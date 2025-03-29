@@ -182,7 +182,7 @@ main {
     var(--light-bg-color) 50%
   ); */
   color: #060606;
-  height: 70vh;
+  height: 75vh;
   width: 90%;
   border-radius: 4rem;
   display: flex;
@@ -392,11 +392,10 @@ main {
     width: 100%;
     max-width: 1200px;
     height: 100px;
-    /* outline: 1px solid var(--accent-bg-color); */
   }
   .logo-track {
     display: flex;
-    gap: 20px;
+    gap: 50px;
     animation: scroll 20s linear infinite;
     width: max-content;
   }

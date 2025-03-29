@@ -1,23 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="">
-        <h1>LOG IN</h1>
-        <div class="form-inputs">
-            <label for="">Email</label>
-            <input type="email" name="email" id="email" placeholder="Enter your email" required>
-        </div>
-        <div class="form-inputs">
-            <label for="">Password</label>
-            <input type="password" name="password" id="password" placeholder="Enter your Password" required>
-        </div>
-        <button type="submit" class="btn-login">Login</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toggleable Login/Sign-Up</title>
+    <link rel="stylesheet" href="../css/login.css" />
+  </head>
+  <body class="container">
+    <div class="form-container">
+      <h2 id="form-title" class="form-title">Login</h2>
 
-    </form>
-</body>
+      <form id="login-form" class="form">
+        <input type="email" placeholder="Email" required class="input" />
+        <input type="password" placeholder="Password" required class="input" />
+        <button type="submit" class="btn login-btn">Login</button>
+        <p class="toggle-text">
+          Don't have an account?
+          <a href="#" id="show-signup" class="toggle-link">Sign Up</a>
+        </p>
+      </form>
+
+      <form id="signup-form" class="form hidden">
+        <input type="text" placeholder="Full Name" required class="input" />
+        <input type="email" placeholder="Email" required class="input" />
+        <input type="password" placeholder="Password" required class="input" />
+        <button type="submit" class="btn signup-btn">Sign Up</button>
+        <p class="toggle-text">
+          Already have an account?
+          <a href="#" id="show-login" class="toggle-link">Login</a>
+        </p>
+      </form>
+    </div>
+
+    <script>
+      const loginForm = document.getElementById("login-form");
+      const signupForm = document.getElementById("signup-form");
+      const formTitle = document.getElementById("form-title");
+      const showSignup = document.getElementById("show-signup");
+      const showLogin = document.getElementById("show-login");
+
+      showSignup.addEventListener("click", (e) => {
+        e.preventDefault();
+        loginForm.classList.add("hidden");
+        signupForm.classList.remove("hidden");
+        formTitle.textContent = "Sign Up";
+      });
+
+      showLogin.addEventListener("click", (e) => {
+        e.preventDefault();
+        signupForm.classList.add("hidden");
+        loginForm.classList.remove("hidden");
+        formTitle.textContent = "Login";
+      });
+    </script>
+  </body>
 </html>
