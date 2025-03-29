@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applicant Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333; padding: 20px; }
+        header { background-color: #007bff; color: white; padding: 20px; text-align: center; border-radius: 8px; }
+        .container { margin-top: 20px; }
+        .card { background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .card h2 { color: #007bff; }
+        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welcome, [Applicant's Name]</h1>
+</header>
+
+<div class="container">
+    <div class="card">
+        <h2>Profile Summary</h2>
+        <p><strong>Name:</strong> [Applicant's Name]</p>
+        <p><strong>Resume:</strong> <a href="#">View/Update</a></p>
+        <p><strong>Status:</strong> Under Review</p>
+    </div>
+
+    <div class="card">
+        <h2>Recent Applications</h2>
+        <ul>
+            <li>Software Developer - Tech Corp (Pending)</li>
+            <li>Data Analyst - Insight Solutions (Interview Scheduled)</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Actions</h2>
+        <button>Apply for New Jobs</button>
+        <button>Update Profile</button>
+    </div>
+</div>
+
+</body>
+</html>
