@@ -23,57 +23,50 @@
   padding: 0;
   /* border: 1px solid lime; */
 }
-/* General Styles */
+html {
+  scroll-behavior: smooth;
+}
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fcfcfc;
+  color: #000;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #f4f4f4;
-  padding: 20px;
 }
-
-/* Form Container */
 .form-container {
   background: white;
-  padding: 25px;
+  padding: 2rem;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
   text-align: center;
   transition: all 0.3s ease;
 }
-
-/* Form Layout */
 .form {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
-
-/* Hide elements */
-.hidden {
-  display: none;
-}
-
-/* Form Title */
 .form-title {
-  font-size: 1.5rem;
+  font-size: 2.825rem;
+  text-transform: uppercase;
   font-weight: bold;
   margin-bottom: 15px;
 }
-
-/* Labels */
 label {
   text-align: left;
   font-weight: bold;
   margin: 10px 0 5px;
   display: block;
 }
-
-/* Input Fields */
 .input {
   width: 100%;
   padding: 10px;
@@ -82,14 +75,11 @@ label {
   font-size: 1rem;
   transition: 0.2s;
 }
-
 .input:focus {
   border-color: #007bff;
   outline: none;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
 }
-
-/* Buttons */
 .btn {
   padding: 12px;
   background-color: #007bff;
@@ -101,28 +91,21 @@ label {
   margin-top: 10px;
   transition: 0.3s;
 }
-
 .btn:hover {
   background-color: #0056b3;
 }
-
-/* Toggle Text */
 .toggle-text {
   margin-top: 15px;
   font-size: 0.9rem;
 }
-
 .toggle-link {
   color: #007bff;
   text-decoration: none;
   font-weight: bold;
 }
-
 .toggle-link:hover {
   text-decoration: underline;
 }
-
-/* Radio Buttons */
 .radio-group {
   display: flex;
   justify-content: space-around;
@@ -132,59 +115,52 @@ label {
   background: #f8f9fa;
   border-radius: 5px;
 }
-
 .radio-group label {
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
 }
-
 .radio-group input {
   margin-right: 5px;
 }
 
-/* Responsive Design */
+
 @media (max-width: 450px) {
   .form-container {
     padding: 20px;
     max-width: 100%;
   }
-
   .form-title {
     font-size: 1.3rem;
   }
-
   .btn {
     font-size: 0.9rem;
     padding: 10px;
   }
-
   .toggle-text {
     font-size: 0.8rem;
   }
 }
-/* Terms and Conditions */
+
 .terms-container {
   display: flex;
   align-items: center;
+  /* justify-content: center; */
   margin-top: 10px;
+  gap: 10px;
 }
-
 .terms-container label {
   font-size: 0.9rem;
 }
-
 .terms-container a {
   color: #007bff;
   text-decoration: none;
   font-weight: bold;
 }
-
 .terms-container a:hover {
   text-decoration: underline;
 }
 
-/* Modal Styles */
 .modal {
   position: fixed;
   top: 0;
@@ -196,7 +172,6 @@ label {
   justify-content: center;
   align-items: center;
 }
-
 .modal-content {
   background: white;
   padding: 20px;
@@ -207,7 +182,6 @@ label {
   text-align: center;
   position: relative;
 }
-
 .close-modal {
   position: absolute;
   top: 10px;
@@ -215,8 +189,9 @@ label {
   font-size: 1.5rem;
   cursor: pointer;
 }
-
 .hidden {
   display: none;
 }
-
+.hidden {
+  display: none;
+}
