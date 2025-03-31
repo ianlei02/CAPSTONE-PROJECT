@@ -4,19 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PESO Landing</title>
+    <link rel="shortcut icon" href="../assets/images/pesosmb.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/index.css" />
   </head>
   <body>
+    <div class="header-info">
+      <div class="city-name"><a href="index.html" style="text-decoration: none; color: #fff;">PESO</a></div>
+      <div class="office-hours">
+        <span>Office Hours: Mon - Fri: 8.00 am. - 5.00 pm.</span>
+        <span style="margin-left: 2rem;">Email: pesosanmiguel@gmail.com</span>
+      </div>
+    </div>
+
     <nav class="navbar">
       <div class="container">
         <a class="navbar-brand" href="#">
-          <!-- <img src="logo.png" alt="Logo" class="logo" /> -->
-          PE<span class="accent">SO</span>
+          <img
+            src="../assets/images/logo without glass.png"
+            alt="PESO logo"
+            class="logo"
+          />
         </a>
         <ul class="navbar-links">
           <li><a class="nav-link" href="#">Home</a></li>
           <li class="dropdown">
-              Job Portal <span class="arrow-down">&#9662;</span>
+            Job Portal <span class="arrow-down">&#9662;</span>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">Job Listings</a></li>
               <li><a class="dropdown-item" href="#">Post a Job</a></li>
@@ -24,30 +36,116 @@
           </li>
           <li><a class="nav-link" href="#">About Us</a></li>
           <li class="auth-buttons">
-            <button class="btn-login">Login</button>
-            <button class="btn-signup">Signup</button>
+            <button class="btn-login" onclick="window.location.href='login-signup.html';">Login/Signup</button>
+            <!-- <button class="btn-signup" onclick="window.location.href='login-signup.html#signup-applicant-form';">Signup</button> -->
           </li>
         </ul>
       </div>
     </nav>
+
     <main>
       <section class="hero">
-        <h1>Welcome to CompanyName</h1>
-        <p>Your gateway to amazing job opportunities.</p>
+        <div class="hero-text">
+          <h1>PUBLIC EMPLOYMENT SERVICE OFFICE OF <br /><span class="sanmiguel">SAN MIGUEL, BULACAN</span></h1>
+          <p>Your gateway to amazing job opportunities.</p>
+          <div class="hero-btn">
+            <button class="find-job">Browse jobs</button>
+            <button class="find-talent">Find Talent</button>
+          </div>
+        </div>
+        <div class="hero-image-container">
+          <img
+            src="../assets/images/people.png"
+            alt="Hero Image"
+            class="hero-img"
+          />
+        </div>
       </section>
-      <section class="features">
-        <h2>Our Features</h2>
-        <p>Explore job listings, post jobs, and learn more about us.</p>
+
+      <section class="statistics">
+        <h2>PORTAL STATISTICS</h2>
+        <hr />
+        <div class="stats-container">
+          <div class="stats-card appear-animation">
+            <h4>Registered Applicants</h4>
+            <p>123</p>
+          </div>
+          <div class="stats-card appear-animation">
+            <h4>Registered Employers</h4>
+            <p>456</p>
+          </div>
+          <div class="stats-card appear-animation">
+            <h4>Job Listings</h4>
+            <p>789</p>
+          </div>
+          <div class="stats-card appear-animation">
+            <h4>Hired Applicants</h4>
+            <p>312</p>
+          </div>
+        </div>
       </section>
-      <section class="cta">
-        <h2>Join Us Today</h2>
-        <button class="btn-cta">Get Started</button>
+
+      <section class="registered-employers">
+        <h2>REGISTERED EMPLOYERS</h2>
+        
+          
+
+        <div class="scroller" data-direction="right" data-speed="fast">
+          <div class="scroller__inner">
+            <img src="../assets/images/company-logos/7-eleven_logo.svg.png" alt="" />
+            <img src="../assets/images/company-logos/Chowking_logo.svg.png" alt="" />
+            <img src="../assets/images/company-logos/Jollibee.png" alt="" />
+            <img src="../assets/images/company-logos/kfc.png" alt="" />
+            <img src="../assets/images/company-logos/mang-inasal-logo-png_seeklogo-543182.png" alt="" />
+            <img src="../assets/images/company-logos/robinsons.png" alt="" />
+            <img src="../assets/images/company-logos/Puregold_logo.svg.png" alt="">
+            <img src="../assets/images/company-logos/rcs.png" alt="" >
+     
+          </div>
+        </div>
+        <br>
+        <div class="scroller" data-direction="left" data-speed="fast">
+          <div class="scroller__inner">
+            <img src="../assets/images/company-logos/7-eleven_logo.svg.png" alt="" />
+            <img src="../assets/images/company-logos/Chowking_logo.svg.png" alt="" />
+            <img src="../assets/images/company-logos/Jollibee.png" alt="" />
+            <img src="../assets/images/company-logos/kfc.png" alt="" />
+            <img src="../assets/images/company-logos/mang-inasal-logo-png_seeklogo-543182.png" alt="" />
+            <img src="../assets/images/company-logos/robinsons.png" alt="" />
+            <img src="../assets/images/company-logos/Puregold_logo.svg.png" alt="">
+            <img src="../assets/images/company-logos/rcs.png" alt="" >
+          </div>
+        </div>
       </section>
     </main>
     <footer>
       <div class="container">
-        <p>&copy; 2021 CompanyName. All rights reserved.</p>
+        <p>&copy; 2025 PESO. All rights reserved.</p>
       </div>
     </footer>
+
+    <script>
+      const scrollers = document.querySelectorAll(".scroller");
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        addAnimation();
+      }
+      function addAnimation() {
+        scrollers.forEach((scroller) => {
+          scroller.setAttribute("data-animated", true);
+
+          const scrollerInner = scroller.querySelector(".scroller__inner");
+          const scrollerContent = Array.from(scrollerInner.children);
+
+          scrollerContent.forEach((item) => {
+            const duplicatedItem = item.cloneNode(true);
+            duplicatedItem.setAttribute("aria-hidden", true);
+            scrollerInner.appendChild(duplicatedItem);
+          });
+        });
+      }
+      document.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+      });
+    </script>
   </body>
 </html>
