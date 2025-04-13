@@ -25,31 +25,31 @@
       <aside class="sidebar">
         <ul class="sidebar-menu">
           <li>
-            <a href="#">
+            <a href="./employer-dashboard.html">
               <span class="emoji">🏠</span>
               <span class="label">Dashboard</span>
             </a>
           </li>
           <li>
-            <a href="#">
-              <span class="emoji">ℹ️</span>
-              <span class="label">My Applications</span>
+            <a href="./employer-applications.html">
+              <span class="emoji">💼</span>
+              <span class="label">Job Applications</span>
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="./applicant-job-search.html">
               <span class="emoji">🔍</span>
-              <span class="label">Job Search</span>
+              <span class="label">Applicant Search</span>
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="./applicant-profile.html">
               <span class="emoji">🤵</span>
               <span class="label">My Profile</span>
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="../../landing/index.html">
               <span class="emoji">📴</span>
               <span class="label">Log Out</span>
             </a>
@@ -58,27 +58,27 @@
       </aside>
 
       <main class="main-content">
-        <div class="main-header">
-          <h1>Welcome, Applicant!</h1>
-          <p>
-            You are now registered. Please update your
-            <a href="">Profile</a> and upload your <a href="">CV</a> before you
-            can find a job. Thank you and good luck to your journey!
-          </p>
-        </div>
-
         <section>
+          <div class="main-header">
+            <h1>Welcome, Employer!</h1>
+            <p>
+              You are now registered. Please update your
+              <a href="">Profile</a> and upload your
+              <a href="">Business Permit</a> before you can find a job. Thank
+              you and good luck to your journey!
+            </p>
+          </div>
           <div class="statistics-container gradient">
             <div class="statistic-card">
-              <h2>Applications</h2>
+              <h2>Jobs Posted</h2>
               <p>5</p>
             </div>
             <div class="statistic-card">
-              <h2>Interviews</h2>
+              <h2>Pending Job Vacancies</h2>
               <p>3</p>
             </div>
             <div class="statistic-card">
-              <h2>Referred</h2>
+              <h2>Referred Applicants</h2>
               <p>2</p>
             </div>
             <div class="statistic-card">
@@ -94,55 +94,74 @@
               <p>409</p>
             </div>
           </div>
-
           <div class="job-application-status">
-            <h2>Job Application Status</h2>
+            <h2>Applicant List</h2>
             <table class="job-application-table">
               <thead>
                 <tr>
-                  <th>Job Title</th>
-                  <th>Company</th>
+                  <th>Applicant Name</th>
+                  <th>Email</th>
                   <th>Status</th>
                   <th>Date Applied</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Software Engineer</td>
-                  <td>Tech Company</td>
-                  <td>Interview</td>
+                  <td>John Doe</td>
+                  <td>john.doe@example.com</td>
+                  <td class="status interviewed">Interview</td>
                   <td>2023-10-01</td>
+                  <td>
+                    <button>Hire</button><button>Reject</button
+                    ><button>View Profile</button><button>Interview</button>
+                  </td>
                 </tr>
                 <tr>
-                  <td>Data Analyst</td>
-                  <td>Data Corp</td>
-                  <td>Submitted</td>
+                  <td>Jane Smith</td>
+                  <td>jane.smith@example.com</td>
+                  <td class="status applied">Applied</td>
                   <td>2023-09-15</td>
+                  <td>
+                    <button>Hire</button><button>Reject</button
+                    ><button>View Profile</button><button>Interview</button>
+                  </td>
                 </tr>
                 <tr>
-                  <td>Manager</td>
-                  <td>Data Corp</td>
-                  <td>Referred</td>
+                  <td>Alice Johnson</td>
+                  <td>alice.johnson@example.com</td>
+                  <td class="status referred">Referred</td>
                   <td>2023-09-15</td>
+                  <td>
+                    <button>Hire</button><button>Reject</button
+                    ><button>View Profile</button><button>Interview</button>
+                  </td>
                 </tr>
                 <tr>
-                  <td>Manager</td>
-                  <td>Data Corp</td>
-                  <td>Referred</td>
+                  <td>Bob Brown</td>
+                  <td>bob.brown@example.com</td>
+                  <td class="status hired">Hired</td>
                   <td>2023-09-15</td>
+                  <td>
+                    <button>Hire</button><button>Reject</button
+                    ><button>View Profile</button><button>Interview</button>
+                  </td>
                 </tr>
                 <tr>
-                  <td>Manager</td>
-                  <td>Data Corp</td>
-                  <td>Referred</td>
+                  <td>Charlie Davis</td>
+                  <td>charlie.davis@example.com</td>
+                  <td class="status referred">Referred</td>
                   <td>2023-09-15</td>
+                  <td>
+                    <button>Hire</button><button>Reject</button
+                    ><button>View Profile</button><button>Interview</button>
+                  </td>
                 </tr>
-                
               </tbody>
             </table>
           </div>
-          </section>
-        </main>
+        </section>
+      </main>
     </div>
 
     <script>
