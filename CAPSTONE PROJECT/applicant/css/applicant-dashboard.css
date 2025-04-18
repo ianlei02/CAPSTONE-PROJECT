@@ -219,6 +219,9 @@
     display: flex;
     justify-content: center;
     overflow: auto;
+
+    
+
   }
   .statistics-container{
     grid-template-columns: repeat(1, 1fr);
@@ -243,3 +246,4 @@
     width: auto !important;
   }
 }
+
