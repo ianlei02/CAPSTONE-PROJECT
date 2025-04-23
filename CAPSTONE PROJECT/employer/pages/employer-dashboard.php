@@ -1,3 +1,13 @@
+<?php
+require_once '../../landing/functions/check_login.php';
+
+if(!isset($_SESSION['user_id'])) {
+    header("Location: ../login-signup.php");
+    exit();
+}
+
+// Rest of your page
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,6 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Employer Dashboard</title>
     <link rel="stylesheet" href="../css/employer-dashboard.css" />
+    
   </head>
   <body>
     <nav class="navbar">
@@ -49,7 +60,7 @@
             </a>
           </li>
           <li>
-            <a href="../../landing/index.html">
+            <a href="../../landing/functions/logout.php">
               <span class="emoji">📴</span>
               <span class="label">Log Out</span>
             </a>

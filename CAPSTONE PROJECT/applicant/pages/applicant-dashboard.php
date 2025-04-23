@@ -1,3 +1,12 @@
+<?php
+require_once '../../landing/functions/check_login.php';
+
+if(!isset($_SESSION['user_id'])) {
+    header("Location: ../login-signup.php");
+    exit();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,6 +15,7 @@
     <title>Applicant Dashboard</title>
     <link rel="stylesheet" href="../css/applicant-dashboard.css" />
     <link rel="stylesheet" href="../css/navs.css">
+   
   </head>
   <body>
     <nav class="navbar">
@@ -50,7 +60,7 @@
             </a>
           </li>
           <li>
-            <a href="../../landing/index.html">
+            <a href="../../landing/functions/logout.php">
               <span class="emoji"><img src="../../public-assets/icons/arrow-right-from-bracket-solid.svg" alt="Logout-icon"></span>
               <span class="label">Log Out</span>
             </a>
