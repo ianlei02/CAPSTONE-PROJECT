@@ -26,7 +26,7 @@
       <aside class="sidebar">
         <ul class="sidebar-menu">
           <li>
-            <a href="./applicant-dashboard.html">
+            <a href="./applicant-dashboard.php">
               <span class="emoji"><img src="../../public-assets/icons/gauge-high-solid.svg" alt="Dashboard-icon"></span>
               <span class="label">Dashboard</span>
             </a>

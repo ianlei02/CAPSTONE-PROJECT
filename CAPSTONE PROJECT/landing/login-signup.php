@@ -6,7 +6,7 @@ header("Expires: Sat, 01 Jan 2000 00:00:00 GMT");
 header("Pragma: no-cache");
 
 if (isset($_SESSION['user_id'])) {
-    // Redirect to the appropriate dashboard based on user type
+    
     if ($_SESSION['user_type'] === 'applicant') {
         header("Location: applicant/pages/applicant-dashboard.php");
     } elseif ($_SESSION['user_type'] === 'employer') {
