@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Poppins";
-  src: url("./assets/font/Poppins-Regular.ttf") format("truetype");
+  src: url("../public-assets/font/Poppins-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
@@ -26,7 +26,7 @@
 }
 
 body {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg,var(--primary-blue-color), #ffffff);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,8 +64,8 @@ body {
 }
 
 .tab.active {
-  color: #4f46e5;
-  border-bottom: 2px solid #4f46e5;
+  color: var(--primary-blue-color);
+  border-bottom: 2px solid var(--secondary-blue-color);
 }
 
 h2 {
@@ -130,7 +130,7 @@ input[type="password"] {
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus {
-  border-color: #4f46e5;
+  border-color: var(--secondary-blue-color);
   outline: none;
 }
 
@@ -142,13 +142,13 @@ input[type="password"]:focus {
 }
 
 .terms a {
-  color: #4f46e5;
+  color: var(--primary-blue-color);
   text-decoration: none;
   cursor: pointer;
 }
 
 .btn {
-  background-color: #4f46e5;
+  background-color: var(--secondary-blue-color);
   color: white;
   border: none;
   border-radius: 5px;
@@ -161,7 +161,7 @@ input[type="password"]:focus {
 }
 
 .btn:hover {
-  background-color: #4338ca;
+  background-color: var(--secondary-blue-color);
 }
 
 .toggle-form {
@@ -171,7 +171,7 @@ input[type="password"]:focus {
 }
 
 .toggle-form a {
-  color: #4f46e5;
+  color: var(--primary-blue-color);
   text-decoration: none;
   cursor: pointer;
   font-weight: 500;
@@ -183,7 +183,7 @@ input[type="password"]:focus {
 }
 
 .forgot-password a {
-  color: #4f46e5;
+  color: var(--primary-blue-color);
   text-decoration: none;
   font-size: 14px;
 }
@@ -243,7 +243,7 @@ input[type="password"]:focus {
 }
 
 .modal-btn {
-  background-color: #4f46e5;
+  background-color: var(--secondary-blue-color);
   color: white;
   border: none;
   border-radius: 5px;
@@ -254,7 +254,7 @@ input[type="password"]:focus {
 }
 
 .modal-btn:hover {
-  background-color: #4338ca;
+  background-color: var(--primary-blue-color);
 }
 
 
@@ -321,7 +321,7 @@ input[type="password"]:focus {
   .submit-btn {
     width: 100%;
     padding: 12px;
-    background-color: #4a6bff;
+    background-color: var(--secondary-blue-color);
     color: white;
     border: none;
     border-radius: 4px;
@@ -331,7 +331,7 @@ input[type="password"]:focus {
   }
 
   .submit-btn:hover {
-    background-color: #3a56d4;
+    background-color: var(--secondary-blue-color);
   }
 
   .modal-footer {
@@ -341,7 +341,7 @@ input[type="password"]:focus {
   }
 
   .login-link {
-    color: #4a6bff;
+    color: var(--primary-blue-color);
     text-decoration: none;
     font-weight: 500;
   }
