@@ -36,25 +36,25 @@ if(!isset($_SESSION['user_id'])) {
       <aside class="sidebar">
         <ul class="sidebar-menu">
           <li>
-            <a href="./employer-dashboard.html">
+            <a href="./employer-dashboard.php">
               <span class="emoji">🏠</span>
               <span class="label">Dashboard</span>
             </a>
           </li>
           <li>
-            <a href="./employer-applications.html">
+            <a href="./employer-applications.php">
               <span class="emoji">💼</span>
               <span class="label">Job Applications</span>
             </a>
           </li>
           <li>
-            <a href="./applicant-job-search.html">
+            <a href="./applicant-job-search.php">
               <span class="emoji">🔍</span>
               <span class="label">Applicant Search</span>
             </a>
           </li>
           <li>
-            <a href="./applicant-profile.html">
+            <a href="./applicant-profile.php">
               <span class="emoji">🤵</span>
               <span class="label">My Profile</span>
             </a>

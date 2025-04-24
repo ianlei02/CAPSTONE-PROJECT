@@ -1,3 +1,12 @@
+<?php
+require_once '../../landing/functions/check_login.php';
+
+if(!isset($_SESSION['user_id'])) {
+    header("Location: ../login-signup.php");
+    exit();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -26,31 +35,31 @@
       <aside class="sidebar">
         <ul class="sidebar-menu">
           <li>
-            <a href="./applicant-dashboard.html">
+            <a href="./applicant-dashboard.php">
               <span class="emoji"><img src="../../public-assets/icons/gauge-high-solid.svg" alt="Dashboard-icon"></span>
               <span class="label">Dashboard</span>
             </a>
           </li>
           <li>
-            <a href="./applicant-applications.html">
+            <a href="./applicant-applications.php">
               <span class="emoji"><img src="../../public-assets/icons/briefcase-solid.svg" alt="Applications-icon"></span>
               <span class="label">My Applications</span>
             </a>
           </li>
           <li>
-            <a href="./applicant-job-search.html">
+            <a href="./applicant-job-search.php">
               <span class="emoji"><img src="../../public-assets/icons/magnifying-glass-solid.svg" alt="Job-Search-icon"></span>
               <span class="label">Job Search</span>
             </a>
           </li>
           <li>
-            <a href="./applicant-profile.html">
+            <a href="./applicant-profile.php">
               <span class="emoji"><img src="../../public-assets/icons/user-solid.svg" alt="Profile-icon"></span>
               <span class="label">My Profile</span>
             </a>
           </li>
           <li>
-            <a href="../../landing/index.html">
+            <a href="../../landing/functions/logout.php">
               <span class="emoji"><img src="../../public-assets/icons/arrow-right-from-bracket-solid.svg" alt="Logout-icon"></span>
               <span class="label">Log Out</span>
             </a>

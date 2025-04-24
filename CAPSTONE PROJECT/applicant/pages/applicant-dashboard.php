@@ -36,19 +36,19 @@ if(!isset($_SESSION['user_id'])) {
       <aside class="sidebar">
         <ul class="sidebar-menu">
           <li>
-            <a href="./applicant-dashboard.html">
+            <a href="./applicant-dashboard.php">
               <span class="emoji"><img src="../../public-assets/icons/gauge-high-solid.svg" alt="Dashboard-icon"></span>
               <span class="label">Dashboard</span>
             </a>
           </li>
           <li>
-            <a href="./applicant-applications.html">
+            <a href="./applicant-applications.php">
               <span class="emoji"><img src="../../public-assets/icons/briefcase-solid.svg" alt="Applications-icon"></span>
               <span class="label">My Applications</span>
             </a>
           </li>
           <li>
-            <a href="./applicant-job-search.html">
+            <a href="./applicant-job-search.php">
               <span class="emoji"><img src="../../public-assets/icons/magnifying-glass-solid.svg" alt="Job-Search-icon"></span>
               <span class="label">Job Search</span>
             </a>
