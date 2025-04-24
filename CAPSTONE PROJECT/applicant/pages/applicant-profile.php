@@ -333,13 +333,13 @@
                 <div class="form-grid">
                   <div class="form-group">
                     <label class="required">Primary Skills</label>
-                    <select id="primarySkills" multiple style="height: auto">
-                      <option>Computer Literacy</option>
+                    <input id="primarySkills" multiple style="height: auto"  placeholder="Add skills separated by commas">
+                      <!-- <option>Computer Literacy</option>
                       <option>Customer Service</option>
                       <option>Microsoft Office</option>
                       <option>Accounting</option>
-                      <option>Graphic Design</option>
-                    </select>
+                      <option>Graphic Design</option> -->
+                    </input>
                     <div class="skills-container" id="selectedSkills">
                       <!-- Selected skills will appear here -->
                     </div>
