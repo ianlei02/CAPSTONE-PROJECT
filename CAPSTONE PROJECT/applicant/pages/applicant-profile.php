@@ -1,3 +1,12 @@
+<?php
+require_once '../../landing/functions/check_login.php';
+
+if(!isset($_SESSION['user_id'])) {
+    header("Location: ../login-signup.php");
+    exit();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>

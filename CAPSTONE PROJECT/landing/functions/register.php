@@ -11,6 +11,9 @@ if(isset($_POST['signupBtn'])) {
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
+    $minPasswordLength = 8;
+    $password = $_POST['password'];
+
     if ($user_type == 'applicant') {
         $query = "INSERT INTO applicant_account (f_name, l_name, email, password)
                  VALUES ('$f_name', '$l_name', '$email', '$hashed_password')";
