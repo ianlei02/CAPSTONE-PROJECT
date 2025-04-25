@@ -359,6 +359,7 @@
           }
       }
   </style>
+
   </head>
   <body>
     <div class="header-info">
@@ -389,10 +390,8 @@
           </li>
           <li><a class="nav-link" href="#">About Us</a></li>
           <li class="auth-buttons">
-
-            <a class="btn-login" target="_blank" href="login-signup.html">Login/Signup</a>
+            <a class="btn-login" target="_self" href="login-signup.php">Login/Signup</a>
             <!-- <a class="btn-signup" target="_blank" href="applicant-login-signup.html">Applicant</a> -->
-
           </li>
         </ul>
       </div>
@@ -440,7 +439,6 @@
         </div>
       </section>
 
-
       <section class="registered-employers">
         <h2>REGISTERED EMPLOYERS</h2>
         
@@ -469,10 +467,12 @@
             <img src="./assets/images/company-logos/mang-inasal-logo-png_seeklogo-543182.png" alt="" />
             <img src="./assets/images/company-logos/robinsons.png" alt="" />
             <!-- <img src="./assets/images/company-logos/Puregold_logo.svg.png" alt=""> -->
+
             <img src="./assets/images/company-logos/rcs.png" alt="" >
           </div>
         </div>
       </section>
+
       <section class="features">
         <div class="container">
             <div class="section-title">
@@ -592,6 +592,7 @@
             </div>
         </div>
     </section>
+
 
     </main>
     <footer>
