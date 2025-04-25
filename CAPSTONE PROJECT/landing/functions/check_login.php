@@ -57,24 +57,25 @@ if (isset($_COOKIE['remember_login'])) {
             }
         }
 
-        // Verify token if user found
+      
         if (isset($row) && password_verify($token, $row['remember_token'])) {
             $_SESSION['user_id'] = $row[$id_field];
             $_SESSION['user_type'] = ($table === 'applicant_account') ? 'applicant' : 'employer';
             $_SESSION['email'] = $row['email'];
             $_SESSION['f_name'] = $row['f_name'];
             $_SESSION['l_name'] = $row['l_name'];
+            $_SESSION['verified'] = true;
         } else {
-            // Invalid token or user not found
+            
             setcookie('remember_login', '', time() - 3600, '/');
         }
     } else {
-        // Invalid cookie format — clear it
+        
         setcookie('remember_login', '', time() - 3600, '/');
     }
 }
 
-// Optional debugging message
+
 // echo "Reached end of script.";
 
 exit();

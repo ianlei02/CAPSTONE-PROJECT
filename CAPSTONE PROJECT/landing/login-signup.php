@@ -276,7 +276,10 @@ if (isset($_SESSION['user_id'])) {
         localStorage.setItem('lastGeneratedNumber',randomNumber);
         return randomNumber
       }
+      document.querySelector('.signup-form form').addEventListener('submit', function() {
       document.getElementById('otp').value = generateRandomNumber();
+    });
+
     </script>
     <script>
     if (window.history.replaceState) {
