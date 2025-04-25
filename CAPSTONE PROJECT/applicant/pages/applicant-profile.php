@@ -1,360 +1,355 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Applicant Dashboard</title>
-    <link rel="stylesheet" href="../css/applicant-profile.css" />
-    <link rel="stylesheet" href="../css/navs.css" />
-  </head>
-  <body>
-    <nav class="navbar">
-      <div class="navbar-left">
-        <div class="left-pos" style="display: flex; width: auto; height: auto">
-          <button class="hamburger">☰</button>
-          <div class="logo">
-            <img src="../assets/images/logo without glass.png" alt="" />
-          </div>
-        </div>
-        <div class="right-pos">
-          <div class="profile">IAN</div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Applicant Dashboard</title>
+  <link rel="stylesheet" href="../css/applicant-profile.css" />
+  <link rel="stylesheet" href="../css/navs.css" />
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="navbar-left">
+      <div class="left-pos" style="display: flex; width: auto; height: auto">
+        <button class="hamburger">☰</button>
+        <div class="logo">
+          <img src="../assets/images/logo without glass.png" alt="" />
         </div>
       </div>
-    </nav>
+      <div class="right-pos">
+        <div class="profile">IAN</div>
+      </div>
+    </div>
+  </nav>
 
-    <div class="container">
-      <aside class="sidebar">
-        <ul class="sidebar-menu">
-          <li>
+  <div class="container">
+    <aside class="sidebar">
+      <ul class="sidebar-menu">
+        <li>
 
-            <a href="./applicant-dashboard.php">
-              <span class="emoji"><img src="../../public-assets/icons/gauge-high-solid.svg" alt="Dashboard-icon"></span>
+          <a href="./applicant-dashboard.php">
+            <span class="emoji"><img src="../../public-assets/icons/gauge-high-solid.svg" alt="Dashboard-icon"></span>
 
-              <span class="label">Dashboard</span>
-            </a>
-          </li>
-          <li>
-            <a href="./applicant-applications.html">
+            <span class="label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="./applicant-applications.html">
 
-              <span class="emoji"><img src="../../public-assets/icons/briefcase-solid.svg" alt="Applications-icon"></span>
-              <span class="label">My Applications</span>
-            </a>
-          </li>
-          <li>
-            <a href="./applicant-job-search.html">
+            <span class="emoji"><img src="../../public-assets/icons/briefcase-solid.svg" alt="Applications-icon"></span>
+            <span class="label">My Applications</span>
+          </a>
+        </li>
+        <li>
+          <a href="./applicant-job-search.html">
 
-              <span class="emoji"><img src="../../public-assets/icons/magnifying-glass-solid.svg" alt="Job-Search-icon"></span>
-              <span class="label">Job Search</span>
-            </a>
-          </li>
-          <li>
-            <a href="./applicant-profile.html">
+            <span class="emoji"><img src="../../public-assets/icons/magnifying-glass-solid.svg" alt="Job-Search-icon"></span>
+            <span class="label">Job Search</span>
+          </a>
+        </li>
+        <li>
+          <a href="./applicant-profile.html">
 
-              <span class="emoji"><img src="../../public-assets/icons/user-solid.svg" alt="Profile-icon"></span>
-              <span class="label">My Profile</span>
-            </a>
-          </li>
-          <li>
-            <a href="../../landing/index.html">
+            <span class="emoji"><img src="../../public-assets/icons/user-solid.svg" alt="Profile-icon"></span>
+            <span class="label">My Profile</span>
+          </a>
+        </li>
+        <li>
+          <a href="../../landing/index.html">
 
-              <span class="emoji"><img src="../../public-assets/icons/arrow-right-from-bracket-solid.svg" alt="Logout-icon"></span>
-              <span class="label">Log Out</span>
-            </a>
-          </li>
-        </ul>
-      </aside>
+            <span class="emoji"><img src="../../public-assets/icons/arrow-right-from-bracket-solid.svg" alt="Logout-icon"></span>
+            <span class="label">Log Out</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
 
-      <main class="main-content">
-        <div class="profile-container">
+    <main class="main-content">
+      <div class="profile-container">
 
-          <div class="header">
-            <h1>Applicant Profile</h1>
-            <button class="save-btn">Save Profile</button>
+        <div class="header">
+          <h1>Applicant Profile</h1>
+          <button class="save-btn">Save Profile</button>
+        </div>
+
+        <!-- Personal Information Section -->
+        <div class="section">
+          <div class="section-header">Personal Information</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="required">First Name</label>
+              <input type="text" required />
+            </div>
+            <div class="form-group">
+              <label>Middle Name</label>
+              <input type="text" />
+            </div>
+            <div class="form-group">
+              <label class="required">Last Name</label>
+              <input type="text" required />
+            </div>
+            <div class="form-group">
+              <label>Suffix</label>
+              <input type="text" placeholder="Jr., Sr., III" />
+            </div>
+            <div class="form-group">
+              <label class="required">Gender</label>
+              <select required>
+                <option value="">Select</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="required">Date of Birth</label>
+              <input type="date" required />
+            </div>
+            <div class="form-group">
+              <label class="required">Civil Status</label>
+              <select required>
+                <option value="">Select</option>
+                <option>Single</option>
+                <option>Married</option>
+                <option>Divorced</option>
+                <option>Widowed</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="required">Nationality</label>
+              <input type="text" value="Filipino" required />
+            </div>
+            <div class="form-group">
+              <label class="required">Contact Number</label>
+              <input type="tel" placeholder="09123456789" required />
+            </div>
+            <div class="form-group">
+              <label class="required">Email Address</label>
+              <input type="email" required />
+            </div>
+            <div class="form-group">
+              <label class="required">Complete Address</label>
+              <select required>
+                <option value="">Select Region</option>
+                <option>NCR</option>
+                <option>Region I</option>
+                <option>Region II</option>
+                <option>Region III</option>
+                <option>Region IV</option>
+                <option>Region V</option>
+                <option>Region VI</option>
+                <option>Region VII</option>
+                <!-- More regions -->
+              </select>
+              <input type="text" placeholder="Province" style="margin-top: 10px;" required />
+              <input
+                type="text"
+                placeholder="City/Municipality"
+                required
+                style="margin-top: 10px" />
+              <input
+                type="text"
+                placeholder="Barangay and Street"
+                required
+                style="margin-top: 10px" />
+            </div>
           </div>
+        </div>
 
-          <!-- Personal Information Section -->
-          <div class="section">
-            <div class="section-header">Personal Information</div>
-            <div class="form-grid">
+        <!-- Education Section -->
+        <div class="section">
+          <div class="section-header">Education & Training</div>
+          <div id="education-entries">
+            <div class="education-entry form-grid">
               <div class="form-group">
-                <label class="required">First Name</label>
+                <label class="required">Highest Educational Level</label>
+                <select required>
+                  <option value="">Select</option>
+                  <option>Elementary</option>
+                  <option>High School</option>
+                  <option>Vocational</option>
+                  <option>College</option>
+                  <option>Postgraduate</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="required">School/Institution</label>
                 <input type="text" required />
               </div>
               <div class="form-group">
-                <label>Middle Name</label>
+                <label>Course/Degree</label>
                 <input type="text" />
               </div>
               <div class="form-group">
-                <label class="required">Last Name</label>
+                <label>Year Graduated</label>
+                <input type="number" min="1900" max="2099" />
+              </div>
+            </div>
+          </div>
+          <button class="add-btn" id="add-education">+ Add Education</button>
+        </div>
+
+        <!-- Work Experience Section -->
+        <div class="section">
+          <div class="section-header">Work Experience</div>
+          <div id="experience-entries">
+            <div class="experience-entry form-grid">
+              <div class="form-group">
+                <label class="required">Company Name</label>
                 <input type="text" required />
               </div>
               <div class="form-group">
-                <label>Suffix</label>
-                <input type="text" placeholder="Jr., Sr., III" />
+                <label class="required">Position</label>
+                <input type="text" required />
               </div>
               <div class="form-group">
-                <label class="required">Gender</label>
+                <label class="required">Industry</label>
                 <select required>
                   <option value="">Select</option>
-                  <option>Male</option>
-                  <option>Female</option>
-                  <option>Other</option>
+                  <option>Agriculture</option>
+                  <option>Construction</option>
+                  <option>Manufacturing</option>
+                  <option>Retail</option>
+                  <option>IT/BPO</option>
                 </select>
               </div>
               <div class="form-group">
-                <label class="required">Date of Birth</label>
-                <input type="date" required />
-              </div>
-              <div class="form-group">
-                <label class="required">Civil Status</label>
-                <select required>
-                  <option value="">Select</option>
-                  <option>Single</option>
-                  <option>Married</option>
-                  <option>Divorced</option>
-                  <option>Widowed</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="required">Nationality</label>
-                <input type="text" value="Filipino" required />
-              </div>
-              <div class="form-group">
-                <label class="required">Contact Number</label>
-                <input type="tel" placeholder="09123456789" required />
-              </div>
-              <div class="form-group">
-                <label class="required">Email Address</label>
-                <input type="email" required />
-              </div>
-              <div class="form-group">
-                <label class="required">Complete Address</label>
-                <select required>
-                  <option value="">Select Region</option>
-                  <option>NCR</option>
-                  <option>Region I</option>
-                  <option>Region II</option>
-                  <option>Region III</option>
-                  <option>Region IV</option>
-                  <option>Region V</option>
-                  <option>Region VI</option>
-                  <option>Region VII</option>
-                  <!-- More regions -->
-                </select>
-                <input type="text" placeholder="Province" style="margin-top: 10px;" required />
-                <input
-                  type="text"
-                  placeholder="City/Municipality"
-                  required
-                  style="margin-top: 10px"
-                />
-                <input
-                  type="text"
-                  placeholder="Barangay and Street"
-                  required
-                  style="margin-top: 10px"
-                />
-              </div>
-            </div>
-          </div>
-
-          <!-- Education Section -->
-          <div class="section">
-            <div class="section-header">Education & Training</div>
-            <div id="education-entries">
-              <div class="education-entry form-grid">
-                <div class="form-group">
-                  <label class="required">Highest Educational Level</label>
-                  <select required>
-                    <option value="">Select</option>
-                    <option>Elementary</option>
-                    <option>High School</option>
-                    <option>Vocational</option>
-                    <option>College</option>
-                    <option>Postgraduate</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="required">School/Institution</label>
-                  <input type="text" required />
-                </div>
-                <div class="form-group">
-                  <label>Course/Degree</label>
-                  <input type="text" />
-                </div>
-                <div class="form-group">
-                  <label>Year Graduated</label>
-                  <input type="number" min="1900" max="2099" />
-                </div>
-              </div>
-            </div>
-            <button class="add-btn" id="add-education">+ Add Education</button>
-          </div>
-
-          <!-- Work Experience Section -->
-          <div class="section">
-            <div class="section-header">Work Experience</div>
-            <div id="experience-entries">
-              <div class="experience-entry form-grid">
-                <div class="form-group">
-                  <label class="required">Company Name</label>
-                  <input type="text" required />
-                </div>
-                <div class="form-group">
-                  <label class="required">Position</label>
-                  <input type="text" required />
-                </div>
-                <div class="form-group">
-                  <label class="required">Industry</label>
-                  <select required>
-                    <option value="">Select</option>
-                    <option>Agriculture</option>
-                    <option>Construction</option>
-                    <option>Manufacturing</option>
-                    <option>Retail</option>
-                    <option>IT/BPO</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="required">Employment Period</label>
-                  <br>
-                  <div style="display: flex; gap: 10px">
-                    <label for="from-date" style="margin-top: 8px;">From</label>
-                    <input
+                <label class="required">Employment Period</label>
+                <br>
+                <div style="display: flex; gap: 10px">
+                  <label for="from-date" style="margin-top: 8px;">From</label>
+                  <input
                     type="month"
                     placeholder="From"
                     id="from-date"
                     required
-                    style="flex: 1"
-                    />
-                    <label for="to-date" style="margin-top: 8px;">To</label>
-                    <input
+                    style="flex: 1" />
+                  <label for="to-date" style="margin-top: 8px;">To</label>
+                  <input
                     id="to-date"
-                      type="month"
-                      placeholder="To"
-                      style="flex: 1"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="form-group" style="grid-column: span 3">
-                  <label>Key Responsibilities</label>
-                  <textarea rows="3" columns="10"></textarea>
+                    type="month"
+                    placeholder="To"
+                    style="flex: 1"
+                    required />
                 </div>
               </div>
-            </div>
-            <button class="add-btn" id="add-experience">
-              + Add Work Experience
-            </button>
-          </div>
-
-          <!-- Skills Section -->
-          <div class="section">
-            <div class="section-header">Skills & Qualifications</div>
-            <div class="form-grid">
-              <div class="form-group">
-                <label class="required">Primary Skills</label>
-                <select id="primary-skills" multiple style="height: auto">
-                  <option>Computer Literacy</option>
-                  <option>Welding</option>
-                  <option>Driving</option>
-                  <option>Customer Service</option>
-                  <option>Bookkeeping</option>
-                </select>
-                <div class="skills-container" id="selected-skills">
-                  <!-- Dito lalabas skills -->
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Technical Skills</label>
-                <input
-                  type="text"
-                  id="tech-skill-input"
-                  placeholder="Add skills separated by commas"
-                />
-              </div>
-            </div>
-
-            <div class="form-grid" style="margin-top: 20px">
-              <div class="form-group">
-                <label>Language Proficiency</label>
-                <div class="language-entry">
-                  <div style="display: flex; gap: 10px; margin-bottom: 10px">
-                    <select style="flex: 1">
-                      <option>English</option>
-                      <option>Filipino</option>
-                      <option>Other</option>
-                    </select>
-                    <select style="flex: 1">
-                      <option>Basic</option>
-                      <option>Intermediate</option>
-                      <option>Advanced</option>
-                      <option>Fluent</option>
-                    </select>
-                  </div>
-                  <div class="language-progress">
-                    <!-- <div class="progress-bar" style="width: 75%"></div> -->
-                  </div>
-                </div>
-                <button class="add-btn" style="margin-top: 10px">
-                  + Add Language
-                </button>
+              <div class="form-group" style="grid-column: span 3">
+                <label>Key Responsibilities</label>
+                <textarea rows="3" columns="10"></textarea>
               </div>
             </div>
           </div>
+          <button class="add-btn" id="add-experience">
+            + Add Work Experience
+          </button>
+        </div>
 
-          <div class="section">
-            <div class="section-header">Government IDs & Documents</div>
-            <div class="form-grid">
-              <div class="form-group">
-                <label class="required">Resume/CV</label>
-                <div class="file-upload">
-                  <p>Drag & drop your file here or click to browse</p>
-                  <input type="file" style="display: none" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label>PSA Birth Certificate</label>
-                <div class="file-upload">
-                  <p>Upload scanned copy</p>
-                  <input type="file" style="display: none" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="required">Valid ID</label>
-                <select required>
-                  <option value="">Select ID Type</option>
-                  <option>UMID</option>
-                  <option>Passport</option>
-                  <option>Driver's License</option>
-                  <option>SSS ID</option>
-                </select>
-                <div class="file-upload" style="margin-top: 10px">
-                  <p>Upload scanned copy</p>
-                  <input type="file" style="display: none" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Diploma/TOR</label>
-                <div class="file-upload">
-                  <p>Upload scanned copy</p>
-                  <input type="file" style="display: none" />
-                </div>
+        <!-- Skills Section -->
+        <div class="section">
+          <div class="section-header">Skills & Qualifications</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="required">Primary Skills</label>
+              <select id="primary-skills" multiple style="height: auto">
+                <option>Computer Literacy</option>
+                <option>Welding</option>
+                <option>Driving</option>
+                <option>Customer Service</option>
+                <option>Bookkeeping</option>
+              </select>
+              <div class="skills-container" id="selected-skills">
+                <!-- Dito lalabas skills -->
               </div>
             </div>
+            <div class="form-group">
+              <label>Technical Skills</label>
+              <input
+                type="text"
+                id="tech-skill-input"
+                placeholder="Add skills separated by commas" />
+            </div>
+          </div>
+
+          <div class="form-grid" style="margin-top: 20px">
+            <div class="form-group">
+              <label>Language Proficiency</label>
+              <div class="language-entry">
+                <div style="display: flex; gap: 10px; margin-bottom: 10px">
+                  <select style="flex: 1">
+                    <option>English</option>
+                    <option>Filipino</option>
+                    <option>Other</option>
+                  </select>
+                  <select style="flex: 1">
+                    <option>Basic</option>
+                    <option>Intermediate</option>
+                    <option>Advanced</option>
+                    <option>Fluent</option>
+                  </select>
+                </div>
+                <div class="language-progress">
+                  <!-- <div class="progress-bar" style="width: 75%"></div> -->
+                </div>
+              </div>
+              <button class="add-btn" style="margin-top: 10px">
+                + Add Language
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">Government IDs & Documents</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="required">Resume/CV</label>
+              <div class="file-upload">
+                <p>Drag & drop your file here or click to browse</p>
+                <input type="file" style="display: none" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>PSA Birth Certificate</label>
+              <div class="file-upload">
+                <p>Upload scanned copy</p>
+                <input type="file" style="display: none" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="required">Valid ID</label>
+              <select required>
+                <option value="">Select ID Type</option>
+                <option>UMID</option>
+                <option>Passport</option>
+                <option>Driver's License</option>
+                <option>SSS ID</option>
+              </select>
+              <div class="file-upload" style="margin-top: 10px">
+                <p>Upload scanned copy</p>
+                <input type="file" style="display: none" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Diploma/TOR</label>
+              <div class="file-upload">
+                <p>Upload scanned copy</p>
+                <input type="file" style="display: none" />
+              </div>
+            </div>
+          </div>
 
           <div class="profile-header">
             <label
               class="profile-pic-container"
               id="profilePicContainer"
-              form="profilePicInput"
-            >
+              form="profilePicInput">
               <img
                 src=""
                 alt="Profile Picture"
                 class="profile-pic"
-                id="profilePic"
-              />
+                id="profilePic" />
               <div class="upload-icon">
                 <svg
                   width="20"
@@ -362,8 +357,7 @@
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                >
+                  stroke-width="2">
                   ['\\ ']
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                   <polyline points="17 8 12 3 7 8"></polyline>
@@ -374,8 +368,7 @@
                 type="file"
                 id="profilePicInput"
                 class="profile-pic-input"
-                accept="image/*"
-              />
+                accept="image/*" />
             </label>
             <h1>My Profile</h1>
             <p>Complete your profile to increase job opportunities</p>
@@ -404,8 +397,7 @@
                     <input
                       type="text"
                       id="suffix"
-                      placeholder="Jr., Sr., III"
-                    />
+                      placeholder="Jr., Sr., III" />
                   </div>
                   <div class="form-group">
                     <label class="required">Gender</label>
@@ -437,8 +429,7 @@
                       type="text"
                       id="nationality"
                       value="Filipino"
-                      required
-                    />
+                      required />
                   </div>
                 </div>
               </div>
@@ -457,8 +448,7 @@
                       type="tel"
                       id="mobile"
                       placeholder="09123456789"
-                      required
-                    />
+                      required />
                   </div>
                   <div class="form-group">
                     <label>Alternate Contact Number</label>
@@ -471,15 +461,13 @@
                       id="street"
                       placeholder="Street Address"
                       required
-                      style="margin-bottom: 10px"
-                    />
+                      style="margin-bottom: 10px" />
                     <div
                       style="
                         display: grid;
                         grid-template-columns: 1fr 1fr;
                         gap: 10px;
-                      "
-                    >
+                      ">
                       <select id="region" required>
                         <option value="">Select Region</option>
                         <option>NCR</option>
@@ -502,8 +490,7 @@
                         type="text"
                         id="barangay"
                         placeholder="Barangay"
-                        required
-                      />
+                        required />
                     </div>
                   </div>
                 </div>
@@ -574,8 +561,7 @@
                         <input
                           type="month"
                           placeholder="From"
-                          style="flex: 1"
-                        />
+                          style="flex: 1" />
                         <input type="month" placeholder="To" style="flex: 1" />
                       </div>
                     </div>
@@ -596,8 +582,8 @@
                 <div class="form-grid">
                   <div class="form-group">
                     <label class="required">Primary Skills</label>
-                    <input id="primarySkills" multiple style="height: auto"  placeholder="Add skills separated by commas">
-                      <!-- <option>Computer Literacy</option>
+                    <input id="primarySkills" multiple style="height: auto" placeholder="Add skills separated by commas">
+                    <!-- <option>Computer Literacy</option>
                       <option>Customer Service</option>
                       <option>Microsoft Office</option>
                       <option>Accounting</option>
@@ -612,15 +598,13 @@
                     <input
                       type="text"
                       id="techSkills"
-                      placeholder="Add skills separated by commas"
-                    />
+                      placeholder="Add skills separated by commas" />
                   </div>
                   <div class="form-group">
                     <label>Language Proficiency</label>
                     <div class="language-entry">
                       <div
-                        style="display: flex; gap: 10px; margin-bottom: 10px"
-                      >
+                        style="display: flex; gap: 10px; margin-bottom: 10px">
                         <select style="flex: 1">
                           <option>English</option>
                           <option>Filipino</option>
@@ -637,8 +621,7 @@
                     <button
                       type="button"
                       class="add-btn"
-                      style="margin-top: 10px"
-                    >
+                      style="margin-top: 10px">
                       + Add Language
                     </button>
                   </div>
@@ -673,8 +656,7 @@
                         type="file"
                         class="file-input"
                         id="certFiles"
-                        multiple
-                      />
+                        multiple />
                     </div>
                     <div class="file-preview" id="certPreview"></div>
                   </div>
@@ -693,162 +675,156 @@
 
           </div>
         </div>
-      </main>
-    </div>
+    </main>
+  </div>
+
+  <script src="../js/responsive.js"></script>
+  <script>
+    // Add Education Entry
+    document
+      .getElementById("addEducation")
+
+      .addEventListener("click", function() {
+        const educationEntry = document
+          .querySelector(".education-entry")
+          .cloneNode(true);
+        document
+
+          .getElementById("educationEntries")
+          .appendChild(educationEntry);
+
+        // Clear the cloned inputs
+
+        const inputs = educationEntry.querySelectorAll("input, select");
+        inputs.forEach((input) => (input.value = ""));
+      });
 
 
-    <script src="../js/responsive.js"></script>
+    // Add Work Experience Entry
+    document
+      .getElementById("addExperience")
 
-    <script src="../js/responsive.js"></script>
-    <script>
-      // Add Education Entry
-      document
-        .getElementById("addEducation")
+      .addEventListener("click", function() {
+        const experienceEntry = document
+          .querySelector(".experience-entry")
+          .cloneNode(true);
+        document
 
-        .addEventListener("click", function () {
-          const educationEntry = document
-            .querySelector(".education-entry")
-            .cloneNode(true);
-          document
+          .getElementById("experienceEntries")
+          .appendChild(experienceEntry);
 
-            .getElementById("educationEntries")
-            .appendChild(educationEntry);
+        // Clear the cloned inputs
 
-          // Clear the cloned inputs
-
-          const inputs = educationEntry.querySelectorAll("input, select");
-          inputs.forEach((input) => (input.value = ""));
-        });
+        const inputs = experienceEntry.querySelectorAll(
+          "input, select, textarea"
+        );
+        inputs.forEach((input) => (input.value = ""));
+      });
 
 
-      // Add Work Experience Entry
-      document
-        .getElementById("addExperience")
+    // Skills Selection
+    document
+      .getElementById("primarySkills")
+      .addEventListener("change", function() {
+        const selectedSkills = document.getElementById("selectedSkills");
 
-        .addEventListener("click", function () {
-          const experienceEntry = document
-            .querySelector(".experience-entry")
-            .cloneNode(true);
-          document
+        selectedSkills.innerHTML = "";
 
-            .getElementById("experienceEntries")
-            .appendChild(experienceEntry);
-
-          // Clear the cloned inputs
-
-          const inputs = experienceEntry.querySelectorAll(
-            "input, select, textarea"
-          );
-          inputs.forEach((input) => (input.value = ""));
-        });
-
-
-      // Skills Selection
-      document
-        .getElementById("primarySkills")
-        .addEventListener("change", function () {
-          const selectedSkills = document.getElementById("selectedSkills");
-
-          selectedSkills.innerHTML = "";
-
-          Array.from(this.selectedOptions).forEach((option) => {
-            const skillTag = document.createElement("div");
-            skillTag.className = "skill-tag";
-            skillTag.innerHTML = `
+        Array.from(this.selectedOptions).forEach((option) => {
+          const skillTag = document.createElement("div");
+          skillTag.className = "skill-tag";
+          skillTag.innerHTML = `
                     ${option.text}
                     <button type="button">&times;</button>
                 `;
-            selectedSkills.appendChild(skillTag);
+          selectedSkills.appendChild(skillTag);
 
 
-            // Add remove functionality
+          // Add remove functionality
 
-            skillTag
-              .querySelector("button")
-              .addEventListener("click", function () {
-                option.selected = false;
-                skillTag.remove();
-              });
-          });
+          skillTag
+            .querySelector("button")
+            .addEventListener("click", function() {
+              option.selected = false;
+              skillTag.remove();
+            });
         });
+      });
 
 
-      // File Upload Handling
-      function setupFileUpload(uploadDivId, fileInputId, previewDivId) {
-        const uploadDiv = document.getElementById(uploadDivId);
-        const fileInput = document.getElementById(fileInputId);
-        const previewDiv = document.getElementById(previewDivId);
+    // File Upload Handling
+    function setupFileUpload(uploadDivId, fileInputId, previewDivId) {
+      const uploadDiv = document.getElementById(uploadDivId);
+      const fileInput = document.getElementById(fileInputId);
+      const previewDiv = document.getElementById(previewDivId);
 
-        uploadDiv.addEventListener("click", function () {
-          fileInput.click();
-        });
+      uploadDiv.addEventListener("click", function() {
+        fileInput.click();
+      });
 
-        fileInput.addEventListener("change", function () {
-          if (this.files.length > 0) {
+      fileInput.addEventListener("change", function() {
+        if (this.files.length > 0) {
 
-            uploadDiv.querySelector("p").textContent = this.files[0].name;
-          }
-        });
+          uploadDiv.querySelector("p").textContent = this.files[0].name;
+        }
+      });
 
-        uploadDiv.addEventListener("dragover", function (e) {
-          e.preventDefault();
-          this.style.borderColor = "var(--dole-blue)";
-          this.style.backgroundColor = "var(--dole-light-blue)";
-        });
+      uploadDiv.addEventListener("dragover", function(e) {
+        e.preventDefault();
+        this.style.borderColor = "var(--dole-blue)";
+        this.style.backgroundColor = "var(--dole-light-blue)";
+      });
 
-        uploadDiv.addEventListener("dragleave", function () {
-          this.style.borderColor = "#ccc";
+      uploadDiv.addEventListener("dragleave", function() {
+        this.style.borderColor = "#ccc";
 
-            if (this.files.length > 1) {
-              previewDiv.textContent = `${this.files.length} files selected`;
-            } else {
-              previewDiv.textContent = this.files[0].name;
-            }
-          } else {
-            previewDiv.textContent = "";
-          }
-        });
+        if (this.files.length > 1) {
+          previewDiv.textContent = `${this.files.length} files selected`;
+        } else {
+          previewDiv.textContent = this.files[0].name;
+        }
 
-        // Drag and drop functionality
-        uploadDiv.addEventListener("dragover", function (e) {
-          e.preventDefault();
-          this.style.borderColor = "var(--primary)";
-          this.style.backgroundColor = "var(--primary-light)";
-        });
+      });
 
-        uploadDiv.addEventListener("dragleave", function () {
+      // Drag and drop functionality
+      uploadDiv.addEventListener("dragover", function(e) {
+        e.preventDefault();
+        this.style.borderColor = "var(--primary)";
+        this.style.backgroundColor = "var(--primary-light)";
+      });
 
-          this.style.backgroundColor = "transparent";
-        });
+      uploadDiv.addEventListener("dragleave", function() {
 
-        uploadDiv.addEventListener("drop", function (e) {
-          e.preventDefault();
+        this.style.backgroundColor = "transparent";
+      });
 
-          this.style.borderColor = "var(--border)";
+      uploadDiv.addEventListener("drop", function(e) {
+        e.preventDefault();
 
-          this.style.backgroundColor = "transparent";
+        this.style.borderColor = "var(--border)";
 
-          if (e.dataTransfer.files.length > 0) {
-            fileInput.files = e.dataTransfer.files;
+        this.style.backgroundColor = "transparent";
 
-            uploadDiv.querySelector("p").textContent = fileInput.files[0].name;
-          }
-        });
+        if (e.dataTransfer.files.length > 0) {
+          fileInput.files = e.dataTransfer.files;
+
+          uploadDiv.querySelector("p").textContent = fileInput.files[0].name;
+        }
       });
 
       document
         .querySelector(".save-btn")
-        .addEventListener("click", function () {
+        .addEventListener("click", function() {
           alert("Profile saved successfully!");
 
-            if (fileInput.files.length > 1) {
-              previewDiv.textContent = `${fileInput.files.length} files selected`;
-            } else {
-              previewDiv.textContent = fileInput.files[0].name;
-            }
+          if (fileInput.files.length > 1) {
+            previewDiv.textContent = `${fileInput.files.length} files selected`;
+          } else {
+            previewDiv.textContent = fileInput.files[0].name;
           }
+
         });
-      }
+
 
       // Setup file uploads
       setupFileUpload("resumeUpload", "resumeFile", "resumePreview");
@@ -858,26 +834,26 @@
       // Form Submission
       document
         .getElementById("profileForm")
-        .addEventListener("submit", function (e) {
+        .addEventListener("submit", function(e) {
           e.preventDefault();
           alert("Profile saved successfully!");
           // In a real implementation, this would send data to your server
         });
 
       // Cancel Button
-      document
-        .getElementById("cancelBtn")
-        .addEventListener("click", function () {
-          if (
-            confirm(
-              "Are you sure you want to cancel? Any unsaved changes will be lost."
-            )
-          ) {
-            // In a real implementation, this might redirect back to dashboard
-            alert("Changes discarded");
-          }
+      document.getElementById("cancelBtn").addEventListener("click", function() {
+        if (
+          confirm(
+            "Are you sure you want to cancel? Any unsaved changes will be lost."
+          )
+        ) {
+          // In a real implementation, this might redirect back to dashboard
+          alert("Changes discarded");
+        }
+      });
+    }
+  </script>
 
-        });
-    </script>
-  </body>
+</body>
+
 </html>
