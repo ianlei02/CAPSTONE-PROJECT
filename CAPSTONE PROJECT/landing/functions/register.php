@@ -2,6 +2,7 @@
 session_start();
 require "../connection/dbcon.php";
 
+
 if(isset($_POST['signupBtn'])) {
     $user_type = mysqli_real_escape_string($conn, $_POST['user-type']); 
     $f_name = mysqli_real_escape_string($conn, $_POST['f_name']);
