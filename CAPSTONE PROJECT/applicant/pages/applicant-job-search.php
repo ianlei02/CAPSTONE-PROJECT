@@ -1,3 +1,12 @@
+<?php
+require_once '../../landing/functions/check_login.php';
+
+if(!isset($_SESSION['user_id'])) {
+    header("Location: ../login-signup.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -27,52 +36,37 @@
       <aside class="sidebar">
         <ul class="sidebar-menu">
           <li>
-            <a href="./applicant-dashboard.html">
-              <span class="emoji"
-                ><img
-                  src="../../public-assets/icons/gauge-high-solid.svg"
-                  alt="Dashboard-icon"
-              /></span>
+
+            <a href="./applicant-dashboard.php">
+              <span class="emoji"><img src="../../public-assets/icons/gauge-high-solid.svg" alt="Dashboard-icon"></span>
               <span class="label">Dashboard</span>
             </a>
           </li>
           <li>
-            <a href="./applicant-applications.html">
-              <span class="emoji"
-                ><img
-                  src="../../public-assets/icons/briefcase-solid.svg"
-                  alt="Applications-icon"
-              /></span>
+
+            <a href="./applicant-applications.php">
+              <span class="emoji"><img src="../../public-assets/icons/briefcase-solid.svg" alt="Applications-icon"></span>
               <span class="label">My Applications</span>
             </a>
           </li>
           <li>
-            <a href="./applicant-job-search.html">
-              <span class="emoji"
-                ><img
-                  src="../../public-assets/icons/magnifying-glass-solid.svg"
-                  alt="Job-Search-icon"
-              /></span>
+
+            <a href="./applicant-job-search.php">
+              <span class="emoji"><img src="../../public-assets/icons/magnifying-glass-solid.svg" alt="Job-Search-icon"></span>
               <span class="label">Job Search</span>
             </a>
           </li>
           <li>
-            <a href="./applicant-profile.html">
-              <span class="emoji"
-                ><img
-                  src="../../public-assets/icons/user-solid.svg"
-                  alt="Profile-icon"
-              /></span>
+
+            <a href="./applicant-profile.php">
+              <span class="emoji"><img src="../../public-assets/icons/user-solid.svg" alt="Profile-icon"></span>
               <span class="label">My Profile</span>
             </a>
           </li>
           <li>
-            <a href="../../landing/index.html">
-              <span class="emoji"
-                ><img
-                  src="../../public-assets/icons/arrow-right-from-bracket-solid.svg"
-                  alt="Logout-icon"
-              /></span>
+
+            <a href="../../landing/functions/logout.php">
+              <span class="emoji"><img src="../../public-assets/icons/arrow-right-from-bracket-solid.svg" alt="Logout-icon"></span>
               <span class="label">Log Out</span>
             </a>
           </li>
@@ -80,6 +74,95 @@
       </aside>
 
       <main class="main-content">
+
+        <div class="job-header">
+          <h2>JOB LISTINGS</h2>
+        </div>
+        <div class="job-listings">
+          <div class="job-card">
+            <h3>Software Engineer</h3>
+            <p>Company: Tech Innovators</p>
+            <p>Location: New York, NY</p>
+            <p>Salary: $100,000 - $120,000</p>
+            <button class="apply-button">Apply Now</button>
+          </div>
+          <div class="job-card">
+            <h3>Data Analyst</h3>
+            <p>Company: Data Insights</p>
+            <p>Location: San Francisco, CA</p>
+            <p>Salary: $80,000 - $95,000</p>
+            <button class="apply-button">Apply Now</button>
+          </div>
+          <div class="job-card">
+            <h3>UI/UX Designer</h3>
+            <p>Company: Creative Minds</p>
+            <p>Location: Austin, TX</p>
+            <p>Salary: $70,000 - $85,000</p>
+            <button class="apply-button">Apply Now</button>
+          </div>
+          <div class="job-card">
+            <h3>Software Engineer</h3>
+            <p>Company: Tech Innovators</p>
+            <p>Location: New York, NY</p>
+            <p>Salary: $100,000 - $120,000</p>
+            <button class="apply-button">Apply Now</button>
+          </div>
+          <div class="job-card">
+            <h3>Data Analyst</h3>
+            <p>Company: Data Insights</p>
+            <p>Location: San Francisco, CA</p>
+            <p>Salary: $80,000 - $95,000</p>
+            <button class="apply-button">Apply Now</button>
+          </div>
+          <div class="job-card">
+            <h3>UI/UX Designer</h3>
+            <p>Company: Creative Minds</p>
+            <p>Location: Austin, TX</p>
+            <p>Salary: $70,000 - $85,000</p>
+            <button class="apply-button">Apply Now</button>
+          </div>
+          <div class="job-card">
+            <h3>Software Engineer</h3>
+            <p>Company: Tech Innovators</p>
+            <p>Location: New York, NY</p>
+            <p>Salary: $100,000 - $120,000</p>
+            <button class="apply-button">Apply Now</button>
+          </div>
+          <div class="job-card">
+            <h3>Data Analyst</h3>
+            <p>Company: Data Insights</p>
+            <p>Location: San Francisco, CA</p>
+            <p>Salary: $80,000 - $95,000</p>
+            <button class="apply-button">Apply Now</button>
+          </div>
+          <div class="job-card">
+            <h3>UI/UX Designer</h3>
+            <p>Company: Creative Minds</p>
+            <p>Location: Austin, TX</p>
+            <p>Salary: $70,000 - $85,000</p>
+            <button class="apply-button">Apply Now</button>
+          </div>
+          <div class="job-card">
+            <h3>Software Engineer</h3>
+            <p>Company: Tech Innovators</p>
+            <p>Location: New York, NY</p>
+            <p>Salary: $100,000 - $120,000</p>
+            <button class="apply-button">Apply Now</button>
+          </div>
+          <div class="job-card">
+            <h3>Data Analyst</h3>
+            <p>Company: Data Insights</p>
+            <p>Location: San Francisco, CA</p>
+            <p>Salary: $80,000 - $95,000</p>
+            <button class="apply-button">Apply Now</button>
+          </div>
+          <div class="job-card">
+            <h3>UI/UX Designer</h3>
+            <p>Company: Creative Minds</p>
+            <p>Location: Austin, TX</p>
+            <p>Salary: $70,000 - $85,000</p>
+            <button class="apply-button">Apply Now</button>
+
         <div class="container-job-search">
           <div class="header">
             <h1>Job Listings</h1>
@@ -382,5 +465,6 @@
           closeModal();
       });
     </script>
+
   </body>
 </html>

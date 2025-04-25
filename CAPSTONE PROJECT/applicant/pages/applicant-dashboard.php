@@ -1,3 +1,12 @@
+ 
+<?php
+require_once '../../landing/functions/check_login.php';
+
+if(!isset($_SESSION['user_id'])) {
+    header("Location: ../login-signup.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -26,31 +35,40 @@
       <aside class="sidebar">
         <ul class="sidebar-menu">
           <li>
-            <a href="./applicant-dashboard.html">
+
+            <a href="./applicant-dashboard.php">
+
               <span class="emoji"><img src="../../public-assets/icons/gauge-high-solid.svg" alt="Dashboard-icon"></span>
               <span class="label">Dashboard</span>
             </a>
           </li>
           <li>
-            <a href="./applicant-applications.html">
+
+            <a href="./applicant-applications.php">
+
               <span class="emoji"><img src="../../public-assets/icons/briefcase-solid.svg" alt="Applications-icon"></span>
               <span class="label">My Applications</span>
             </a>
           </li>
           <li>
-            <a href="./applicant-job-search.html">
+            <a href="./applicant-job-search.php">
+
               <span class="emoji"><img src="../../public-assets/icons/magnifying-glass-solid.svg" alt="Job-Search-icon"></span>
               <span class="label">Job Search</span>
             </a>
           </li>
           <li>
-            <a href="./applicant-profile.html">
+
+            <a href="./applicant-profile.php">
+
               <span class="emoji"><img src="../../public-assets/icons/user-solid.svg" alt="Profile-icon"></span>
               <span class="label">My Profile</span>
             </a>
           </li>
           <li>
-            <a href="../../landing/index.html">
+
+            <a href="../../landing/functions/logout.php">
+
               <span class="emoji"><img src="../../public-assets/icons/arrow-right-from-bracket-solid.svg" alt="Logout-icon"></span>
               <span class="label">Log Out</span>
             </a>
@@ -108,31 +126,41 @@
               <tr>
                 <td>Software Engineer</td>
                 <td>Tech Company</td>
+
                 <td><span class="status interviewed">Interview</span></td>
+
                 <td>2025-10-01</td>
               </tr>
               <tr>
                 <td>Data Analyst</td>
                 <td>Data Corp</td>
+
                 <td><span class="status applied">Applied</span></td>
+
                 <td>2025-09-15</td>
               </tr>
               <tr>
                 <td>Manager</td>
                 <td>Data Corp</td>
+
                 <td><span class="status referred">Reffered</span></td>
+
                 <td>2025-09-15</td>
               </tr>
               <tr>
                 <td>Data Analyst</td>
                 <td>Data Corp</td>
+
                 <td><span class="status hired">Hired</span></td>
+
                 <td>2025-09-15</td>
               </tr>
               <tr>
                 <td>Manager</td>
                 <td>Data Corp</td>
+
                 <td><span class="status rejected">Rejected</span></td>
+
                 <td>2025-09-15</td>
               </tr>
             </tbody>
