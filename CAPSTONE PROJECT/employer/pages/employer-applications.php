@@ -14,6 +14,7 @@ if(!isset($_SESSION['user_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Applications</title>
     <link rel="stylesheet" href="../css/employer-dashboard.css" />
+    <link rel="stylesheet" href="../css/navs.css" />
   </head>
   <body>
     <nav class="navbar">
@@ -34,32 +35,37 @@ if(!isset($_SESSION['user_id'])) {
       <aside class="sidebar">
         <ul class="sidebar-menu">
           <li>
+
             <a href="./employer-dashboard.php">
-              <span class="emoji">🏠</span>
+              <span class="emoji"><img src="../../public-assets/icons/gauge-high-solid.svg" alt=""></span>
               <span class="label">Dashboard</span>
             </a>
           </li>
           <li>
+
             <a href="./employer-applications.php">
-              <span class="emoji">💼</span>
+              <span class="emoji"><img src="../../public-assets/icons/briefcase-solid.svg" alt=""></span>
               <span class="label">Job Applications</span>
             </a>
           </li>
           <li>
+
             <a href="./applicant-job-search.php">
-              <span class="emoji">🔍</span>
+              <span class="emoji"><img src="../../public-assets/icons/magnifying-glass-solid.svg" alt=""></span>
               <span class="label">Job Search</span>
             </a>
           </li>
           <li>
             <a href="./applicant-profile.php">
-              <span class="emoji">🤵</span>
+              <span class="emoji"><img src="../../public-assets/icons/user-solid.svg" alt=""></span>
               <span class="label">My Profile</span>
             </a>
           </li>
           <li>
+
             <a href="../../landing/functions/logout.php">
-              <span class="emoji">📴</span>
+              <span class="emoji"><img src="../../public-assets/icons/arrow-right-from-bracket-solid.svg" alt=""></span>
+
               <span class="label">Log Out</span>
             </a>
           </li>
