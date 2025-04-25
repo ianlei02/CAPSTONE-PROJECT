@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Poppins";
-  src: url("./assets/font/Poppins-Regular.ttf") format("truetype");
+  src: url("../public-assets/font/Poppins-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
@@ -37,6 +37,7 @@ body {
   line-height: 1.5;
   position: relative;
   height: auto;
+  overflow-x: hidden;
 }
 
 
@@ -324,11 +325,13 @@ main {
   }
 
   .stats-card {
-    background: linear-gradient(
+    /* background: linear-gradient(
       180deg,
       #5294ff,
       var(--dark-bg-color)
-    );
+    ); */
+    border: 1px solid var(--clr-secondary);
+    color: var(--primary-blue-color);
     background-position: left;
     /* border: 1px solid rgba(0, 0, 0, 0.447); */
     border-radius: 10px;
@@ -343,21 +346,21 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #fff;
+    color: #292929;
   }
 
   .stats-card h4 {
     font-size: 1.75rem;
     margin-bottom: 10px;
     /* color: var(--primary-blue-color); */
-    text-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.055);
   }
   .stats-card p {
     font-size: 3.5rem;
     font-weight: 800;
     /* font-family: monospace; */
-    color: #fff;
-    text-shadow: 0 0 10px  rgba(0, 0, 0, 1);
+    /* color: #fff; */
+    text-shadow: 0 0 10px  rgba(0, 0, 0, 0.089);
   }
 }
 .registered-employers {

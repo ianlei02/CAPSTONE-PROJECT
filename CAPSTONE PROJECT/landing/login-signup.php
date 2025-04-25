@@ -15,7 +15,6 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -23,8 +22,6 @@ if (isset($_SESSION['user_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login & Signup Form</title>
     <link rel="stylesheet" href="login-signup.css" />
-   
-
   </head>
   <body>
     <div class="container">
@@ -40,6 +37,7 @@ if (isset($_SESSION['user_id'])) {
         <div class="form signup-form ">
           <h2>Create an Account</h2>
           <form action="functions/register.php" method="POST">
+
             <div class="user-type">
               <h4>Register as:</h4>
               <div class="radio-container">
@@ -47,7 +45,9 @@ if (isset($_SESSION['user_id'])) {
                   <input
                     type="radio"
                     id="applicant"
+
                     name="user-type"
+
                     value="applicant"
                     checked
                   />
@@ -58,8 +58,7 @@ if (isset($_SESSION['user_id'])) {
                     type="radio"
                     id="employer"
                     name="user-type"
-                    value="employer"
-                    
+                    value="employer"                   
                   />
                   <label for="employer">Employer</label>
                 </div>
@@ -73,6 +72,7 @@ if (isset($_SESSION['user_id'])) {
               <div class="input-group">
                 <label for="lastName">Last Name</label>
                 <input type="text" id="lastName" name="l_name" required />
+
               </div>
             </div>
             <div class="input-group">
@@ -90,6 +90,7 @@ if (isset($_SESSION['user_id'])) {
                 <a id="termsLink">Terms and Conditions</a></label
               >
             </div>
+
             <button type="submit" class="btn" id="signupBtn" name="signupBtn">Sign Up</button>
             <div class="toggle-form">
               Already have an account? <a onclick="showTab('login')">Login</a>
@@ -101,6 +102,7 @@ if (isset($_SESSION['user_id'])) {
         <div class="form login-form active">
           <h2>Welcome Back</h2>
           <form action="" method="POST">
+
             <div class="user-type">
               <h4>Login as:</h4>
               <div class="radio-container">
@@ -129,21 +131,25 @@ if (isset($_SESSION['user_id'])) {
               <label for="loginEmail">Email</label>
               <input type="email" id="loginEmail" required />
             </div>
-            
+
             <div class="input-group">
               <label for="loginPassword">Password</label>
               <input type="password" id="loginPassword" required />
             </div>
+
             <div class="input-group remember-me">
                 <input type="checkbox" id="rememberMe" name="remember_me">
                 <label for="rememberMe">Remember me</label>
             </div>
+
             <div class="forgot-password">
               <a href="#" onclick="openForgotPasswordModal()"
                 >Forgot Password?</a
               >
             </div>
+
             <button type="submit" class="btn" id="loginBtn" name="remember_login" >Login</button>
+
             <div class="toggle-form">
               Don't have an account? <a onclick="showTab('signup')">Sign Up</a>
             </div>
@@ -293,16 +299,8 @@ if (isset($_SESSION['user_id'])) {
           });
       });
     </script>
-    <!-- <script>
 
-      function redirect(){
-        const selected = document.querySelector('input[name="user-type-login"]:checked').value;
-      if (selected === 'applicant') {
-        window.location.href = '../applicant/pages/applicant-dashboard.html';
-      } else if (selected === 'employer') {
-        window.location.href = '../employer/pages/employer-dashboard.html'; 
-      }
-      }
-    </script> -->
+
+
   </body>
 </html>
