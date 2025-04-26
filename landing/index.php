@@ -363,6 +363,7 @@
   </head>
   <body>
     <div class="header-info">
+
       <div class="city-name"><a href="index.php" style="text-decoration: none; color: #fff;">PESO</a></div>
       <div class="office-hours">
         <span>Office Hours: Mon - Fri: 8.00 am. - 5.00 pm.</span>

@@ -1,9 +1,11 @@
 <?php
 require_once '../../landing/functions/check_login.php';
 
-if (!isset($_SESSION['user_id'])) {
-  header("Location: ../login-signup.php");
-  exit();
+if(!isset($_SESSION['user_id'])) {
+    header("Location: ../login-signup.php");
+    exit();
+
+
 }
 
 ?>
@@ -45,21 +47,23 @@ if (!isset($_SESSION['user_id'])) {
           </a>
         </li>
         <li>
-          <a href="./applicant-applications.html">
+
+          <a href="./applicant-applications.php">
+
+
 
             <span class="emoji"><img src="../../public-assets/icons/briefcase-solid.svg" alt="Applications-icon"></span>
             <span class="label">My Applications</span>
           </a>
         </li>
         <li>
-          <a href="./applicant-job-search.html">
-
+          <a href="./applicant-job-search.php">
             <span class="emoji"><img src="../../public-assets/icons/magnifying-glass-solid.svg" alt="Job-Search-icon"></span>
             <span class="label">Job Search</span>
           </a>
         </li>
         <li>
-          <a href="./applicant-profile.html">
+          <a href="./applicant-profile.php">
 
             <span class="emoji"><img src="../../public-assets/icons/user-solid.svg" alt="Profile-icon"></span>
             <span class="label">My Profile</span>
@@ -67,7 +71,6 @@ if (!isset($_SESSION['user_id'])) {
         </li>
         <li>
           <a href="../../landing/index.php">
-
             <span class="emoji"><img src="../../public-assets/icons/arrow-right-from-bracket-solid.svg" alt="Logout-icon"></span>
             <span class="label">Log Out</span>
           </a>
@@ -77,6 +80,7 @@ if (!isset($_SESSION['user_id'])) {
 
     <main class="main-content">
       <div class="profile-container">
+
         <div class="section">
           <div class="profile-header">
             <label
@@ -111,6 +115,7 @@ if (!isset($_SESSION['user_id'])) {
             <h1>My Profile</h1>
             <p>Complete your profile to increase job opportunities</p>
           </div>
+
           <div class="profile-content">
             <form id="profileForm">
               <!-- Personal Information Section -->
@@ -591,5 +596,4 @@ if (!isset($_SESSION['user_id'])) {
     }
   </script>
 </body>
-
 </html>
