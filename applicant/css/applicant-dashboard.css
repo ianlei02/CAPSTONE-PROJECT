@@ -9,7 +9,7 @@
   --light-clr-600: #fafafa;
   --light-clr-500: #f3f3f3;
 }
- 
+
 .main-header {
   display: flex;
   justify-content: center;
@@ -41,7 +41,7 @@
   display: grid;
   place-items: center;
   /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   /* background-color: red;  */
   color: var(--light-clr-700);
@@ -122,7 +122,7 @@
 .job-application-status {
   width: 100%;
   /* height: auto; */
-  padding: 2rem 3rem;
+  padding: 3rem 3rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -131,20 +131,74 @@
   h2 {
     color: var(--dark-clr-600);
   }
+  .table-responsive {
+    overflow-x: auto;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+  }
   .job-application-table {
     width: 100%;
     text-align: center;
+    border-collapse: collapse;
   }
-  thead{
+  thead {
     background: rgb(221, 221, 221);
   }
   th,
   td {
-    padding: .75rem 0;
-    border-bottom: 1px solid #0000004f;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #edf2f7;
+  }
+  th{
+    color: var(--dark-clr-600);
+    background-color: #e5ebf1;
+  }
+  td{
+    background-color: var(--light-clr-600);
   }
 }
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-top: 20px; */
+  flex-wrap: wrap;
+  gap: 15px;
+  .pagination {
+    display: flex;
+    gap: 6px;
+  }
 
+  .page-btn {
+    padding: 8px 14px;
+    border: 1px solid #e2e8f0;
+    background-color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+  }
+
+  .page-btn:hover:not(.active) {
+    background-color: #edf2f7;
+  }
+
+  .page-btn.active {
+    background-color: #3182ce;
+    color: white;
+    border-color: #3182ce;
+  }
+
+  .page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .table-info {
+    color: #718096;
+    font-size: 0.85rem;
+  }
+}
 .status {
   border-radius: 3rem;
   font-weight: 600;
