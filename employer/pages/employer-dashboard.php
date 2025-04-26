@@ -111,69 +111,82 @@ if(!isset($_SESSION['user_id'])) {
           </div>
           <div class="job-application-status">
             <h2>Applicant List</h2>
-            <table class="job-application-table">
-              <thead>
-                <tr>
-                  <th>Applicant Name</th>
-                  <th>Email</th>
-                  <th>Status</th>
-                  <th>Date Applied</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>John Doe</td>
-                  <td>john.doe@example.com</td>
-                  <td class="status interviewed">Interview</td>
-                  <td>2023-10-01</td>
-                  <td>
-                    <button>Hire</button><button>Reject</button
-                    ><button>View Profile</button><button>Interview</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Jane Smith</td>
-                  <td>jane.smith@example.com</td>
-                  <td class="status applied">Applied</td>
-                  <td>2023-09-15</td>
-                  <td>
-                    <button>Hire</button><button>Reject</button
-                    ><button>View Profile</button><button>Interview</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Alice Johnson</td>
-                  <td>alice.johnson@example.com</td>
-                  <td class="status referred">Referred</td>
-                  <td>2023-09-15</td>
-                  <td>
-                    <button>Hire</button><button>Reject</button
-                    ><button>View Profile</button><button>Interview</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Bob Brown</td>
-                  <td>bob.brown@example.com</td>
-                  <td class="status hired">Hired</td>
-                  <td>2023-09-15</td>
-                  <td>
-                    <button>Hire</button><button>Reject</button
-                    ><button>View Profile</button><button>Interview</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Charlie Davis</td>
-                  <td>charlie.davis@example.com</td>
-                  <td class="status referred">Referred</td>
-                  <td>2023-09-15</td>
-                  <td>
-                    <button>Hire</button><button>Reject</button
-                    ><button>View Profile</button><button>Interview</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="job-application-table">
+                <thead>
+                  <tr>
+                    <th>Applicant Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Date Applied</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>John Doe</td>
+                    <td>john.doe@example.com</td>
+                    <td><span class="status interviewed">Interview</span></td>
+                    <td>2023-10-01</td>
+                    <td>
+                      <button>Hire</button><button>Reject</button
+                      ><button>View Profile</button><button>Interview</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Jane Smith</td>
+                    <td>jane.smith@example.com</td>
+                    <td><span class="status applied">Applied</span></td>
+                    <td>2023-09-15</td>
+                    <td>
+                      <button>Hire</button><button>Reject</button
+                      ><button>View Profile</button><button>Interview</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Alice Johnson</td>
+                    <td>alice.johnson@example.com</td>
+                    <td><span class="status referred">Referred</span></td>
+                    <td>2023-09-15</td>
+                    <td>
+                      <button>Hire</button><button>Reject</button
+                      ><button>View Profile</button><button>Interview</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Bob Brown</td>
+                    <td>bob.brown@example.com</td>
+                    <td><span class="status hired">Hired</span></td>
+                    <td>2023-09-15</td>
+                    <td>
+                      <button>Hire</button><button>Reject</button
+                      ><button>View Profile</button><button>Interview</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Charlie Davis</td>
+                    <td>charlie.davis@example.com</td>
+                    <td><span class="status referred">Referred</span></td>
+                    <td>2023-09-15</td>
+                    <td>
+                      <button>Hire</button><button>Reject</button
+                      ><button>View Profile</button><button>Interview</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-footer">
+              <div class="pagination">
+                <button class="page-btn" disabled>Previous</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">Next</button>
+              </div>
+              <div class="table-info">
+                Showing 1 to 4 of 4 entries
+              </div>
+            </div>
           </div>
         </section>
       </main>
