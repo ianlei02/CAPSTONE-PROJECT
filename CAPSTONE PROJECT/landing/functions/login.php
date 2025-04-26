@@ -36,6 +36,14 @@ if ($result && mysqli_num_rows($result) === 1) {
     $row = mysqli_fetch_assoc($result);
     
     if (password_verify($password, $row['password'])) {
+
+        if ($row['status'] !== 'verified') {
+        echo json_encode([
+            "status" => "error",
+            "message" => "Account not verified. Please check your email for verification link."
+        ]);
+        exit();
+    }
         
         $_SESSION['user_id'] = $row[$id_field];
         $_SESSION['user_type'] = $user_type;
