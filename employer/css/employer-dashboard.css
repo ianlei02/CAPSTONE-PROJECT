@@ -129,7 +129,7 @@
 .job-application-status {
   width: 100%;
   /* height: auto; */
-  padding: 2rem 3rem;
+  padding: 3rem 3rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -138,9 +138,15 @@
   h2 {
     color: var(--dark-clr-600);
   }
+  .table-responsive {
+    overflow-x: auto;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+  }
   .job-application-table {
     width: 100%;
     text-align: center;
+    border-collapse: collapse;
   }
   thead {
     background: rgb(221, 221, 221);
@@ -148,36 +154,92 @@
   th,
   td {
     padding: 0.75rem 1rem;
-    border-bottom: 1px solid #0000004f;
+    border-bottom: 1px solid #edf2f7;
+  }
+  th{
+    color: var(--dark-clr-600);
+    background-color: #e5ebf1;
+  }
+  td{
+    background-color: var(--light-clr-600);
   }
 }
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-top: 20px; */
+  flex-wrap: wrap;
+  gap: 15px;
+  .pagination {
+    display: flex;
+    gap: 6px;
+  }
 
+  .page-btn {
+    padding: 8px 14px;
+    border: 1px solid #e2e8f0;
+    background-color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+  }
+
+  .page-btn:hover:not(.active) {
+    background-color: #edf2f7;
+  }
+
+  .page-btn.active {
+    background-color: #3182ce;
+    color: white;
+    border-color: #3182ce;
+  }
+
+  .page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .table-info {
+    color: #718096;
+    font-size: 0.85rem;
+  }
+}
 .status {
-  border-radius: 2rem;
-
+  border-radius: 3rem;
+  font-weight: 600;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  width: 7rem;
   &.applied {
-    background-color: #77dbff;
+    color: rgb(6, 103, 128);
+    /* background-color: #77dbff; */
+    background-color: rgb(222, 234, 255);
     box-shadow: none;
   }
 
   &.interviewed {
-    background-color: #e58bf8;
+    background-color: #f8d9fd;
+    color: #9628ac;
     box-shadow: none;
   }
 
   &.referred {
-    background-color: #ffa556;
+    background-color: #ffe7d2;
+    color: #7e400a;
     box-shadow: none;
   }
 
   &.hired {
-    background-color: #42ff49;
+    color: rgb(15, 92, 8);
+    background-color: #c6ffc8;
     box-shadow: none;
   }
 
   &.rejected {
-    background-color: #ff4c4c;
+    color: rgb(173, 24, 24);
+    background-color: #ffd2d2;
     box-shadow: none;
   }
 }
-

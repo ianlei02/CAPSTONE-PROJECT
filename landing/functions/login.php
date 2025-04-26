@@ -37,7 +37,6 @@ if ($result && mysqli_num_rows($result) === 1) {
     
     if (password_verify($password, $row['password'])) {
 
-
         if ($row['status'] !== 'verified') {
         echo json_encode([
             "status" => "error",

@@ -113,58 +113,62 @@ if(!isset($_SESSION['user_id'])) {
         </div>
         <div class="job-application-status">
           <h2>Job Application Status</h2>
-          <table class="job-application-table">
-            <thead>
-              <tr>
-                <th>Job Title</th>
-                <th>Company</th>
-                <th>Status</th>
-                <th>Date Applied</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Software Engineer</td>
-                <td>Tech Company</td>
+          <div class="table-responsive">
+            <table class="job-application-table">
+              <thead>
+                <tr>
+                  <th>Job Title</th>
+                  <th>Company</th>
+                  <th>Status</th>
+                  <th>Date Applied</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Software Engineer</td>
+                  <td>Tech Company</td>
+                  <td><span class="status interviewed">Interview</span></td>
+                  <td>2025-10-01</td>
+                </tr>
+                <tr>
+                  <td>Data Analyst</td>
+                  <td>Data Corp</td>
+                  <td><span class="status applied">Applied</span></td>
+                  <td>2025-09-15</td>
+                </tr>
+                <tr>
+                  <td>Manager</td>
+                  <td>Data Corp</td>
+                  <td><span class="status referred">Reffered</span></td>
+                  <td>2025-09-15</td>
+                </tr>
+                <tr>
+                  <td>Data Analyst</td>
+                  <td>Data Corp</td>
+                  <td><span class="status hired">Hired</span></td>
+                  <td>2025-09-15</td>
+                </tr>
+                <tr>
+                  <td>Manager</td>
+                  <td>Data Corp</td>
+                  <td><span class="status rejected">Rejected</span></td>
+                  <td>2025-09-15</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-                <td><span class="status interviewed">Interview</span></td>
-
-                <td>2025-10-01</td>
-              </tr>
-              <tr>
-                <td>Data Analyst</td>
-                <td>Data Corp</td>
-
-                <td><span class="status applied">Applied</span></td>
-
-                <td>2025-09-15</td>
-              </tr>
-              <tr>
-                <td>Manager</td>
-                <td>Data Corp</td>
-
-                <td><span class="status referred">Reffered</span></td>
-
-                <td>2025-09-15</td>
-              </tr>
-              <tr>
-                <td>Data Analyst</td>
-                <td>Data Corp</td>
-
-                <td><span class="status hired">Hired</span></td>
-
-                <td>2025-09-15</td>
-              </tr>
-              <tr>
-                <td>Manager</td>
-                <td>Data Corp</td>
-
-                <td><span class="status rejected">Rejected</span></td>
-
-                <td>2025-09-15</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-footer">
+            <div class="pagination">
+              <button class="page-btn" disabled>Previous</button>
+              <button class="page-btn active">1</button>
+              <button class="page-btn">2</button>
+              <button class="page-btn">Next</button>
+            </div>
+            <div class="table-info">
+              Showing 1 to 4 of 4 entries
+            </div>
+          </div>
         </div>
       </main>
     </div>
