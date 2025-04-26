@@ -64,7 +64,6 @@ if (isset($_COOKIE['remember_login'])) {
             $_SESSION['email'] = $row['email'];
             $_SESSION['f_name'] = $row['f_name'];
             $_SESSION['l_name'] = $row['l_name'];
-            $_SESSION['verified'] = true;
         } else {
             
             setcookie('remember_login', '', time() - 3600, '/');

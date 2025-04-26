@@ -1,73 +1,86 @@
 <?php
 session_start();
-require "connection/dbcon.php";
+require __DIR__ . "/connection/dbcon.php";
 
-// Verify database connection
-if (!$conn) {
-    die("Database connection failed: " . mysqli_connect_error());
-}
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-// Validate session
-$user_type = $_SESSION['user_type'] ?? '';
+$user_type = $_SESSION['user_type'] ?? $_POST['user_type'] ?? '';
 if (empty($user_type)) {
     die("User type not specified. Cannot proceed with verification.");
 }
 
-$message = "";
-$email = "";
-$stored_otp = "";
+$email = '';
+$message = '';
+$ip_address = $_SERVER['REMOTE_ADDR'];
+
+if ($user_type == 'applicant') {
+    $query = "SELECT email FROM applicant_account 
+             WHERE ip = ? AND status = 'pending'
+             ORDER BY otp_send_time DESC LIMIT 1";
+} else {
+    $query = "SELECT email FROM employer_account 
+             WHERE ip = ? AND status = 'pending'
+             ORDER BY otp_send_time DESC LIMIT 1";
+}
+
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $ip_address);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result && $result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $email = $row['email'];
+}
 
 if (isset($_POST['verify'])) {
-    // Sanitize input
     $entered_otp = mysqli_real_escape_string($conn, $_POST['otp']);
-    
-    // Use prepared statement with email
-    $query = $user_type == 'applicant' 
-        ? "SELECT email, otp FROM applicant_account WHERE email = ? AND status = 'pending' AND otp_send_time > DATE_SUB(NOW(), INTERVAL 15 MINUTE) LIMIT 1"
-        : "SELECT email, otp FROM employer_account WHERE email = ? AND status = 'pending' AND otp_send_time > DATE_SUB(NOW(), INTERVAL 15 MINUTE) LIMIT 1";
-    
-    // Get email from session or previous query
-    $email = $_SESSION['email'] ?? '';
-    
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "s", $email);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
+
+    if ($user_type == 'applicant') {
+        $query = "SELECT email, otp FROM applicant_account 
+                  WHERE ip = ? AND status = 'pending'
+                  ORDER BY otp_send_time DESC LIMIT 1";
+    } else {
+        $query = "SELECT email, otp FROM employer_account 
+                  WHERE ip = ? AND status = 'pending'
+                  ORDER BY otp_send_time DESC LIMIT 1";
+    }
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $ip_address);
+    $stmt->execute();
+    $result = $stmt->get_result();
     
     if ($result && $result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $stored_otp = $row['otp'];
         $email = $row['email'];
-        
+
         if ($entered_otp === $stored_otp) {
-            // Update user status using email
-            $update = $user_type == 'applicant'
-                ? "UPDATE applicant_account SET status = 'verified' WHERE email = ?"
-                : "UPDATE employer_account SET status = 'verified' WHERE email = ?";
+            $update = "UPDATE ".($user_type == 'applicant' ? 'applicant' : 'employer')."_account 
+                      SET status = 'verified' WHERE email = ?";
+            $stmt = $conn->prepare($update);
+            $stmt->bind_param("s", $email);
             
-            $stmt = mysqli_prepare($conn, $update);
-            mysqli_stmt_bind_param($stmt, "s", $email);
-            
-            if (mysqli_stmt_execute($stmt)) {
-                // Regenerate session ID for security
-                session_regenerate_id(true);
-                
-                $_SESSION['verified'] = true;
-                $_SESSION['email'] = $email;
-                
-                header("Location: ../{$user_type}/pages/{$user_type}-dashboard.php");
+            if ($stmt->execute()) {
+                $_SESSION['verified_email'] = $email;
+                $_SESSION['verification_success'] = "Your account has been verified. You can now login.";
+                header("Location: login-signup.php");
                 exit();
             } else {
-                $message = "Verification succeeded but failed to update database.";
+                $message = "Failed to update user status.";
+                error_log("Update error: ".$conn->error);
             }
         } else {
-            $message = "Invalid OTP. Please try again.";
+            $message = "Incorrect OTP entered.";
         }
     } else {
-        $message = "No pending OTP found for your email or OTP has expired.";
+        $message = "No pending OTP found for this session.";
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -80,31 +93,26 @@ if (isset($_POST['verify'])) {
     <div class="container">
       <div class="form-container">
          <!-- Verification form -->
-        <div class="form login-form active" >
-          <h2>Verify OTP</h2>
-          <?php if ($email): ?>
-          <div class="alert alert-info" role="alert">
-              Your Email Is:<strong><?php echo htmlspecialchars($email); ?></strong>
+          <div class="form login-form active">
+              <h2>Verify OTP</h2>
+               <div class="input-group" >
+                  Your Email Is: <strong><?php echo htmlspecialchars($email); ?></strong>
+              </div>         
+              <form action="" method="POST">
+                  <div class="input-group">
+                      <input type="text" name="otp" id="otp" class="form-control" maxlength="6" placeholder="Enter Your OTP">
+                  </div>
+                  <button type="submit" name="verify" class="btn">Verify OTP</button>
+              </form>
+              <div class="toggle-form">
+                  <a href="login-signup.php">Back to Login</a>
+              </div>
+              <?php if ($message && !$email): ?>
+              <div class="alert alert-info" role="alert">
+                  <?php echo $message; ?>
+              </div>
+              <?php endif; ?>
           </div>
-              <?php else:?>
-          <div class="alert alert-info" role="alert">
-            <?php echo $message;?>
-          </div>
-          <?php endif; ?>
-          <form action="" method="POST">
-            <div class="input-group">
-              <span class="input-group"></span>
-              <input type="text"" name="otp" id="otp" class="form-control" maxlength="6" placeholder="Enter Your Otp">
-            </div>
-            <button type="submit" name="verify" class="btn">Verify OTP</button>
-          </form>
-          <?php if ($message && !$email):?>
-            <div class="alert alert-info" role="alert">
-              <?php echo $message; ?>
-            </div>
-            <?php endif;?>
-        </div>
-
 
       </div>
     </div>
