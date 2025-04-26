@@ -45,20 +45,25 @@ if(!isset($_SESSION['user_id'])) {
           </a>
         </li>
         <li>
+
           <a href="./applicant-applications.php">
+
 
             <span class="emoji"><img src="../../public-assets/icons/briefcase-solid.svg" alt="Applications-icon"></span>
             <span class="label">My Applications</span>
           </a>
         </li>
         <li>
+
           <a href="./applicant-job-search.php">
+
 
             <span class="emoji"><img src="../../public-assets/icons/magnifying-glass-solid.svg" alt="Job-Search-icon"></span>
             <span class="label">Job Search</span>
           </a>
         </li>
         <li>
+
           <a href="./applicant-profile.php">
 
             <span class="emoji"><img src="../../public-assets/icons/user-solid.svg" alt="Profile-icon"></span>
@@ -66,7 +71,9 @@ if(!isset($_SESSION['user_id'])) {
           </a>
         </li>
         <li>
+
           <a href="../../landing/index.php">
+
 
             <span class="emoji"><img src="../../public-assets/icons/arrow-right-from-bracket-solid.svg" alt="Logout-icon"></span>
             <span class="label">Log Out</span>
