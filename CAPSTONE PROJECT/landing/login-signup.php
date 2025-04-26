@@ -14,6 +14,12 @@ if (isset($_SESSION['user_id'])) {
     }
     exit();
 }
+
+// At the top of login-signup.php, after session_start()
+if (isset($_SESSION['verification_success'])) {
+    echo "<script>alert('".$_SESSION['verification_success']."');</script>";
+    unset($_SESSION['verification_success']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,7 +87,11 @@ if (isset($_SESSION['user_id'])) {
             </div>
             <div class="input-group">
               <label for="signupPassword">Password</label>
-              <input type="password" id="signupPassword" name="password" required />
+              <input type="password" id="signupPassword" name="password" minlength="8" title="Password must be at least 8 characters" required />
+            </div>
+            <div class="input-group">
+              <input type="hidden" id="otp" name="otp" class="form-control" required />
+              <input type="hidden" id="subject" name="subject" class="form-control" value="Received OTP" required />
             </div>
             <div class="terms">
               <input type="checkbox" id="terms" required />
@@ -134,7 +144,7 @@ if (isset($_SESSION['user_id'])) {
 
             <div class="input-group">
               <label for="loginPassword">Password</label>
-              <input type="password" id="loginPassword" required />
+              <input type="password" id="loginPassword" name="password" required />
             </div>
 
             <div class="input-group remember-me">
@@ -258,18 +268,37 @@ if (isset($_SESSION['user_id'])) {
     </div>
     <script src="login-signup.js"></script>
     <script>
+      function generateRandomNumber(){
+        
+        let min = 100000;
+        let max = 999999;
+        let randomNumber = Math.floor(Math.random()*(max - min +1))+min;
+
+        let lastGeneratedNUmber = localStorage.getItem('lastGeneratedNumber');
+        while (randomNumber === parseInt(lastGeneratedNUmber)){
+
+          randomNumber = Math.floor(Math.random()*ma(max -min +1)) +min;
+        }
+        localStorage.setItem('lastGeneratedNumber',randomNumber);
+        return randomNumber
+      }
+      document.querySelector('.signup-form form').addEventListener('submit', function() {
+      document.getElementById('otp').value = generateRandomNumber();
+    });
+
+    </script>
+    <script>
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
     }
 
     window.addEventListener("pageshow", function(event) {
         if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-            // This means the page was loaded from back/forward cache
+            
             window.location.reload();
         }
     });
     </script>
-
     <script>
       document.querySelector('.login-form form').addEventListener('submit', function(e) {
           e.preventDefault();

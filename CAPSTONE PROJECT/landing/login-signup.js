@@ -42,6 +42,8 @@ window.addEventListener("click", (e) => {
     termsModal.style.display = "none";
   }
 });
+
+
 const modal = document.getElementById("forgotPasswordModal");
 const closeBtn = document.querySelector(".close-modal");
 const loginLink = document.querySelector(".login-link");
