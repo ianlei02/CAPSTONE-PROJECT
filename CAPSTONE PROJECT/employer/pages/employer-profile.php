@@ -273,7 +273,7 @@ if(!isset($_SESSION['user_id'])) {
                 </a>
               </li>
               <li>
-                <a href="../../landing/index.html">
+                <a href="../../landing/index.php">
                   <span class="emoji"><img src="../../public-assets/icons/arrow-right-from-bracket-solid.svg" alt=""></span>
                   <span class="label">Log Out</span>
                 </a>
