@@ -22,8 +22,10 @@ if(isset($_POST['signupBtn'])) {
     $ip_address = $_SERVER['REMOTE_ADDR'];
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    $check = mysqli_query($conn, "SELECT * FROM applicant_account WHERE email = '$email'");
-    if(mysqli_num_rows($check) > 0) {
+    $check_applicant = mysqli_query($conn, "SELECT email FROM applicant_account WHERE email = '$email'");
+    $check_employer = mysqli_query($conn, "SELECT email FROM employer_account WHERE email = '$email'");
+    
+    if(mysqli_num_rows($check_applicant) > 0 || mysqli_num_rows($check_employer) > 0) {
         $_SESSION['error'] = "Email is already registered.";
         header("Location: ../login-signup.php");
         exit();
