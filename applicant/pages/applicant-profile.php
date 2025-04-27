@@ -189,19 +189,19 @@ if(!isset($_SESSION['user_id'])) {
                     <input
                       type="tel"
                       id="mobile"
-                      placeholder="09123456789"
+                      placeholder="09123456789" name="mobileNumber"
                       required />
                   </div>
                   <div class="form-group">
                     <label>Alternate Contact Number</label>
-                    <input type="tel" id="alternateMobile" />
+                    <input type="tel" id="alternateMobile" name="alternateContact" />
                   </div>
                   <div class="form-group" style="grid-column: span 2">
                     <label class="required">Complete Address</label>
                     <input
                       type="text"
                       id="street"
-                      placeholder="Street Address"
+                      placeholder="Street Address" name="streetAddress"
                       required
                       style="margin-bottom: 10px" />
                     <div
@@ -210,19 +210,19 @@ if(!isset($_SESSION['user_id'])) {
                         grid-template-columns: 1fr 1fr;
                         gap: 10px;
                       ">
-                      <select id="region" required>
+                      <select id="region" name="region" required>
                         <option value="">Select Region</option>
                         <option>NCR</option>
                         <option>Region I</option>
                         <option>Region II</option>
                       </select>
-                      <select id="province" required>
+                      <select id="province" name="province" required>
                         <option value="">Select Province</option>
                         <option>Metro Manila</option>
                         <option>Bulacan</option>
                         <option>Cavite</option>
                       </select>
-                      <select id="city" required>
+                      <select id="city" name="cityMunicipality" required>
                         <option value="">Select City/Municipality</option>
                         <option>Quezon City</option>
                         <option>Manila</option>
@@ -231,7 +231,7 @@ if(!isset($_SESSION['user_id'])) {
                       <input
                         type="text"
                         id="barangay"
-                        placeholder="Barangay"
+                        placeholder="Barangay" name="barangay"
                         required />
                     </div>
                   </div>
