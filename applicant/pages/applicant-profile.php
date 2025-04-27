@@ -117,7 +117,7 @@ if(!isset($_SESSION['user_id'])) {
           </div>
 
           <div class="profile-content">
-            <form action="../Functions/profile_update.php" method="POST" id="profileForm">
+            <form action="../Functions/profile_update.php" method="POST" id="profileForm" enctype="multipart/form-data">
               <!-- Personal Information Section -->
               <div class="section">
                 <h2 class="section-title">Personal Information</h2>
@@ -324,7 +324,7 @@ if(!isset($_SESSION['user_id'])) {
                 <div class="form-grid">
                   <div class="form-group">
                     <label class="required">Primary Skills</label>
-                    <input id="primarySkills" multiple style="height: auto" placeholder="Add skills separated by commas">
+                    <input id="primarySkills" multiple style="height: auto" name="primarySkills" placeholder="Add skills separated by commas">
                     <!-- <option>Computer Literacy</option>
                       <option>Customer Service</option>
                       <option>Microsoft Office</option>
@@ -339,7 +339,7 @@ if(!isset($_SESSION['user_id'])) {
                     <label>Technical Skills</label>
                     <input
                       type="text"
-                      id="techSkills"
+                      id="techSkills" name="technicalSkills"
                       placeholder="Add skills separated by commas" />
                   </div>
                   <div class="form-group">
@@ -347,12 +347,12 @@ if(!isset($_SESSION['user_id'])) {
                     <div class="language-entry">
                       <div
                         style="display: flex; gap: 10px; margin-bottom: 10px">
-                        <select style="flex: 1">
+                        <select style="flex: 1" name="language" id="language">
                           <option>English</option>
                           <option>Filipino</option>
                           <option>Other</option>
                         </select>
-                        <select style="flex: 1">
+                        <select style="flex: 1" name="proficiencyLevel" id="proficiencyLevel">
                           <option>Basic</option>
                           <option>Intermediate</option>
                           <option>Advanced</option>
@@ -376,30 +376,30 @@ if(!isset($_SESSION['user_id'])) {
                 <div class="form-grid">
                   <div class="form-group">
                     <label class="required">Resume/CV</label>
-                    <div class="file-upload" id="resumeUpload">
+                    <label class="file-upload" id="resumeUpload" for="resumeFile">
                       <p>Drag & drop your file here or click to browse</p>
-                      <input type="file" class="file-input" id="resumeFile" />
-                    </div>
+                      <input type="file" class="file-input" id="resumeFile" name="resumeFile" />
+                    </label>
                     <div class="file-preview" id="resumePreview"></div>
                   </div>
                   <div class="form-group">
                     <label>Valid ID (Government Issued)</label>
-                    <div class="file-upload" id="idUpload">
+                    <label class="file-upload" id="idUpload" for="idFile">
                       <p>Upload scanned copy</p>
-                      <input type="file" class="file-input" id="idFile" />
-                    </div>
+                      <input type="file" class="file-input" id="idFile" name="idFile" />
+                    </label>
                     <div class="file-preview" id="idPreview"></div>
                   </div>
                   <div class="form-group">
                     <label>Other Certifications</label>
-                    <div class="file-upload" id="certUpload">
+                    <label class="file-upload" id="certUpload" for="certFiles">
                       <p>Upload additional documents</p>
                       <input
                         type="file"
                         class="file-input"
-                        id="certFiles"
+                        id="certFiles" name="certFiles[]"
                         multiple />
-                    </div>
+                    </label>
                     <div class="file-preview" id="certPreview"></div>
                   </div>
                 </div>
@@ -421,7 +421,7 @@ if(!isset($_SESSION['user_id'])) {
   </div>
 
   <script src="../js/responsive.js"></script>
-  <script>
+  <!-- <script>
     // Add Education Entry
     document
       .getElementById("addEducation")
@@ -594,6 +594,6 @@ if(!isset($_SESSION['user_id'])) {
         }
       });
     }
-  </script>
+  </script> -->
 </body>
 </html>
