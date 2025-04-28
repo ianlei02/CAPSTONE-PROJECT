@@ -93,8 +93,9 @@ if(!isset($_SESSION['user_id'])) {
       }
 
       .btn-primary {
-        background-color: var(--primary);
-        color: white;
+        background-color: white;
+        color: var(--primary);
+        border: 1px solid  white;
       }
 
       .profile-content {
@@ -228,6 +229,10 @@ if(!isset($_SESSION['user_id'])) {
           padding-top: 60px;
         }
       }
+      .update-doc{
+        font-size: .85rem;
+        color: var(--primary);
+      }
     </style>
   </head>
   <body>
@@ -282,7 +287,7 @@ if(!isset($_SESSION['user_id'])) {
           </aside>
 
       <main class="main-content">
-        <div class="profile-container">
+        <form class="profile-container">
           <div class="profile-header">
             <h1 id="companyName">ABC Manufacturing Inc.</h1>
             <p id="companyIndustry">
@@ -293,9 +298,10 @@ if(!isset($_SESSION['user_id'])) {
               <button class="btn btn-outline" id="editProfileBtn">
                 Edit Profile
               </button>
+              <button type="submit" class="btn btn-primary" id="saveProfileBtn"> Save Profile</button>
             </div>
 
-            <div class="company-logo-container" id="logoContainer">
+            <label class="company-logo-container" id="logoContainer" ="uploadLogo">
               <img
                 src="https://via.placeholder.com/120"
                 alt="Company Logo"
@@ -308,68 +314,51 @@ if(!isset($_SESSION['user_id'])) {
                 class="upload-logo"
                 accept="image/*"
               />
-            </div>
+            </label>
           </div>
 
           <div class="profile-content">
             <div class="section">
               <h2 class="section-title">
                 Company Information
-                <button class="edit-btn" id="editCompanyInfoBtn">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                    ></path>
-                    <path
-                      d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                    ></path>
-                  </svg>
-                  Edit
-                </button>
+              
               </h2>
               <div class="info-grid">
                 <div class="info-item">
                   <span class="info-label">Company Type</span>
-                  <div class="info-value" id="companyType">Corporation</div>
+                  <input type="text" class="info-value" id="companyType">Corporation</input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Industry</span>
-                  <div class="info-value" id="industry">Manufacturing</div>
+                  <input type="text" class="info-value" id="industry">Manufacturing</input>
                 </div>
-                <div class="info-item">
+                <input type="text" class="info-item">
                   <span class="info-label">Company Size</span>
                   <div class="info-value" id="companySize">
                     201-500 employees
                   </div>
-                </div>
+                </input>
                 <div class="info-item">
                   <span class="info-label">Address</span>
-                  <div class="info-value" id="companyAddress">
+                  <input type="address" class="info-value" id="companyAddress">
                     123 Industrial Park, Laguna Technopark, Biñan, Laguna
-                  </div>
+                  </input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Contact Number</span>
-                  <div class="info-value" id="contactNumber">
+                  <input type="number" class="info-value" id="contactNumber">
                     (049) 511-2233
-                  </div>
+                  </input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Email</span>
-                  <div class="info-value" id="companyEmail">hr@abcmfg.com</div>
+                  <input type="email" class="info-value" id="companyEmail">hr@abcmfg.com</input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Website</span>
-                  <div class="info-value" id="companyWebsite">
+                  <input type="text" class="info-value" id="companyWebsite">
                     www.abcmfg.com
-                  </div>
+                  </input>
                 </div>
               </div>
               <div class="save-cancel-btns" id="companyInfoBtns">
@@ -385,45 +374,28 @@ if(!isset($_SESSION['user_id'])) {
             <div class="section">
               <h2 class="section-title">
                 Primary Contact
-                <button class="edit-btn" id="editContactBtn">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                    ></path>
-                    <path
-                      d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                    ></path>
-                  </svg>
-                  Edit
-                </button>
+             
               </h2>
               <div class="info-grid">
                 <div class="info-item">
                   <span class="info-label">Contact Person</span>
-                  <div class="info-value" id="contactPerson">
+                  <input type="text" class="info-value" id="contactPerson">
                     Maria Dela Cruz
-                  </div>
+                  </input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Position</span>
-                  <div class="info-value" id="contactPosition">HR Manager</div>
+                  <input type="text" class="info-value" id="contactPosition">HR Manager</input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Mobile Number</span>
-                  <div class="info-value" id="contactMobile">0917-123-4567</div>
+                  <input type="number" class="info-value" id="contactMobile">0917-123-4567</input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Email</span>
-                  <div class="info-value" id="contactEmail">
+                  <input type="email" class="info-value" id="contactEmail">
                     maria.delacruz@abcmfg.com
-                  </div>
+                  </input>
                 </div>
               </div>
               <div class="save-cancel-btns" id="contactBtns">
@@ -442,237 +414,93 @@ if(!isset($_SESSION['user_id'])) {
                 <li class="document-item">
                   <div class="document-icon">📄</div>
                   <div class="document-info">
-                    <div class="document-name">SEC Registration</div>
-                    <div class="document-date">Uploaded: January 15, 2023</div>
+                    <div class="document-name">BIR Certification</div>
+                    <div class="document-date">Uploaded: <span id="bir-upload-date">Not Uploaded</span></div>
                   </div>
                   <div class="document-actions">
-                    <a href="#" class="view-doc">View</a>
-                    <a href="#" class="update-doc">Update</a>
+                    <a href="#" class="view-doc" id="view-bir">View</a>
+                    <label for="upload-bir" class="update-doc">Upload</label>
+                    <input type="file" id="upload-bir" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                   </div>
                 </li>
                 <li class="document-item">
                   <div class="document-icon">📄</div>
                   <div class="document-info">
                     <div class="document-name">Business Permit</div>
-                    <div class="document-date">Uploaded: January 20, 2023</div>
+                    <div class="document-date">Uploaded: <span id="business-permit-upload-date">Not Uploaded</span></div>
                   </div>
                   <div class="document-actions">
-                    <a href="#" class="view-doc">View</a>
-                    <a href="#" class="update-doc">Update</a>
+                    <a href="#" class="view-doc" id="view-business-permit">View</a>
+                    <label for="upload-business-permit" class="update-doc">Upload</label>
+                    <input type="file" id="upload-business-permit" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+                  </div>
+                </li>
+                <li class="document-item">
+                  <div class="document-icon">📄</div>
+                  <div class="document-info">
+                    <div class="document-name">DOLE Certification</div>
+                    <div class="document-date">Uploaded: <span id="dole-upload-date">Not Uploaded</span></div>
+                  </div>
+                  <div class="document-actions">
+                    <a href="#" class="view-doc" id="view-dole">View</a>
+                    <label for="upload-dole" class="update-doc">Upload</label>
+                    <input type="file" id="upload-dole" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+                  </div>
+                </li>
+                <li class="document-item">
+                  <div class="document-icon">📄</div>
+                  <div class="document-info">
+                    <div class="document-name">Migrant Certification</div>
+                    <div class="document-date">Uploaded: <span id="migrant-upload-date">Not Uploaded</span></div>
+                  </div>
+                  <div class="document-actions">
+                    <a href="#" class="view-doc" id="view-migrant">View</a>
+                    <label for="upload-migrant" class="update-doc">Upload</label>
+                    <input type="file" id="upload-migrant" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+                  </div>
+                </li>
+                <li class="document-item">
+                  <div class="document-icon">📄</div>
+                  <div class="document-info">
+                    <div class="document-name">PhilJob Certification</div>
+                    <div class="document-date">Uploaded: <span id="philjob-upload-date">Not Uploaded</span></div>
+                  </div>
+                  <div class="document-actions">
+                    <a href="#" class="view-doc" id="view-philjob">View</a>
+                    <label for="upload-philjob" class="update-doc">Upload</label>
+                    <input type="file" id="upload-philjob" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                   </div>
                 </li>
               </ul>
-              <button class="btn btn-outline" style="margin-top: 10px">
-                + Add Document
-              </button>
             </div>
           </div>
-        </div>
+        </form>
       </main>
     </div>
 
     <script src="../js/responsive.js"></script>
-    <script>
-      // Edit Mode Toggle
-      let editMode = false;
-      let originalValues = {};
-
-      // Toggle edit mode for company info
-      document
-        .getElementById("editCompanyInfoBtn")
-        .addEventListener("click", function () {
-          toggleEditMode("company");
-        });
-
-      // Toggle edit mode for contact info
-      document
-        .getElementById("editContactBtn")
-        .addEventListener("click", function () {
-          toggleEditMode("contact");
-        });
-
-      // Save company info
-      document
-        .getElementById("saveCompanyInfo")
-        .addEventListener("click", function () {
-          saveChanges("company");
-        });
-
-      // Cancel company info edit
-      document
-        .getElementById("cancelCompanyInfo")
-        .addEventListener("click", function () {
-          cancelEdit("company");
-        });
-
-      // Save contact info
-      document
-        .getElementById("saveContactInfo")
-        .addEventListener("click", function () {
-          saveChanges("contact");
-        });
-
-      // Cancel contact info edit
-      document
-        .getElementById("cancelContactInfo")
-        .addEventListener("click", function () {
-          cancelEdit("contact");
-        });
-
-      // Logo upload functionality
-      document
-        .getElementById("logoContainer")
-        .addEventListener("click", function () {
-          if (editMode) {
-            document.getElementById("uploadLogo").click();
-          }
-        });
-
-      document
-        .getElementById("uploadLogo")
-        .addEventListener("change", function (e) {
-          if (e.target.files && e.target.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (event) {
-              document.getElementById("companyLogo").src = event.target.result;
-            };
-            reader.readAsDataURL(e.target.files[0]);
-          }
-        });
-
-      // Document actions
-      document.querySelectorAll(".view-doc").forEach((link) => {
-        link.addEventListener("click", function (e) {
-          e.preventDefault();
-          const docName =
-            this.closest(".document-item").querySelector(
-              ".document-name"
-            ).textContent;
-          alert(`Viewing ${docName}`);
-        });
-      });
-
-      document.querySelectorAll(".update-doc").forEach((link) => {
-        link.addEventListener("click", function (e) {
-          e.preventDefault();
-          const docName =
-            this.closest(".document-item").querySelector(
-              ".document-name"
-            ).textContent;
-          alert(`Updating ${docName}`);
-        });
-      });
-
-      // Main edit mode function
-      function toggleEditMode(section) {
-        editMode = true;
-        document.getElementById("editProfileBtn").textContent = "Editing...";
-
-        const fields = {
-          company: [
-            "companyType",
-            "industry",
-            "companySize",
-            "companyAddress",
-            "contactNumber",
-            "companyEmail",
-            "companyWebsite",
-          ],
-          contact: [
-            "contactPerson",
-            "contactPosition",
-            "contactMobile",
-            "contactEmail",
-          ],
-        };
-
-        // Store original values
-        fields[section].forEach((field) => {
-          const element = document.getElementById(field);
-          originalValues[field] = element.textContent;
-
-          // Make editable
-          element.contentEditable = true;
-          element.classList.add("editable");
-          element.focus();
-        });
-
-        // Show save/cancel buttons
-        document.getElementById(`${section}InfoBtns`).style.display = "flex";
-      }
-
-      function saveChanges(section) {
-        editMode = false;
-        document.getElementById("editProfileBtn").textContent = "Edit Profile";
-
-        const fields = {
-          company: [
-            "companyType",
-            "industry",
-            "companySize",
-            "companyAddress",
-            "contactNumber",
-            "companyEmail",
-            "companyWebsite",
-          ],
-          contact: [
-            "contactPerson",
-            "contactPosition",
-            "contactMobile",
-            "contactEmail",
-          ],
-        };
-
-        fields[section].forEach((field) => {
-          const element = document.getElementById(field);
-          element.contentEditable = false;
-          element.classList.remove("editable");
-        });
-
-        // Hide save/cancel buttons
-        document.getElementById(`${section}InfoBtns`).style.display = "none";
-
-        // In a real app, you would save to server here
-        alert(
-          `${
-            section.charAt(0).toUpperCase() + section.slice(1)
-          } information updated!`
-        );
-      }
-
-      function cancelEdit(section) {
-        editMode = false;
-        document.getElementById("editProfileBtn").textContent = "Edit Profile";
-
-        const fields = {
-          company: [
-            "companyType",
-            "industry",
-            "companySize",
-            "companyAddress",
-            "contactNumber",
-            "companyEmail",
-            "companyWebsite",
-          ],
-          contact: [
-            "contactPerson",
-            "contactPosition",
-            "contactMobile",
-            "contactEmail",
-          ],
-        };
-
-        fields[section].forEach((field) => {
-          const element = document.getElementById(field);
-          element.textContent = originalValues[field];
-          element.contentEditable = false;
-          element.classList.remove("editable");
-        });
-
-        // Hide save/cancel buttons
-        document.getElementById(`${section}InfoBtns`).style.display = "none";
-      }
-    </script>
+    <script>    
+    const editBtn = document.getElementById('editProfileBtn');
+      const saveBtn = document.getElementById('saveProfileBtn');
+      const inputs = document.querySelectorAll('form input');
+      const select = document.querySelectorAll('form select');
+  
+      window.addEventListener('DOMContentLoaded', () => {
+      inputs.forEach(input => input.disabled = true);
+    });
+  
+    editBtn.addEventListener('click', () => {
+    inputs.forEach(input => input.disabled = false);
+    saveBtn.disabled = false;
+    editBtn.disabled = true;
+  });
+  
+  saveBtn.addEventListener('click', (e) => {
+    e.preventDefault(); 
+    inputs.forEach(input => input.disabled = true);
+    saveBtn.disabled = true;
+    editBtn.disabled = false;
+  });</script>
   </body>
 </html>
 
