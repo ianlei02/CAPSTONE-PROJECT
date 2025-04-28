@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+header("Pragma: no-cache");
+
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: ../pages/admin-login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -694,6 +706,10 @@
                     <i class="fas fa-cog"></i>
                     <span>Settings</span>
                 </div>
+                <div class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <a href="../Function/logout.php"><span>Log Out</span></a>
+                </div>
             </div>
         </div>
         
@@ -1338,6 +1354,11 @@
             }
         `;
         document.head.appendChild(style);
+    </script>
+    <script>
+    setTimeout(function() {
+        location.reload();
+    }, 5000);
     </script>
 </body>
 </html>
