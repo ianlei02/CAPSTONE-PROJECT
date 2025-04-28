@@ -58,7 +58,7 @@ if(!isset($_SESSION['user_id'])) {
             </a>
           </li>
           <li>
-            <a href="./applicant-profile.php">
+            <a href="employer-profile.php">
               <span class="emoji"><img src="../../public-assets/icons/user-solid.svg" alt=""></span>
               <span class="label">My Profile</span>
             </a>
