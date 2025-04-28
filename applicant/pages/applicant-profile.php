@@ -120,6 +120,8 @@ if(!isset($_SESSION['user_id'])) {
             <form action="../Functions/profile_update.php" method="POST" id="profileForm" enctype="multipart/form-data">
               <!-- Personal Information Section -->
               <div class="section">
+                <button id="editBtn" class="btn btn-outline">Edit</button>
+                <button id="saveBtn" class="btn btn-primary">Save</button>
                 <h2 class="section-title">Personal Information</h2>
                 <div class="form-grid">
                   <div class="form-group">
@@ -240,7 +242,7 @@ if(!isset($_SESSION['user_id'])) {
 
               <!-- Education Section -->
               <div class="section">
-                <h2 class="section-title">Education Background</h2>
+                <h2 class="section-title">Highest Educational Attainment </h2>
                 <div id="educationEntries">
                   <div class="form-grid education-entry">
                     <div class="form-group">
@@ -268,9 +270,9 @@ if(!isset($_SESSION['user_id'])) {
                     </div>
                   </div>
                 </div>
-                <button type="button" class="add-btn" id="addEducation">
+                <!-- <button type="button" class="add-btn" id="addEducation">
                   + Add Education
-                </button>
+                </button> -->
               </div>
 
               <!-- Work Experience Section -->
@@ -313,9 +315,9 @@ if(!isset($_SESSION['user_id'])) {
                     </div>
                   </div>
                 </div>
-                <button type="button" class="add-btn" id="addExperience">
+                <!-- <button type="button" class="add-btn" id="addExperience">
                   + Add Work Experience
-                </button>
+                </button> -->
               </div>
 
               <!-- Skills Section -->
@@ -360,12 +362,12 @@ if(!isset($_SESSION['user_id'])) {
                         </select>
                       </div>
                     </div>
-                    <button
+                    <!-- <button
                       type="button"
                       class="add-btn"
                       style="margin-top: 10px">
                       + Add Language
-                    </button>
+                    </button> -->
                   </div>
                 </div>
               </div>
@@ -406,10 +408,12 @@ if(!isset($_SESSION['user_id'])) {
               </div>
 
               <div class="form-actions">
-                <button type="button" class="btn btn-outline" id="cancelBtn">
+                <button type="reset" class="btn btn-outline" id="cancelBtn">
                   Cancel
                 </button>
-                <button type="submit" class="btn btn-primary" id="saveBtn">
+                <button type="submit" class="btn btn-secondary" id="updateBtn">
+                  Update Profile
+                <button type="submit" class="btn btn-primary" id="saveBtnn">
                   Save Profile
                 </button>
               </div>
@@ -421,6 +425,29 @@ if(!isset($_SESSION['user_id'])) {
   </div>
 
   <script src="../js/responsive.js"></script>
+  <script>
+    const editBtn = document.getElementById('editBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const inputs = document.querySelectorAll('#profileForm input');
+    const select = document.querySelectorAll('#profileForm select');
+
+    window.addEventListener('DOMContentLoaded', () => {
+    inputs.forEach(input => input.disabled = true);
+  });
+
+  editBtn.addEventListener('click', () => {
+  inputs.forEach(input => input.disabled = false);
+  saveBtn.disabled = false;
+  editBtn.disabled = true;
+});
+
+saveBtn.addEventListener('click', (e) => {
+  e.preventDefault(); 
+  inputs.forEach(input => input.disabled = true);
+  saveBtn.disabled = true;
+  editBtn.disabled = false;
+});
+  </script>
   <!-- <script>
     // Add Education Entry
     document
