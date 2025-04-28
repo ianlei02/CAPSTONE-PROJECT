@@ -389,7 +389,7 @@
               <li><a class="dropdown-item" href="#">Post a Job</a></li>
             </ul>
           </li>
-          <li><a class="nav-link" href="#">About Us</a></li>
+          <li><a class="nav-link" href="./pages/aboutus.php">About Us</a></li>
           <li class="auth-buttons">
             <a class="btn-login" target="_self" href="login-signup.php">Login/Signup</a>
             <!-- <a class="btn-signup" target="_blank" href="applicant-login-signup.html">Applicant</a> -->
