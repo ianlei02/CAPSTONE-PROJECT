@@ -205,7 +205,7 @@
         <p>Sign in to access your dashboard</p>
       </div>
 
-      <form class="login-form" action="/admin/dashboard" method="POST">
+      <form class="login-form" action="../Function/login.php" method="POST" id="loginform">
         <div class="form-group floating-label">
           <input
             type="text"
@@ -238,4 +238,26 @@
       </form>
     </div>
   </body>
+  <script>
+  document.getElementById('loginform').addEventListener('submit', async function(e) {
+      e.preventDefault(); 
+
+      const formData = new FormData(this);
+
+      const response = await fetch('../Function/login.php', {
+          method: 'POST',
+          body: formData
+      });
+
+      const result = await response.json();
+
+      if (result.status === 'success') {
+         
+          window.location.href = result.redirect;
+      } else {
+        
+          alert(result.message);
+      }
+  });
+</script>
 </html>
