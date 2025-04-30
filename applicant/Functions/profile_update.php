@@ -37,6 +37,17 @@ require "../connection/dbcon.php";
     $language = $_POST['language'] ?? 'English'; 
     $proficiency_level = $_POST['proficiencyLevel'] ?? 'Basic'; 
 
+    $education_level = $_POST['educationLevel'] ?? '';
+    $school_name = $_POST['schoolName'] ?? '';
+    $course_or_degree = $_POST['courseDegree'] ?? '';
+    $year_graduated = $_POST['yearGraduated'] ?? '';
+
+    $company_name = $_POST['companyName'] ?? '';
+    $position = $_POST['position'] ?? '';
+    $industry = $_POST['industry'] ?? '';
+    $employment_start = $_POST['employmentStart'] ?? '';
+    $employment_end = $_POST['employmentEnd'] ?? null;
+    $key_responsibilities = $_POST['keyResponsibilities'] ?? '';
    
     $allowedTypes = [
         'application/pdf',
@@ -120,6 +131,16 @@ require "../connection/dbcon.php";
         $stmt_skills = $conn->prepare("INSERT INTO applicant_skills (applicant_id, primary_skills, technical_skills, language, proficiency_level) VALUES (?, ?, ?, ?, ?)");
         $stmt_skills->bind_param("issss", $applicant_id, $primary_skills, $technical_skills, $language, $proficiency_level);
         $stmt_skills->execute();
+
+        if (!empty($education_level) && !empty($school_name)) {
+        $stmt_educ = $conn->prepare("INSERT INTO applicant_educ (applicant_id, education_level, school_name, course_or_degree, year_graduated) VALUES (?, ?, ?, ?, ?)");
+        $stmt_educ->bind_param("issss", $applicant_id, $education_level, $school_name, $course_or_degree, $year_graduated);
+        $stmt_educ->execute();
+        }
+
+        $stmt_work_exp = $conn->prepare("INSERT INTO applicant_work_exp (applicant_id, company_name, position, industry, employment_start, employment_end, key_responsibilities) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt_work_exp->bind_param("issssss", $applicant_id, $company_name, $position, $industry, $employment_start, $employment_end, $key_responsibilities);
+        $stmt_work_exp->execute();
                 
         handleFileUpload('resumeFile', 'resume', $conn, $applicant_id, $allowedTypes, $maxFileSize);
         handleFileUpload('idFile', 'valid_id', $conn, $applicant_id, $allowedTypes, $maxFileSize);
@@ -155,6 +176,8 @@ require "../connection/dbcon.php";
         if (isset($stmt_profile)) $stmt_profile->close();
         if (isset($stmt_contact)) $stmt_contact->close();
         if (isset($stmt_skills)) $stmt_skills->close();
+        if (isset($stmt_educ)) $stmt_educ->close();
+        if (isset($stmt_work_exp)) $stmt_work_exp->close();
         $conn->close();
     }
     

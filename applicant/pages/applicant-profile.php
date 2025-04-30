@@ -7,6 +7,57 @@ if(!isset($_SESSION['user_id'])) {
 
 
 }
+$userId = $_SESSION['user_id'];
+
+$accountStmt = $conn->prepare("SELECT * FROM applicant_account WHERE applicant_ID = ?");
+$accountStmt->bind_param("i", $userId);
+$accountStmt->execute();
+$accountResult = $accountStmt->get_result();
+$accountData = $accountResult->fetch_assoc();
+
+$profileStmt = $conn->prepare("SELECT * FROM applicant_profile WHERE applicant_id = ?");
+$profileStmt->bind_param("i", $userId);
+$profileStmt->execute();
+$profileResult = $profileStmt->get_result();
+$profileData = $profileResult->fetch_assoc();
+
+$contactStmt = $conn->prepare("SELECT * FROM applicant_contact_info WHERE applicant_id = ?");
+$contactStmt->bind_param("i", $userId);
+$contactStmt->execute();
+$contactResult = $contactStmt->get_result();
+$contactData = $contactResult->fetch_assoc();
+
+$eduStmt = $conn->prepare("SELECT * FROM applicant_educ WHERE applicant_id = ?");
+$eduStmt->bind_param("i", $userId);
+$eduStmt->execute();
+$eduResult = $eduStmt->get_result();
+$educationData = $eduResult->fetch_assoc();
+
+$skillsStmt = $conn->prepare("SELECT * FROM applicant_skills WHERE applicant_id = ?");
+$skillsStmt->bind_param("i", $userId);
+$skillsStmt->execute();
+$skillsResult = $skillsStmt->get_result();
+$skillsData = $skillsResult->fetch_assoc();
+
+$workStmt = $conn->prepare("SELECT * FROM applicant_work_exp WHERE applicant_id = ?");
+$workStmt->bind_param("s", $userId);
+$workStmt->execute();
+$workResult = $workStmt->get_result();
+$workData = $workResult->fetch_all(MYSQLI_ASSOC);
+
+$docsStmt = $conn->prepare("SELECT * FROM applicant_documents WHERE applicant_id = ?");
+$docsStmt->bind_param("i", $userId);
+$docsStmt->execute();
+$docsResult = $docsStmt->get_result();
+$docsData = $docsResult->fetch_all(MYSQLI_ASSOC);
+
+$accountJson = json_encode($accountData ?: []);
+$profileJson = json_encode($profileData ?: []);
+$contactJson = json_encode($contactData ?: []);
+$educationJson = json_encode($educationData ?: []);
+$skillsJson = json_encode($skillsData ?: []);
+$workJson = json_encode($workData ?: []);
+$docsJson = json_encode($docsData ?: []);
 
 ?>
 <!DOCTYPE html>
@@ -247,26 +298,26 @@ if(!isset($_SESSION['user_id'])) {
                   <div class="form-grid education-entry">
                     <div class="form-group">
                       <label class="required">Education Level</label>
-                      <select required>
+                      <select name="educationLevel" required>
                         <option value="">Select</option>
-                        <option>Elementary</option>
-                        <option>High School</option>
-                        <option>Vocational</option>
-                        <option>College</option>
-                        <option>Postgraduate</option>
+                        <option value="Elementary">Elementary</option>
+                        <option value="High School">High School</option>
+                        <option value="Vocational">Vocational</option>
+                        <option value="College">College</option>
+                        <option value="Postgraduate">Postgraduate</option>
                       </select>
                     </div>
                     <div class="form-group">
                       <label class="required">School Name</label>
-                      <input type="text" required />
+                      <input type="text" name="schoolName" required />
                     </div>
                     <div class="form-group">
                       <label>Course/Degree</label>
-                      <input type="text" />
+                      <input type="text" name="courseDegree" />
                     </div>
                     <div class="form-group">
                       <label>Year Graduated</label>
-                      <input type="number" min="1900" max="2099" />
+                      <input type="number" min="1900" max="2099" name="yearGraduated" />
                     </div>
                   </div>
                 </div>
@@ -282,21 +333,21 @@ if(!isset($_SESSION['user_id'])) {
                   <div class="form-grid experience-entry">
                     <div class="form-group">
                       <label>Company Name</label>
-                      <input type="text" />
+                      <input type="text" name="companyName" />
                     </div>
                     <div class="form-group">
                       <label>Position</label>
-                      <input type="text" />
+                      <input type="text" name="position"/>
                     </div>
                     <div class="form-group">
                       <label>Industry</label>
-                      <select>
+                      <select name="industry">
                         <option value="">Select</option>
-                        <option>Agriculture</option>
-                        <option>Construction</option>
-                        <option>Manufacturing</option>
-                        <option>Retail</option>
-                        <option>IT/BPO</option>
+                        <option value="Agriculture">Agriculture</option>
+                        <option value="Construction">Construction</option>
+                        <option value="Manufacturing">Manufacturing</option>
+                        <option value="Retail">Retail</option>
+                        <option value="IT/BPO">IT/BPO</option>
                       </select>
                     </div>
                     <div class="form-group" style="grid-column: span 2">
@@ -305,13 +356,13 @@ if(!isset($_SESSION['user_id'])) {
                         <input
                           type="month"
                           placeholder="From"
-                          style="flex: 1" />
-                        <input type="month" placeholder="To" style="flex: 1" />
+                          style="flex: 1" name="employmentStart" />
+                        <input type="month" placeholder="To" style="flex: 1" name="employmentEnd" />
                       </div>
                     </div>
                     <div class="form-group" style="grid-column: span 3">
                       <label>Key Responsibilities</label>
-                      <textarea rows="4"></textarea>
+                      <textarea rows="4" name="keyResponsibilities"></textarea>
                     </div>
                   </div>
                 </div>
@@ -424,6 +475,109 @@ if(!isset($_SESSION['user_id'])) {
     </main>
   </div>
 
+  <script>
+  
+  const accountData = <?php echo $accountJson; ?>;
+  const profileData = <?php echo $profileJson; ?>;
+  const contactData = <?php echo $contactJson; ?>;
+  const educationData = <?php echo $educationJson; ?>;
+  const skillsData = <?php echo $skillsJson; ?>;
+  const workData = <?php echo $workJson; ?>;
+  const docsData = <?php echo $docsJson; ?>;
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    if (accountData) {
+      document.getElementById('firstName').value = accountData.f_name || '';
+      document.getElementById('lastName').value = accountData.l_name || '';
+      document.getElementById('email').value = accountData.email || '';
+    }
+    
+    if (profileData) {
+      document.getElementById('middleName').value = profileData.middle_name || '';
+      document.getElementById('suffix').value = profileData.suffix || '';
+      document.getElementById('gender').value = profileData.sex || '';
+      document.getElementById('birthDate').value = profileData.date_of_birth || '';
+      document.getElementById('civilStatus').value = profileData.civil_status || '';
+      document.getElementById('nationality').value = profileData.nationality || 'Filipino';
+    }
+    
+    if (contactData) {
+      document.getElementById('mobile').value = contactData.mobile_number || '';
+      document.getElementById('alternateMobile').value = contactData.alternate_contact_number || '';
+      document.getElementById('street').value = contactData.street_address || '';
+      document.getElementById('region').value = contactData.region || '';
+      document.getElementById('province').value = contactData.province || '';
+      document.getElementById('city').value = contactData.city_municipality || '';
+      document.getElementById('barangay').value = contactData.barangay || '';
+    }
+    
+    if (educationData) {
+      const eduEntry = document.querySelector('.education-entry');
+      eduEntry.querySelector('[name="educationLevel"]').value = educationData.education_level || '';
+      eduEntry.querySelector('[name="schoolName"]').value = educationData.school_name || '';
+      eduEntry.querySelector('[name="courseDegree"]').value = educationData.course_or_degree || '';
+      eduEntry.querySelector('[name="yearGraduated"]').value = educationData.year_graduated || '';
+    }
+    
+   
+    if (workData && workData.length > 0) {
+        const expEntriesContainer = document.getElementById('experienceEntries');
+        const originalEntry = document.querySelector('.experience-entry');
+        expEntriesContainer.innerHTML = ''; // Clear the template
+        
+        workData.forEach((work, index) => {
+        
+        const expEntry = originalEntry.cloneNode(true);
+        
+        expEntry.querySelector('[name="companyName"]').value = work.company_name || '';
+        expEntry.querySelector('[name="position"]').value = work.position || '';
+        expEntry.querySelector('[name="industry"]').value = work.industry || '';
+        
+        const startDate = (work.employment_start && work.employment_start !== '0000-00-00') ? work.employment_start : '';
+        const endDate = (work.employment_end && work.employment_end !== '0000-00-00') ? work.employment_end : '';
+        
+        expEntry.querySelector('[name="employmentStart"]').value = startDate ? startDate.substr(0, 7) : '';
+        expEntry.querySelector('[name="employmentEnd"]').value = endDate ? endDate.substr(0, 7) : '';
+        
+        expEntry.querySelector('[name="keyResponsibilities"]').value = work.key_responsibilities || '';
+        
+        if (index > 0) {
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'remove-btn';
+            removeBtn.textContent = 'Remove';
+            removeBtn.addEventListener('click', () => expEntry.remove());
+            expEntry.appendChild(removeBtn);
+        }
+
+        expEntriesContainer.appendChild(expEntry);
+      });
+      }
+    
+        if (skillsData) {
+          document.querySelector('[name="primarySkills"]').value = skillsData.primary_skills || '';
+          document.querySelector('[name="technicalSkills"]').value = skillsData.technical_skills || '';
+          document.querySelector('[name="language"]').value = skillsData.language || '';
+          document.querySelector('[name="proficiencyLevel"]').value = skillsData.proficiency_level || '';
+        }
+        
+        if (docsData && docsData.length > 0) {
+          docsData.forEach(doc => {
+            if (doc.document_type === 'resume') {
+              document.getElementById('resumePreview').textContent = doc.original_filename;
+            } else if (doc.document_type === 'valid_id') {
+              document.getElementById('idPreview').textContent = doc.original_filename;
+            } else if (doc.document_type === 'certification') {
+              const certPreview = document.getElementById('certPreview');
+              const fileElement = document.createElement('div');
+              fileElement.textContent = doc.original_filename;
+              certPreview.appendChild(fileElement);
+            }
+          });
+        }
+      });
+  </script>
   <script src="../js/responsive.js"></script>
   <script>
     const editBtn = document.getElementById('editBtn');
@@ -448,179 +602,6 @@ saveBtn.addEventListener('click', (e) => {
   editBtn.disabled = false;
 });
   </script>
-  <!-- <script>
-    // Add Education Entry
-    document
-      .getElementById("addEducation")
 
-      .addEventListener("click", function() {
-        const educationEntry = document
-          .querySelector(".education-entry")
-          .cloneNode(true);
-        document
-
-          .getElementById("educationEntries")
-          .appendChild(educationEntry);
-
-        // Clear the cloned inputs
-
-        const inputs = educationEntry.querySelectorAll("input, select");
-        inputs.forEach((input) => (input.value = ""));
-      });
-
-
-    // Add Work Experience Entry
-    document
-      .getElementById("addExperience")
-
-      .addEventListener("click", function() {
-        const experienceEntry = document
-          .querySelector(".experience-entry")
-          .cloneNode(true);
-        document
-
-          .getElementById("experienceEntries")
-          .appendChild(experienceEntry);
-
-        // Clear the cloned inputs
-
-        const inputs = experienceEntry.querySelectorAll(
-          "input, select, textarea"
-        );
-        inputs.forEach((input) => (input.value = ""));
-      });
-
-
-    // Skills Selection
-    document
-      .getElementById("primarySkills")
-      .addEventListener("change", function() {
-        const selectedSkills = document.getElementById("selectedSkills");
-
-        selectedSkills.innerHTML = "";
-
-        Array.from(this.selectedOptions).forEach((option) => {
-          const skillTag = document.createElement("div");
-          skillTag.className = "skill-tag";
-          skillTag.innerHTML = `
-                    ${option.text}
-                    <button type="button">&times;</button>
-                `;
-          selectedSkills.appendChild(skillTag);
-
-
-          // Add remove functionality
-
-          skillTag
-            .querySelector("button")
-            .addEventListener("click", function() {
-              option.selected = false;
-              skillTag.remove();
-            });
-        });
-      });
-
-
-    // File Upload Handling
-    function setupFileUpload(uploadDivId, fileInputId, previewDivId) {
-      const uploadDiv = document.getElementById(uploadDivId);
-      const fileInput = document.getElementById(fileInputId);
-      const previewDiv = document.getElementById(previewDivId);
-
-      uploadDiv.addEventListener("click", function() {
-        fileInput.click();
-      });
-
-      fileInput.addEventListener("change", function() {
-        if (this.files.length > 0) {
-
-          uploadDiv.querySelector("p").textContent = this.files[0].name;
-        }
-      });
-
-      uploadDiv.addEventListener("dragover", function(e) {
-        e.preventDefault();
-        this.style.borderColor = "var(--dole-blue)";
-        this.style.backgroundColor = "var(--dole-light-blue)";
-      });
-
-      uploadDiv.addEventListener("dragleave", function() {
-        this.style.borderColor = "#ccc";
-
-        if (this.files.length > 1) {
-          previewDiv.textContent = `${this.files.length} files selected`;
-        } else {
-          previewDiv.textContent = this.files[0].name;
-        }
-
-      });
-
-      // Drag and drop functionality
-      uploadDiv.addEventListener("dragover", function(e) {
-        e.preventDefault();
-        this.style.borderColor = "var(--primary)";
-        this.style.backgroundColor = "var(--primary-light)";
-      });
-
-      uploadDiv.addEventListener("dragleave", function() {
-
-        this.style.backgroundColor = "transparent";
-      });
-
-      uploadDiv.addEventListener("drop", function(e) {
-        e.preventDefault();
-
-        this.style.borderColor = "var(--border)";
-
-        this.style.backgroundColor = "transparent";
-
-        if (e.dataTransfer.files.length > 0) {
-          fileInput.files = e.dataTransfer.files;
-
-          uploadDiv.querySelector("p").textContent = fileInput.files[0].name;
-        }
-      });
-
-      document
-        .querySelector(".save-btn")
-        .addEventListener("click", function() {
-          alert("Profile saved successfully!");
-
-          if (fileInput.files.length > 1) {
-            previewDiv.textContent = `${fileInput.files.length} files selected`;
-          } else {
-            previewDiv.textContent = fileInput.files[0].name;
-          }
-
-        });
-
-
-      // Setup file uploads
-      setupFileUpload("resumeUpload", "resumeFile", "resumePreview");
-      setupFileUpload("idUpload", "idFile", "idPreview");
-      setupFileUpload("certUpload", "certFiles", "certPreview");
-
-      // Form Submission
-      document
-        .getElementById("profileForm")
-        .addEventListener("submit", function(e) {
-          e.preventDefault();
-          alert("Profile saved successfully!");
-          // In a real implementation, this would send data to your server
-        });
-
-      // Cancel Button
-      document.getElementById("cancelBtn").addEventListener("click", function() {
-        if (
-          confirm(
-            "Are you sure you want to cancel? Any unsaved changes will be lost."
-          )
-        ) {
-          // In a real implementation, this might redirect back to dashboard
-          alert("Changes discarded");
-        }
-      });
-    }
-  </script> -->
 </body>
 </html>
