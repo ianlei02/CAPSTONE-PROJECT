@@ -21,7 +21,7 @@
 
     <nav class="navbar">
       <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="../index.php">
           <img
             src="../../landing/assets/images/logo without glass.png"
             alt="PESO logo"
@@ -29,19 +29,22 @@
           />
         </a>
         <ul class="navbar-links">
-          <li><a class="nav-link" href="#">Home</a></li>
+          <li><a class="nav-link" href="../index.php">Home</a></li>
           <li class="dropdown">
-            Job Portal <span class="arrow-down">&#9662;</span>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Job Listings</a></li>
-              <li><a class="dropdown-item" href="#">Post a Job</a></li>
-            </ul>
-          </li>
-          <li><a class="nav-link" href="#">About Us</a></li>
-          <li class="auth-buttons">
-            <a class="btn-login" target="_self" href="login-signup.php">Login/Signup</a>
-            <!-- <a class="btn-signup" target="_blank" href="applicant-login-signup.html">Applicant</a> -->
-          </li>
+                    Job Portal <span class="arrow-down">&#9662;</span>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="login-signup.php?form=signup">Job Listings</a></li>
+                        <li><a class="dropdown-item" href="login-signup.php?form=signup">Post a Job</a></li>
+                        <li><a class="dropdown-item" href="#">User's Guide</a></li>
+                    </ul>
+                </li>
+                <li><a class="nav-link" href="./pages/aboutus.php">About Us</a></li>
+                <li class="auth-buttons">
+                    <a href="login-signup.php?form=login"><button <a class="btn-login">Login</button></a>
+                    <a href="login-signup.php?form=signup"><button <a class="btn-signup">Sign Up</button></a>
+                    <!-- <a class="btn-login" target="_self" href="login-signup.php">Login/Signup</a> -->
+                    <!-- <a class="btn-signup" target="_blank" href="applicant-login-signup.html">Applicant</a> -->
+                </li>
         </ul>
       </div>
     </nav>

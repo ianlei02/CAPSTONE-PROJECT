@@ -24,6 +24,33 @@ function showTab(tabName) {
   }
 }
 
+const urlParams = new URLSearchParams(window.location.search);
+const formType = urlParams.get('form'); // "login" or "signup"
+
+function showForm(tab) {
+  console.log(`Switching to ${tab} tab`);
+  if (tab === 'login') {
+    loginForm.classList.add('active');
+    signupForm.classList.remove('active');
+    loginTab.classList.add("active");
+    signupTab.classList.remove("active");
+    
+  } else if (tab === 'signup') {
+    signupForm.classList.add('active');
+    loginForm.classList.remove('active');
+ 
+    signupTab.classList.add("active");
+    loginTab.classList.remove("active");
+  } else {
+    console.error(`Unknown tab: ${tab}`);
+  }
+}
+if (formType === 'signup') {
+  showForm('signup');
+} else {
+  showForm('login'); 
+}
+
 termsLink.addEventListener("click", () => {
   termsModal.style.display = "flex";
 });
