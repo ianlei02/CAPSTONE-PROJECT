@@ -1,0 +1,186 @@
+<?php
+session_start();
+require "../connection/dbcon.php";
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+
+    if (!isset($_SESSION['user_id'])) {
+        die("Error: User not logged in");
+    }
+
+    $applicant_id = $_SESSION['user_id'];
+
+    
+    $middle_name = $_POST['middleName'] ?? '';
+    $suffix = $_POST['suffix'] ?? '';
+    $sex = $_POST['gender'] ?? '';
+    $date_of_birth = $_POST['birthDate'] ?? '';
+    $civil_status = $_POST['civilStatus'] ?? '';
+    $nationality = $_POST['nationality'] ?? '';
+    $profile_picture = null;
+
+    
+    $mobile_number = $_POST['mobileNumber'] ?? '';
+    $alternate_contact = $_POST['alternateContact'] ?? '';
+    $street_address = $_POST['streetAddress'] ?? '';
+    $region = $_POST['region'] ?? '';
+    $province = $_POST['province'] ?? '';
+    $city_municipality = $_POST['cityMunicipality'] ?? '';
+    $barangay = $_POST['barangay'] ?? '';
+
+       
+    $primary_skills = $_POST['primarySkills'] ?? '';
+    $technical_skills = $_POST['technicalSkills'] ?? '';
+    $language = $_POST['language'] ?? 'English'; 
+    $proficiency_level = $_POST['proficiencyLevel'] ?? 'Basic'; 
+
+    $education_level = $_POST['educationLevel'] ?? '';
+    $school_name = $_POST['schoolName'] ?? '';
+    $course_or_degree = $_POST['courseDegree'] ?? '';
+    $year_graduated = $_POST['yearGraduated'] ?? '';
+
+    $company_name = $_POST['companyName'] ?? '';
+    $position = $_POST['position'] ?? '';
+    $industry = $_POST['industry'] ?? '';
+    $employment_start = $_POST['employmentStart'] ?? '';
+    $employment_end = $_POST['employmentEnd'] ?? null;
+    $key_responsibilities = $_POST['keyResponsibilities'] ?? '';
+   
+    $allowedTypes = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'image/jpeg',
+        'image/png'
+    ];
+    $maxFileSize = 10 * 1024 * 1024; 
+
+    ini_set('upload_max_filesize', '10M');
+    ini_set('post_max_size', '12M');
+    ini_set('memory_limit', '32M');
+
+    
+    function handleFileUpload($fieldName, $docType, $conn, $applicant_id, $allowedTypes, $maxFileSize) {
+        if (empty($_FILES[$fieldName]['name'])) {
+            return true; 
+        }
+
+        $file = $_FILES[$fieldName];
+
+        if ($file['size'] > $maxFileSize) {
+            throw new Exception("{$file['name']} exceeds 10MB limit");
+        }
+
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $fileType = $finfo->file($file['tmp_name']);
+
+        if (!in_array($fileType, $allowedTypes)) {
+            throw new Exception("Invalid file type for {$file['name']}");
+        }
+
+        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $storedName = bin2hex(random_bytes(16)) . '.' . $extension;
+
+        // Folder to save the file
+        $uploadDir = __DIR__ . '/../uploads/documents/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+        $filePath = $uploadDir . $storedName;
+
+        if (!move_uploaded_file($file['tmp_name'], $filePath)) {
+            throw new Exception("Failed to save {$file['name']}");
+        }
+
+        // Save file metadata into database
+        $relativePath = '../uploads/documents/' . $storedName; // relative path for database
+
+        $stmt = $conn->prepare("INSERT INTO applicant_documents 
+                            (applicant_id, document_type, original_filename, stored_filename, file_path, file_type, file_size) 
+                            VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+        $stmt->bind_param("isssssi", 
+            $applicant_id,
+            $docType,
+            $file['name'],
+            $storedName,
+            $relativePath,
+            $fileType,
+            $file['size']
+        );
+
+        return $stmt->execute();
+    }
+
+
+    $conn->begin_transaction();
+
+    try {
+        
+        $stmt_profile = $conn->prepare("INSERT INTO applicant_profile (applicant_id, middle_name, suffix, sex, date_of_birth, civil_status, nationality, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt_profile->bind_param("issssssb", $applicant_id, $middle_name, $suffix, $sex, $date_of_birth, $civil_status, $nationality, $profile_picture);
+        $stmt_profile->execute();
+        
+        $stmt_contact = $conn->prepare("INSERT INTO applicant_contact_info (applicant_id, mobile_number, alternate_contact_number, street_address, region, province, city_municipality, barangay) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt_contact->bind_param("isssssss", $applicant_id, $mobile_number, $alternate_contact, $street_address, $region, $province, $city_municipality, $barangay);
+        $stmt_contact->execute();
+        
+        $stmt_skills = $conn->prepare("INSERT INTO applicant_skills (applicant_id, primary_skills, technical_skills, language, proficiency_level) VALUES (?, ?, ?, ?, ?)");
+        $stmt_skills->bind_param("issss", $applicant_id, $primary_skills, $technical_skills, $language, $proficiency_level);
+        $stmt_skills->execute();
+
+        if (!empty($education_level) && !empty($school_name)) {
+        $stmt_educ = $conn->prepare("INSERT INTO applicant_educ (applicant_id, education_level, school_name, course_or_degree, year_graduated) VALUES (?, ?, ?, ?, ?)");
+        $stmt_educ->bind_param("issss", $applicant_id, $education_level, $school_name, $course_or_degree, $year_graduated);
+        $stmt_educ->execute();
+        }
+
+        $stmt_work_exp = $conn->prepare("INSERT INTO applicant_work_exp (applicant_id, company_name, position, industry, employment_start, employment_end, key_responsibilities) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt_work_exp->bind_param("issssss", $applicant_id, $company_name, $position, $industry, $employment_start, $employment_end, $key_responsibilities);
+        $stmt_work_exp->execute();
+                
+        handleFileUpload('resumeFile', 'resume', $conn, $applicant_id, $allowedTypes, $maxFileSize);
+        handleFileUpload('idFile', 'valid_id', $conn, $applicant_id, $allowedTypes, $maxFileSize);
+
+        if (!empty($_FILES['certFiles']['name'][0])) {
+            foreach ($_FILES['certFiles']['name'] as $index => $filename) {
+                $fileArray = [
+                    'name'     => $_FILES['certFiles']['name'][$index],
+                    'type'     => $_FILES['certFiles']['type'][$index],
+                    'tmp_name' => $_FILES['certFiles']['tmp_name'][$index],
+                    'error'    => $_FILES['certFiles']['error'][$index],
+                    'size'     => $_FILES['certFiles']['size'][$index],
+                ];
+
+                $_FILES['singleCertFile'] = $fileArray;
+
+                handleFileUpload('singleCertFile', 'certification', $conn, $applicant_id, $allowedTypes, $maxFileSize);
+            }
+        }
+
+       
+        $conn->commit();
+
+        header("Location: ../pages/applicant-profile.php?success=1");
+        exit();
+        
+    } catch (Exception $e) {
+        
+        $conn->rollback();
+        echo "Error: " . $e->getMessage();
+    } finally {
+        
+        if (isset($stmt_profile)) $stmt_profile->close();
+        if (isset($stmt_contact)) $stmt_contact->close();
+        if (isset($stmt_skills)) $stmt_skills->close();
+        if (isset($stmt_educ)) $stmt_educ->close();
+        if (isset($stmt_work_exp)) $stmt_work_exp->close();
+        $conn->close();
+    }
+    
+   
+    
+?>
