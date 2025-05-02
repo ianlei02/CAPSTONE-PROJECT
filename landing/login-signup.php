@@ -15,7 +15,6 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 
-// At the top of login-signup.php, after session_start()
 if (isset($_SESSION['verification_success'])) {
     echo "<script>alert('".$_SESSION['verification_success']."');</script>";
     unset($_SESSION['verification_success']);
