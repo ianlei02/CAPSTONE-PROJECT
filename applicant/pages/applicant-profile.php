@@ -585,6 +585,44 @@ $docsJson = json_encode($docsData ?: []);
   </script>
   <script src="../js/responsive.js"></script>
   <script>
+    document.getElementById('profileForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const updateBtn = document.getElementById('updateBtn');
+    const saveBtnn = document.getElementById('saveBtnn');
+
+    try {
+        let response;
+        if (e.submitter === updateBtn) {
+            response = await fetch('../Functions/update.php', {
+                method: 'POST',
+                body: formData
+            });
+        } else if (e.submitter === saveBtnn) {
+            response = await fetch('../Functions/profile_update.php', {
+                method: 'POST',
+                body: formData
+            });
+        }
+
+        const result = await response.json();
+        
+        if (result.success) {
+            alert(result.message);
+            if (e.submitter === updateBtn) {
+                window.location.reload();
+            }
+        } else {
+            alert('Error: ' + result.message);
+        }
+    } catch (error) {
+        alert('Network error: ' + error.message);
+    }
+});
+
+  </script>
+  <script>
     const editBtn = document.getElementById('editBtn');
     const saveBtn = document.getElementById('saveBtn');
     const inputs = document.querySelectorAll('#profileForm input');
