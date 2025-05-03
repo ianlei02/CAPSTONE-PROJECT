@@ -2,7 +2,7 @@
 require_once '../../landing/functions/check_login.php';
 
 if(!isset($_SESSION['user_id'])) {
-    header("Location: ../login-signup.php");
+    header("Location: ../../landing/login-signup.php");
     exit();
 }
 
@@ -488,7 +488,7 @@ if(!isset($_SESSION['user_id'])) {
     saveBtn.disabled = true;
     editBtn.disabled = false;
   });
-  
+
   </script>
   </body>
 </html>
