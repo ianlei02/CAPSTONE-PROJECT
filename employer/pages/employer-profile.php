@@ -1,4 +1,4 @@
-<?php
+<input?php
 require_once '../../landing/functions/check_login.php';
 
 if(!isset($_SESSION['user_id'])) {
@@ -293,7 +293,7 @@ if(!isset($_SESSION['user_id'])) {
             <p id="companyIndustry">
               Industrial Machinery Manufacturing | Established 2005
             </p>
-
+            
             <div class="profile-actions">
               <button class="btn btn-outline" id="editProfileBtn">
                 Edit Profile

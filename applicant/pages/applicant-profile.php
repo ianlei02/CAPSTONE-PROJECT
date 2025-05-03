@@ -39,7 +39,7 @@ $skillsStmt->execute();
 $skillsResult = $skillsStmt->get_result();
 $skillsData = $skillsResult->fetch_assoc();
 
-$workStmt = $conn->prepare("SELECT * FROM applicant_work_exp WHERE applicant_id = ?");
+$workStmt = $conn->prepare("SELECT *, employment_start, employment_end FROM applicant_work_exp WHERE applicant_id = ?");
 $workStmt->bind_param("s", $userId);
 $workStmt->execute();
 $workResult = $workStmt->get_result();
@@ -354,10 +354,10 @@ $docsJson = json_encode($docsData ?: []);
                       <label>Employment Period</label>
                       <div style="display: flex; gap: 10px">
                         <input
-                          type="month"
+                          type="date"
                           placeholder="From"
                           style="flex: 1" name="employmentStart" />
-                        <input type="month" placeholder="To" style="flex: 1" name="employmentEnd" />
+                        <input type="date" placeholder="To" style="flex: 1" name="employmentEnd" />
                       </div>
                     </div>
                     <div class="form-group" style="grid-column: span 3">
@@ -522,26 +522,30 @@ $docsJson = json_encode($docsData ?: []);
     
    
     if (workData && workData.length > 0) {
-        const expEntriesContainer = document.getElementById('experienceEntries');
-        const originalEntry = document.querySelector('.experience-entry');
-        expEntriesContainer.innerHTML = ''; // Clear the template
-        
-        workData.forEach((work, index) => {
-        
+    const expEntriesContainer = document.getElementById('experienceEntries');
+    const originalEntry = document.querySelector('.experience-entry');
+    expEntriesContainer.innerHTML = ''; // Clear the template
+
+    const formatDate = (dateStr) => {
+        const date = new Date(dateStr);
+        return !isNaN(date) ? date.toISOString().split('T')[0] : '';
+    };
+
+    workData.forEach((work, index) => {
         const expEntry = originalEntry.cloneNode(true);
-        
+
         expEntry.querySelector('[name="companyName"]').value = work.company_name || '';
         expEntry.querySelector('[name="position"]').value = work.position || '';
         expEntry.querySelector('[name="industry"]').value = work.industry || '';
-        
+
         const startDate = (work.employment_start && work.employment_start !== '0000-00-00') ? work.employment_start : '';
         const endDate = (work.employment_end && work.employment_end !== '0000-00-00') ? work.employment_end : '';
-        
-        expEntry.querySelector('[name="employmentStart"]').value = startDate ? startDate.substr(0, 7) : '';
-        expEntry.querySelector('[name="employmentEnd"]').value = endDate ? endDate.substr(0, 7) : '';
-        
+
+        expEntry.querySelector('[name="employmentStart"]').value = formatDate(startDate);
+        expEntry.querySelector('[name="employmentEnd"]').value = formatDate(endDate);
+
         expEntry.querySelector('[name="keyResponsibilities"]').value = work.key_responsibilities || '';
-        
+
         if (index > 0) {
             const removeBtn = document.createElement('button');
             removeBtn.type = 'button';
@@ -552,8 +556,9 @@ $docsJson = json_encode($docsData ?: []);
         }
 
         expEntriesContainer.appendChild(expEntry);
-      });
-      }
+    });
+}
+
     
         if (skillsData) {
           document.querySelector('[name="primarySkills"]').value = skillsData.primary_skills || '';
