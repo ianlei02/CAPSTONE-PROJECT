@@ -205,38 +205,6 @@
       <p>Sign in to access your dashboard</p>
     </div>
 
-    <form class="login-form" action="/admin/dashboard" method="POST">
-      <div class="form-group floating-label">
-        <input
-          type="text"
-          id="username"
-          name="username"
-          class="form-control"
-          placeholder=" "
-          required />
-        <label for="username">Username</label>
-      </div>
-
-      <div class="form-group floating-label">
-        <input
-          type="password"
-          id="password"
-          name="password"
-          class="form-control"
-          placeholder=" "
-          required />
-        <label for="password">Password</label>
-      </div>
-
-      <button type="submit" class="btn">Sign In →</button>
-
-      <div class="form-footer">
-        <a href="/forgot-password">Forgot your password?</a>
-      </div>
-    </form>
-  </div>
-</body>
-
       <form class="login-form" action="../Function/login.php" method="POST" id="loginform">
         <div class="form-group floating-label">
           <input
