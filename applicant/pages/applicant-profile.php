@@ -459,9 +459,6 @@ $docsJson = json_encode($docsData ?: []);
               </div>
 
               <div class="form-actions">
-                <button type="reset" class="btn btn-outline" id="cancelBtn">
-                  Cancel
-                </button>
                 <button type="submit" class="btn btn-secondary" id="updateBtn">
                   Update Profile
                 <button type="submit" class="btn btn-primary" id="saveBtnn">
