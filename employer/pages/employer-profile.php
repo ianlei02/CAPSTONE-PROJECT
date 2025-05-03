@@ -1,10 +1,20 @@
-<input?php
+<?php
 require_once '../../landing/functions/check_login.php';
 
 if(!isset($_SESSION['user_id'])) {
     header("Location: ../../landing/login-signup.php");
     exit();
-}
+} 
+
+$userId = $_SESSION['user_id'];
+
+$accountStmt = $conn->prepare("SELECT * FROM employer_company_info WHERE employer_ID = ?");
+$accountStmt->bind_param("s", $userId);
+$accountStmt->execute();
+$accountResult = $accountStmt->get_result();
+$accountData = $accountResult->fetch_assoc();
+
+$accountJson = json_encode($accountData ?: []);
 
 ?>
 <!DOCTYPE html>
@@ -287,13 +297,13 @@ if(!isset($_SESSION['user_id'])) {
           </aside>
 
       <main class="main-content">
-        <form class="profile-container">
+        <form action="../Functions/profile_update.php" method="POST" enctype="multipart/form-data" class="profile-container">
           <div class="profile-header">
             <h1 id="companyName">ABC Manufacturing Inc.</h1>
             <p id="companyIndustry">
               Industrial Machinery Manufacturing | Established 2005
             </p>
-            
+
             <div class="profile-actions">
               <button class="btn btn-outline" id="editProfileBtn">
                 Edit Profile
@@ -325,34 +335,34 @@ if(!isset($_SESSION['user_id'])) {
               <div class="info-grid">
                 <div class="info-item">
                   <span class="info-label">Company Type</span>
-                  <input type="text" class="info-value" id="companyType"></input>
+                  <input type="text" class="info-value" id="companyType" name="companyType"></input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Industry</span>
-                  <input type="text" class="info-value" id="industry"></input>
+                  <input type="text" class="info-value" id="industry" name="industry"></input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Company Size</span>
-                  <input type="text" class="info-value"></input>
+                  <input type="text" class="info-value" id="companySize" name="companySize"></input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Address</span>
-                  <input type="address" class="info-value" id="companyAddress">
+                  <input type="address" class="info-value" id="companyAddress" name="address">
                   </input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Contact Number</span>
-                  <input type="number" class="info-value" id="contactNumber">
+                  <input type="number" class="info-value" id="contactNumber" name="contactNumber">
                   </input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Email</span>
-                  <input type="email" class="info-value" id="companyEmail"></input>
+                  <input type="email" class="info-value" id="companyEmail" name="email"></input>
                 </div>
                 
               </div>
               <div class="save-cancel-btns" id="companyInfoBtns">
-                <button class="btn btn-primary" id="saveCompanyInfo">
+                <button type="submit" class="btn btn-primary" id="saveCompanyInfo">
                   Save
                 </button>
                 <button class="btn btn-outline" id="cancelCompanyInfo">
@@ -368,20 +378,20 @@ if(!isset($_SESSION['user_id'])) {
               <div class="info-grid">
                 <div class="info-item">
                   <span class="info-label">Contact Person</span>
-                  <input type="text" class="info-value" id="contactPerson">
+                  <input type="text" class="info-value" id="contactPerson" name="contactPerson">
                   </input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Position</span>
-                  <input type="text" class="info-value" id="contactPosition"></input>
+                  <input type="text" class="info-value" id="contactPosition" name="position"></input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Mobile Number</span>
-                  <input type="number" class="info-value" id="contactMobile"></input>
+                  <input type="number" class="info-value" id="contactMobile" name="mobileNumber"></input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Email</span>
-                  <input type="email" class="info-value" id="contactEmail">
+                  <input type="email" class="info-value" id="contactEmail" name="contactEmail">
                   </input>
                 </div>
               </div>
@@ -407,7 +417,7 @@ if(!isset($_SESSION['user_id'])) {
                   <div class="document-actions">
                     <a href="#" class="view-doc" id="view-bir">View</a>
                     <label for="upload-bir" class="update-doc">Upload</label>
-                    <input type="file" id="upload-bir" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+                    <input type="file" id="upload-bir" name="upload-bir" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                   </div>
                 </li>
                 <li class="document-item">
@@ -419,7 +429,7 @@ if(!isset($_SESSION['user_id'])) {
                   <div class="document-actions">
                     <a href="#" class="view-doc" id="view-business-permit">View</a>
                     <label for="upload-business-permit" class="update-doc">Upload</label>
-                    <input type="file" id="upload-business-permit" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+                    <input type="file" id="upload-business-permit" name="upload-business-permit" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                   </div>
                 </li>
                 <li class="document-item">
@@ -431,7 +441,7 @@ if(!isset($_SESSION['user_id'])) {
                   <div class="document-actions">
                     <a href="#" class="view-doc" id="view-dole">View</a>
                     <label for="upload-dole" class="update-doc">Upload</label>
-                    <input type="file" id="upload-dole" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+                    <input type="file" id="upload-dole" name="upload-dole" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                   </div>
                 </li>
                 <li class="document-item">
@@ -443,7 +453,7 @@ if(!isset($_SESSION['user_id'])) {
                   <div class="document-actions">
                     <a href="#" class="view-doc" id="view-migrant">View</a>
                     <label for="upload-migrant" class="update-doc">Upload</label>
-                    <input type="file" id="upload-migrant" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+                    <input type="file" id="upload-migrant" name="upload-migrant" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                   </div>
                 </li>
                 <li class="document-item">
@@ -455,16 +465,37 @@ if(!isset($_SESSION['user_id'])) {
                   <div class="document-actions">
                     <a href="#" class="view-doc" id="view-philjob">View</a>
                     <label for="upload-philjob" class="update-doc">Upload</label>
-                    <input type="file" id="upload-philjob" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+                    <input type="file" id="upload-philjob" name="upload-philjob" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                   </div>
                 </li>
               </ul>
             </div>
           </div>
+          <button type="submit">Submit</button>
         </form>
       </main>
     </div>
+    <script>
+  
+  const accountData = <?php echo $accountJson; ?>;
 
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    if (accountData) {
+      document.getElementById('companyType').value = accountData.company_type || '';
+      document.getElementById('industry').value = accountData.industry || '';
+      document.getElementById('companySize').value = accountData.company_size || '';
+      document.getElementById('companyAddress').value = accountData.address || '';
+      document.getElementById('contactNumber').value = accountData.contact_number || '';
+      document.getElementById('companyEmail').value = accountData.email || '';
+      document.getElementById('contactPerson').value = accountData.contact_person || '';
+      document.getElementById('contactPosition').value = accountData.contact_position || '';
+      document.getElementById('contactMobile').value = accountData.contact_mobile || '';
+      document.getElementById('contactEmail').value = accountData.contact_email || '';
+    }   
+      });
+  </script>
     <script src="../js/responsive.js"></script>
     <script>    
       const editBtn = document.getElementById('editProfileBtn');
