@@ -321,45 +321,35 @@ if(!isset($_SESSION['user_id'])) {
             <div class="section">
               <h2 class="section-title">
                 Company Information
-              
               </h2>
               <div class="info-grid">
                 <div class="info-item">
                   <span class="info-label">Company Type</span>
-                  <input type="text" class="info-value" id="companyType">Corporation</input>
+                  <input type="text" class="info-value" id="companyType"></input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Industry</span>
-                  <input type="text" class="info-value" id="industry">Manufacturing</input>
+                  <input type="text" class="info-value" id="industry"></input>
                 </div>
-                <input type="text" class="info-item">
+                <div class="info-item">
                   <span class="info-label">Company Size</span>
-                  <div class="info-value" id="companySize">
-                    201-500 employees
-                  </div>
-                </input>
+                  <input type="text" class="info-value"></input>
+                </div>
                 <div class="info-item">
                   <span class="info-label">Address</span>
                   <input type="address" class="info-value" id="companyAddress">
-                    123 Industrial Park, Laguna Technopark, Biñan, Laguna
                   </input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Contact Number</span>
                   <input type="number" class="info-value" id="contactNumber">
-                    (049) 511-2233
                   </input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Email</span>
-                  <input type="email" class="info-value" id="companyEmail">hr@abcmfg.com</input>
+                  <input type="email" class="info-value" id="companyEmail"></input>
                 </div>
-                <div class="info-item">
-                  <span class="info-label">Website</span>
-                  <input type="text" class="info-value" id="companyWebsite">
-                    www.abcmfg.com
-                  </input>
-                </div>
+                
               </div>
               <div class="save-cancel-btns" id="companyInfoBtns">
                 <button class="btn btn-primary" id="saveCompanyInfo">
@@ -374,27 +364,24 @@ if(!isset($_SESSION['user_id'])) {
             <div class="section">
               <h2 class="section-title">
                 Primary Contact
-             
               </h2>
               <div class="info-grid">
                 <div class="info-item">
                   <span class="info-label">Contact Person</span>
                   <input type="text" class="info-value" id="contactPerson">
-                    Maria Dela Cruz
                   </input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Position</span>
-                  <input type="text" class="info-value" id="contactPosition">HR Manager</input>
+                  <input type="text" class="info-value" id="contactPosition"></input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Mobile Number</span>
-                  <input type="number" class="info-value" id="contactMobile">0917-123-4567</input>
+                  <input type="number" class="info-value" id="contactMobile"></input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Email</span>
                   <input type="email" class="info-value" id="contactEmail">
-                    maria.delacruz@abcmfg.com
                   </input>
                 </div>
               </div>
@@ -480,14 +467,14 @@ if(!isset($_SESSION['user_id'])) {
 
     <script src="../js/responsive.js"></script>
     <script>    
-    const editBtn = document.getElementById('editProfileBtn');
+      const editBtn = document.getElementById('editProfileBtn');
       const saveBtn = document.getElementById('saveProfileBtn');
       const inputs = document.querySelectorAll('form input');
       const select = document.querySelectorAll('form select');
   
       window.addEventListener('DOMContentLoaded', () => {
       inputs.forEach(input => input.disabled = true);
-    });
+      });
   
     editBtn.addEventListener('click', () => {
     inputs.forEach(input => input.disabled = false);
@@ -500,7 +487,9 @@ if(!isset($_SESSION['user_id'])) {
     inputs.forEach(input => input.disabled = true);
     saveBtn.disabled = true;
     editBtn.disabled = false;
-  });</script>
+  });
+  
+  </script>
   </body>
 </html>
 
