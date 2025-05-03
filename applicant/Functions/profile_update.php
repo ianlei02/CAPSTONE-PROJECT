@@ -161,9 +161,9 @@ require "../connection/dbcon.php";
             }
         }
 
-       
+        
         $conn->commit();
-
+        
         header("Location: ../pages/applicant-profile.php?success=1");
         exit();
         
