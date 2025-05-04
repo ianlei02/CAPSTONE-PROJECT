@@ -28,6 +28,63 @@ $contact_position = $_POST['position'] ?? '';
 $contact_mobile = $_POST['mobileNumber'] ?? '';
 $contact_email = $_POST['contactEmail'] ?? '';
 
+// Profile picture upload settings
+$allowedImageTypes = [
+    'image/jpeg',
+    'image/png',
+    'image/gif',
+    'image/webp'
+];
+$maxImageSize = 2 * 1024 * 1024; // 2MB
+
+function handleProfilePictureUpload($conn, $employer_id, $allowedTypes, $maxSize) {
+    if (empty($_FILES['profilePicture']['name'])) {
+        return null; 
+    }
+
+    $file = $_FILES['profilePicture'];
+
+    if ($file['size'] > $maxSize) {
+        throw new Exception("Profile picture exceeds 2MB limit");
+    }
+
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $fileType = $finfo->file($file['tmp_name']);
+
+    if (!in_array($fileType, $allowedTypes)) {
+        throw new Exception("Only JPG, PNG, GIF or WebP images are allowed for profile pictures");
+    }
+
+    $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $storedName = 'profile_' . $employer_id . '_' . bin2hex(random_bytes(8)) . '.' . $extension;
+
+    $uploadDir = __DIR__ . '/../uploads/profile_pictures/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+
+    $oldPicture = $conn->query("SELECT profile_picture FROM employer_profile WHERE employer_id = $employer_id")->fetch_assoc();
+    if ($oldPicture && $oldPicture['profile_picture']) {
+        $oldPath = __DIR__ . '/../' . $oldPicture['profile_picture'];
+        if (file_exists($oldPath)) {
+            unlink($oldPath);
+        }
+    }
+
+    $filePath = $uploadDir . $storedName;
+    if (!move_uploaded_file($file['tmp_name'], $filePath)) {
+        throw new Exception("Failed to save profile picture");
+    }
+
+    $relativePath = 'uploads/profile_pictures/' . $storedName;
+
+    $stmt = $conn->prepare("UPDATE employer_profile SET profile_picture = ? WHERE employer_id = ?");
+    $stmt->bind_param("si", $relativePath, $employer_id);
+    $stmt->execute();
+
+    return $relativePath;
+}
+
 
 $uploadDir = __DIR__ . '/../uploads/company_docs/';
 if (!file_exists($uploadDir)) {
@@ -173,6 +230,7 @@ try {
                 }
             }
         }
+        $profilePicturePath = handleProfilePictureUpload($conn, $employer_id, $allowedImageTypes, $maxImageSize);
 
         $conn->commit();
         header("Location: ../pages/employer-profile.php?success=1");

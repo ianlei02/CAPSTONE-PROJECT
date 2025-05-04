@@ -60,7 +60,7 @@ $allowedTypes = [
     'image/jpeg',
     'image/png'
 ];
-$maxFileSize = 10 * 1024 * 1024; // 10MB
+$maxFileSize = 10 * 1024 * 1024; 
 
 function handleFileUpload($fieldName, $docType, $conn, $applicant_id, $allowedTypes, $maxFileSize) {
     if (empty($_FILES[$fieldName]['name'])) {

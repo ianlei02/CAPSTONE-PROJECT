@@ -311,9 +311,9 @@ $accountJson = json_encode($accountData ?: []);
               <button type="submit" class="btn btn-primary" id="saveProfileBtn"> Save Profile</button>
             </div>
 
-            <label class="company-logo-container" id="logoContainer" ="uploadLogo">
+            <label class="company-logo-container" id="logoContainer" form="uploadLogo">
               <img
-                src="https://via.placeholder.com/120"
+                src="<?php echo $profile_picture_url ?? '../assets/images/profile.png'; ?>"
                 alt="Company Logo"
                 class="company-logo"
                 id="companyLogo"
@@ -496,6 +496,19 @@ $accountJson = json_encode($accountData ?: []);
     }   
       });
   </script>
+  <script>
+    
+    document.getElementById('uploadLogo').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('companyLogo').src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+   </script>
     <script src="../js/responsive.js"></script>
     <script>    
       const editBtn = document.getElementById('editProfileBtn');

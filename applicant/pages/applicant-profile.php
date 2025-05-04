@@ -39,7 +39,7 @@ $skillsStmt->execute();
 $skillsResult = $skillsStmt->get_result();
 $skillsData = $skillsResult->fetch_assoc();
 
-$workStmt = $conn->prepare("SELECT *, employment_start, employment_end FROM applicant_work_exp WHERE applicant_id = ?");
+$workStmt = $conn->prepare("SELECT * FROM applicant_work_exp WHERE applicant_id = ?");
 $workStmt->bind_param("s", $userId);
 $workStmt->execute();
 $workResult = $workStmt->get_result();
@@ -133,13 +133,14 @@ $docsJson = json_encode($docsData ?: []);
       <div class="profile-container">
 
         <div class="section">
+          <form action="../Functions/profile_update.php" method="POST" id="profileForm" enctype="multipart/form-data"></form>
           <div class="profile-header">
             <label
               class="profile-pic-container"
               id="profilePicContainer"
               form="profilePicInput">
               <img
-                src=""
+                src="<?php echo $profile_picture_url ?? '../assets/images/profile.png'; ?>"
                 alt="Profile Picture"
                 class="profile-pic"
                 id="profilePic" />
@@ -168,7 +169,7 @@ $docsJson = json_encode($docsData ?: []);
           </div>
 
           <div class="profile-content">
-            <form action="../Functions/profile_update.php" method="POST" id="profileForm" enctype="multipart/form-data">
+            
               <!-- Personal Information Section -->
               <div class="section">
                 <button id="editBtn" class="btn btn-outline">Edit</button>
@@ -354,7 +355,7 @@ $docsJson = json_encode($docsData ?: []);
                       <label>Employment Period</label>
                       <div style="display: flex; gap: 10px">
                         <input
-                          type="date"
+                          type="month"
                           placeholder="From"
                           style="flex: 1" name="employmentStart" />
                         <input type="date" placeholder="To" style="flex: 1" name="employmentEnd" />
@@ -459,6 +460,9 @@ $docsJson = json_encode($docsData ?: []);
               </div>
 
               <div class="form-actions">
+                <button type="reset" class="btn btn-outline" id="cancelBtn">
+                  Cancel
+                </button>
                 <button type="submit" class="btn btn-secondary" id="updateBtn">
                   Update Profile
                 <button type="submit" class="btn btn-primary" id="saveBtnn">
@@ -519,30 +523,26 @@ $docsJson = json_encode($docsData ?: []);
     
    
     if (workData && workData.length > 0) {
-    const expEntriesContainer = document.getElementById('experienceEntries');
-    const originalEntry = document.querySelector('.experience-entry');
-    expEntriesContainer.innerHTML = ''; // Clear the template
-
-    const formatDate = (dateStr) => {
-        const date = new Date(dateStr);
-        return !isNaN(date) ? date.toISOString().split('T')[0] : '';
-    };
-
-    workData.forEach((work, index) => {
+        const expEntriesContainer = document.getElementById('experienceEntries');
+        const originalEntry = document.querySelector('.experience-entry');
+        expEntriesContainer.innerHTML = ''; // Clear the template
+        
+        workData.forEach((work, index) => {
+        
         const expEntry = originalEntry.cloneNode(true);
-
+        
         expEntry.querySelector('[name="companyName"]').value = work.company_name || '';
         expEntry.querySelector('[name="position"]').value = work.position || '';
         expEntry.querySelector('[name="industry"]').value = work.industry || '';
-
+        
         const startDate = (work.employment_start && work.employment_start !== '0000-00-00') ? work.employment_start : '';
         const endDate = (work.employment_end && work.employment_end !== '0000-00-00') ? work.employment_end : '';
-
-        expEntry.querySelector('[name="employmentStart"]').value = formatDate(startDate);
-        expEntry.querySelector('[name="employmentEnd"]').value = formatDate(endDate);
-
+        
+        expEntry.querySelector('[name="employmentStart"]').value = startDate ? startDate.substr(0, 7) : '';
+        expEntry.querySelector('[name="employmentEnd"]').value = endDate ? endDate.substr(0, 7) : '';
+        
         expEntry.querySelector('[name="keyResponsibilities"]').value = work.key_responsibilities || '';
-
+        
         if (index > 0) {
             const removeBtn = document.createElement('button');
             removeBtn.type = 'button';
@@ -553,9 +553,8 @@ $docsJson = json_encode($docsData ?: []);
         }
 
         expEntriesContainer.appendChild(expEntry);
-    });
-}
-
+      });
+      }
     
         if (skillsData) {
           document.querySelector('[name="primarySkills"]').value = skillsData.primary_skills || '';
@@ -581,44 +580,6 @@ $docsJson = json_encode($docsData ?: []);
       });
   </script>
   <script src="../js/responsive.js"></script>
-  <script>
-    document.getElementById('profileForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(this);
-    const updateBtn = document.getElementById('updateBtn');
-    const saveBtnn = document.getElementById('saveBtnn');
-
-    try {
-        let response;
-        if (e.submitter === updateBtn) {
-            response = await fetch('../Functions/update.php', {
-                method: 'POST',
-                body: formData
-            });
-        } else if (e.submitter === saveBtnn) {
-            response = await fetch('../Functions/profile_update.php', {
-                method: 'POST',
-                body: formData
-            });
-        }
-
-        const result = await response.json();
-        
-        if (result.success) {
-            alert(result.message);
-            if (e.submitter === updateBtn) {
-                window.location.reload();
-            }
-        } else {
-            alert('Error: ' + result.message);
-        }
-    } catch (error) {
-        alert('Network error: ' + error.message);
-    }
-});
-
-  </script>
   <script>
     const editBtn = document.getElementById('editBtn');
     const saveBtn = document.getElementById('saveBtn');
