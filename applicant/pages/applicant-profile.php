@@ -59,6 +59,32 @@ $skillsJson = json_encode($skillsData ?: []);
 $workJson = json_encode($workData ?: []);
 $docsJson = json_encode($docsData ?: []);
 
+$profile_picture_url = '../assets/images/profile.png'; 
+
+if (isset($_SESSION['user_id'])) {
+    $applicant_id = $_SESSION['user_id'];
+    $query = "SELECT profile_picture FROM applicant_profile WHERE applicant_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $applicant_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        if (!empty($row['profile_picture'])) {
+            $filename = basename($row['profile_picture']); 
+            $absolute_path = __DIR__ . '/../uploads/profile_pictures/' . $filename;
+            $web_path = '../uploads/profile_pictures/' . $filename;
+
+            error_log("Checking: " . $absolute_path);
+
+            if (file_exists($absolute_path)) {
+                $profile_picture_url = $web_path;
+            }
+        }
+    }
+    $stmt->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,6 +95,12 @@ $docsJson = json_encode($docsData ?: []);
   <title>Applicant Dashboard</title>
   <link rel="stylesheet" href="../css/applicant-profile.css" />
   <link rel="stylesheet" href="../css/navs.css" />
+  <style>
+    .profile-pic-container:hover .profile-pic {
+      transform: scale(1.05);
+      opacity: 0.8;
+      }
+  </style>
 </head>
 
 <body>
@@ -81,7 +113,37 @@ $docsJson = json_encode($docsData ?: []);
         </div>
       </div>
       <div class="right-pos">
-        <div class="profile">IAN</div>
+        <div class="profile" ><label
+              class="profile-pic-container"
+              id="profilePicContainer"
+              for="profilePicInput">
+              <img
+                src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+                alt="Profile Picture"
+                class="profile-pic"
+                id="profilePic" />
+              <div class="upload-icon">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2">
+                  ['\\ ']
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <input
+                type="file"
+                id="profilePicInput"
+                name="profilePicture"
+                class="profile-pic-input"
+                accept="image/*" />
+            </label>
+          </div>
       </div>
     </div>
   </nav>
@@ -100,7 +162,6 @@ $docsJson = json_encode($docsData ?: []);
         <li>
 
           <a href="./applicant-applications.php">
-
 
 
             <span class="emoji"><img src="../../public-assets/icons/briefcase-solid.svg" alt="Applications-icon"></span>
@@ -133,13 +194,14 @@ $docsJson = json_encode($docsData ?: []);
       <div class="profile-container">
 
         <div class="section">
+          <form action="../Functions/profile_update.php" method="POST" id="profileForm" enctype="multipart/form-data">
           <div class="profile-header">
             <label
               class="profile-pic-container"
               id="profilePicContainer"
-              form="profilePicInput">
+              for="profilePicInput">
               <img
-                src=""
+                src="<?php echo htmlspecialchars($profile_picture_url); ?>"
                 alt="Profile Picture"
                 class="profile-pic"
                 id="profilePic" />
@@ -160,6 +222,7 @@ $docsJson = json_encode($docsData ?: []);
               <input
                 type="file"
                 id="profilePicInput"
+                name="profilePicture"
                 class="profile-pic-input"
                 accept="image/*" />
             </label>
@@ -168,7 +231,7 @@ $docsJson = json_encode($docsData ?: []);
           </div>
 
           <div class="profile-content">
-            <form action="../Functions/profile_update.php" method="POST" id="profileForm" enctype="multipart/form-data">
+            
               <!-- Personal Information Section -->
               <div class="section">
                 <button id="editBtn" class="btn btn-outline">Edit</button>
@@ -354,10 +417,10 @@ $docsJson = json_encode($docsData ?: []);
                       <label>Employment Period</label>
                       <div style="display: flex; gap: 10px">
                         <input
-                          type="month"
+                          type="date"
                           placeholder="From"
                           style="flex: 1" name="employmentStart" />
-                        <input type="month" placeholder="To" style="flex: 1" name="employmentEnd" />
+                        <input type="date" placeholder="To" style="flex: 1" name="employmentEnd" />
                       </div>
                     </div>
                     <div class="form-group" style="grid-column: span 3">
@@ -459,9 +522,7 @@ $docsJson = json_encode($docsData ?: []);
               </div>
 
               <div class="form-actions">
-                <button type="reset" class="btn btn-outline" id="cancelBtn">
-                  Cancel
-                </button>
+               
                 <button type="submit" class="btn btn-secondary" id="updateBtn">
                   Update Profile
                 <button type="submit" class="btn btn-primary" id="saveBtnn">
@@ -474,7 +535,30 @@ $docsJson = json_encode($docsData ?: []);
         </div>
     </main>
   </div>
-
+  <script>
+    document.getElementById('profilePicInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+       
+        if (!file.type.match('image.*')) {
+            alert('Please select an image file');
+            return;
+        }
+        
+        if (file.size > 2 * 1024 * 1024) {
+            alert('Image must be less than 2MB');
+            return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            document.getElementById('profilePic').src = event.target.result;
+            
+        };
+        reader.readAsDataURL(file);
+    }
+});
+  </script>
   <script>
   
   const accountData = <?php echo $accountJson; ?>;
@@ -522,23 +606,26 @@ $docsJson = json_encode($docsData ?: []);
     
    
     if (workData && workData.length > 0) {
-        const expEntriesContainer = document.getElementById('experienceEntries');
-        const originalEntry = document.querySelector('.experience-entry');
-        expEntriesContainer.innerHTML = ''; // Clear the template
-        
-        workData.forEach((work, index) => {
-        
+    const expEntriesContainer = document.getElementById('experienceEntries');
+    const originalEntry = document.querySelector('.experience-entry');
+    expEntriesContainer.innerHTML = ''; // Clear the template
+    
+    workData.forEach((work, index) => {
         const expEntry = originalEntry.cloneNode(true);
         
         expEntry.querySelector('[name="companyName"]').value = work.company_name || '';
         expEntry.querySelector('[name="position"]').value = work.position || '';
         expEntry.querySelector('[name="industry"]').value = work.industry || '';
         
-        const startDate = (work.employment_start && work.employment_start !== '0000-00-00') ? work.employment_start : '';
-        const endDate = (work.employment_end && work.employment_end !== '0000-00-00') ? work.employment_end : '';
+        const startDate = (work.employment_start && work.employment_start !== '0000-00-00') ? 
+                         new Date(work.employment_start) : null;
+        const endDate = (work.employment_end && work.employment_end !== '0000-00-00') ? 
+                       new Date(work.employment_end) : null;
         
-        expEntry.querySelector('[name="employmentStart"]').value = startDate ? startDate.substr(0, 7) : '';
-        expEntry.querySelector('[name="employmentEnd"]').value = endDate ? endDate.substr(0, 7) : '';
+        expEntry.querySelector('[name="employmentStart"]').value = 
+            startDate ? startDate.toISOString().split('T')[0] : '';
+        expEntry.querySelector('[name="employmentEnd"]').value = 
+            endDate ? endDate.toISOString().split('T')[0] : '';
         
         expEntry.querySelector('[name="keyResponsibilities"]').value = work.key_responsibilities || '';
         
@@ -578,6 +665,47 @@ $docsJson = json_encode($docsData ?: []);
         }
       });
   </script>
+  <script> 
+    document.getElementById('profileForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const updateBtn = document.getElementById('updateBtn');
+    const saveBtnn = document.getElementById('saveBtnn');
+
+    if (e.submitter === updateBtn) {
+        
+        const response = await fetch('../Functions/update.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert('Profile updated successfully!');
+            window.location.reload();
+        } else {
+            alert('Error: ' + result.message);
+        }
+    } else if (e.submitter === saveBtnn) {
+     
+        const response = await fetch('../Functions/profile_update.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert('Profile saved successfully!');
+        } else {
+            alert('Error: ' + result.message);
+        }
+    }
+  });
+
+  </script>
   <script src="../js/responsive.js"></script>
   <script>
     const editBtn = document.getElementById('editBtn');
@@ -602,6 +730,6 @@ saveBtn.addEventListener('click', (e) => {
   editBtn.disabled = false;
 });
   </script>
-
+  
 </body>
 </html>
