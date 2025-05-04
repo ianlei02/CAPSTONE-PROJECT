@@ -16,6 +16,28 @@ $accountData = $accountResult->fetch_assoc();
 
 $accountJson = json_encode($accountData ?: []);
 
+$profile_picture_url = '../assets/images/profile.png'; 
+
+if (isset($_SESSION['user_id'])) {
+    $employer_id = $_SESSION['user_id'];
+    $query = "SELECT profile_picture FROM employer_company_info WHERE employer_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $employer_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        if (!empty($row['profile_picture'])) {
+            
+            if (file_exists('../' . $row['profile_picture'])) {
+                $profile_picture_url = '../' . $row['profile_picture'];
+            }
+        }
+    }
+    $stmt->close();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -243,6 +265,12 @@ $accountJson = json_encode($accountData ?: []);
         font-size: .85rem;
         color: var(--primary);
       }
+
+      .company-logo-container:hover .company-logo {
+      transform: scale(1.05);
+      opacity: 0.8;
+      }
+    
     </style>
   </head>
   <body>
@@ -311,9 +339,10 @@ $accountJson = json_encode($accountData ?: []);
               <button type="submit" class="btn btn-primary" id="saveProfileBtn"> Save Profile</button>
             </div>
 
+            <div class="profile-picture-container">
             <label class="company-logo-container" id="logoContainer" form="uploadLogo">
               <img
-                src="<?php echo $profile_picture_url ?? '../assets/images/profile.png'; ?>"
+                src="<?php echo htmlspecialchars($profile_picture_url); ?>"
                 alt="Company Logo"
                 class="company-logo"
                 id="companyLogo"
@@ -321,10 +350,12 @@ $accountJson = json_encode($accountData ?: []);
               <input
                 type="file"
                 id="uploadLogo"
+                name="profilePicture"
                 class="upload-logo"
                 accept="image/*"
               />
             </label>
+            </div>
           </div>
 
           <div class="profile-content">
@@ -497,7 +528,6 @@ $accountJson = json_encode($accountData ?: []);
       });
   </script>
   <script>
-    
     document.getElementById('uploadLogo').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
@@ -508,7 +538,7 @@ $accountJson = json_encode($accountData ?: []);
             reader.readAsDataURL(file);
         }
     });
-   </script>
+  </script>
     <script src="../js/responsive.js"></script>
     <script>    
       const editBtn = document.getElementById('editProfileBtn');

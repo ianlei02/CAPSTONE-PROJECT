@@ -10,6 +10,7 @@ require "../connection/dbcon.php";
     if (!isset($_SESSION['user_id'])) {
         die("Error: User not logged in");
     }
+    
 
     $applicant_id = $_SESSION['user_id'];
 
@@ -20,8 +21,8 @@ require "../connection/dbcon.php";
     $date_of_birth = $_POST['birthDate'] ?? '';
     $civil_status = $_POST['civilStatus'] ?? '';
     $nationality = $_POST['nationality'] ?? '';
+    
     $profile_picture = null;
-
     
     $mobile_number = $_POST['mobileNumber'] ?? '';
     $alternate_contact = $_POST['alternateContact'] ?? '';
@@ -84,7 +85,7 @@ require "../connection/dbcon.php";
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $storedName = bin2hex(random_bytes(16)) . '.' . $extension;
 
-        // Folder to save the file
+       
         $uploadDir = __DIR__ . '/../uploads/documents/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
@@ -96,7 +97,7 @@ require "../connection/dbcon.php";
         }
 
         // Save file metadata into database
-        $relativePath = '../uploads/documents/' . $storedName; // relative path for database
+        $relativePath = '../uploads/documents/' . $storedName;
 
         $stmt = $conn->prepare("INSERT INTO applicant_documents 
                             (applicant_id, document_type, original_filename, stored_filename, file_path, file_type, file_size) 
@@ -117,11 +118,41 @@ require "../connection/dbcon.php";
 
 
     $conn->begin_transaction();
+    
 
     try {
+
+        if (isset($_FILES['profilePicture']) && $_FILES['profilePicture']['error'] === UPLOAD_ERR_OK) {
+        $file = $_FILES['profilePicture'];
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $fileType = $finfo->file($file['tmp_name']);
+
+        if (!in_array($fileType, ['image/jpeg', 'image/png'])) {
+            throw new Exception("Invalid profile picture format. Only JPG/PNG allowed.");
+        }
+
+        if ($file['size'] > $maxFileSize) {
+            throw new Exception("Profile picture exceeds 10MB limit.");
+        }
+
+        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $storedName = bin2hex(random_bytes(16)) . '.' . $extension;
+
+        $uploadDir = __DIR__ . '/../uploads/profile_pictures/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+
+        $filePath = $uploadDir . $storedName;
+        if (!move_uploaded_file($file['tmp_name'], $filePath)) {
+            throw new Exception("Failed to upload profile picture.");
+        }
+
+        $profile_picture = '../uploads/profile_pictures/' . $storedName;
+        }
         
         $stmt_profile = $conn->prepare("INSERT INTO applicant_profile (applicant_id, middle_name, suffix, sex, date_of_birth, civil_status, nationality, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt_profile->bind_param("issssssb", $applicant_id, $middle_name, $suffix, $sex, $date_of_birth, $civil_status, $nationality, $profile_picture);
+        $stmt_profile->bind_param("isssssss", $applicant_id, $middle_name, $suffix, $sex, $date_of_birth, $civil_status, $nationality, $profile_picture);
         $stmt_profile->execute();
         
         $stmt_contact = $conn->prepare("INSERT INTO applicant_contact_info (applicant_id, mobile_number, alternate_contact_number, street_address, region, province, city_municipality, barangay) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
@@ -164,13 +195,21 @@ require "../connection/dbcon.php";
         
         $conn->commit();
         
+        echo json_encode([
+        'success' => true,
+        'message' => 'Profile updated successfully'
+        ]);
         header("Location: ../pages/applicant-profile.php?success=1");
         exit();
         
     } catch (Exception $e) {
         
         $conn->rollback();
-        echo "Error: " . $e->getMessage();
+        http_response_code(500);
+        echo json_encode([
+        'success' => false,
+        'message' => $e->getMessage()
+    ]);
     } finally {
         
         if (isset($stmt_profile)) $stmt_profile->close();

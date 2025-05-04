@@ -28,14 +28,13 @@ $contact_position = $_POST['position'] ?? '';
 $contact_mobile = $_POST['mobileNumber'] ?? '';
 $contact_email = $_POST['contactEmail'] ?? '';
 
-// Profile picture upload settings
 $allowedImageTypes = [
     'image/jpeg',
     'image/png',
     'image/gif',
     'image/webp'
 ];
-$maxImageSize = 2 * 1024 * 1024; // 2MB
+$maxImageSize = 5 * 1024 * 1024; 
 
 function handleProfilePictureUpload($conn, $employer_id, $allowedTypes, $maxSize) {
     if (empty($_FILES['profilePicture']['name'])) {
@@ -63,7 +62,7 @@ function handleProfilePictureUpload($conn, $employer_id, $allowedTypes, $maxSize
         mkdir($uploadDir, 0755, true);
     }
 
-    $oldPicture = $conn->query("SELECT profile_picture FROM employer_profile WHERE employer_id = $employer_id")->fetch_assoc();
+    $oldPicture = $conn->query("SELECT profile_picture FROM employer_company_info WHERE employer_id = $employer_id")->fetch_assoc();
     if ($oldPicture && $oldPicture['profile_picture']) {
         $oldPath = __DIR__ . '/../' . $oldPicture['profile_picture'];
         if (file_exists($oldPath)) {
@@ -78,7 +77,7 @@ function handleProfilePictureUpload($conn, $employer_id, $allowedTypes, $maxSize
 
     $relativePath = 'uploads/profile_pictures/' . $storedName;
 
-    $stmt = $conn->prepare("UPDATE employer_profile SET profile_picture = ? WHERE employer_id = ?");
+    $stmt = $conn->prepare("UPDATE employer_company_info SET profile_picture = ? WHERE employer_id = ?");
     $stmt->bind_param("si", $relativePath, $employer_id);
     $stmt->execute();
 
