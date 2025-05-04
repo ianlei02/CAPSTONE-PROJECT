@@ -72,14 +72,14 @@ if (isset($_SESSION['user_id'])) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         if (!empty($row['profile_picture'])) {
-            $imagePath = '../' . $row['profile_picture'];
-            
-            // Debug output
-            error_log("Profile picture path: " . $imagePath);
-            error_log("File exists: " . (file_exists($imagePath) ? 'Yes' : 'No'));
-            
-            if (file_exists($imagePath)) {
-                $profile_picture_url = $imagePath;
+            $filename = basename($row['profile_picture']); 
+            $absolute_path = __DIR__ . '/../uploads/profile_pictures/' . $filename;
+            $web_path = '../uploads/profile_pictures/' . $filename;
+
+            error_log("Checking: " . $absolute_path);
+
+            if (file_exists($absolute_path)) {
+                $profile_picture_url = $web_path;
             }
         }
     }

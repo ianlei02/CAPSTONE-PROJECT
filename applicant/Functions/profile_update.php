@@ -21,7 +21,6 @@ require "../connection/dbcon.php";
     $date_of_birth = $_POST['birthDate'] ?? '';
     $civil_status = $_POST['civilStatus'] ?? '';
     $nationality = $_POST['nationality'] ?? '';
-    
     $profile_picture = null;
     
     $mobile_number = $_POST['mobileNumber'] ?? '';
@@ -96,7 +95,7 @@ require "../connection/dbcon.php";
             throw new Exception("Failed to save {$file['name']}");
         }
 
-        // Save file metadata into database
+        
         $relativePath = '../uploads/documents/' . $storedName;
 
         $stmt = $conn->prepare("INSERT INTO applicant_documents 
@@ -122,33 +121,34 @@ require "../connection/dbcon.php";
 
     try {
 
+        // Handle profile picture upload
         if (isset($_FILES['profilePicture']) && $_FILES['profilePicture']['error'] === UPLOAD_ERR_OK) {
-        $file = $_FILES['profilePicture'];
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        $fileType = $finfo->file($file['tmp_name']);
+            $file = $_FILES['profilePicture'];
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $fileType = $finfo->file($file['tmp_name']);
 
-        if (!in_array($fileType, ['image/jpeg', 'image/png'])) {
-            throw new Exception("Invalid profile picture format. Only JPG/PNG allowed.");
-        }
+            if (!in_array($fileType, ['image/jpeg', 'image/png'])) {
+                throw new Exception("Invalid profile picture format. Only JPG/PNG allowed.");
+            }
 
-        if ($file['size'] > $maxFileSize) {
-            throw new Exception("Profile picture exceeds 10MB limit.");
-        }
+            if ($file['size'] > $maxFileSize) {
+                throw new Exception("Profile picture exceeds 10MB limit.");
+            }
 
-        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $storedName = bin2hex(random_bytes(16)) . '.' . $extension;
+            $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $storedName = bin2hex(random_bytes(16)) . '.' . $extension;
 
-        $uploadDir = __DIR__ . '/../uploads/profile_pictures/';
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
-        }
+            $uploadDir = __DIR__ . '/../uploads/profile_pictures/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
 
-        $filePath = $uploadDir . $storedName;
-        if (!move_uploaded_file($file['tmp_name'], $filePath)) {
-            throw new Exception("Failed to upload profile picture.");
-        }
+            $filePath = $uploadDir . $storedName;
+            if (!move_uploaded_file($file['tmp_name'], $filePath)) {
+                throw new Exception("Failed to upload profile picture.");
+            }
 
-        $profile_picture = '../uploads/profile_pictures/' . $storedName;
+            $profile_picture = '../uploads/profile_pictures/' . $storedName;
         }
         
         $stmt_profile = $conn->prepare("INSERT INTO applicant_profile (applicant_id, middle_name, suffix, sex, date_of_birth, civil_status, nationality, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
