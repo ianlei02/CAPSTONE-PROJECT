@@ -224,6 +224,13 @@ textarea {
   }
 }
 
+.btn-secondary:hover{
+  background-color: hsl(32, 100%, 94%);
+}
+
+.btn-secondary{
+  border: dotted 1px black;
+}
 
 
 

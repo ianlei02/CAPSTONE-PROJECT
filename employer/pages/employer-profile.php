@@ -2,8 +2,40 @@
 require_once '../../landing/functions/check_login.php';
 
 if(!isset($_SESSION['user_id'])) {
-    header("Location: ../login-signup.php");
+    header("Location: ../../landing/login-signup.php");
     exit();
+} 
+
+$userId = $_SESSION['user_id'];
+
+$accountStmt = $conn->prepare("SELECT * FROM employer_company_info WHERE employer_ID = ?");
+$accountStmt->bind_param("s", $userId);
+$accountStmt->execute();
+$accountResult = $accountStmt->get_result();
+$accountData = $accountResult->fetch_assoc();
+
+$accountJson = json_encode($accountData ?: []);
+
+$profile_picture_url = '../assets/images/profile.png'; 
+
+if (isset($_SESSION['user_id'])) {
+    $employer_id = $_SESSION['user_id'];
+    $query = "SELECT profile_picture FROM employer_company_info WHERE employer_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $employer_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        if (!empty($row['profile_picture'])) {
+            
+            if (file_exists('../' . $row['profile_picture'])) {
+                $profile_picture_url = '../' . $row['profile_picture'];
+            }
+        }
+    }
+    $stmt->close();
 }
 
 ?>
@@ -233,6 +265,12 @@ if(!isset($_SESSION['user_id'])) {
         font-size: .85rem;
         color: var(--primary);
       }
+
+      .company-logo-container:hover .company-logo {
+      transform: scale(1.05);
+      opacity: 0.8;
+      }
+    
     </style>
   </head>
   <body>
@@ -287,7 +325,7 @@ if(!isset($_SESSION['user_id'])) {
           </aside>
 
       <main class="main-content">
-        <form class="profile-container">
+        <form action="../Functions/profile_update.php" method="POST" enctype="multipart/form-data" class="profile-container">
           <div class="profile-header">
             <h1 id="companyName">ABC Manufacturing Inc.</h1>
             <p id="companyIndustry">
@@ -301,9 +339,10 @@ if(!isset($_SESSION['user_id'])) {
               <button type="submit" class="btn btn-primary" id="saveProfileBtn"> Save Profile</button>
             </div>
 
-            <label class="company-logo-container" id="logoContainer" ="uploadLogo">
+            <div class="profile-picture-container">
+            <label class="company-logo-container" id="logoContainer" form="uploadLogo">
               <img
-                src="https://via.placeholder.com/120"
+                src="<?php echo htmlspecialchars($profile_picture_url); ?>"
                 alt="Company Logo"
                 class="company-logo"
                 id="companyLogo"
@@ -311,58 +350,50 @@ if(!isset($_SESSION['user_id'])) {
               <input
                 type="file"
                 id="uploadLogo"
+                name="profilePicture"
                 class="upload-logo"
                 accept="image/*"
               />
             </label>
+            </div>
           </div>
 
           <div class="profile-content">
             <div class="section">
               <h2 class="section-title">
                 Company Information
-              
               </h2>
               <div class="info-grid">
                 <div class="info-item">
                   <span class="info-label">Company Type</span>
-                  <input type="text" class="info-value" id="companyType">Corporation</input>
+                  <input type="text" class="info-value" id="companyType" name="companyType"></input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Industry</span>
-                  <input type="text" class="info-value" id="industry">Manufacturing</input>
+                  <input type="text" class="info-value" id="industry" name="industry"></input>
                 </div>
-                <input type="text" class="info-item">
+                <div class="info-item">
                   <span class="info-label">Company Size</span>
-                  <div class="info-value" id="companySize">
-                    201-500 employees
-                  </div>
-                </input>
+                  <input type="text" class="info-value" id="companySize" name="companySize"></input>
+                </div>
                 <div class="info-item">
                   <span class="info-label">Address</span>
-                  <input type="address" class="info-value" id="companyAddress">
-                    123 Industrial Park, Laguna Technopark, Biñan, Laguna
+                  <input type="address" class="info-value" id="companyAddress" name="address">
                   </input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Contact Number</span>
-                  <input type="number" class="info-value" id="contactNumber">
-                    (049) 511-2233
+                  <input type="number" class="info-value" id="contactNumber" name="contactNumber">
                   </input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Email</span>
-                  <input type="email" class="info-value" id="companyEmail">hr@abcmfg.com</input>
+                  <input type="email" class="info-value" id="companyEmail" name="email"></input>
                 </div>
-                <div class="info-item">
-                  <span class="info-label">Website</span>
-                  <input type="text" class="info-value" id="companyWebsite">
-                    www.abcmfg.com
-                  </input>
-                </div>
+                
               </div>
               <div class="save-cancel-btns" id="companyInfoBtns">
-                <button class="btn btn-primary" id="saveCompanyInfo">
+                <button type="submit" class="btn btn-primary" id="saveCompanyInfo">
                   Save
                 </button>
                 <button class="btn btn-outline" id="cancelCompanyInfo">
@@ -374,27 +405,24 @@ if(!isset($_SESSION['user_id'])) {
             <div class="section">
               <h2 class="section-title">
                 Primary Contact
-             
               </h2>
               <div class="info-grid">
                 <div class="info-item">
                   <span class="info-label">Contact Person</span>
-                  <input type="text" class="info-value" id="contactPerson">
-                    Maria Dela Cruz
+                  <input type="text" class="info-value" id="contactPerson" name="contactPerson">
                   </input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Position</span>
-                  <input type="text" class="info-value" id="contactPosition">HR Manager</input>
+                  <input type="text" class="info-value" id="contactPosition" name="position"></input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Mobile Number</span>
-                  <input type="number" class="info-value" id="contactMobile">0917-123-4567</input>
+                  <input type="number" class="info-value" id="contactMobile" name="mobileNumber"></input>
                 </div>
                 <div class="info-item">
                   <span class="info-label">Email</span>
-                  <input type="email" class="info-value" id="contactEmail">
-                    maria.delacruz@abcmfg.com
+                  <input type="email" class="info-value" id="contactEmail" name="contactEmail">
                   </input>
                 </div>
               </div>
@@ -420,7 +448,7 @@ if(!isset($_SESSION['user_id'])) {
                   <div class="document-actions">
                     <a href="#" class="view-doc" id="view-bir">View</a>
                     <label for="upload-bir" class="update-doc">Upload</label>
-                    <input type="file" id="upload-bir" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+                    <input type="file" id="upload-bir" name="upload-bir" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                   </div>
                 </li>
                 <li class="document-item">
@@ -432,7 +460,7 @@ if(!isset($_SESSION['user_id'])) {
                   <div class="document-actions">
                     <a href="#" class="view-doc" id="view-business-permit">View</a>
                     <label for="upload-business-permit" class="update-doc">Upload</label>
-                    <input type="file" id="upload-business-permit" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+                    <input type="file" id="upload-business-permit" name="upload-business-permit" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                   </div>
                 </li>
                 <li class="document-item">
@@ -444,7 +472,7 @@ if(!isset($_SESSION['user_id'])) {
                   <div class="document-actions">
                     <a href="#" class="view-doc" id="view-dole">View</a>
                     <label for="upload-dole" class="update-doc">Upload</label>
-                    <input type="file" id="upload-dole" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+                    <input type="file" id="upload-dole" name="upload-dole" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                   </div>
                 </li>
                 <li class="document-item">
@@ -456,7 +484,7 @@ if(!isset($_SESSION['user_id'])) {
                   <div class="document-actions">
                     <a href="#" class="view-doc" id="view-migrant">View</a>
                     <label for="upload-migrant" class="update-doc">Upload</label>
-                    <input type="file" id="upload-migrant" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+                    <input type="file" id="upload-migrant" name="upload-migrant" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                   </div>
                 </li>
                 <li class="document-item">
@@ -468,26 +496,59 @@ if(!isset($_SESSION['user_id'])) {
                   <div class="document-actions">
                     <a href="#" class="view-doc" id="view-philjob">View</a>
                     <label for="upload-philjob" class="update-doc">Upload</label>
-                    <input type="file" id="upload-philjob" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+                    <input type="file" id="upload-philjob" name="upload-philjob" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                   </div>
                 </li>
               </ul>
             </div>
           </div>
+          <button type="submit">Submit</button>
         </form>
       </main>
     </div>
+    <script>
+  
+  const accountData = <?php echo $accountJson; ?>;
 
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    if (accountData) {
+      document.getElementById('companyType').value = accountData.company_type || '';
+      document.getElementById('industry').value = accountData.industry || '';
+      document.getElementById('companySize').value = accountData.company_size || '';
+      document.getElementById('companyAddress').value = accountData.address || '';
+      document.getElementById('contactNumber').value = accountData.contact_number || '';
+      document.getElementById('companyEmail').value = accountData.email || '';
+      document.getElementById('contactPerson').value = accountData.contact_person || '';
+      document.getElementById('contactPosition').value = accountData.contact_position || '';
+      document.getElementById('contactMobile').value = accountData.contact_mobile || '';
+      document.getElementById('contactEmail').value = accountData.contact_email || '';
+    }   
+      });
+  </script>
+  <script>
+    document.getElementById('uploadLogo').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('companyLogo').src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+  </script>
     <script src="../js/responsive.js"></script>
     <script>    
-    const editBtn = document.getElementById('editProfileBtn');
+      const editBtn = document.getElementById('editProfileBtn');
       const saveBtn = document.getElementById('saveProfileBtn');
       const inputs = document.querySelectorAll('form input');
       const select = document.querySelectorAll('form select');
   
       window.addEventListener('DOMContentLoaded', () => {
       inputs.forEach(input => input.disabled = true);
-    });
+      });
   
     editBtn.addEventListener('click', () => {
     inputs.forEach(input => input.disabled = false);
@@ -500,7 +561,9 @@ if(!isset($_SESSION['user_id'])) {
     inputs.forEach(input => input.disabled = true);
     saveBtn.disabled = true;
     editBtn.disabled = false;
-  });</script>
+  });
+
+  </script>
   </body>
 </html>
 
