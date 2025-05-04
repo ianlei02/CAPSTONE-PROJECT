@@ -4,12 +4,12 @@ require_once '../../landing/functions/check_login.php';
 if (!isset($_SESSION['user_id'])) {
   header("Location: ../login-signup.php");
   exit();
-
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,37 +38,36 @@ if (!isset($_SESSION['user_id'])) {
     <aside class="sidebar">
       <ul class="sidebar-menu">
         <li>
-
           <a href="./applicant-dashboard.php">
-            <span class="emoji"><img src="../../public-assets/icons/gauge-high-solid.svg" alt="Dashboard-icon"></span>
+            <span class="emoji"><img src="../../public-assets/icons/chart-histogram.svg" alt="Dashboard-icon"></span>
             <span class="label">Dashboard</span>
           </a>
         </li>
         <li>
-
           <a href="./applicant-applications.php">
-            <span class="emoji"><img src="../../public-assets/icons/briefcase-solid.svg" alt="Applications-icon"></span>
+            <span class="emoji"><img src="../../public-assets/icons/briefcase.svg" alt="Applications-icon"></span>
             <span class="label">My Applications</span>
           </a>
         </li>
         <li>
 
           <a href="./applicant-job-search.php">
-            <span class="emoji"><img src="../../public-assets/icons/magnifying-glass-solid.svg" alt="Job-Search-icon"></span>
+
+            <span class="emoji"><img src="../../public-assets/icons/search.svg" alt="Job-Search-icon"></span>
             <span class="label">Job Search</span>
           </a>
         </li>
         <li>
 
           <a href="./applicant-profile.php">
-            <span class="emoji"><img src="../../public-assets/icons/user-solid.svg" alt="Profile-icon"></span>
+
+            <span class="emoji"><img src="../../public-assets/icons/user.svg" alt="Profile-icon"></span>
             <span class="label">My Profile</span>
           </a>
         </li>
         <li>
-
           <a href="../../landing/functions/logout.php">
-            <span class="emoji"><img src="../../public-assets/icons/arrow-right-from-bracket-solid.svg" alt="Logout-icon"></span>
+            <span class="emoji"><img src="../../public-assets/icons/download.svg" alt="Logout-icon" style="transform: rotate(90deg);"></span>
             <span class="label">Log Out</span>
           </a>
         </li>
@@ -375,5 +374,5 @@ if (!isset($_SESSION['user_id'])) {
   </script>
 
 </body>
-</html>
 
+</html>

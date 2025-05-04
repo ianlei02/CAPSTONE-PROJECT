@@ -87,7 +87,7 @@ if (isset($_POST['verify'])) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Verification</title>
-    <link rel="stylesheet" href="login-signup.css" />
+    <link rel="stylesheet" href="./css/login-signup.css" />
   </head>
   <body>
     <div class="container">

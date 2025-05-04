@@ -70,9 +70,19 @@ body {
   }
   .navbar-left .right-pos {
     color: var(--dark-clr-700);
-    padding: 0.75rem;
-    border: 1px solid var(--dark-clr-700);
+    /* padding: 0.75rem; */
+    /* border: 1px solid var(--dark-clr-700); */
     border-radius: 50%;
+  }
+  .right-pos .profile-pic-container {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    border-radius: 50%;
+    /* border: 2px solid var(--dark-clr-700); */
+    /* background-color: var(--secondary-blue-color); */
+    overflow: hidden;
+    cursor: pointer;
   }
 }
 .container {
@@ -194,4 +204,3 @@ body {
     width: auto !important;
   }
 }
-

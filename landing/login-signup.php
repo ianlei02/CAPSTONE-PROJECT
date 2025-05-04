@@ -26,7 +26,7 @@ if (isset($_SESSION['verification_success'])) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login & Signup Form</title>
-    <link rel="stylesheet" href="login-signup.css" />
+    <link rel="stylesheet" href="./css/login-signup.css" />
   </head>
   <body>
     <div class="container">
@@ -146,7 +146,7 @@ if (isset($_SESSION['verification_success'])) {
               <input type="password" id="loginPassword" name="password" required />
             </div>
 
-            <div class="input-group remember-me">
+            <div class="input-group remember-me" style="display: flex; align-items: center; gap: 0.5rem;">
                 <input type="checkbox" id="rememberMe" name="remember_me">
                 <label for="rememberMe">Remember me</label>
             </div>

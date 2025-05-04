@@ -371,38 +371,38 @@
     </nav>
 
     <div class="container">
-      <aside class="sidebar">
+    <aside class="sidebar">
         <ul class="sidebar-menu">
           <li>
 
             <a href="./employer-dashboard.php">
-              <span class="emoji"><img src="../../public-assets/icons/gauge-high-solid.svg" alt=""></span>
+              <span class="emoji"><img src="../../public-assets/icons/chart-histogram.svg" alt=""></span>
               <span class="label">Dashboard</span>
             </a>
           </li>
           <li>
 
             <a href="./employer-applications.php">
-              <span class="emoji"><img src="../../public-assets/icons/briefcase-solid.svg" alt=""></span>
+              <span class="emoji"><img src="../../public-assets/icons/briefcase.svg" alt=""></span>
               <span class="label">Job Applications</span>
             </a>
           </li>
           <li>
 
             <a href="./applicant-job-search.php">
-              <span class="emoji"><img src="../../public-assets/icons/magnifying-glass-solid.svg" alt=""></span>
+              <span class="emoji"><img src="../../public-assets/icons/search.svg" alt=""></span>
               <span class="label">Applicant Search</span>
             </a>
           </li>
           <li>
-            <a href="./applicant-profile.php">
-              <span class="emoji"><img src="../../public-assets/icons/user-solid.svg" alt=""></span>
+            <a href="employer-profile.php">
+              <span class="emoji"><img src="../../public-assets/icons/user.svg" alt=""></span>
               <span class="label">My Profile</span>
             </a>
           </li>
           <li>
             <a href="../../landing/functions/logout.php">
-              <span class="emoji"><img src="../../public-assets/icons/arrow-right-from-bracket-solid.svg" alt=""></span>
+              <span class="emoji"><img src="../../public-assets/icons/download.svg" style="transform:rotate(90deg);"></span>
               <span class="label">Log Out</span>
             </a>
           </li>
