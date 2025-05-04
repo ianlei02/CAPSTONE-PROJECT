@@ -95,6 +95,12 @@ if (isset($_SESSION['user_id'])) {
   <title>Applicant Dashboard</title>
   <link rel="stylesheet" href="../css/applicant-profile.css" />
   <link rel="stylesheet" href="../css/navs.css" />
+  <style>
+    .profile-pic-container:hover .profile-pic {
+      transform: scale(1.05);
+      opacity: 0.8;
+      }
+  </style>
 </head>
 
 <body>
@@ -107,7 +113,37 @@ if (isset($_SESSION['user_id'])) {
         </div>
       </div>
       <div class="right-pos">
-        <div class="profile">IAN</div>
+        <div class="profile" ><label
+              class="profile-pic-container"
+              id="profilePicContainer"
+              for="profilePicInput">
+              <img
+                src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+                alt="Profile Picture"
+                class="profile-pic"
+                id="profilePic" />
+              <div class="upload-icon">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2">
+                  ['\\ ']
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <input
+                type="file"
+                id="profilePicInput"
+                name="profilePicture"
+                class="profile-pic-input"
+                accept="image/*" />
+            </label>
+          </div>
       </div>
     </div>
   </nav>
@@ -126,7 +162,6 @@ if (isset($_SESSION['user_id'])) {
         <li>
 
           <a href="./applicant-applications.php">
-
 
 
             <span class="emoji"><img src="../../public-assets/icons/briefcase-solid.svg" alt="Applications-icon"></span>
