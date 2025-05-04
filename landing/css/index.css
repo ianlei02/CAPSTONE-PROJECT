@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Poppins";
-  src: url("../public-assets/font/Poppins-Regular.ttf") format("truetype");
+  src: url("../../public-assets/font/Poppins-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
@@ -197,25 +197,19 @@ main {
 .hero {
   text-align: center;
   padding: 0px 20px;
-  /* background: linear-gradient(
-    135deg,
-    var(--secondary-blue-color) 1%,
-    var(--light-bg-color) 50%
-  ); */
-  color: #060606;
+  background: linear-gradient(to right, #2563eb, #4f46e5);
+  /* color: #060606; */
   height: 75vh;
   width: 90%;
   border-radius: 4rem;
   display: flex;
-  /* flex-direction: column; */
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  /* padding-top: 100px; */
+
 
   .hero-text {
     width: 100%;
     max-width: 650px;
-    /* margin: 0 auto; */
     height: 400px;
     text-align: center;
     display: flex;
@@ -224,29 +218,32 @@ main {
     align-items: center;
   }
   .hero-text h1 {
+    color: #fff;
     font-size: 3.75rem;
-    /* margin-bottom: 0.825rem; */
-    text-align: left;
+    text-align: center;
     text-wrap: wrap;
     width: 100%;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   }
   .hero-text h1 span {
     color: var(--primary-red-color);
   }
   .hero-text p {
     font-size: 1.5rem;
-    text-align: left;
+    text-align: center;
     width: 100%;
-    color: var(--dark-bg-color);
+    color: var(--light-clr-600);
   }
   .hero-btn {
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
-    margin-top: 1.5rem;
+    margin-top: 3.5rem;
     width: 100%;
 
     .get-started {
-      background-color: var(--primary-blue-color);
+      background-color: var(--dark-clr-700);
       color: var(--light-bg-color);
       padding: 10px 20px;
       border-radius: 8px;
@@ -315,6 +312,7 @@ main {
   height: auto;
 
   h2 {
+    margin-top: 2rem;
     font-size: 3.5rem;
     color: #141414;
   }
@@ -340,7 +338,7 @@ main {
       var(--dark-bg-color)
     ); */
     /* border: 1px solid var(--dark-clr-700); */
-    border-left: 8px solid var(--primary-blue-color);
+    border-top: 8px solid var(--secondary-blue-color);
     background-color: white;
     color: var(--primary-blue-color);
     background-position: left;
@@ -474,12 +472,8 @@ main {
   background: red !important;
 }
 
-footer {
-  background-color: var(--dark-bg-color);
-  color: #fff;
-  text-align: center;
-  padding: 20px;
-}
+
+
 
 /* Custom scrollbar styling */
 body::-webkit-scrollbar {
@@ -504,6 +498,7 @@ body::-webkit-scrollbar-thumb:hover {
   }
 
   .hero {
+  
     flex-direction: column;
   }
 

@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PESO Landing</title>
     <link rel="shortcut icon" href="./assets/images/pesosmb.png" type="image/x-icon">
-    <link rel="stylesheet" href="aboutus.css" />
+    <link rel="stylesheet" href="../css/aboutus.css" />
+    <link rel="stylesheet" href="../css/footer.css">
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
     
 
@@ -86,13 +87,49 @@
 
 
     </main>
-    <footer>
-      <div class="footer-container">
-        <img src="./assets/images/pesosmb.png" alt="" style="width: 150px;">
-        <p>&copy; 2025 PESO. All rights reserved.</p>
-      </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <img src="../../landing/assets/images/pesosmb.png" style="width: 150px;" alt="PESO Logo">
+            </div>
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>We are committed to delivering the best services in tech and innovation. Join us in making a difference.</p>
+            </div>
 
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <ul class="social-icons">
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">X (Twitter)</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: sanmiguelbulacanpeso@gmail.com</p>
+                <p>Phone: +123 456 7890</p>
+                <p>Address: 123 Tech Street, Innovation City</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 PESO. All rights reserved.</p>
+        </div>
     </footer>
+
 
     <script>
       const scrollers = document.querySelectorAll(".scroller");

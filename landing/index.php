@@ -6,9 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PESO Landing</title>
     <link rel="shortcut icon" href="./assets/images/pesosmb.png" type="image/x-icon">
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <link rel="stylesheet" href="./css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue-color);
+            color: #fff;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-blue-color);
+            color: var(--primary-blue-color);
+        }
+
         /* Features Section */
         .features {
             padding: 80px 0;
@@ -168,61 +188,6 @@
             font-size: 18px;
         }
 
-        /* Footer */
-        footer {
-            background-color: var(--dark-clr-700);
-            color: var(--light-clr-700);
-            padding: 60px 0 20px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-column h3 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: var(--light-clr-700);
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-column ul li a {
-            color: var(--light-clr-500);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-column ul li a:hover {
-            color: var(--light-clr-700);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-links a {
-            color: var(--light-clr-700);
-            font-size: 20px;
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--light-clr-500);
-            font-size: 14px;
-        }
 
         /* Responsive Styles */
         @media (max-width: 768px) {
@@ -252,7 +217,6 @@
             }
         }
     </style>
-
 </head>
 
 <body>
@@ -297,7 +261,8 @@
     <main>
         <section class="hero">
             <div class="hero-text">
-                <h1>PUBLIC EMPLOYMENT SERVICE OFFICE OF <br /><span class="sanmiguel">SAN MIGUEL, BULACAN</span></h1>
+                <!-- <h1>PUBLIC EMPLOYMENT SERVICE OFFICE OF <br /><span class="sanmiguel">SAN MIGUEL, BULACAN</span></h1> -->
+                <h1>Find Your Dream Job Today with PESO</h1>
                 <p>Your gateway to amazing job opportunities.</p>
                 <div class="hero-btn">
                     <a href="login-signup.php?form=signup" class="get-started">Get Started &#10132;</a>
@@ -305,12 +270,12 @@
                     <button class="find-talent">Find Talent</button> -->
                 </div>
             </div>
-            <div class="hero-image-container">
+            <!-- <div class="hero-image-container">
                 <img
                     src="./assets/images/people.png"
                     alt="Hero Image"
                     class="hero-img" />
-            </div>
+            </div> -->
         </section>
 
         <section class="statistics">
@@ -398,6 +363,13 @@
                         <h3>Secure Platform</h3>
                         <p>Your personal information is protected with our advanced security measures and privacy controls.</p>
                     </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>Reliable Support</h3>
+                        <p>Our dedicated support team is available during office hours to assist you with any inquiries or issues.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -474,12 +446,16 @@
                         <i class="fas fa-paint-brush"></i>
                         <h3>Creative</h3>
                     </div>
+                    <div class="category-card">
+                        <i class="fas fa-hammer"></i>
+                        <h3>Construction</h3>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- CTA Section -->
-        <section class="cta" style="width: 100vw;">
+        <section class="cta" style="width: 100vw;background: linear-gradient(to right, #2563eb, #4f46e5); ">
             <div class="container" style="width: auto;">
                 <h2>Ready to Take the Next Step?</h2>
                 <p>Join thousands of professionals and companies who found their perfect match through PESO</p>
@@ -492,13 +468,49 @@
 
 
     </main>
-    <footer>
+    <footer class="footer">
         <div class="footer-container">
-            <img src="./assets/images/pesosmb.png" alt="" style="width: 150px;">
-            <p>&copy; 2025 PESO. All rights reserved.</p>
+            <div class="footer-section">
+                <img src="../landing/assets/images/pesosmb.png" style="width: 150px;" alt="PESO Logo">
+            </div>
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>We are committed to delivering the best services in tech and innovation. Join us in making a difference.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <ul class="social-icons">
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">X (Twitter)</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: sanmiguelbulacanpeso@gmail.com</p>
+                <p>Phone: +123 456 7890</p>
+                <p>Address: 123 Tech Street, Innovation City</p>
+            </div>
         </div>
 
+        <div class="footer-bottom">
+            <p>&copy; 2025 PESO. All rights reserved.</p>
+        </div>
     </footer>
+
 
     <script>
         const scrollers = document.querySelectorAll(".scroller");

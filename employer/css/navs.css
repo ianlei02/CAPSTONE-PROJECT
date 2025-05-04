@@ -125,6 +125,7 @@ body {
     margin-top: 8px;
     width: 24px;
     height: 24px;
+    filter: grayscale(100%) brightness(75%);
   }
   .label {
     transition: opacity 0.3s ease;

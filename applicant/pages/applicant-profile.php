@@ -5,7 +5,6 @@ if(!isset($_SESSION['user_id'])) {
     header("Location: ../login-signup.php");
     exit();
 
-
 }
 $userId = $_SESSION['user_id'];
 
@@ -95,6 +94,7 @@ if (isset($_SESSION['user_id'])) {
   <title>Applicant Dashboard</title>
   <link rel="stylesheet" href="../css/applicant-profile.css" />
   <link rel="stylesheet" href="../css/navs.css" />
+
   <style>
     .profile-pic-container:hover .profile-pic {
       transform: scale(1.05);
@@ -113,7 +113,8 @@ if (isset($_SESSION['user_id'])) {
         </div>
       </div>
       <div class="right-pos">
-        <div class="profile" ><label
+        <div class="profile">
+          <label
               class="profile-pic-container"
               id="profilePicContainer"
               for="profilePicInput">
@@ -149,41 +150,40 @@ if (isset($_SESSION['user_id'])) {
   </nav>
 
   <div class="container">
-    <aside class="sidebar">
+  <aside class="sidebar">
       <ul class="sidebar-menu">
         <li>
-
           <a href="./applicant-dashboard.php">
-            <span class="emoji"><img src="../../public-assets/icons/gauge-high-solid.svg" alt="Dashboard-icon"></span>
-
+            <span class="emoji"><img src="../../public-assets/icons/chart-histogram.svg" alt="Dashboard-icon"></span>
             <span class="label">Dashboard</span>
           </a>
         </li>
         <li>
-
           <a href="./applicant-applications.php">
-
-
-            <span class="emoji"><img src="../../public-assets/icons/briefcase-solid.svg" alt="Applications-icon"></span>
+            <span class="emoji"><img src="../../public-assets/icons/briefcase.svg" alt="Applications-icon"></span>
             <span class="label">My Applications</span>
           </a>
         </li>
         <li>
+
           <a href="./applicant-job-search.php">
-            <span class="emoji"><img src="../../public-assets/icons/magnifying-glass-solid.svg" alt="Job-Search-icon"></span>
+
+            <span class="emoji"><img src="../../public-assets/icons/search.svg" alt="Job-Search-icon"></span>
             <span class="label">Job Search</span>
           </a>
         </li>
         <li>
+
           <a href="./applicant-profile.php">
 
-            <span class="emoji"><img src="../../public-assets/icons/user-solid.svg" alt="Profile-icon"></span>
+            <span class="emoji"><img src="../../public-assets/icons/user.svg" alt="Profile-icon"></span>
             <span class="label">My Profile</span>
           </a>
         </li>
         <li>
+
           <a href="../../landing/functions/logout.php">
-            <span class="emoji"><img src="../../public-assets/icons/arrow-right-from-bracket-solid.svg" alt="Logout-icon"></span>
+            <span class="emoji"><img src="../../public-assets/icons/download.svg" alt="Logout-icon" style="transform: rotate(90deg);"></span>
             <span class="label">Log Out</span>
           </a>
         </li>
@@ -522,9 +522,10 @@ if (isset($_SESSION['user_id'])) {
               </div>
 
               <div class="form-actions">
-               
-                <button type="submit" class="btn btn-secondary" id="updateBtn">
+               <button type="reset" class="btn btn-danger">Reset</button>
+                <button type="submit" class="btn btn-outline" id="updateBtn">
                   Update Profile
+                </button>
                 <button type="submit" class="btn btn-primary" id="saveBtnn">
                   Save Profile
                 </button>
@@ -715,10 +716,16 @@ if (isset($_SESSION['user_id'])) {
 
     window.addEventListener('DOMContentLoaded', () => {
     inputs.forEach(input => input.disabled = true);
+    select.forEach(select => select.disabled = true);
+    textArea.forEach(textArea => textArea.disabled = true);
+    saveBtn.disabled = true;
+
   });
 
   editBtn.addEventListener('click', () => {
   inputs.forEach(input => input.disabled = false);
+  select.forEach(select => select.disabled = false);
+  textArea.forEach(textArea => textArea.disabled = false);
   saveBtn.disabled = false;
   editBtn.disabled = true;
 });
@@ -726,10 +733,11 @@ if (isset($_SESSION['user_id'])) {
 saveBtn.addEventListener('click', (e) => {
   e.preventDefault(); 
   inputs.forEach(input => input.disabled = true);
+  select.forEach(select => select.disabled = true);
+  textArea.forEach(textArea => textArea.disabled = true);
   saveBtn.disabled = true;
   editBtn.disabled = false;
 });
   </script>
-  
 </body>
 </html>
