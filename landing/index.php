@@ -171,8 +171,9 @@
 
         /* CTA Section */
         .cta {
+            width: 100%;
             padding: 100px 0;
-            background: linear-gradient(135deg, var(--primary-blue-color) 0%, var(--secondary-blue-color) 100%);
+            background:var(--gradient);
             color: var(--light-clr-700);
             text-align: center;
         }
@@ -244,7 +245,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="login-signup.php?form=signup">Job Listings</a></li>
                         <li><a class="dropdown-item" href="login-signup.php?form=signup">Post a Job</a></li>
-                        <li><a class="dropdown-item" href="#">User's Guide</a></li>
+                        <li><a class="dropdown-item" href="./pages/user-guide.php">User's Guide</a></li>
                     </ul>
                 </li>
                 <li><a class="nav-link" href="./pages/aboutus.php">About Us</a></li>
@@ -270,12 +271,12 @@
                     <button class="find-talent">Find Talent</button> -->
                 </div>
             </div>
-            <!-- <div class="hero-image-container">
+            <div class="hero-image-container">
                 <img
-                    src="./assets/images/people.png"
+                    src="./assets/images/hero-asset.png"
                     alt="Hero Image"
                     class="hero-img" />
-            </div> -->
+            </div>
         </section>
 
         <section class="statistics">
@@ -455,7 +456,7 @@
         </section>
 
         <!-- CTA Section -->
-        <section class="cta" style="width: 100vw;background: linear-gradient(to right, #2563eb, #4f46e5); ">
+        <section class="cta"  ">
             <div class="container" style="width: auto;">
                 <h2>Ready to Take the Next Step?</h2>
                 <p>Join thousands of professionals and companies who found their perfect match through PESO</p>

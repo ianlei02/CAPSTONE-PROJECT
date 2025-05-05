@@ -5,7 +5,7 @@
   font-style: normal;
 }
 :root {
-  --primary-blue-color: #4285f4;
+--primary-blue-color: #4285f4;
   --secondary-blue-color: #5c9eff;
   --primary-red-color: #ff4c4c;
   --secondary-red-color: #ff6b6b;
@@ -20,6 +20,7 @@
   --light-clr-600: #fafafa;
   --light-clr-500: #f3f3f3;
   --border: #ddd;
+  --gradient: linear-gradient(to left, #487beb, #6962ec);
 }
 *,
 *::before,
@@ -37,6 +38,8 @@ body {
   margin: 0;
   padding: 0;
   background: #fcfcfc;
+
+  
   color: #000;
   width: 100%;
   min-height: 100vh;
@@ -46,7 +49,7 @@ body {
   overflow-x: hidden;
 }
 .header-info {
-  background: var(--secondary-blue-color);
+  background: var(--dark-clr-600);
   color: white;
   padding: 8px 15px;
   font-weight: 700;
@@ -197,14 +200,16 @@ main {
 .hero {
   text-align: center;
   padding: 0px 20px;
-  background: linear-gradient(to right, #2563eb, #4f46e5);
+  margin-top: 20px;
+  background: var(--gradient);
   /* color: #060606; */
   height: 75vh;
-  width: 90%;
-  border-radius: 4rem;
+  width: 95%;
+  border-radius: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 
 
   .hero-text {
@@ -220,7 +225,7 @@ main {
   .hero-text h1 {
     color: #fff;
     font-size: 3.75rem;
-    text-align: center;
+    text-align: left;
     text-wrap: wrap;
     width: 100%;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
@@ -230,16 +235,16 @@ main {
   }
   .hero-text p {
     font-size: 1.5rem;
-    text-align: center;
+    text-align: left;
     width: 100%;
     color: var(--light-clr-600);
   }
   .hero-btn {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     gap: 10px;
-    margin-top: 3.5rem;
+    margin-top: 1.5rem;
     width: 100%;
 
     .get-started {
@@ -253,35 +258,7 @@ main {
       text-decoration: none;
     }
   }
-  .hero-btn .find-job {
-    background-color: var(--primary-blue-color);
-    border: 1px solid var(--primary-blue-color);
-    color: #fff;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  .hero-btn .find-talent {
-    background-color: transparent;
-    border: 1px solid var(--primary-blue-color);
-    color: var(--primary-blue-color);
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  .find-job:hover {
-    background-color: transparent;
-    /* border: 1px solid var(--primary-blue-color); */
-    color: var(--primary-blue-color);
-  }
-  .find-talent:hover {
-    background-color: var(--primary-blue-color);
-    color: var(--light-bg-color);
-  }
+
 
   .hero-image-container {
     display: flex;
@@ -289,8 +266,8 @@ main {
     align-items: center;
     width: 100%;
     max-width: 450px;
-    /* height: 400px; */
-    /* margin-top: 20px; */
+    background-color: transparent;
+    
   }
   .hero-img {
     width: 100%;
