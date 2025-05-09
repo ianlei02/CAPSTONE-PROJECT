@@ -243,19 +243,19 @@ if (isset($_SESSION['verification_success'])) {
           password.
         </p>
 
-        <form id="forgotPasswordForm">
+        <form action="" method="POST" id="forgotPasswordForm">
           <div class="form-group">
             <label for="forgot-email">Email Address</label>
             <input
               type="email"
               id="forgot-email"
-              name="email"
+              name="email-reset"
               required
               placeholder="cardodalisay@gmail.com"
             />
           </div>
 
-          <button type="submit" class="submit-btn">Send Reset Link</button>
+          <button type="submit" name="resetLink" value="Submit" class="submit-btn">Send Reset Link</button>
 
           <div class="modal-footer">
             <p>
