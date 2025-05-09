@@ -461,8 +461,8 @@
                 <h2>Ready to Take the Next Step?</h2>
                 <p>Join thousands of professionals and companies who found their perfect match through PESO</p>
                 <div style="display: flex; justify-content: center; gap: 20px;">
-                    <button class="btn btn-outline" style="background-color: transparent; border-color: var(--light-clr-700); color: var(--light-clr-700);">I'm Hiring</button>
-                    <button class="btn btn-primary" style="background-color: var(--light-clr-700); color: var(--primary-blue-color);">Find Jobs</button>
+                    <button class="btn btn-outline" style="background-color: transparent; border-color: var(--light-clr-700); color: var(--light-clr-700);" onclick="window.location.href='login-signup.php'">I'm Hiring</button>
+                    <button class="btn btn-primary" style="background-color: var(--light-clr-700); color: var(--primary-blue-color);" onclick="window.location.href='login-signup.php'">Find Jobs</button>
                 </div>
             </div>
         </section>
