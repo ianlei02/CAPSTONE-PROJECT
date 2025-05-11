@@ -79,7 +79,7 @@ if (!isset($_SESSION['user_id'])) {
       <div class="container-job-search">
         <div class="header">
           <h1>Job Listings</h1>
-          <div>Showing 24 jobs</div>
+          <div>Showing 10 jobs</div>
         </div>
 
         <div class="search-filter">
@@ -107,16 +107,17 @@ if (!isset($_SESSION['user_id'])) {
             <div class="job-field">IT/Software</div>
             <div class="job-header">
               <div>
-                <h3 class="job-title">Frontend Developer</h3>
-                <div class="job-company">Tech Solutions Inc.</div>
+          <h3 class="job-title">Frontend Developer</h3>
+          <div class="job-company">Tech Solutions Inc.</div>
               </div>
               <div>
-                <span class="job-salary">₱50,000 - ₱70,000/month</span>
+          <span class="job-salary">₱50,000 - ₱70,000/month</span>
               </div>
             </div>
             <div class="job-meta">
               <span><i class="fas fa-briefcase"></i> Full-time</span>
               <span><i class="fas fa-map-marker-alt"></i> Taguig City</span>
+              <span><i class="fas fa-users"></i> Vacancies: 3</span>
             </div>
             <div class="job-description">
               We're looking for a skilled Frontend Developer with 3+ years
@@ -135,16 +136,17 @@ if (!isset($_SESSION['user_id'])) {
             <div class="job-field">Engineering</div>
             <div class="job-header">
               <div>
-                <h3 class="job-title">Civil Engineer</h3>
-                <div class="job-company">BuildRight Construction</div>
+          <h3 class="job-title">Civil Engineer</h3>
+          <div class="job-company">BuildRight Construction</div>
               </div>
               <div>
-                <span class="job-salary">₱45,000 - ₱60,000/month</span>
+          <span class="job-salary">₱45,000 - ₱60,000/month</span>
               </div>
             </div>
             <div class="job-meta">
               <span><i class="fas fa-briefcase"></i> Full-time</span>
               <span><i class="fas fa-map-marker-alt"></i> Quezon City</span>
+              <span><i class="fas fa-users"></i> Vacancies: 2</span>
             </div>
             <div class="job-description">
               Seeking a licensed Civil Engineer to oversee construction
@@ -163,16 +165,17 @@ if (!isset($_SESSION['user_id'])) {
             <div class="job-field">Medicine/Healthcare</div>
             <div class="job-header">
               <div>
-                <h3 class="job-title">Staff Nurse</h3>
-                <div class="job-company">Metro Medical Center</div>
+          <h3 class="job-title">Staff Nurse</h3>
+          <div class="job-company">Metro Medical Center</div>
               </div>
               <div>
-                <span class="job-salary">₱35,000 - ₱45,000/month</span>
+          <span class="job-salary">₱35,000 - ₱45,000/month</span>
               </div>
             </div>
             <div class="job-meta">
               <span><i class="fas fa-briefcase"></i> Full-time</span>
               <span><i class="fas fa-map-marker-alt"></i> Manila</span>
+              <span><i class="fas fa-users"></i> Vacancies: 5</span>
             </div>
             <div class="job-description">
               Registered nurses needed for hospital wards. Must have valid PRC
@@ -190,16 +193,17 @@ if (!isset($_SESSION['user_id'])) {
             <div class="job-field">Business/Finance</div>
             <div class="job-header">
               <div>
-                <h3 class="job-title">Financial Analyst</h3>
-                <div class="job-company">Prime Capital Inc.</div>
+          <h3 class="job-title">Financial Analyst</h3>
+          <div class="job-company">Prime Capital Inc.</div>
               </div>
               <div>
-                <span class="job-salary">₱60,000 - ₱80,000/month</span>
+          <span class="job-salary">₱60,000 - ₱80,000/month</span>
               </div>
             </div>
             <div class="job-meta">
               <span><i class="fas fa-briefcase"></i> Full-time</span>
               <span><i class="fas fa-map-marker-alt"></i> Makati City</span>
+              <span><i class="fas fa-users"></i> Vacancies: 1</span>
             </div>
             <div class="job-description">
               Looking for a CFA with 4+ years experience in investment
@@ -209,6 +213,145 @@ if (!isset($_SESSION['user_id'])) {
             <div class="job-footer">
               <div class="job-posted">Posted: May 15, 2023</div>
               <button class="apply-btn" data-job-id="104">Apply Now</button>
+            </div>
+          </div>
+
+          <!-- Education Job -->
+          <div class="job-card" data-field="Education">
+            <div class="job-field">Education</div>
+            <div class="job-header">
+              <div>
+          <h3 class="job-title">High School Teacher</h3>
+          <div class="job-company">Bright Future Academy</div>
+              </div>
+              <div>
+          <span class="job-salary">₱30,000 - ₱40,000/month</span>
+              </div>
+            </div>
+            <div class="job-meta">
+              <span><i class="fas fa-briefcase"></i> Full-time</span>
+              <span><i class="fas fa-map-marker-alt"></i> Pasig City</span>
+              <span><i class="fas fa-users"></i> Vacancies: 4</span>
+            </div>
+            <div class="job-description">
+              Licensed teacher with expertise in Mathematics or Science. Must
+              have at least 3 years teaching experience and excellent
+              communication skills.
+            </div>
+            <div class="job-footer">
+              <div class="job-posted">Posted: May 14, 2023</div>
+              <button class="apply-btn" data-job-id="105">Apply Now</button>
+            </div>
+          </div>
+
+          <!-- Marketing Job -->
+          <div class="job-card" data-field="Marketing">
+            <div class="job-field">Marketing</div>
+            <div class="job-header">
+              <div>
+          <h3 class="job-title">Digital Marketing Specialist</h3>
+          <div class="job-company">AdVantage Media</div>
+              </div>
+              <div>
+          <span class="job-salary">₱40,000 - ₱55,000/month</span>
+              </div>
+            </div>
+            <div class="job-meta">
+              <span><i class="fas fa-briefcase"></i> Full-time</span>
+              <span><i class="fas fa-map-marker-alt"></i> Cebu City</span>
+              <span><i class="fas fa-users"></i> Vacancies: 2</span>
+            </div>
+            <div class="job-description">
+              Experienced in SEO, PPC, and social media campaigns. Must have
+              strong analytical skills and a proven track record in increasing
+              online engagement.
+            </div>
+            <div class="job-footer">
+              <div class="job-posted">Posted: May 13, 2023</div>
+              <button class="apply-btn" data-job-id="106">Apply Now</button>
+            </div>
+          </div>
+
+          <!-- Construction Job -->
+          <div class="job-card" data-field="Construction">
+            <div class="job-field">Construction</div>
+            <div class="job-header">
+              <div>
+          <h3 class="job-title">Project Manager</h3>
+          <div class="job-company">Skyline Builders</div>
+              </div>
+              <div>
+          <span class="job-salary">₱70,000 - ₱90,000/month</span>
+              </div>
+            </div>
+            <div class="job-meta">
+              <span><i class="fas fa-briefcase"></i> Full-time</span>
+              <span><i class="fas fa-map-marker-alt"></i> Davao City</span>
+              <span><i class="fas fa-users"></i> Vacancies: 1</span>
+            </div>
+            <div class="job-description">
+              Oversee construction projects from start to finish. Must have
+              strong leadership skills and 7+ years experience in project
+              management.
+            </div>
+            <div class="job-footer">
+              <div class="job-posted">Posted: May 12, 2023</div>
+              <button class="apply-btn" data-job-id="107">Apply Now</button>
+            </div>
+          </div>
+
+          <!-- Manufacturing Job -->
+          <div class="job-card" data-field="Manufacturing">
+            <div class="job-field">Manufacturing</div>
+            <div class="job-header">
+              <div>
+          <h3 class="job-title">Production Supervisor</h3>
+          <div class="job-company">Quality Goods Inc.</div>
+              </div>
+              <div>
+          <span class="job-salary">₱35,000 - ₱50,000/month</span>
+              </div>
+            </div>
+            <div class="job-meta">
+              <span><i class="fas fa-briefcase"></i> Full-time</span>
+              <span><i class="fas fa-map-marker-alt"></i> Cavite</span>
+              <span><i class="fas fa-users"></i> Vacancies: 3</span>
+            </div>
+            <div class="job-description">
+              Supervise production lines and ensure quality standards are met.
+              Must have at least 5 years experience in manufacturing.
+            </div>
+            <div class="job-footer">
+              <div class="job-posted">Posted: May 11, 2023</div>
+              <button class="apply-btn" data-job-id="108">Apply Now</button>
+            </div>
+          </div>
+
+          <!-- Other Fields -->
+          <div class="job-card" data-field="Other">
+            <div class="job-field">Other Fields</div>
+            <div class="job-header">
+              <div>
+          <h3 class="job-title">Event Coordinator</h3>
+          <div class="job-company">Dream Events Co.</div>
+              </div>
+              <div>
+          <span class="job-salary">₱25,000 - ₱35,000/month</span>
+              </div>
+            </div>
+            <div class="job-meta">
+              <span><i class="fas fa-briefcase"></i> Full-time</span>
+              <span><i class="fas fa-map-marker-alt"></i> Baguio City</span>
+              <span><i class="fas fa-users"></i> Vacancies: 2</span>
+            </div>
+            <div class="job-description">
+              Plan and execute events such as weddings and corporate
+              gatherings. Must have excellent organizational skills and
+              creativity.
+            </div>
+            <div class="job-footer">
+              <div class="job-posted">Posted: May 10, 2023</div>
+              <button class="apply-btn" data-job-id="109">Apply Now</button>
             </div>
           </div>
         </div>

@@ -14,6 +14,22 @@
   --light-clr-700: #fff;
   --light-clr-600: #fafafa;
   --light-clr-500: #f3f3f3;
+  --color-text-dark: #4a5568;
+  --color-border: #e2e8f0;
+  --color-background-header: #f8fafc;
+  --color-primary: #3182ce;
+  --color-danger: #e53e3e;
+  --color-success: #38a169;
+  --color-muted: #718096;
+  --color-warning: #dd6b20;
+  --color-primary-light: #dbf2ff;
+  --color-success-light: #c6f6d5;
+  --color-warning-light: #feebc8;
+  --color-danger-light: #fed7d7;
+  --color-danger-hover: #feb2b2;
+  --color-primary-hover: #bee3f8;
+  --color-warning-hover: #f6ad55;
+  --color-success-hover: #58bd8a;
 }
 html {
   scroll-behavior: smooth;

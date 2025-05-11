@@ -47,233 +47,7 @@ if (isset($_SESSION['user_id'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Company Profile</title>
   <link rel="stylesheet" href="../css/navs.css">
-
-  <style>
-    :root {
-      --primary: #0055a5;
-      --primary-light: #e6f0fa;
-      --secondary: #4caf50;
-      --dark: #333;
-      --light: #f5f5f5;
-      --border: #ddd;
-    }
-
-    .profile-container {
-      max-width: 1000px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-    }
-
-    .profile-header {
-      background-color: var(--primary);
-      color: white;
-      padding: 30px;
-      position: relative;
-      min-height: 180px;
-    }
-
-    .company-logo-container {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background-color: white;
-      border: 3px solid white;
-      position: absolute;
-      bottom: -60px;
-      left: 50px;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .company-logo {
-      max-width: 100%;
-      max-height: 100%;
-      display: block;
-    }
-
-    .upload-logo {
-      display: none;
-    }
-
-    .profile-actions {
-      position: absolute;
-      right: 30px;
-      top: 30px;
-    }
-
-    .btn {
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 500;
-      border: none;
-      transition: all 0.3s;
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: white;
-      border: 1px solid white;
-    }
-
-    .btn-outline:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .btn-primary {
-      background-color: white;
-      color: var(--primary);
-      border: 1px solid white;
-    }
-
-    .profile-content {
-      padding: 80px 30px 30px;
-    }
-
-    .section {
-      margin-bottom: 30px;
-    }
-
-    .section-title {
-      color: var(--primary);
-      border-bottom: 2px solid var(--primary-light);
-      padding-bottom: 8px;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .edit-btn {
-      background: none;
-      border: none;
-      color: var(--primary);
-      cursor: pointer;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .info-item {
-      margin-bottom: 15px;
-    }
-
-    .info-label {
-      display: block;
-      color: var(--dark);
-      margin-bottom: 5px;
-      font-weight: 500;
-    }
-
-    .info-value {
-      padding: 10px;
-      border-radius: 4px;
-      background-color: var(--light);
-      min-height: 40px;
-      display: flex;
-      align-items: center;
-    }
-
-    .editable {
-      background-color: white;
-      border: 1px solid var(--border);
-      cursor: text;
-    }
-
-    .editable:focus {
-      outline: 2px solid var(--primary-light);
-    }
-
-    .document-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .document-item {
-      display: flex;
-      align-items: center;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      margin-bottom: 10px;
-    }
-
-    .document-icon {
-      margin-right: 15px;
-      color: var(--primary);
-      font-size: 24px;
-    }
-
-    .document-info {
-      flex: 1;
-    }
-
-    .document-name {
-      font-weight: 500;
-      margin-bottom: 5px;
-    }
-
-    .document-date {
-      color: #666;
-      font-size: 14px;
-    }
-
-    .document-actions a {
-      color: var(--primary);
-      text-decoration: none;
-      margin-left: 10px;
-      font-size: 14px;
-    }
-
-    .save-cancel-btns {
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-      margin-top: 20px;
-      display: none;
-    }
-
-    @media (max-width: 768px) {
-      .company-logo-container {
-        left: 30px;
-        width: 100px;
-        height: 100px;
-        bottom: -50px;
-      }
-
-      .profile-actions {
-        position: static;
-        margin-bottom: 20px;
-      }
-
-      .profile-content {
-        padding-top: 60px;
-      }
-    }
-
-    .update-doc {
-      font-size: .85rem;
-      color: var(--primary);
-    }
-
-    .company-logo-container:hover .company-logo {
-      transform: scale(1.05);
-      opacity: 0.8;
-    }
-  </style>
+  <link rel="stylesheet" href="../css/employer-profile.css" />
 </head>
 
 <body>
@@ -295,14 +69,17 @@ if (isset($_SESSION['user_id'])) {
     <aside class="sidebar">
       <ul class="sidebar-menu">
         <li>
-
           <a href="./employer-dashboard.php">
             <span class="emoji"><img src="../../public-assets/icons/chart-histogram.svg" alt=""></span>
             <span class="label">Dashboard</span>
           </a>
         </li>
         <li>
-
+          <a href="./employer-post.php">
+            <span class="emoji"><img src="../../public-assets/icons/download.svg" style="transform:rotate(180deg);"></span>
+            <span class="label">Post Job</span>
+          </a>
+        <li>
           <a href="./employer-applications.php">
             <span class="emoji"><img src="../../public-assets/icons/briefcase.svg" alt=""></span>
             <span class="label">Job Applications</span>
@@ -505,14 +282,14 @@ if (isset($_SESSION['user_id'])) {
               </li>
             </ul>
           </div>
-          <button type="submit" class="btn btn-primary" style="background-color: #0055a5; color:white;">Submit</button>
+          <button type="submit" class="btn btn-primary" style="background-color: #0055a5; color:white; padding: .825rem 3rem; font-size: 1rem; margin-left: 83.5%;">Submit</button>
         </div>
       </form>
     </main>
   </div>
+  
   <script>
     const accountData = <?php echo $accountJson; ?>;
-
 
     document.addEventListener('DOMContentLoaded', function() {
 
