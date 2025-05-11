@@ -229,26 +229,27 @@ if (isset($_SESSION['verification_success'])) {
   </div>
 
   <div id="forgotPasswordModal" class="forgot-modal">
-    <div class="modal-content">
-      <span class="close-modal">&times;</span>
-      <h2>Reset Your Password</h2>
-      <p>
-        Enter your email address and we'll send you a link to reset your
-        password.
-      </p>
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Reset Your Password</h2>
+        <p>
+          Enter your email address and we'll send you a link to reset your
+          password.
+        </p>
 
-      <form id="forgotPasswordForm">
-        <div class="form-group">
-          <label for="forgot-email">Email Address</label>
-          <input
-            type="email"
-            id="forgot-email"
-            name="email"
-            required
-            placeholder="cardodalisay@gmail.com" />
-        </div>
+        <form action="" method="POST" id="forgotPasswordForm">
+          <div class="form-group">
+            <label for="forgot-email">Email Address</label>
+            <input
+              type="email"
+              id="forgot-email"
+              name="email-reset"
+              required
+              placeholder="cardodalisay@gmail.com"
+            />
+          </div>
 
-        <button type="submit" class="submit-btn">Send Reset Link</button>
+          <button type="submit" name="resetLink" value="Submit" class="submit-btn">Send Reset Link</button>
 
         <div class="modal-footer">
           <p>
@@ -262,12 +263,16 @@ if (isset($_SESSION['verification_success'])) {
   <script>
     function generateRandomNumber() {
 
+
+   
+
       let min = 100000;
       let max = 999999;
       let randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 
       let lastGeneratedNUmber = localStorage.getItem('lastGeneratedNumber');
       while (randomNumber === parseInt(lastGeneratedNUmber)) {
+
 
         randomNumber = Math.floor(Math.random() * ma(max - min + 1)) + min;
       }
