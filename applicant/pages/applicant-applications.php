@@ -16,7 +16,11 @@ if (!isset($_SESSION['user_id'])) {
   <title>My Applications</title>
   <link rel="stylesheet" href="../css/applicant-dashboard.css" />
   <link rel="stylesheet" href="../css/navs.css" />
+  <link rel="stylesheet" href="../css/table.css" />
   <link rel="stylesheet" href="../../public-assets/library/datatable/dataTables.css">
+  <script src="../../public-assets/JS_JQUERY/jquery-3.7.1.min.js" defer></script>
+  <script src="../../public-assets/library/datatable/dataTables.js" defer></script>
+  <script src="../../public-assets/js/table-init.js" defer></script>
 </head>
 
 <body>
@@ -84,6 +88,7 @@ if (!isset($_SESSION['user_id'])) {
               <tr>
                 <th>Job Title</th>
                 <th>Company</th>
+                <th>Industry</th>
                 <th>Status</th>
                 <th>Date Applied</th>
               </tr>
@@ -92,76 +97,110 @@ if (!isset($_SESSION['user_id'])) {
               <tr>
                 <td>Software Engineer</td>
                 <td>Tech Company</td>
-                <td><span class="status interviewed">Interview</span></td>
-                <td>2025-10-01</td>
+                <td class="industry it">IT/Software</td>
+                <td><span class="status interview">Interview</span></td>
+                <td class="table-date">2025-10-01</td>
               </tr>
               <tr>
                 <td>Data Analyst</td>
                 <td>Data Corp</td>
+                <td class="industry finance">Finance</td>
                 <td><span class="status applied">Applied</span></td>
-                <td>2025-09-15</td>
+                <td class="table-date">2025-09-15</td>
               </tr>
               <tr>
                 <td>Manager</td>
                 <td>Data Corp</td>
-                <td><span class="status referred">Reffered</span></td>
-                <td>2025-09-15</td>
+                <td class="industry finance">Finance</td>
+                <td><span class="status referred">Referred</span></td>
+                <td class="table-date">2025-09-15</td>
               </tr>
               <tr>
                 <td>Data Analyst</td>
                 <td>Data Corp</td>
+                <td class="industry finance">Finance</td>
                 <td><span class="status hired">Hired</span></td>
-                <td>2025-09-15</td>
+                <td class="table-date">2025-09-15</td>
               </tr>
               <tr>
                 <td>Manager</td>
                 <td>Data Corp</td>
-                <td><span class="status rejected">Rejected</span></td>
-                <td>2025-09-15</td>
+                <td class="industry finance">Finance</td>
+                <td><span class="status declined">Declined</span></td>
+                <td class="table-date">2025-09-15</td>
               </tr>
               <tr>
-                <td>Software Engineer</td>
-                <td>Tech Company</td>
-                <td><span class="status interviewed">Interview</span></td>
-                <td>2025-10-01</td>
+                <td>Frontend Developer</td>
+                <td>Web Solutions</td>
+                <td class="industry it">IT/Software</td>
+                <td><span class="status interview">Interview</span></td>
+                <td class="table-date">2025-08-22</td>
               </tr>
               <tr>
-                <td>Data Analyst</td>
-                <td>Data Corp</td>
+                <td>UX Designer</td>
+                <td>Design Studio</td>
+                <td class="industry others">Others</td>
                 <td><span class="status applied">Applied</span></td>
-                <td>2025-09-15</td>
+                <td class="table-date">2025-07-30</td>
               </tr>
               <tr>
-                <td>Manager</td>
-                <td>Data Corp</td>
-                <td><span class="status referred">Reffered</span></td>
-                <td>2025-09-15</td>
+                <td>Project Manager</td>
+                <td>BuildSmart Inc.</td>
+                <td class="industry engineering">Engineering</td>
+                <td><span class="status referred">Referred</span></td>
+                <td class="table-date">2025-08-10</td>
               </tr>
               <tr>
-                <td>Data Analyst</td>
-                <td>Data Corp</td>
+                <td>QA Tester</td>
+                <td>QualitySoft</td>
+                <td class="industry it">IT/Software</td>
                 <td><span class="status hired">Hired</span></td>
-                <td>2025-09-15</td>
+                <td class="table-date">2025-07-01</td>
               </tr>
               <tr>
-                <td>Manager</td>
-                <td>Data Corp</td>
-                <td><span class="status rejected">Rejected</span></td>
-                <td>2025-09-15</td>
+                <td>DevOps Engineer</td>
+                <td>CloudStack</td>
+                <td class="industry it">IT/Software</td>
+                <td><span class="status declined">Declined</span></td>
+                <td class="table-date">2025-09-05</td>
               </tr>
               <tr>
-                <td>Software Engineer</td>
-                <td>Tech Company</td>
-                <td><span class="status interviewed">Interview</span></td>
-                <td>2025-10-01</td>
+                <td>Backend Developer</td>
+                <td>ServerTech</td>
+                <td class="industry it">IT/Software</td>
+                <td><span class="status interview">Interview</span></td>
+                <td class="table-date">2025-10-03</td>
               </tr>
               <tr>
-                <td>Data Analyst</td>
-                <td>Data Corp</td>
+                <td>AI Researcher</td>
+                <td>NeuralNet AI</td>
+                <td class="industry it">IT/Software</td>
                 <td><span class="status applied">Applied</span></td>
-                <td>2025-09-15</td>
+                <td class="table-date">2025-08-12</td>
+              </tr>
+              <tr>
+                <td>Business Analyst</td>
+                <td>MarketWise</td>
+                <td class="industry finance">Finance</td>
+                <td><span class="status referred">Referred</span></td>
+                <td class="table-date">2025-07-25</td>
+              </tr>
+              <tr>
+                <td>Scrum Master</td>
+                <td>AgileWorks</td>
+                <td class="industry it">IT/Software</td>
+                <td><span class="status hired">Hired</span></td>
+                <td class="table-date">2025-06-18</td>
+              </tr>
+              <tr>
+                <td>IT Support Specialist</td>
+                <td>HelpDesk Pro</td>
+                <td class="industry it">IT/Software</td>
+                <td><span class="status declined">Declined</span></td>
+                <td class="table-date">2025-07-09</td>
               </tr>
             </tbody>
+
           </table>
         </div>
       </div>
@@ -169,21 +208,5 @@ if (!isset($_SESSION['user_id'])) {
   </div>
 
   <script src="../js/responsive.js"></script>
-  <script src="../../public-assets/JS_JQUERY/jquery-3.7.1.min.js"></script>
-  <script src="../../public-assets/library/datatable/dataTables.js"></script>
-  <script>
-    $(document).ready(function() {
-      $("#dashboardTable").DataTable({
-        responsive: true,
-        columnDefs: [{
-          target: "_all",
-          defaultContent: "-",
-        }, ],
-      });
-    });
-  </script>
-
-
 </body>
-
 </html>

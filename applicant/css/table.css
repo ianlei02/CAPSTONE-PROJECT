@@ -1,0 +1,156 @@
+:root {
+  --primary-blue-color: #4285f4;
+  --secondary-blue-color: #5c9eff;
+  --primary-red-color: #ff4c4c;
+  --secondary-red-color: #ff6b6b;
+  --dark-clr-700: #000;
+  --dark-clr-600: #333;
+  --light-clr-700: #fff;
+  --light-clr-600: #fafafa;
+  --light-clr-500: #f3f3f3;
+  --color-text-dark: #4a5568;
+  --color-border: #e2e8f0;
+  --color-background-header: #f8fafc;
+  --color-primary: #3182ce;
+  --color-danger: #e53e3e;
+  --color-success: #38a169;
+  --color-muted: #718096;
+  --color-warning: #dd6b20;
+  --color-primary-light: #dbf2ff;
+  --color-success-light: #c6f6d5;
+  --color-warning-light: #feebc8;
+  --color-danger-light: #fed7d7;
+  --color-danger-hover: #feb2b2;
+  --color-primary-hover: #bee3f8;
+  --color-warning-hover: #f6ad55;
+  --color-success-hover: #58bd8a;
+}
+
+.job-application-status {
+  justify-self: center;
+  width: 95%;
+  border-radius: 1rem;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: var(--dark-clr-700);
+
+  h2 {
+    color: var(--dark-clr-600);
+  }
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 6px;
+  }
+  .job-application-table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+  }
+  thead {
+    background: #f8fafc;
+    color: var(--dark-clr-600);
+    text-transform: uppercase;
+    font-size: 0.875rem;
+  }
+  th,
+  td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #edf2f7;
+  }
+  th {
+    color: var(--dark-clr-600);
+    background-color: #e5ebf1;
+  }
+  tbody tr {
+    background-color: var(--light-clr-500);
+  }
+}
+.status {
+  border-radius: 3rem;
+  font-weight: 600;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: .875rem;
+  box-shadow: none;
+
+  &.applied {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+  }
+
+  &.interview{
+    background-color: rgb(255, 219, 255);
+    color: rgb(151, 84, 151);
+  }
+
+  &.referred {
+    background-color: var(--color-warning-light);
+    color: var(--color-warning);
+
+  }
+  &.hired {
+    background-color: var(--color-success-light);
+    color: var(--color-success);
+  }
+  &.declined {
+    color: var(--color-danger);
+    background-color: var(--color-danger-light);
+  
+  }
+}
+.action-btns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: .375rem;
+}
+.action-btns button{
+  display: inline-block;
+  padding: 6px 12px;
+  margin-right: 6px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.2s;
+
+  &:nth-child(1){
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+  }
+  &:nth-child(1):hover{
+    background-color: var(--color-primary-hover);
+  }
+  &:nth-child(2){
+    background-color: var(--color-warning-light);
+    color: var(--color-warning);
+  }
+  &:nth-child(2):hover{
+    background-color: var(--color-warning-hover);
+  }
+  &:nth-child(3){
+    background-color: var(--color-success-light);
+    color: var(--color-success);
+  }
+  &:nth-child(3):hover{
+    background-color: var(--color-success-hover);
+  }
+  &:nth-child(4){
+    background-color: var(--color-danger-light);
+    color: var(--color-danger);
+  }
+  &:nth-child(4):hover{
+    background-color: var(--color-danger-hover);
+  }
+}
+.table-date {
+  font-size: 0.875rem;
+  color: #718096 !important;
+  font-weight: 500;
+  text-align: center;
+}
