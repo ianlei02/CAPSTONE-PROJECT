@@ -8,6 +8,25 @@
   --light-clr-700: #fff;
   --light-clr-600: #fafafa;
   --light-clr-500: #f3f3f3;
+  --color-background-primary-light: #ebf8ff;
+  --color-background-light: #edf2f7;
+  --color-text-dark: #4a5568;
+  --color-border: #e2e8f0;
+  --color-background-header: #f8fafc;
+  --color-primary: #3182ce;
+  --color-danger: #e53e3e;
+  --color-success: #38a169;
+  --color-muted: #718096;
+  --color-warning: #dd6b20;
+  --color-primary-light: #dbf2ff;
+  --color-success-light: #c6f6d5;
+  --color-warning-light: #feebc8;
+  --color-danger-light: #fed7d7;
+  --color-danger-hover: #feb2b2;
+  --color-primary-hover: #bee3f8;
+  --color-warning-hover: #f6ad55;
+  --color-success-hover: #58bd8a;
+
 }
 .main-header {
   display: flex;
@@ -37,111 +56,114 @@
   }
 }
 .statistics-container {
-  padding: 1rem 2rem;
+  color: var(--light-clr-700);
+  justify-self: center;
+  width: 94%;
+  height: 300px;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
   display: grid;
   place-items: center;
-  /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
   grid-template-columns: repeat(3, 1fr);
+  /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
   gap: 2rem;
-  /* background-color: red;  */
-  color: var(--light-clr-700);
 
   .statistic-card {
     width: 100%;
     height: 100%;
-    color: white;
-    background-color: #fafafa;
     border-radius: 1rem;
     display: grid;
     place-items: center;
     text-align: center;
-    opacity: 0.8;
+    opacity: 1;
+ 
   }
   .statistic-card h2 {
     font-size: 1.3rem;
     font-weight: 500;
     margin: 0.5rem 0;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   }
   .statistic-card p {
     font-size: 2.5rem;
     font-weight: 500;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    /* margin-bottom: 0.5rem; */
   }
   &.gradient {
     > :nth-child(1) {
       background: linear-gradient(
         246deg,
         #8bc1f8 31.86%,
-        rgba(0, 128, 255, 0.8) 95.05%
+        rgba(0, 128, 255, 0.5) 95.05%
       );
       box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      /* border-left: 10px solid #8bc1f8; */
     }
     > :nth-child(2) {
       background: linear-gradient(
         246deg,
         #e58bf8 31.86%,
-        rgba(119, 60, 166, 0.8) 95.05%
+        rgba(119, 60, 166, 0.5) 95.05%
       );
       box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      /* border-left: 10px solid #e58bf8; */
     }
     > :nth-child(3) {
       background: linear-gradient(
         246deg,
         #94ee34 31.86%,
-        rgba(0, 177, 44, 0.8) 95.05%
+        rgba(0, 177, 44, 0.5) 95.05%
       );
       box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      /* border-left: 10px solid #94ee34; */
     }
     > :nth-child(4) {
       background: linear-gradient(
         246deg,
         #f88ba2 31.86%,
-        rgba(255, 13, 0, 0.8) 95.05%
+        rgba(255, 13, 0, 0.5) 95.05%
       );
       box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      /* border-left: 10px solid #f88ba2; */
     }
     > :nth-child(5) {
       background: linear-gradient(
         246deg,
         #ff9539 31.86%,
-        rgba(255, 85, 0, 0.8) 95.05%
+        rgba(255, 85, 0, 0.5) 95.05%
       );
       box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      /* border-left: 10px solid #ff9539; */
     }
     > :nth-child(6) {
       background: linear-gradient(
         246deg,
         #ff7376 31.86%,
-        rgba(255, 0, 76, 0.8) 95.05%
+        rgba(255, 0, 76, 0.5) 95.05%
       );
       box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      /* border-left: 10px solid #ff7376; */
     }
   }
 }
 .job-application-status {
-  width: 100%;
-  /* height: auto; */
-  padding: 3rem 3rem;
+  justify-self: center;
+  width: 94%;
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 1rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   color: var(--dark-clr-700);
+
 
   h2 {
     color: var(--dark-clr-600);
   }
   .table-responsive {
+    width: 100%;
     overflow-x: auto;
     border-radius: 6px;
-    border: 1px solid #e2e8f0;
   }
   .job-application-table {
     width: 100%;
@@ -149,98 +171,29 @@
     border-collapse: collapse;
   }
   thead {
-    background: rgb(221, 221, 221);
+    background: #f8fafc;
+    color: var(--dark-clr-600);
+    text-transform: uppercase;
+    font-size: 0.875rem;
   }
   th,
   td {
     padding: 0.75rem 1rem;
     border-bottom: 1px solid #edf2f7;
   }
-  th{
+  th {
     color: var(--dark-clr-600);
     background-color: #e5ebf1;
   }
-  td{
-    background-color: var(--light-clr-600);
+  tbody tr {
+    background-color: var(--light-clr-500);
   }
 }
-.table-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  /* margin-top: 20px; */
-  flex-wrap: wrap;
-  gap: 15px;
-  .pagination {
-    display: flex;
-    gap: 6px;
-  }
-
-  .page-btn {
-    padding: 8px 14px;
-    border: 1px solid #e2e8f0;
-    background-color: #fff;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    transition: all 0.2s;
-  }
-
-  .page-btn:hover:not(.active) {
-    background-color: #edf2f7;
-  }
-
-  .page-btn.active {
-    background-color: #3182ce;
-    color: white;
-    border-color: #3182ce;
-  }
-
-  .page-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .table-info {
-    color: #718096;
-    font-size: 0.85rem;
-  }
+.table-date{
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  font-weight: 500;
+  text-align: center;
 }
-.status {
-  border-radius: 3rem;
-  font-weight: 600;
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  width: 7rem;
-  &.applied {
-    color: rgb(6, 103, 128);
-    /* background-color: #77dbff; */
-    background-color: rgb(222, 234, 255);
-    box-shadow: none;
-  }
 
-  &.interviewed {
-    background-color: #f8d9fd;
-    color: #9628ac;
-    box-shadow: none;
-  }
-
-  &.referred {
-    background-color: #ffe7d2;
-    color: #7e400a;
-    box-shadow: none;
-  }
-
-  &.hired {
-    color: rgb(15, 92, 8);
-    background-color: #c6ffc8;
-    box-shadow: none;
-  }
-
-  &.rejected {
-    color: rgb(173, 24, 24);
-    background-color: #ffd2d2;
-    box-shadow: none;
-  }
-}
 

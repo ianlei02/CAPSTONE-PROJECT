@@ -77,12 +77,20 @@ h2 {
 }
 
 .user-type {
+  padding-left: .5rem;
   margin-bottom: 20px;
+  border-left: 4px solid var(--primary-blue-color);
+  background-color: #f5f5ff;
 }
 
 .user-type h4 {
   margin-bottom: 10px;
   color: #555;
+}
+.user-type label {
+  margin-top: 8px;
+  font-size: 1.2rem;
+  color: #333;
 }
 
 .radio-container {
@@ -154,14 +162,15 @@ input[type="password"]:focus {
   border-radius: 5px;
   padding: 12px;
   width: 100%;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 800;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .btn:hover {
-  background-color: var(--secondary-blue-color);
+  background-color: var(--primary-blue-color);
+  transform: translateY(-2px);
 }
 
 .toggle-form {
@@ -179,7 +188,7 @@ input[type="password"]:focus {
 
 .forgot-password {
   text-align: right;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 .forgot-password a {

@@ -9,215 +9,7 @@
     <link rel="stylesheet" href="./css/index.css" />
     <link rel="stylesheet" href="./css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .btn {
-            padding: 10px 20px;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
 
-        .btn-primary {
-            background-color: var(--primary-blue-color);
-            color: #fff;
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--primary-blue-color);
-            color: var(--primary-blue-color);
-        }
-
-        /* Features Section */
-        .features {
-            padding: 80px 0;
-            background-color: var(--light-clr-700);
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title h2 {
-            font-size: 36px;
-            color: var(--dark-clr-700);
-            margin-bottom: 15px;
-        }
-
-        .section-title p {
-            color: var(--dark-clr-600);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background-color: var(--light-clr-600);
-            border-radius: 8px;
-            padding: 30px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            background-color: var(--primary-blue-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            color: var(--light-clr-700);
-            font-size: 30px;
-        }
-
-        .feature-card h3 {
-            margin-bottom: 15px;
-            color: var(--dark-clr-700);
-        }
-
-        /* How It Works Section */
-        .how-it-works {
-            padding: 80px 0;
-            background-color: var(--light-clr-500);
-        }
-
-        .steps {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 50px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .step {
-            flex: 1;
-            min-width: 250px;
-            text-align: center;
-            position: relative;
-        }
-
-        .step-number {
-            width: 50px;
-            height: 50px;
-            background-color: var(--primary-blue-color);
-            color: var(--light-clr-700);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: 700;
-            margin: 0 auto 20px;
-        }
-
-        .step h3 {
-            margin-bottom: 15px;
-            color: var(--dark-clr-700);
-        }
-
-        .step p {
-            color: var(--dark-clr-600);
-        }
-
-        /* Job Categories Section */
-        .job-categories {
-            padding: 80px 0;
-            background-color: var(--light-clr-700);
-        }
-
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .category-card {
-            background-color: var(--light-clr-600);
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .category-card:hover {
-            background-color: var(--primary-blue-color);
-            color: var(--light-clr-700);
-        }
-
-        .category-card i {
-            font-size: 30px;
-            margin-bottom: 15px;
-            color: var(--primary-blue-color);
-        }
-
-        .category-card:hover i {
-            color: var(--light-clr-700);
-        }
-
-        /* CTA Section */
-        .cta {
-            width: 100%;
-            padding: 100px 0;
-            background:var(--gradient);
-            color: var(--light-clr-700);
-            text-align: center;
-        }
-
-        .cta h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-
-        .cta p {
-            max-width: 700px;
-            margin: 0 auto 40px;
-            font-size: 18px;
-        }
-
-
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .hero p {
-                font-size: 18px;
-            }
-
-            .steps {
-                flex-direction: column;
-            }
-
-            .step:not(:last-child)::after {
-                content: "↓";
-                display: block;
-                text-align: center;
-                margin: 20px 0;
-                color: var(--primary-blue-color);
-                font-size: 24px;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -260,7 +52,7 @@
     </nav>
 
     <main>
-        <section class="hero">
+        <section class="hero" id="hero">
             <div class="hero-text">
                 <!-- <h1>PUBLIC EMPLOYMENT SERVICE OFFICE OF <br /><span class="sanmiguel">SAN MIGUEL, BULACAN</span></h1> -->
                 <h1>Find Your Dream Job Today with PESO</h1>
@@ -285,21 +77,23 @@
             <div class="stats-container">
                 <div class="stats-card appear-animation">
                     <h4>Registered Applicants</h4>
-                    <p>123</p>
+                    <p class="stat-number" data-target="123">0</p>
                 </div>
                 <div class="stats-card appear-animation">
                     <h4>Registered Employers</h4>
-                    <p>456</p>
+                    <p class="stat-number" data-target="456">0</p>
                 </div>
                 <div class="stats-card appear-animation">
                     <h4>Job Listings</h4>
-                    <p>789</p>
+                    <p class="stat-number" data-target="789">0</p>
                 </div>
                 <div class="stats-card appear-animation">
                     <h4>Hired Applicants</h4>
-                    <p>312</p>
+                    <p class="stat-number" data-target="312">0</p>
                 </div>
             </div>
+
+
         </section>
 
         <section class="registered-employers">
@@ -456,14 +250,14 @@
         </section>
 
         <!-- CTA Section -->
-        <section class="cta"  ">
-            <div class="container" style="width: auto;">
-                <h2>Ready to Take the Next Step?</h2>
-                <p>Join thousands of professionals and companies who found their perfect match through PESO</p>
-                <div style="display: flex; justify-content: center; gap: 20px;">
-                    <button class="btn btn-outline" style="background-color: transparent; border-color: var(--light-clr-700); color: var(--light-clr-700);">I'm Hiring</button>
-                    <button class="btn btn-primary" style="background-color: var(--light-clr-700); color: var(--primary-blue-color);">Find Jobs</button>
-                </div>
+        <section class="cta" ">
+            <div class=" container" style="width: auto;">
+            <h2>Ready to Take the Next Step?</h2>
+            <p>Join thousands of professionals and companies who found their perfect match through PESO</p>
+            <div style="display: flex; justify-content: center; gap: 20px;">
+                <button class="btn btn-outline" style="background-color: transparent; border-color: var(--light-clr-700); color: var(--light-clr-700);">I'm Hiring</button>
+                <button class="btn btn-primary" style="background-color: var(--light-clr-700); color: var(--primary-blue-color);">Find Jobs</button>
+            </div>
             </div>
         </section>
 
@@ -476,16 +270,16 @@
             </div>
             <div class="footer-section">
                 <h3>About Us</h3>
-                <p>We are committed to delivering the best services in tech and innovation. Join us in making a difference.</p>
+                <p>We are dedicated to connecting job seekers and employers for a brighter future.</p>
             </div>
 
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="./pages/aboutus.php">About Us</a></li>
+                    <li><a href="./pages/user-guide.php">User's Guide</a></li>
+                    <li><a href="../landing/login-signup.php">Job Portal</a></li>
                 </ul>
             </div>
 
@@ -493,17 +287,17 @@
                 <h3>Follow Us</h3>
                 <ul class="social-icons">
                     <li><a href="#">Facebook</a></li>
-                    <li><a href="#">X (Twitter)</a></li>
+                    <!-- <li><a href="#">X (Twitter)</a></li>
                     <li><a href="#">Instagram</a></li>
-                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">LinkedIn</a></li> -->
                 </ul>
             </div>
 
             <div class="footer-section">
                 <h3>Contact</h3>
                 <p>Email: sanmiguelbulacanpeso@gmail.com</p>
-                <p>Phone: +123 456 7890</p>
-                <p>Address: 123 Tech Street, Innovation City</p>
+                <p>Phone: (+63)975-440-4362</p>
+                <p>Address: Ground Floor, Juan F. Dela Cruz Building, Municipal Compound, Poblacion, San Miguel, Bulacan</p>
             </div>
         </div>
 
@@ -535,6 +329,40 @@
         }
         document.addEventListener("contextmenu", (e) => {
             e.preventDefault();
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const statNumbers = document.querySelectorAll(".stat-number");
+
+            const animateNumbers = (entry) => {
+                if (entry.isIntersecting) {
+                    const target = +entry.target.getAttribute("data-target");
+                    const increment = Math.ceil(target / 100);
+
+                    let current = 0;
+                    const updateNumber = () => {
+                        current += increment;
+                        if (current > target) {
+                            current = target;
+                        }
+                        entry.target.textContent = current;
+                        if (current < target) {
+                            requestAnimationFrame(updateNumber);
+                        }
+                    };
+                    updateNumber();
+                    observer.unobserve(entry.target);
+                }
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(animateNumbers);
+            }, {
+                threshold: 0.5
+            });
+
+            statNumbers.forEach((number) => observer.observe(number));
         });
     </script>
 
