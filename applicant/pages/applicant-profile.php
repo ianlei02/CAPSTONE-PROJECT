@@ -122,7 +122,7 @@ if (isset($_SESSION['user_id'])) {
                 src="<?php echo htmlspecialchars($profile_picture_url); ?>"
                 alt="Profile Picture"
                 class="profile-pic"
-                id="profilePic" />
+                id="profilePicc" />
               <div class="upload-icon">
                 <svg
                   width="20"
@@ -554,6 +554,7 @@ if (isset($_SESSION['user_id'])) {
         const reader = new FileReader();
         reader.onload = function(event) {
             document.getElementById('profilePic').src = event.target.result;
+            document.getElementById('profilePicc').src = event.target.result;
             
         };
         reader.readAsDataURL(file);
@@ -674,7 +675,23 @@ if (isset($_SESSION['user_id'])) {
     const updateBtn = document.getElementById('updateBtn');
     const saveBtnn = document.getElementById('saveBtnn');
 
-    if (e.submitter === updateBtn) {
+    if (e.submitter === saveBtnn) {
+     
+     const response = await fetch('../Functions/profile_update.php', {
+         method: 'POST',
+         body: formData
+     });
+
+     const result = await response.json();
+
+     if (result.success) {
+       alert('Profile saved successfully!');
+          window.location.reload();
+     } else {
+         alert('Error: ' + result.message);
+     }
+ }
+    else if (e.submitter === updateBtn) {
         
         const response = await fetch('../Functions/update.php', {
             method: 'POST',
@@ -689,21 +706,7 @@ if (isset($_SESSION['user_id'])) {
         } else {
             alert('Error: ' + result.message);
         }
-    } else if (e.submitter === saveBtnn) {
-     
-        const response = await fetch('../Functions/profile_update.php', {
-            method: 'POST',
-            body: formData
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-            alert('Profile saved successfully!');
-        } else {
-            alert('Error: ' + result.message);
-        }
-    }
+    } 
   });
 
   </script>
@@ -713,31 +716,36 @@ if (isset($_SESSION['user_id'])) {
     const saveBtn = document.getElementById('saveBtn');
     const inputs = document.querySelectorAll('#profileForm input');
     const select = document.querySelectorAll('#profileForm select');
+    const textAreas = document.querySelectorAll('#profileForm textarea'); // Correctly define textAreas
+    const profilePicInput = document.getElementById('profilePicInput');
 
     window.addEventListener('DOMContentLoaded', () => {
-    inputs.forEach(input => input.disabled = true);
-    select.forEach(select => select.disabled = true);
-    textArea.forEach(textArea => textArea.disabled = true);
-    saveBtn.disabled = true;
+        inputs.forEach(input => input.disabled = true);
+        select.forEach(select => select.disabled = true);
+        textAreas.forEach(textArea => textArea.disabled = true); // Use textAreas here
+        saveBtn.disabled = true;
+        editBtn.disabled = false;
+        profilePicInput.disabled = true; // Disable the file input
+    });
 
-  });
+    editBtn.addEventListener('click', () => {
+        inputs.forEach(input => input.disabled = false);
+        select.forEach(select => select.disabled = false);
+        textAreas.forEach(textArea => textArea.disabled = false); // Use textAreas here
+        saveBtn.disabled = false;
+        editBtn.disabled = true;
+        profilePicInput.disabled = false; // Enable the file input
+    });
 
-  editBtn.addEventListener('click', () => {
-  inputs.forEach(input => input.disabled = false);
-  select.forEach(select => select.disabled = false);
-  textArea.forEach(textArea => textArea.disabled = false);
-  saveBtn.disabled = false;
-  editBtn.disabled = true;
-});
-
-saveBtn.addEventListener('click', (e) => {
-  e.preventDefault(); 
-  inputs.forEach(input => input.disabled = true);
-  select.forEach(select => select.disabled = true);
-  textArea.forEach(textArea => textArea.disabled = true);
-  saveBtn.disabled = true;
-  editBtn.disabled = false;
-});
+    saveBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        inputs.forEach(input => input.disabled = true);
+        select.forEach(select => select.disabled = true);
+        textAreas.forEach(textArea => textArea.disabled = true); // Use textAreas here
+        saveBtn.disabled = true;
+        editBtn.disabled = false;
+        profilePicInput.disabled = true; // Disable the file input
+    });
   </script>
 </body>
 </html>

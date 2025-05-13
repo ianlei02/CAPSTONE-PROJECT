@@ -107,7 +107,7 @@
              Complete your profile to find jobs before you can apply. The more complete your profile is, the better
              your chances of getting hired.
            </div>
-           <button class="complete-profile-btn">Complete My Profile</button>
+           <button class="complete-profile-btn" onclick=" windows.location.href = 'application-profile.php'">Complete My Profile</button>
          </div>
 
          <div class="missing-items">
