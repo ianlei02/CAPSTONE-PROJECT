@@ -546,8 +546,8 @@ if (isset($_SESSION['user_id'])) {
             return;
         }
         
-        if (file.size > 2 * 1024 * 1024) {
-            alert('Image must be less than 2MB');
+        if (file.size > 10 * 1024 * 1024) {
+            alert('Image must be less than 10MB');
             return;
         }
         
