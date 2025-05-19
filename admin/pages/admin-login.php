@@ -205,7 +205,7 @@
       <p>Sign in to access your dashboard</p>
     </div>
 
-      <form class="login-form" action="../Function/login.php" method="POST" id="loginform">
+      <form class="login-form" method="POST" id="loginform">
         <div class="form-group floating-label">
           <input
             type="text"
@@ -218,7 +218,7 @@
           <label for="username">Username</label>
         </div>
 
-        <div class="form-group floating-label">
+        <div class="form-group floating-label" style="position:relative;">
           <input
             type="password"
             id="password"
@@ -228,6 +228,9 @@
             required
           />
           <label for="password">Password</label>
+          <button type="button" id="togglePassword" style="position:absolute; right:18px; top:18px; background:none; border:none; cursor:pointer; padding:0;">
+            <span id="toggleIcon" style="font-size:18px;">👁</span>
+          </button>
         </div>
 
         <button type="submit" class="btn">Sign In →</button>
@@ -239,6 +242,18 @@
     </div>
   </body>
   <script>
+  document.getElementById('togglePassword').addEventListener('click', function () {
+      const passwordInput = document.getElementById('password');
+      const icon = document.getElementById('toggleIcon');
+      if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          icon.textContent = '👁'; 
+      } else {
+          passwordInput.type = 'password';
+          icon.textContent = '👁'; 
+      }
+  });
+
   document.getElementById('loginform').addEventListener('submit', async function(e) {
       e.preventDefault(); 
 
@@ -252,7 +267,7 @@
       const result = await response.json();
 
       if (result.status === 'success') {
-         
+          alert(result.message);
           window.location.href = result.redirect;
       } else {
         
