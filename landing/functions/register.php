@@ -53,12 +53,11 @@ if(isset($_POST['signupBtn'])) {
             $mail->Password = 'fvxzodcnxnoxqfrc';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port = 465;
-
             $mail->setFrom('justincruz9812@gmail.com','PESO PH');
             $mail->addAddress($email);
             $mail->isHTML(true);
             $mail->Subject = mysqli_real_escape_string($conn, $_POST['subject']);
-            $mail->Body = "Your Verification code is:" . $otp;
+            $mail->Body = "Your Verification code is: " . $otp;
 
             $mail->send();
             echo "
