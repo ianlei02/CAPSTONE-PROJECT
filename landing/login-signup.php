@@ -135,9 +135,12 @@ if (isset($_SESSION['verification_success'])) {
             <input type="email" id="loginEmail" required />
           </div>
 
-          <div class="input-group">
+          <div class="input-group" style="position:relative;">
             <label for="loginPassword">Password</label>
             <input type="password" id="loginPassword" name="password" required />
+            <button type="button" id="togglePassword" style="position:absolute; right:10px; top:40px; background:none; border:none; cursor:pointer; padding:0;">
+              <span id="toggleIcon" style="font-size:18px;">👁</span>
+            </button>
           </div>
 
           <div class="input-group remember-me" style="display: flex; align-items: center; gap: 0.5rem; justify-content: space-between; ">
@@ -323,6 +326,21 @@ if (isset($_SESSION['verification_success'])) {
           alert('Login failed. Please try again.');
         });
     });
+
+  
+    document.getElementById('togglePassword').addEventListener('click', function () {
+      const passwordInput = document.getElementById('loginPassword');
+      const icon = document.getElementById('toggleIcon');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.textContent = '🙈'; 
+      } else {
+        passwordInput.type = 'password';
+        icon.textContent = '👁'; 
+      }
+    });
+
+    
   </script>
 
 

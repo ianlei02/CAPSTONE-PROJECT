@@ -60,7 +60,11 @@ if (isset($_SESSION['user_id'])) {
         </div>
       </div>
       <div class="right-pos">
-        <div class="profile">IAN</div>
+        <div class="profile" style="width: 40px; aspect-ratio: 1; padding: 0;"><img
+                src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+                alt="Company Logo"
+                class="company-logo"
+                id="companyLogoo" style="width: 100%; height: 100%; border-radius: 50%"/></div>
       </div>
     </div>
   </nav>
@@ -314,6 +318,7 @@ if (isset($_SESSION['user_id'])) {
         const reader = new FileReader();
         reader.onload = function(event) {
           document.getElementById('companyLogo').src = event.target.result;
+          document.getElementById('companyLogoo').src = event.target.result;
         };
         reader.readAsDataURL(file);
       }

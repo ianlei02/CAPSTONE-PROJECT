@@ -76,12 +76,14 @@ require "../connection/dbcon.php";
 
         $finfo = new finfo(FILEINFO_MIME_TYPE);
         $fileType = $finfo->file($file['tmp_name']);
+        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
-        if (!in_array($fileType, $allowedTypes)) {
-            throw new Exception("Invalid file type for {$file['name']}");
+        
+        $allowedExtensions = ['pdf', 'doc', 'docx', 'jpeg', 'jpg', 'png'];
+        if (!in_array($fileType, $allowedTypes) || !in_array($extension, $allowedExtensions)) {
+            throw new Exception("Invalid file type or extension for {$file['name']}");
         }
 
-        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $storedName = bin2hex(random_bytes(16)) . '.' . $extension;
 
        
@@ -195,21 +197,15 @@ require "../connection/dbcon.php";
         
         $conn->commit();
         
-        echo json_encode([
-        'success' => true,
-        'message' => 'Profile updated successfully'
-        ]);
-        header("Location: ../pages/applicant-profile.php?success=1");
-        exit();
+        $response['success'] = true;
+        $response['message'] = 'Profile saved successfully!';
+        
+        
         
     } catch (Exception $e) {
         
         $conn->rollback();
-        http_response_code(500);
-        echo json_encode([
-        'success' => false,
-        'message' => $e->getMessage()
-    ]);
+        $response['message'] = 'Error: ' . $e->getMessage();
     } finally {
         
         if (isset($stmt_profile)) $stmt_profile->close();
@@ -220,6 +216,6 @@ require "../connection/dbcon.php";
         $conn->close();
     }
     
-   
+    echo json_encode($response);
     
 ?>
