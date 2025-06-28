@@ -137,12 +137,6 @@ if (isset($_SESSION['user_id'])) {
                   <line x1="12" y1="3" x2="12" y2="15"></line>
                 </svg>
               </div>
-              <input
-                type="file"
-                id="profilePicInput"
-                name="profilePicture"
-                class="profile-pic-input"
-                accept="image/*" />
             </label>
           </div>
       </div>

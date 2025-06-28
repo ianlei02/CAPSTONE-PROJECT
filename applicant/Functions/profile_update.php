@@ -117,42 +117,84 @@ require "../connection/dbcon.php";
         return $stmt->execute();
     }
 
+    function handleApplicantProfilePictureUpload($conn, $applicant_id, $allowedTypes, $maxFileSize) {
+        if (empty($_FILES['profilePicture']['name']) || $_FILES['profilePicture']['error'] !== UPLOAD_ERR_OK) {
+            return null; // No file uploaded or upload error
+        }
+    
+        $file = $_FILES['profilePicture'];
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $fileType = $finfo->file($file['tmp_name']);
+    
+        if (!in_array($fileType, $allowedTypes)) {
+            throw new Exception("Invalid profile picture format. Only JPG, PNG, or WebP allowed.");
+        }
+    
+        if ($file['size'] > $maxFileSize) {
+            throw new Exception("Profile picture exceeds the " . ($maxFileSize / 1024 / 1024) . "MB limit.");
+        }
+    
+        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $storedName = 'profile_' . $applicant_id . '_' . bin2hex(random_bytes(8)) . '.' . $extension;
+    
+        $uploadDir = __DIR__ . '/../uploads/profile_pictures/';
+        if (!is_dir($uploadDir)) {
+            if (!mkdir($uploadDir, 0755, true)) {
+                throw new Exception("Failed to create upload directory.");
+            }
+        }
+    
+        if (!is_writable($uploadDir)) {
+            throw new Exception("Upload directory is not writable.");
+        }
+    
+        // Delete old picture if not default
+        $query = "SELECT profile_picture FROM applicant_profile WHERE applicant_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $applicant_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($row = $result->fetch_assoc()) {
+            $oldPath = $row['profile_picture'];
+            if ($oldPath && $oldPath !== '../assets/images/profile.png') {
+                $fullOldPath = __DIR__ . '/../' . ltrim($oldPath, './');
+                if (file_exists($fullOldPath)) {
+                    unlink($fullOldPath);
+                }
+            }
+        }
+    
+       
+        $filePath = $uploadDir . $storedName;
+        if (!move_uploaded_file($file['tmp_name'], $filePath)) {
+            throw new Exception("Failed to upload profile picture.");
+        }
+    
+        $relativePath = 'uploads/profile_pictures/' . $storedName;
+    
+        // Update DB
+        $stmt = $conn->prepare("UPDATE applicant_profile SET profile_picture = ? WHERE applicant_id = ?");
+        $stmt->bind_param("si", $relativePath, $applicant_id);
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to update applicant profile picture in the database.");
+        }
+    
+        return $relativePath;
+    }
+    
+
 
     $conn->begin_transaction();
     
 
     try {
-
-        // Handle profile picture upload
-        if (isset($_FILES['profilePicture']) && $_FILES['profilePicture']['error'] === UPLOAD_ERR_OK) {
-            $file = $_FILES['profilePicture'];
-            $finfo = new finfo(FILEINFO_MIME_TYPE);
-            $fileType = $finfo->file($file['tmp_name']);
-
-            if (!in_array($fileType, ['image/jpeg', 'image/png'])) {
-                throw new Exception("Invalid profile picture format. Only JPG/PNG allowed.");
-            }
-
-            if ($file['size'] > $maxFileSize) {
-                throw new Exception("Profile picture exceeds 10MB limit.");
-            }
-
-            $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-            $storedName = bin2hex(random_bytes(16)) . '.' . $extension;
-
-            $uploadDir = __DIR__ . '/../uploads/profile_pictures/';
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0755, true);
-            }
-
-            $filePath = $uploadDir . $storedName;
-            if (!move_uploaded_file($file['tmp_name'], $filePath)) {
-                throw new Exception("Failed to upload profile picture.");
-            }
-
-            $profile_picture = '../uploads/profile_pictures/' . $storedName;
-        }
         
+        // Handle profile picture upload and get the path
+        $uploadedProfilePic = handleApplicantProfilePictureUpload($conn, $applicant_id, ['image/jpeg', 'image/png', 'image/webp'], $maxFileSize);
+        if ($uploadedProfilePic !== null) {
+            $profile_picture = $uploadedProfilePic;
+        }
+
         $stmt_profile = $conn->prepare("INSERT INTO applicant_profile (applicant_id, middle_name, suffix, sex, date_of_birth, civil_status, nationality, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt_profile->bind_param("isssssss", $applicant_id, $middle_name, $suffix, $sex, $date_of_birth, $civil_status, $nationality, $profile_picture);
         $stmt_profile->execute();
