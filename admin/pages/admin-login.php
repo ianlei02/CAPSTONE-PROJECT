@@ -259,19 +259,24 @@
 
       const formData = new FormData(this);
 
-      const response = await fetch('../Function/login.php', {
-          method: 'POST',
-          body: formData
-      });
+      try {
+          const response = await fetch('../Function/login.php', {
+              method: 'POST',
+              body: formData
+          });
 
-      const result = await response.json();
+          if (!response.ok) throw new Error('Network response was not ok');
 
-      if (result.status === 'success') {
-          alert(result.message);
-          window.location.href = result.redirect;
-      } else {
-        
-          alert(result.message);
+          const result = await response.json();
+
+          if (result.status === 'success') {
+              alert(result.message);
+              window.location.href = result.redirect;
+          } else {
+              alert(result.message);
+          }
+      } catch (err) {
+          alert('Login failed. Please try again.');
       }
   });
 </script>
