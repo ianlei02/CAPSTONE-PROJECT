@@ -1,32 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PESO Landing</title>
     <link rel="shortcut icon" href="./assets/images/pesosmb.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/css-reset.css" />
     <link rel="stylesheet" href="./css/index.css" />
     <link rel="stylesheet" href="./css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 </head>
 
 <body>
-    <div class="header-info">
-
+    <!-- <div class="header-info">
         <div class="city-name"><a href="index.php" style="text-decoration: none; color: #fff;">PESO</a></div>
         <div class="office-hours">
             <span>Office Hours: Mon - Fri: 8.00 am. - 5.00 pm.</span>
             <span style="margin-left: 2rem;">Email: sanmiguelbulacanpeso@gmail.com</span>
         </div>
-    </div>
+    </div> -->
 
     <nav class="navbar">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <img
-                    src="./assets/images/logo without glass.png"
+                    src="../public-assets/smb-images/pesosmb.png"
+                    alt="PESO logo"
+                    class="logo" />
+                <img
+                    src="../public-assets/smb-images/smb-logo.png"
                     alt="PESO logo"
                     class="logo" />
             </a>
@@ -54,8 +56,8 @@
     <main>
         <section class="hero" id="hero">
             <div class="hero-text">
-                <!-- <h1>PUBLIC EMPLOYMENT SERVICE OFFICE OF <br /><span class="sanmiguel">SAN MIGUEL, BULACAN</span></h1> -->
-                <h1>Find Your Dream Job Today with PESO</h1>
+                <h1>PUBLIC EMPLOYMENT SERVICE OFFICE OF <br /><span class="sanmiguel">SAN MIGUEL, BULACAN</span></h1>
+                <!-- <h1>Find Your Dream Job Today with PESO</h1> -->
                 <p>Your gateway to amazing job opportunities.</p>
                 <div class="hero-btn">
                     <a href="login-signup.php?form=signup" class="get-started">Get Started &#10132;</a>
@@ -96,11 +98,8 @@
 
         </section>
 
-        <section class="registered-employers">
+        <!-- <section class="registered-employers">
             <h2>REGISTERED EMPLOYERS</h2>
-
-
-
             <div class="scroller" data-direction="right" data-speed="fast">
                 <div class="scroller__inner">
                     <img src="./assets/images/company-logos/7-eleven_logo.svg.png" alt="" />
@@ -109,7 +108,6 @@
                     <img src="./assets/images/company-logos/kfc.png" alt="" />
                     <img src="./assets/images/company-logos/mang-inasal-logo-png_seeklogo-543182.png" alt="" />
                     <img src="./assets/images/company-logos/robinsons.png" alt="" />
-                    <!-- <img src="./assets/images/company-logos/Puregold_logo.svg.png" alt=""> -->
                     <img src="./assets/images/company-logos/rcs.png" alt="">
 
                 </div>
@@ -123,12 +121,10 @@
                     <img src="./assets/images/company-logos/kfc.png" alt="" />
                     <img src="./assets/images/company-logos/mang-inasal-logo-png_seeklogo-543182.png" alt="" />
                     <img src="./assets/images/company-logos/robinsons.png" alt="" />
-                    <!-- <img src="./assets/images/company-logos/Puregold_logo.svg.png" alt=""> -->
-
                     <img src="./assets/images/company-logos/rcs.png" alt="">
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <section class="features">
             <div class="container">
@@ -251,18 +247,17 @@
 
         <!-- CTA Section -->
 
-        <section class="cta"  ">
-            <div class="container" style="width: auto;">
-                <h2>Ready to Take the Next Step?</h2>
-                <p>Join thousands of professionals and companies who found their perfect match through PESO</p>
-                <div style="display: flex; justify-content: center; gap: 20px;">
-                    <button class="btn btn-outline" style="background-color: transparent; border-color: var(--light-clr-700); color: var(--light-clr-700);" onclick="window.location.href='login-signup.php'">I'm Hiring</button>
-                    <button class="btn btn-primary" style="background-color: var(--light-clr-700); color: var(--primary-blue-color);" onclick="window.location.href='login-signup.php'">Find Jobs</button>
-                </div>
+        <section class="cta" ">
+            <div class=" container" style="width: auto;">
+            <h2>Ready to Take the Next Step?</h2>
+            <p>Join thousands of professionals and companies who found their perfect match through PESO</p>
+            <div style="display: flex; justify-content: center; gap: 20px;">
+                <button class="btn btn-outline" style="background-color: transparent; border-color: var(--light-clr-700); color: var(--light-clr-700);" onclick="window.location.href='login-signup.php'">I'm Hiring</button>
+                <button class="btn btn-primary" style="background-color: var(--light-clr-700); color: var(--primary-blue-color);" onclick="window.location.href='login-signup.php'">Find Jobs</button>
+            </div>
 
             </div>
         </section>
-
 
     </main>
     <footer class="footer">
@@ -289,9 +284,6 @@
                 <h3>Follow Us</h3>
                 <ul class="social-icons">
                     <li><a href="#">Facebook</a></li>
-                    <!-- <li><a href="#">X (Twitter)</a></li>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">LinkedIn</a></li> -->
                 </ul>
             </div>
 
@@ -309,7 +301,7 @@
     </footer>
 
 
-    <script>
+    <!-- <script>
         const scrollers = document.querySelectorAll(".scroller");
         if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
             addAnimation();
@@ -329,9 +321,9 @@
                 });
             });
         }
-        document.addEventListener("contextmenu", (e) => {
-            e.preventDefault();
-        });
+        //document.addEventListener("contextmenu", (e) => {
+          //  e.preventDefault();
+      //  });
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -366,7 +358,7 @@
 
             statNumbers.forEach((number) => observer.observe(number));
         });
-    </script>
+    </script> -->
 
 </body>
 
