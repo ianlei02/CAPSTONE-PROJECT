@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/css-reset.css" />
     <link rel="stylesheet" href="./css/index.css" />
     <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/breakpoints.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -21,7 +22,7 @@
     </div> -->
 
     <nav class="navbar">
-        <div class="container">
+       
             <a class="navbar-brand" href="#">
                 <img
                     src="../public-assets/smb-images/pesosmb.png"
@@ -46,23 +47,18 @@
                 <li class="auth-buttons">
                     <a href="login-signup.php?form=login"><button <a class="btn-login">Login</button></a>
                     <a href="login-signup.php?form=signup"><button <a class="btn-signup">Sign Up</button></a>
-                    <!-- <a class="btn-login" target="_self" href="login-signup.php">Login/Signup</a> -->
-                    <!-- <a class="btn-signup" target="_blank" href="applicant-login-signup.html">Applicant</a> -->
                 </li>
             </ul>
-        </div>
+    
     </nav>
 
     <main>
         <section class="hero" id="hero">
             <div class="hero-text">
                 <h1>PUBLIC EMPLOYMENT SERVICE OFFICE OF <br /><span class="sanmiguel">SAN MIGUEL, BULACAN</span></h1>
-                <!-- <h1>Find Your Dream Job Today with PESO</h1> -->
                 <p>Your gateway to amazing job opportunities.</p>
                 <div class="hero-btn">
-                    <a href="login-signup.php?form=signup" class="get-started">Get Started &#10132;</a>
-                    <!-- <button class="find-job">Browse jobs</button>
-                    <button class="find-talent">Find Talent</button> -->
+                    <a href="login-signup.php?form=signup" class="get-started">Get Started &#10132;</a>  
                 </div>
             </div>
             <div class="hero-image-container">
@@ -74,24 +70,28 @@
         </section>
 
         <section class="statistics">
-            <h2>PORTAL STATISTICS</h2>
-            <hr />
-            <div class="stats-container">
-                <div class="stats-card appear-animation">
-                    <h4>Registered Applicants</h4>
-                    <p class="stat-number" data-target="123">0</p>
+            <div class="container">
+                <div>
+                    <h2>PORTAL STATISTICS</h2>
+                    <hr />
                 </div>
-                <div class="stats-card appear-animation">
-                    <h4>Registered Employers</h4>
-                    <p class="stat-number" data-target="456">0</p>
-                </div>
-                <div class="stats-card appear-animation">
-                    <h4>Job Listings</h4>
-                    <p class="stat-number" data-target="789">0</p>
-                </div>
-                <div class="stats-card appear-animation">
-                    <h4>Hired Applicants</h4>
-                    <p class="stat-number" data-target="312">0</p>
+                <div class="stats-container">
+                    <div class="stats-card appear-animation">
+                        <h4>Registered Applicants</h4>
+                        <p class="stat-number" data-target="123">0</p>
+                    </div>
+                    <div class="stats-card appear-animation">
+                        <h4>Registered Employers</h4>
+                        <p class="stat-number" data-target="456">0</p>
+                    </div>
+                    <div class="stats-card appear-animation">
+                        <h4>Job Listings</h4>
+                        <p class="stat-number" data-target="789">0</p>
+                    </div>
+                    <div class="stats-card appear-animation">
+                        <h4>Hired Applicants</h4>
+                        <p class="stat-number" data-target="312">0</p>
+                    </div>
                 </div>
             </div>
 
@@ -191,7 +191,7 @@
                     <div class="step">
                         <div class="step-number">4</div>
                         <h3>Get Matched</h3>
-                        <p>Our office reviews applications and connects qualified candidates with employers.</p>
+                        <p> Our office reviews applications and connects qualified candidates with employers.</p>
                     </div>
                 </div>
             </div>
