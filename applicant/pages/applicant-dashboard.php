@@ -5,7 +5,75 @@
     header("Location: ../login-signup.php");
     exit();
   }
-  ?>
+  $applicantId = $_SESSION['user_id']?? 0;
+  function getProfileCompletion($applicantId, $conn) {
+    $totalTables = 7;
+    $completed = 0;
+
+    $stmt = $conn->prepare("SELECT f_name, l_name, email FROM applicant_account WHERE applicant_ID = ?");
+    $stmt->bind_param("i", $applicantId);
+    $stmt->execute();
+    $data = $stmt->get_result()->fetch_assoc();
+    if (!empty($data['f_name']) && !empty($data['l_name']) && !empty($data['email'])) {
+        $completed++;
+    }
+
+    $stmt = $conn->prepare("SELECT * FROM applicant_contact_info WHERE applicant_ID = ?");
+    $stmt->bind_param("i", $applicantId);
+    $stmt->execute();
+    if ($stmt->get_result()->num_rows > 0) {
+        $completed++;
+    }
+
+    $stmt = $conn->prepare("SELECT * FROM applicant_educ WHERE applicant_ID = ?");
+    $stmt->bind_param("i", $applicantId);
+    $stmt->execute();
+    if ($stmt->get_result()->num_rows > 0) {
+        $completed++;
+    }
+
+    $stmt = $conn->prepare("SELECT * FROM applicant_work_exp WHERE applicant_ID = ?");
+    $stmt->bind_param("i", $applicantId);
+    $stmt->execute();
+    if ($stmt->get_result()->num_rows > 0) {
+        $completed++;
+    }
+
+   
+    $stmt = $conn->prepare("SELECT * FROM applicant_documents WHERE applicant_ID = ?");
+    $stmt->bind_param("i", $applicantId);
+    $stmt->execute();
+    if ($stmt->get_result()->num_rows > 0) {
+        $completed++;
+    }
+
+    $stmt = $conn->prepare("SELECT * FROM applicant_skills WHERE applicant_ID = ?");
+    $stmt->bind_param("i", $applicantId);
+    $stmt->execute();
+    if ($stmt->get_result()->num_rows > 0) {
+        $completed++;
+    }
+
+    $stmt = $conn->prepare("SELECT * FROM applicant_profile WHERE applicant_ID = ?");
+    $stmt->bind_param("i", $applicantId);
+    $stmt->execute();
+    if ($stmt->get_result()->num_rows > 0) {
+        $completed++;
+    }
+
+    $completionPercentage = ($completed / $totalTables) * 100;
+    return round($completionPercentage);
+}
+
+$progress = getProfileCompletion($applicantId, $conn);
+$radius = 45;
+$circumference = 2 * M_PI * $radius;
+$offset = $circumference - ($progress / 100) * $circumference;
+?>
+
+
+
+
  <!DOCTYPE html>
  <html lang="en">
 
@@ -87,19 +155,23 @@
            can find a job. Thank you and good luck to your journey!
          </p> -->
        </div>
-       <div class="profile-completion-container">
-         <!-- <h6 class="completion-title">Profile Completion</h6> -->
-         <div class="progress-circle">
-           <svg viewBox="0 0 100 100">
-             <circle class="progress-circle-background" cx="50" cy="50" r="45"></circle>
-             <circle class="progress-circle-progress" cx="50" cy="50" r="45"
-               stroke-dasharray="282.743"
-               stroke-dashoffset="113.097"></circle> <!-- 60% complete (282.743 * 0.4) -->
-           </svg>
-           <div class="progress-text">
-             60%<span>COMPLETE</span>
-           </div>
-         </div>
+       <div class="profile-completion-container"> 
+        <div class="progress-circle">
+            <svg viewBox="0 0 100 100">
+                <circle class="progress-circle-background" cx="50" cy="50" r="<?php echo $radius; ?>"></circle>
+                <circle class="progress-circle-progress"
+                    cx="50" cy="50" r="<?php echo $radius; ?>"
+                    stroke-dasharray="<?php echo $circumference; ?>"
+                    stroke-dashoffset="<?php echo $offset; ?>">
+                </circle>
+            </svg>
+            <div class="progress-text">
+                <?php echo $progress; ?>%
+                <span>COMPLETE</span>
+            </div>
+        </div>
+
+
 
 
          <div class="message-button">
@@ -202,27 +274,6 @@
      </main>
    </div>
    <script src="../js/responsive.js"></script>
-   <script>
-     function updateProgress(percent) {
-       const progressCircle = document.querySelector('.progress-circle-progress');
-       const progressText = document.querySelector('.progress-text');
-       const circumference = 282.743; // 2 * π * r (where r = 45)
-
-       const offset = circumference - (percent / 100) * circumference;
-       progressCircle.style.strokeDashoffset = offset;
-       progressText.innerHTML = `${percent}%<span>COMPLETE</span>`;
-
-       if (percent >= 75) {
-         progressCircle.style.stroke = '#2ecc71'; // Green
-       } else if (percent >= 50) {
-         progressCircle.style.stroke = '#3498db'; // Blue
-       } else {
-         progressCircle.style.stroke = '#e74c3c'; // Red
-       }
-     }
-
-     setTimeout(() => updateProgress(75), 2000);
-   </script>
    <script>
      document.addEventListener("DOMContentLoaded", () => {
        const statisticCards = document.querySelectorAll(".statistic-card p");
