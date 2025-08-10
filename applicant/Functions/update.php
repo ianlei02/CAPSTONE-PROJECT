@@ -30,10 +30,10 @@ $nationality = $_POST['nationality'] ?? '';
 $mobile_number = $_POST['mobileNumber'] ?? '';
 $alternate_contact = $_POST['alternateContact'] ?? '';
 $street_address = $_POST['streetAddress'] ?? '';
-$region = $_POST['region'] ?? '';
-$province = $_POST['province'] ?? '';
-$city_municipality = $_POST['cityMunicipality'] ?? '';
-$barangay = $_POST['barangay'] ?? '';
+$region = $_POST['region_name'] ?? '';
+$province = $_POST['province_name'] ?? '';
+$city_municipality = $_POST['city_name'] ?? '';
+$barangay = $_POST['barangay_name'] ?? '';
 
 $primary_skills = $_POST['primarySkills'] ?? '';
 $technical_skills = $_POST['technicalSkills'] ?? '';

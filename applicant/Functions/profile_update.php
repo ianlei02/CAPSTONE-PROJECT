@@ -26,12 +26,15 @@ require "../connection/dbcon.php";
     $mobile_number = $_POST['mobileNumber'] ?? '';
     $alternate_contact = $_POST['alternateContact'] ?? '';
     $street_address = $_POST['streetAddress'] ?? '';
-    $region = $_POST['region'] ?? '';
-    $province = $_POST['province'] ?? '';
-    $city_municipality = $_POST['cityMunicipality'] ?? '';
-    $barangay = $_POST['barangay'] ?? '';
-
-       
+    $region = $_POST['region_name'] ?? '';
+    $province = $_POST['province_name'] ?? '';
+    $city_municipality = $_POST['city_name'] ?? '';
+    $barangay = $_POST['barangay_name'] ?? '';
+    $region_id   = $_POST['region'] ?? '';
+    $province_id = $_POST['province'] ?? '';
+    $city_id     = $_POST['cityMunicipality'] ?? '';
+    $barangay_id = $_POST['barangay'] ?? '';
+   
     $primary_skills = $_POST['primarySkills'] ?? '';
     $technical_skills = $_POST['technicalSkills'] ?? '';
     $language = $_POST['language'] ?? 'English'; 
@@ -199,8 +202,8 @@ require "../connection/dbcon.php";
         $stmt_profile->bind_param("isssssss", $applicant_id, $middle_name, $suffix, $sex, $date_of_birth, $civil_status, $nationality, $profile_picture);
         $stmt_profile->execute();
         
-        $stmt_contact = $conn->prepare("INSERT INTO applicant_contact_info (applicant_id, mobile_number, alternate_contact_number, street_address, region, province, city_municipality, barangay) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt_contact->bind_param("isssssss", $applicant_id, $mobile_number, $alternate_contact, $street_address, $region, $province, $city_municipality, $barangay);
+        $stmt_contact = $conn->prepare("INSERT INTO applicant_contact_info (applicant_id, mobile_number, alternate_contact_number, street_address, region, province, city_municipality, barangay, region_id, province_id, city_id, barangay_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?)");
+        $stmt_contact->bind_param("isssssssssss", $applicant_id, $mobile_number, $alternate_contact, $street_address, $region, $province, $city_municipality, $barangay, $region_id, $province_id, $city_id, $barangay_id);
         $stmt_contact->execute();
         
         $stmt_skills = $conn->prepare("INSERT INTO applicant_skills (applicant_id, primary_skills, technical_skills, language, proficiency_level) VALUES (?, ?, ?, ?, ?)");
