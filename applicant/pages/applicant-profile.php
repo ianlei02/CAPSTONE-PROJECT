@@ -84,7 +84,26 @@ if (isset($_SESSION['user_id'])) {
     }
     $stmt->close();
 }
+
+$applicant_id = $userId; 
+$stmt = $conn->prepare("SELECT street_address, region_id, province_id, city_id, barangay_id FROM applicant_contact_info WHERE applicant_ID = ?");
+$stmt->bind_param("i", $applicant_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$userAddress = $result->fetch_assoc();
+
+$saved_street = $userAddress['street_address'] ?? '';
+$saved_region = $userAddress['region_id'] ?? '';
+$saved_province = $userAddress['province_id'] ?? '';
+$saved_city = $userAddress['city_id'] ?? '';
+$saved_barangay = $userAddress['barangay_id'] ?? '';
+
+$regions = json_decode(file_get_contents("https://psgc.rootscratch.com/region"), true);
+$provinces = json_decode(file_get_contents("https://psgc.rootscratch.com/province"), true);
+$cities = json_decode(file_get_contents("https://psgc.rootscratch.com/municipal-city"), true);
+$barangays = json_decode(file_get_contents("https://psgc.rootscratch.com/barangay"), true);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -311,43 +330,62 @@ if (isset($_SESSION['user_id'])) {
                     <input
                       type="text"
                       id="street"
-                      placeholder="Street Address" name="streetAddress"
+                      placeholder="Street Address"
+                      name="streetAddress"
+                      value="<?= htmlspecialchars($saved_street) ?>"
                       required
-                      style="margin-bottom: 10px" />
-                    <div
-                      style="
-                        display: grid;
-                        grid-template-columns: 1fr 1fr;
-                        gap: 10px;
-                      ">
+                      style="margin-bottom: 10px"
+                    />
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+
                       <select id="region" name="region" required>
                         <option value="">Select Region</option>
-                        <option>NCR</option>
-                        <option>Region I</option>
-                        <option>Region II</option>
+                        <?php foreach ($regions as $reg): ?>
+                          <option value="<?= htmlspecialchars($reg['psgc_id']) ?>" 
+                            <?= ($saved_region == $reg['psgc_id']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($reg['name']) ?>
+                          </option>
+                        <?php endforeach; ?>
                       </select>
+
                       <select id="province" name="province" required>
                         <option value="">Select Province</option>
-                        <option>Metro Manila</option>
-                        <option>Bulacan</option>
-                        <option>Cavite</option>
+                        <?php foreach ($provinces as $prov): ?>
+                          <option value="<?= htmlspecialchars($prov['psgc_id']) ?>" 
+                            <?= ($saved_province == $prov['psgc_id']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($prov['name']) ?>
+                          </option>
+                        <?php endforeach; ?>
                       </select>
+
                       <select id="city" name="cityMunicipality" required>
                         <option value="">Select City/Municipality</option>
-                        <option>Quezon City</option>
-                        <option>Manila</option>
-                        <option>Makati</option>
+                        <?php foreach ($cities as $city): ?>
+                          <option value="<?= htmlspecialchars($city['psgc_id']) ?>" 
+                            <?= ($saved_city == $city['psgc_id']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($city['name']) ?>
+                          </option>
+                        <?php endforeach; ?>
                       </select>
-                      <input
-                        type="text"
-                        id="barangay"
-                        placeholder="Barangay" name="barangay"
-                        required />
+            
+                      <select id="barangay" name="barangay" required>
+                        <option value="">Select Barangay</option>
+                        <?php foreach ($barangays as $brgy): ?>
+                          <option value="<?= htmlspecialchars($brgy['psgc_id']) ?>" 
+                            <?= ($saved_barangay == $brgy['psgc_id']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($brgy['name']) ?>
+                          </option>
+                        <?php endforeach; ?>
+                      </select>
+
                     </div>
                   </div>
                 </div>
               </div>
-
+                <input type="hidden" name="region_name" id="region_name">
+                <input type="hidden" name="province_name" id="province_name">
+                <input type="hidden" name="city_name" id="city_name">
+                <input type="hidden" name="barangay_name" id="barangay_name">
               <!-- Education Section -->
               <div class="section">
                 <h2 class="section-title">Highest Educational Attainment </h2>
@@ -586,10 +624,6 @@ if (isset($_SESSION['user_id'])) {
       document.getElementById('mobile').value = contactData.mobile_number || '';
       document.getElementById('alternateMobile').value = contactData.alternate_contact_number || '';
       document.getElementById('street').value = contactData.street_address || '';
-      document.getElementById('region').value = contactData.region || '';
-      document.getElementById('province').value = contactData.province || '';
-      document.getElementById('city').value = contactData.city_municipality || '';
-      document.getElementById('barangay').value = contactData.barangay || '';
     }
     
     if (educationData) {
@@ -741,5 +775,134 @@ if (isset($_SESSION['user_id'])) {
         profilePicInput.disabled = true; // Disable the file input
     });
   </script>
+  <script>
+    const regionSel = document.getElementById('region');
+    const provinceSel = document.getElementById('province');
+    const citySel = document.getElementById('city');
+    const barangaySel = document.getElementById('barangay');
+
+    function reset(selectEl, placeholder){
+      selectEl.innerHTML = `<option value="">${placeholder}</option>`;
+      selectEl.disabled = true;
+    }
+
+    /* initial reset */
+    reset(provinceSel, 'Select Province');
+    reset(citySel, 'Select City/Municipality');
+    reset(barangaySel, 'Select Barangay');
+
+    regionSel.addEventListener('change', async () => {
+      const regionId = regionSel.value;
+      reset(provinceSel, 'Select Province');
+      reset(citySel, 'Select City/Municipality');
+      reset(barangaySel, 'Select Barangay');
+      if (!regionId) return;
+
+      try {
+        const res = await fetch(`https://psgc.rootscratch.com/province?id=${encodeURIComponent(regionId)}`);
+        if (!res.ok) throw new Error('Network response not ok');
+        const provinces = await res.json();
+        provinces.forEach(p => {
+          const opt = document.createElement('option');
+          opt.value = p.psgc_id;
+          opt.textContent = p.name;
+          provinceSel.appendChild(opt);
+        });
+        provinceSel.disabled = false;
+      } catch (err) {
+        console.error('Failed to load provinces', err);
+        alert('Unable to load provinces. Check console for details.');
+      }
+    });
+
+    provinceSel.addEventListener('change', async () => {
+      const provId = provinceSel.value;
+      reset(citySel, 'Select City/Municipality');
+      reset(barangaySel, 'Select Barangay');
+      if (!provId) return;
+
+      try {
+        const res = await fetch(`https://psgc.rootscratch.com/municipal-city?id=${encodeURIComponent(provId)}`);
+        if (!res.ok) throw new Error('Network response not ok');
+        const cities = await res.json();
+        cities.forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = c.psgc_id;
+          opt.textContent = c.name;
+          citySel.appendChild(opt);
+        });
+        citySel.disabled = false;
+      } catch (err) {
+        console.error('Failed to load cities', err);
+      }
+    });
+
+    citySel.addEventListener('change', async () => {
+      const cityId = citySel.value;
+      reset(barangaySel, 'Select Barangay');
+      if (!cityId) return;
+
+      try {
+        const res = await fetch(`https://psgc.rootscratch.com/barangay?id=${encodeURIComponent(cityId)}`);
+        if (!res.ok) throw new Error('Network response not ok');
+        const brgys = await res.json();
+        brgys.forEach(b => {
+          const opt = document.createElement('option');
+          opt.value = b.psgc_id;
+          opt.textContent = b.name;
+          barangaySel.appendChild(opt);
+        });
+        barangaySel.disabled = false;
+      } catch (err) {
+        console.error('Failed to load barangays', err);
+      }
+    });
+
+    document.getElementById("region").addEventListener("change", function() {
+    document.getElementById("region_name").value = this.options[this.selectedIndex].text;
+    });
+    document.getElementById("province").addEventListener("change", function() {
+        document.getElementById("province_name").value = this.options[this.selectedIndex].text;
+    });
+    document.getElementById("city").addEventListener("change", function() {
+        document.getElementById("city_name").value = this.options[this.selectedIndex].text;
+    });
+    document.getElementById("barangay").addEventListener("change", function() {
+        document.getElementById("barangay_name").value = this.options[this.selectedIndex].text;
+    });
+
+    window.addEventListener('DOMContentLoaded', function () {
+    const savedRegion = "<?= $saved_region ?>";
+    const savedProvince = "<?= $saved_province ?>";
+    const savedCity = "<?= $saved_city ?>";
+    const savedBarangay = "<?= $saved_barangay ?>";
+
+    if (savedRegion) {
+        document.getElementById('region').value = savedRegion;
+        document.getElementById('region').dispatchEvent(new Event('change'));
+    }
+
+    setTimeout(() => {
+        if (savedProvince) {
+            document.getElementById('province').value = savedProvince;
+            document.getElementById('province').dispatchEvent(new Event('change'));
+        }
+    }, 300);
+
+    setTimeout(() => {
+        if (savedCity) {
+            document.getElementById('city').value = savedCity;
+            document.getElementById('city').dispatchEvent(new Event('change'));
+        }
+    }, 600);
+
+    setTimeout(() => {
+        if (savedBarangay) {
+            document.getElementById('barangay').value = savedBarangay;
+        }
+    }, 900);
+});
+
+</script>
 </body>
 </html>
