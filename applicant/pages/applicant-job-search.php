@@ -107,11 +107,11 @@ if (!isset($_SESSION['user_id'])) {
             <div class="job-field">IT/Software</div>
             <div class="job-header">
               <div>
-          <h3 class="job-title">Frontend Developer</h3>
-          <div class="job-company">Tech Solutions Inc.</div>
+                <h3 class="job-title">Frontend Developer</h3>
+                <div class="job-company">Tech Solutions Inc.</div>
               </div>
               <div>
-          <span class="job-salary">₱50,000 - ₱70,000/month</span>
+                <span class="job-salary">₱50,000 - ₱70,000/month</span>
               </div>
             </div>
             <div class="job-meta">
@@ -136,11 +136,11 @@ if (!isset($_SESSION['user_id'])) {
             <div class="job-field">Engineering</div>
             <div class="job-header">
               <div>
-          <h3 class="job-title">Civil Engineer</h3>
-          <div class="job-company">BuildRight Construction</div>
+                <h3 class="job-title">Civil Engineer</h3>
+                <div class="job-company">BuildRight Construction</div>
               </div>
               <div>
-          <span class="job-salary">₱45,000 - ₱60,000/month</span>
+                <span class="job-salary">₱45,000 - ₱60,000/month</span>
               </div>
             </div>
             <div class="job-meta">
@@ -165,11 +165,11 @@ if (!isset($_SESSION['user_id'])) {
             <div class="job-field">Medicine/Healthcare</div>
             <div class="job-header">
               <div>
-          <h3 class="job-title">Staff Nurse</h3>
-          <div class="job-company">Metro Medical Center</div>
+                <h3 class="job-title">Staff Nurse</h3>
+                <div class="job-company">Metro Medical Center</div>
               </div>
               <div>
-          <span class="job-salary">₱35,000 - ₱45,000/month</span>
+                <span class="job-salary">₱35,000 - ₱45,000/month</span>
               </div>
             </div>
             <div class="job-meta">
@@ -193,11 +193,11 @@ if (!isset($_SESSION['user_id'])) {
             <div class="job-field">Business/Finance</div>
             <div class="job-header">
               <div>
-          <h3 class="job-title">Financial Analyst</h3>
-          <div class="job-company">Prime Capital Inc.</div>
+                <h3 class="job-title">Financial Analyst</h3>
+                <div class="job-company">Prime Capital Inc.</div>
               </div>
               <div>
-          <span class="job-salary">₱60,000 - ₱80,000/month</span>
+                <span class="job-salary">₱60,000 - ₱80,000/month</span>
               </div>
             </div>
             <div class="job-meta">
@@ -221,11 +221,11 @@ if (!isset($_SESSION['user_id'])) {
             <div class="job-field">Education</div>
             <div class="job-header">
               <div>
-          <h3 class="job-title">High School Teacher</h3>
-          <div class="job-company">Bright Future Academy</div>
+                <h3 class="job-title">High School Teacher</h3>
+                <div class="job-company">Bright Future Academy</div>
               </div>
               <div>
-          <span class="job-salary">₱30,000 - ₱40,000/month</span>
+                <span class="job-salary">₱30,000 - ₱40,000/month</span>
               </div>
             </div>
             <div class="job-meta">
@@ -249,11 +249,11 @@ if (!isset($_SESSION['user_id'])) {
             <div class="job-field">Marketing</div>
             <div class="job-header">
               <div>
-          <h3 class="job-title">Digital Marketing Specialist</h3>
-          <div class="job-company">AdVantage Media</div>
+                <h3 class="job-title">Digital Marketing Specialist</h3>
+                <div class="job-company">AdVantage Media</div>
               </div>
               <div>
-          <span class="job-salary">₱40,000 - ₱55,000/month</span>
+                <span class="job-salary">₱40,000 - ₱55,000/month</span>
               </div>
             </div>
             <div class="job-meta">
@@ -277,11 +277,11 @@ if (!isset($_SESSION['user_id'])) {
             <div class="job-field">Construction</div>
             <div class="job-header">
               <div>
-          <h3 class="job-title">Project Manager</h3>
-          <div class="job-company">Skyline Builders</div>
+                <h3 class="job-title">Project Manager</h3>
+                <div class="job-company">Skyline Builders</div>
               </div>
               <div>
-          <span class="job-salary">₱70,000 - ₱90,000/month</span>
+                <span class="job-salary">₱70,000 - ₱90,000/month</span>
               </div>
             </div>
             <div class="job-meta">
@@ -305,11 +305,11 @@ if (!isset($_SESSION['user_id'])) {
             <div class="job-field">Manufacturing</div>
             <div class="job-header">
               <div>
-          <h3 class="job-title">Production Supervisor</h3>
-          <div class="job-company">Quality Goods Inc.</div>
+                <h3 class="job-title">Production Supervisor</h3>
+                <div class="job-company">Quality Goods Inc.</div>
               </div>
               <div>
-          <span class="job-salary">₱35,000 - ₱50,000/month</span>
+                <span class="job-salary">₱35,000 - ₱50,000/month</span>
               </div>
             </div>
             <div class="job-meta">
@@ -332,11 +332,11 @@ if (!isset($_SESSION['user_id'])) {
             <div class="job-field">Other Fields</div>
             <div class="job-header">
               <div>
-          <h3 class="job-title">Event Coordinator</h3>
-          <div class="job-company">Dream Events Co.</div>
+                <h3 class="job-title">Event Coordinator</h3>
+                <div class="job-company">Dream Events Co.</div>
               </div>
               <div>
-          <span class="job-salary">₱25,000 - ₱35,000/month</span>
+                <span class="job-salary">₱25,000 - ₱35,000/month</span>
               </div>
             </div>
             <div class="job-meta">
