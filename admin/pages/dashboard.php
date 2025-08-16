@@ -40,7 +40,7 @@
           <h2 style="font-size: 2.25rem">PESO</h2>
         </div>
         <div class="nav-menu">
-          <a class="nav-item active" href="#stats">
+          <a class="nav-item active" href="dashboard.php">
             <i class="fas fa-home"></i>
             <span>Dashboard</span>
           </a>
@@ -56,10 +56,14 @@
             <i class="fas fa-users"></i>
             <span>Applicants</span>
           </a>
-          <a class="nav-item">
+          <a class="nav-item" href="reports.php">
             <i class="fas fa-chart-bar"></i>
             <span>Reports</span>
           </a>
+           <a class="nav-item" href="news-upload.php">
+                <i class="fas fa-newspaper"></i>
+                <span>News</span>   
+            </a>
           <a class="nav-item" href="../Function/logout.php">
             <i class="fas fa-cog"></i>
             <span>Logout</span>
