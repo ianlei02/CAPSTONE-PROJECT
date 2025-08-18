@@ -568,6 +568,7 @@ $barangays = json_decode(file_get_contents("https://psgc.rootscratch.com/baranga
         </div>
     </main>
   </div>
+  
   <script>
     document.getElementById('profilePicInput').addEventListener('change', function(e) {
     const file = e.target.files[0];

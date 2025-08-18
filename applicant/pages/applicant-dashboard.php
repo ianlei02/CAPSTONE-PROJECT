@@ -273,6 +273,7 @@ $offset = $circumference - ($progress / 100) * $circumference;
        </div>
      </main>
    </div>
+   
    <script src="../js/responsive.js"></script>
    <script>
      document.addEventListener("DOMContentLoaded", () => {
