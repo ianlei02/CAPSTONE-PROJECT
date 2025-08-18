@@ -16,7 +16,7 @@ require "../connection/dbcon.php";
 
     
     $middle_name = $_POST['middleName'] ?? '';
-    $suffix = $_POST['suffix'] ?? '';
+    $suffix = !empty($_POST['suffix']) ? $_POST['suffix'] : "N/A";
     $sex = $_POST['gender'] ?? '';
     $date_of_birth = $_POST['birthDate'] ?? '';
     $civil_status = $_POST['civilStatus'] ?? '';
@@ -188,7 +188,7 @@ require "../connection/dbcon.php";
 
 
     $conn->begin_transaction();
-    
+
 
     try {
         
