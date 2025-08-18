@@ -325,32 +325,48 @@ if (isset($_SESSION['verification_success'])) {
   </script>
   <script>
     document.querySelector('.login-form form').addEventListener('submit', function(e) {
-      e.preventDefault();
+  e.preventDefault();
 
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
-      const userType = document.querySelector('input[name="user-type-login"]:checked').value;
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+  const userType = document.querySelector('input[name="user-type-login"]:checked').value;
 
-      fetch("functions/login.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&user-type-login=${userType}`
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.status === "success") {
-            window.location.href = data.redirect_url;
-          } else {
-            alert(data.message);
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          alert('Login failed. Please try again.');
+  fetch("functions/login.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&user-type-login=${userType}`
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "success") {
+        Swal.fire({
+          title: "Login Successful",
+          text: "Redirecting to your dashboard...",
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false
+        }).then(() => {
+          window.location.href = data.redirect_url;
         });
+      } else {
+        Swal.fire({
+          title: "Login Failed",
+          text: data.message,
+          icon: "error"
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      Swal.fire({
+        title: "Error",
+        text: "Login failed. Please try again.",
+        icon: "error"
+      });
     });
+});
 
   
     document.getElementById('togglePassword').addEventListener('click', function () {
