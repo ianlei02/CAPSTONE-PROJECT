@@ -8,38 +8,34 @@ if(!isset($_SESSION['user_id'])) {
 }
 $userId = $_SESSION['user_id'];
 
-$accountStmt = $conn->prepare("SELECT * FROM applicant_account WHERE applicant_ID = ?");
-$accountStmt->bind_param("i", $userId);
-$accountStmt->execute();
-$accountResult = $accountStmt->get_result();
-$accountData = $accountResult->fetch_assoc();
+$mainSql = "
+    SELECT 
+        a.*, 
+        p.*, 
+        c.*, 
+        e.*, 
+        s.* 
+    FROM applicant_account a
+    LEFT JOIN applicant_profile p ON a.applicant_id = p.applicant_id
+    LEFT JOIN applicant_contact_info c ON a.applicant_id = c.applicant_id
+    LEFT JOIN applicant_educ e ON a.applicant_id = e.applicant_id
+    LEFT JOIN applicant_skills s ON a.applicant_id = s.applicant_id
+    WHERE a.applicant_id = ?
+";
+$mainStmt = $conn->prepare($mainSql);
+$mainStmt->bind_param("i", $userId);
+$mainStmt->execute();
+$mainResult = $mainStmt->get_result();
+$mainData = $mainResult->fetch_assoc();
 
-$profileStmt = $conn->prepare("SELECT * FROM applicant_profile WHERE applicant_id = ?");
-$profileStmt->bind_param("i", $userId);
-$profileStmt->execute();
-$profileResult = $profileStmt->get_result();
-$profileData = $profileResult->fetch_assoc();
-
-$contactStmt = $conn->prepare("SELECT * FROM applicant_contact_info WHERE applicant_id = ?");
-$contactStmt->bind_param("i", $userId);
-$contactStmt->execute();
-$contactResult = $contactStmt->get_result();
-$contactData = $contactResult->fetch_assoc();
-
-$eduStmt = $conn->prepare("SELECT * FROM applicant_educ WHERE applicant_id = ?");
-$eduStmt->bind_param("i", $userId);
-$eduStmt->execute();
-$eduResult = $eduStmt->get_result();
-$educationData = $eduResult->fetch_assoc();
-
-$skillsStmt = $conn->prepare("SELECT * FROM applicant_skills WHERE applicant_id = ?");
-$skillsStmt->bind_param("i", $userId);
-$skillsStmt->execute();
-$skillsResult = $skillsStmt->get_result();
-$skillsData = $skillsResult->fetch_assoc();
+$accountData   = $mainData ? array_intersect_key($mainData, array_flip(array_keys($mainData))) : [];
+$profileData   = $mainData ? $mainData : [];
+$contactData   = $mainData ? $mainData : [];
+$educationData = $mainData ? $mainData : [];
+$skillsData    = $mainData ? $mainData : [];
 
 $workStmt = $conn->prepare("SELECT * FROM applicant_work_exp WHERE applicant_id = ?");
-$workStmt->bind_param("s", $userId);
+$workStmt->bind_param("i", $userId);
 $workStmt->execute();
 $workResult = $workStmt->get_result();
 $workData = $workResult->fetch_all(MYSQLI_ASSOC);
@@ -50,13 +46,13 @@ $docsStmt->execute();
 $docsResult = $docsStmt->get_result();
 $docsData = $docsResult->fetch_all(MYSQLI_ASSOC);
 
-$accountJson = json_encode($accountData ?: []);
-$profileJson = json_encode($profileData ?: []);
-$contactJson = json_encode($contactData ?: []);
+$accountJson   = json_encode($accountData ?: []);
+$profileJson   = json_encode($profileData ?: []);
+$contactJson   = json_encode($contactData ?: []);
 $educationJson = json_encode($educationData ?: []);
-$skillsJson = json_encode($skillsData ?: []);
-$workJson = json_encode($workData ?: []);
-$docsJson = json_encode($docsData ?: []);
+$skillsJson    = json_encode($skillsData ?: []);
+$workJson      = json_encode($workData ?: []);
+$docsJson      = json_encode($docsData ?: []);
 
 $profile_picture_url = '../assets/images/profile.png'; 
 
