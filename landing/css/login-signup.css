@@ -309,6 +309,20 @@ input[type="password"]:focus {
     color: #333;
   }
 
+  .close-reset {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #888;
+  }
+
+  .close-reset:hover {
+    color: #333;
+  }
+
   .form-group {
     margin-bottom: 20px;
   }
@@ -359,4 +373,3 @@ input[type="password"]:focus {
     text-decoration: underline;
   }
 }
-
