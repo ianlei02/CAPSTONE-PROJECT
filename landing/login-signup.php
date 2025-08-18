@@ -291,9 +291,6 @@ if (isset($_SESSION['verification_success'])) {
   <script>
     function generateRandomNumber() {
 
-
-   
-
       let min = 100000;
       let max = 999999;
       let randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -381,7 +378,6 @@ if (isset($_SESSION['verification_success'])) {
       }
     });
 
-    
   </script>
   <script>
   document.getElementById("forgotPasswordForm").addEventListener("submit", function(e) {

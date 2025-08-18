@@ -5,6 +5,8 @@ require __DIR__ . "/connection/dbcon.php";
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+
+$swal="";
 $user_type = $_SESSION['user_type'] ?? $_POST['user_type'] ?? '';
 if (empty($user_type)) {
     die("User type not specified. Cannot proceed with verification.");
@@ -58,27 +60,37 @@ if (isset($_POST['verify'])) {
         $email = $row['email'];
 
         if ($entered_otp === $stored_otp) {
-            $update = "UPDATE ".($user_type == 'applicant' ? 'applicant' : 'employer')."_account 
-                      SET status = 'verified' WHERE email = ?";
-            $stmt = $conn->prepare($update);
-            $stmt->bind_param("s", $email);
-            
-            if ($stmt->execute()) {
-                $_SESSION['verified_email'] = $email;
-                $_SESSION['verification_success'] = "Your account has been verified. You can now login.";
-                header("Location: login-signup.php");
-                exit();
-            } else {
-                $message = "Failed to update user status.";
-                error_log("Update error: ".$conn->error);
-            }
-        } else {
-            $message = "Incorrect OTP entered.";
-        }
+    $update = "UPDATE " . ($user_type == 'applicant' ? 'applicant' : 'employer') . "_account 
+               SET status = 'verified' WHERE email = ?";
+    $stmt = $conn->prepare($update);
+    $stmt->bind_param("s", $email);
+
+    if ($stmt->execute()) {
+        $_SESSION['verified_email'] = $email;
+
+        
+        $swal = "
+        Swal.fire({
+            title: 'Verified!',
+            text: 'Your account has been successfully verified.',
+            icon: 'success',
+            confirmButtonText: 'Go to Login'
+        }).then(() => {
+            window.location.href = 'login-signup.php';
+        });
+        ";
     } else {
-        $message = "No pending OTP found for this session.";
+        
+        $swal = "
+        Swal.fire({
+            title: 'Invalid OTP',
+            text: 'The OTP you entered is incorrect. Please try again.',
+            icon: 'error',
+            confirmButtonText: 'Retry'
+        });
+        ";
     }
-}
+}}}
 ?>
 
 <!DOCTYPE html>
@@ -88,6 +100,7 @@ if (isset($_POST['verify'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Verification</title>
     <link rel="stylesheet" href="./css/login-signup.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <div class="container">
@@ -116,6 +129,10 @@ if (isset($_POST['verify'])) {
 
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    <?php if (!empty($swal)) { echo $swal; } ?>
+    </script>
 
     <!-- Scripts (unchanged) -->
     <!-- <script src="login-signup.js"></script> -->
@@ -175,4 +192,5 @@ if (isset($_POST['verify'])) {
       });
     </script> -->
   </body>
+
 </html>
