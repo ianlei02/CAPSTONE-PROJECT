@@ -162,7 +162,7 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
   <title>Applicant Dashboard</title>
   <link rel="stylesheet" href="../css/applicant-profile.css" />
   <link rel="stylesheet" href="../css/navs.css" />
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     .profile-pic-container:hover .profile-pic {
       transform: scale(1.05);
@@ -953,6 +953,36 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
     }
 });
 
-</script>
+  </script>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("form");
+  const saveBtn = document.getElementById("saveBtnn");
+  const updateBtn = document.getElementById("updateBtn");
+
+  function handleAction(button, actionText, confirmText) {
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      Swal.fire({
+        title: `Are you sure you want to ${actionText}?`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: confirmText,
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          form.submit();
+        }
+      });
+    });
+  }
+
+  handleAction(saveBtn, "save your profile", "Yes, Save it!");
+  handleAction(updateBtn, "update your profile", "Yes, Update it!");
+});
+  </script>
 </body>
 </html>
