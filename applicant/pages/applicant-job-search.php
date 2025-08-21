@@ -454,7 +454,7 @@ if (!isset($_SESSION['user_id'])) {
       </div>
     </main>
   </div>
-
+  
   <script src="../js/responsive.js"></script>
   <script>
     // Job Field Filter

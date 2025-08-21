@@ -8,38 +8,34 @@ if(!isset($_SESSION['user_id'])) {
 }
 $userId = $_SESSION['user_id'];
 
-$accountStmt = $conn->prepare("SELECT * FROM applicant_account WHERE applicant_ID = ?");
-$accountStmt->bind_param("i", $userId);
-$accountStmt->execute();
-$accountResult = $accountStmt->get_result();
-$accountData = $accountResult->fetch_assoc();
+$mainSql = "
+    SELECT 
+        a.*, 
+        p.*, 
+        c.*, 
+        e.*, 
+        s.* 
+    FROM applicant_account a
+    LEFT JOIN applicant_profile p ON a.applicant_id = p.applicant_id
+    LEFT JOIN applicant_contact_info c ON a.applicant_id = c.applicant_id
+    LEFT JOIN applicant_educ e ON a.applicant_id = e.applicant_id
+    LEFT JOIN applicant_skills s ON a.applicant_id = s.applicant_id
+    WHERE a.applicant_id = ?
+";
+$mainStmt = $conn->prepare($mainSql);
+$mainStmt->bind_param("i", $userId);
+$mainStmt->execute();
+$mainResult = $mainStmt->get_result();
+$mainData = $mainResult->fetch_assoc();
 
-$profileStmt = $conn->prepare("SELECT * FROM applicant_profile WHERE applicant_id = ?");
-$profileStmt->bind_param("i", $userId);
-$profileStmt->execute();
-$profileResult = $profileStmt->get_result();
-$profileData = $profileResult->fetch_assoc();
-
-$contactStmt = $conn->prepare("SELECT * FROM applicant_contact_info WHERE applicant_id = ?");
-$contactStmt->bind_param("i", $userId);
-$contactStmt->execute();
-$contactResult = $contactStmt->get_result();
-$contactData = $contactResult->fetch_assoc();
-
-$eduStmt = $conn->prepare("SELECT * FROM applicant_educ WHERE applicant_id = ?");
-$eduStmt->bind_param("i", $userId);
-$eduStmt->execute();
-$eduResult = $eduStmt->get_result();
-$educationData = $eduResult->fetch_assoc();
-
-$skillsStmt = $conn->prepare("SELECT * FROM applicant_skills WHERE applicant_id = ?");
-$skillsStmt->bind_param("i", $userId);
-$skillsStmt->execute();
-$skillsResult = $skillsStmt->get_result();
-$skillsData = $skillsResult->fetch_assoc();
+$accountData   = $mainData ? array_intersect_key($mainData, array_flip(array_keys($mainData))) : [];
+$profileData   = $mainData ? $mainData : [];
+$contactData   = $mainData ? $mainData : [];
+$educationData = $mainData ? $mainData : [];
+$skillsData    = $mainData ? $mainData : [];
 
 $workStmt = $conn->prepare("SELECT * FROM applicant_work_exp WHERE applicant_id = ?");
-$workStmt->bind_param("s", $userId);
+$workStmt->bind_param("i", $userId);
 $workStmt->execute();
 $workResult = $workStmt->get_result();
 $workData = $workResult->fetch_all(MYSQLI_ASSOC);
@@ -50,13 +46,13 @@ $docsStmt->execute();
 $docsResult = $docsStmt->get_result();
 $docsData = $docsResult->fetch_all(MYSQLI_ASSOC);
 
-$accountJson = json_encode($accountData ?: []);
-$profileJson = json_encode($profileData ?: []);
-$contactJson = json_encode($contactData ?: []);
+$accountJson   = json_encode($accountData ?: []);
+$profileJson   = json_encode($profileData ?: []);
+$contactJson   = json_encode($contactData ?: []);
 $educationJson = json_encode($educationData ?: []);
-$skillsJson = json_encode($skillsData ?: []);
-$workJson = json_encode($workData ?: []);
-$docsJson = json_encode($docsData ?: []);
+$skillsJson    = json_encode($skillsData ?: []);
+$workJson      = json_encode($workData ?: []);
+$docsJson      = json_encode($docsData ?: []);
 
 $profile_picture_url = '../assets/images/profile.png'; 
 
@@ -98,10 +94,63 @@ $saved_province = $userAddress['province_id'] ?? '';
 $saved_city = $userAddress['city_id'] ?? '';
 $saved_barangay = $userAddress['barangay_id'] ?? '';
 
-$regions = json_decode(file_get_contents("https://psgc.rootscratch.com/region"), true);
-$provinces = json_decode(file_get_contents("https://psgc.rootscratch.com/province"), true);
-$cities = json_decode(file_get_contents("https://psgc.rootscratch.com/municipal-city"), true);
-$barangays = json_decode(file_get_contents("https://psgc.rootscratch.com/barangay"), true);
+    function fetchMultipleUrls($urls) {
+        $multiHandle = curl_multi_init();
+        $curlHandles = [];
+        $responses = [];
+
+        foreach ($urls as $key => $url) {
+            $ch = curl_init();
+            curl_setopt_array($ch, [
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_TIMEOUT => 20
+            ]);
+            curl_multi_add_handle($multiHandle, $ch);
+            $curlHandles[$key] = $ch;
+        }
+
+        $running = null;
+        do {
+            curl_multi_exec($multiHandle, $running);
+            curl_multi_select($multiHandle);
+        } while ($running > 0);
+
+        foreach ($curlHandles as $key => $ch) {
+            $responses[$key] = json_decode(curl_multi_getcontent($ch), true);
+            curl_multi_remove_handle($multiHandle, $ch);
+            curl_close($ch);
+        }
+
+        curl_multi_close($multiHandle);
+        return $responses;
+    }
+
+    $cacheFile = __DIR__ . "/psgc_cache.json";
+    $cacheTime = 86400; // 24h
+
+    if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTime) {
+        $data = json_decode(file_get_contents($cacheFile), true);
+    } else {
+        $urls = [
+            "regions"   => "https://psgc.rootscratch.com/region",
+            "provinces" => "https://psgc.rootscratch.com/province",
+            "cities"    => "https://psgc.rootscratch.com/municipal-city",
+            "barangays" => "https://psgc.rootscratch.com/barangay"
+        ];
+        $data = fetchMultipleUrls($urls);
+        file_put_contents($cacheFile, json_encode($data));
+    }
+    $regions   = $data["regions"] ?? [];
+    $provinces = $data["provinces"] ?? [];
+    $cities    = $data["cities"] ?? [];
+    $barangays = $data["barangays"] ?? [];
+
+    function getCode($item) {
+        return $item['psgc_id'];
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -113,7 +162,7 @@ $barangays = json_decode(file_get_contents("https://psgc.rootscratch.com/baranga
   <title>Applicant Dashboard</title>
   <link rel="stylesheet" href="../css/applicant-profile.css" />
   <link rel="stylesheet" href="../css/navs.css" />
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     .profile-pic-container:hover .profile-pic {
       transform: scale(1.05);
@@ -340,9 +389,10 @@ $barangays = json_decode(file_get_contents("https://psgc.rootscratch.com/baranga
 
                       <select id="region" name="region" required>
                         <option value="">Select Region</option>
-                        <?php foreach ($regions as $reg): ?>
-                          <option value="<?= htmlspecialchars($reg['psgc_id']) ?>" 
-                            <?= ($saved_region == $reg['psgc_id']) ? 'selected' : '' ?>>
+                        <?php foreach ($regions as $reg): 
+                          $code = getCode($reg); ?>
+                          <option value="<?= htmlspecialchars($code) ?>" 
+                            <?= ($saved_region == $code) ? 'selected' : '' ?>>
                             <?= htmlspecialchars($reg['name']) ?>
                           </option>
                         <?php endforeach; ?>
@@ -350,9 +400,10 @@ $barangays = json_decode(file_get_contents("https://psgc.rootscratch.com/baranga
 
                       <select id="province" name="province" required>
                         <option value="">Select Province</option>
-                        <?php foreach ($provinces as $prov): ?>
-                          <option value="<?= htmlspecialchars($prov['psgc_id']) ?>" 
-                            <?= ($saved_province == $prov['psgc_id']) ? 'selected' : '' ?>>
+                        <?php foreach ($provinces as $prov): 
+                          $code = getCode($prov); ?>
+                          <option value="<?= htmlspecialchars($code) ?>" 
+                            <?= ($saved_province == $code) ? 'selected' : '' ?>>
                             <?= htmlspecialchars($prov['name']) ?>
                           </option>
                         <?php endforeach; ?>
@@ -360,19 +411,21 @@ $barangays = json_decode(file_get_contents("https://psgc.rootscratch.com/baranga
 
                       <select id="city" name="cityMunicipality" required>
                         <option value="">Select City/Municipality</option>
-                        <?php foreach ($cities as $city): ?>
-                          <option value="<?= htmlspecialchars($city['psgc_id']) ?>" 
-                            <?= ($saved_city == $city['psgc_id']) ? 'selected' : '' ?>>
+                        <?php foreach ($cities as $city): 
+                          $code = getCode($city); ?>
+                          <option value="<?= htmlspecialchars($code) ?>" 
+                            <?= ($saved_city == $code) ? 'selected' : '' ?>>
                             <?= htmlspecialchars($city['name']) ?>
                           </option>
                         <?php endforeach; ?>
                       </select>
-            
+
                       <select id="barangay" name="barangay" required>
                         <option value="">Select Barangay</option>
-                        <?php foreach ($barangays as $brgy): ?>
-                          <option value="<?= htmlspecialchars($brgy['psgc_id']) ?>" 
-                            <?= ($saved_barangay == $brgy['psgc_id']) ? 'selected' : '' ?>>
+                        <?php foreach ($barangays as $brgy): 
+                          $code = getCode($brgy); ?>
+                          <option value="<?= htmlspecialchars($code) ?>" 
+                            <?= ($saved_barangay == $code) ? 'selected' : '' ?>>
                             <?= htmlspecialchars($brgy['name']) ?>
                           </option>
                         <?php endforeach; ?>
@@ -568,6 +621,7 @@ $barangays = json_decode(file_get_contents("https://psgc.rootscratch.com/baranga
         </div>
     </main>
   </div>
+  
   <script>
     document.getElementById('profilePicInput').addEventListener('change', function(e) {
     const file = e.target.files[0];
@@ -871,38 +925,64 @@ $barangays = json_decode(file_get_contents("https://psgc.rootscratch.com/baranga
         document.getElementById("barangay_name").value = this.options[this.selectedIndex].text;
     });
 
-    window.addEventListener('DOMContentLoaded', function () {
+    window.addEventListener('DOMContentLoaded', async function () {
     const savedRegion = "<?= $saved_region ?>";
     const savedProvince = "<?= $saved_province ?>";
     const savedCity = "<?= $saved_city ?>";
     const savedBarangay = "<?= $saved_barangay ?>";
 
-    if (savedRegion) {
-        document.getElementById('region').value = savedRegion;
-        document.getElementById('region').dispatchEvent(new Event('change'));
+    async function selectValue(selectEl, value) {
+        return new Promise(resolve => {
+            const check = setInterval(() => {
+                if ([...selectEl.options].some(opt => opt.value == value)) {
+                    selectEl.value = value;
+                    selectEl.dispatchEvent(new Event('change'));
+                    clearInterval(check);
+                    resolve();
+                }
+            }, 100);
+        });
     }
 
-    setTimeout(() => {
-        if (savedProvince) {
-            document.getElementById('province').value = savedProvince;
-            document.getElementById('province').dispatchEvent(new Event('change'));
-        }
-    }, 300);
-
-    setTimeout(() => {
-        if (savedCity) {
-            document.getElementById('city').value = savedCity;
-            document.getElementById('city').dispatchEvent(new Event('change'));
-        }
-    }, 600);
-
-    setTimeout(() => {
-        if (savedBarangay) {
-            document.getElementById('barangay').value = savedBarangay;
-        }
-    }, 900);
+    if (savedRegion) {
+        regionSel.value = savedRegion;
+        regionSel.dispatchEvent(new Event('change'));
+        await selectValue(provinceSel, savedProvince);
+        await selectValue(citySel, savedCity);
+        await selectValue(barangaySel, savedBarangay);
+    }
 });
 
-</script>
+  </script>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("form");
+  const saveBtn = document.getElementById("saveBtnn");
+  const updateBtn = document.getElementById("updateBtn");
+
+  function handleAction(button, actionText, confirmText) {
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      Swal.fire({
+        title: `Are you sure you want to ${actionText}?`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: confirmText,
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          form.submit();
+        }
+      });
+    });
+  }
+
+  handleAction(saveBtn, "save your profile", "Yes, Save it!");
+  handleAction(updateBtn, "update your profile", "Yes, Update it!");
+});
+  </script>
 </body>
 </html>

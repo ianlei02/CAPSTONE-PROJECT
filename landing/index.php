@@ -495,6 +495,19 @@
         </div>
     </footer>
 
+<div id="preloader">
+  <div class="loader"></div>
+</div>
+
+    <script>
+    window.addEventListener("load", function () {
+        const preloader = document.getElementById("preloader");
+        preloader.style.opacity = "0";
+        setTimeout(() => {
+        preloader.style.display = "none";
+        }, 500); 
+    });
+    </script>
 
     <!-- <script>
         const scrollers = document.querySelectorAll(".scroller");
