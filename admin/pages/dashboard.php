@@ -1,14 +1,14 @@
 <?php
-session_start();
+// session_start();
 
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
-header("Pragma: no-cache");
+// header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+// header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+// header("Pragma: no-cache");
 
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: ../pages/admin-login.php");
-    exit();
-}
+// if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+//     header("Location: ../pages/admin-login.php");
+//     exit();
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +40,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
           <h2 style="font-size: 2.25rem">PESO</h2>
         </div>
         <div class="nav-menu">
-          <a class="nav-item active" href="#stats">
+          <a class="nav-item active" href="dashboard.php">
             <i class="fas fa-home"></i>
             <span>Dashboard</span>
           </a>
@@ -56,10 +56,14 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             <i class="fas fa-users"></i>
             <span>Applicants</span>
           </a>
-          <a class="nav-item">
+          <a class="nav-item" href="reports.php">
             <i class="fas fa-chart-bar"></i>
             <span>Reports</span>
           </a>
+           <a class="nav-item" href="news-upload.php">
+                <i class="fas fa-newspaper"></i>
+                <span>News</span>   
+            </a>
           <a class="nav-item" href="../Function/logout.php">
             <i class="fas fa-cog"></i>
             <span>Logout</span>
