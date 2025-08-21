@@ -70,7 +70,7 @@
             </div>
         </section>
 
-        <!-- <section class="statistics">
+        <section class="statistics">
             <div class="container">
                 <div>
                     <h2>PORTAL STATISTICS</h2>
@@ -97,7 +97,7 @@
             </div>
 
 
-        </section> -->
+        </section>
 
 
         <section class="news">
