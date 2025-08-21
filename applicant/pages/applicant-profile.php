@@ -767,7 +767,7 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
      const result = await response.json();
 
      if (result.success) {
-       alert('Profile saved successfully!');
+       alert(result.message);
           window.location.reload();
      } else {
          alert('Error: ' + result.message);
@@ -798,35 +798,35 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
     const saveBtn = document.getElementById('saveBtn');
     const inputs = document.querySelectorAll('#profileForm input');
     const select = document.querySelectorAll('#profileForm select');
-    const textAreas = document.querySelectorAll('#profileForm textarea'); // Correctly define textAreas
+    const textAreas = document.querySelectorAll('#profileForm textarea'); 
     const profilePicInput = document.getElementById('profilePicInput');
 
     window.addEventListener('DOMContentLoaded', () => {
         inputs.forEach(input => input.disabled = true);
         select.forEach(select => select.disabled = true);
-        textAreas.forEach(textArea => textArea.disabled = true); // Use textAreas here
+        textAreas.forEach(textArea => textArea.disabled = true); 
         saveBtn.disabled = true;
         editBtn.disabled = false;
-        profilePicInput.disabled = true; // Disable the file input
+        profilePicInput.disabled = true; 
     });
 
     editBtn.addEventListener('click', () => {
         inputs.forEach(input => input.disabled = false);
         select.forEach(select => select.disabled = false);
-        textAreas.forEach(textArea => textArea.disabled = false); // Use textAreas here
+        textAreas.forEach(textArea => textArea.disabled = false); 
         saveBtn.disabled = false;
         editBtn.disabled = true;
-        profilePicInput.disabled = false; // Enable the file input
+        profilePicInput.disabled = false; 
     });
 
     saveBtn.addEventListener('click', (e) => {
         e.preventDefault();
         inputs.forEach(input => input.disabled = true);
         select.forEach(select => select.disabled = true);
-        textAreas.forEach(textArea => textArea.disabled = true); // Use textAreas here
+        textAreas.forEach(textArea => textArea.disabled = true); 
         saveBtn.disabled = true;
         editBtn.disabled = false;
-        profilePicInput.disabled = true; // Disable the file input
+        profilePicInput.disabled = true; 
     });
   </script>
   <script>
@@ -960,7 +960,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const saveBtn = document.getElementById("saveBtnn");
   const updateBtn = document.getElementById("updateBtn");
 
-  function handleAction(button, actionText, confirmText) {
+  function handleAction(button, actionText, confirmText, successText) {
     button.addEventListener("click", function (e) {
       e.preventDefault();
 
@@ -974,15 +974,25 @@ document.addEventListener("DOMContentLoaded", () => {
         cancelButtonColor: "#d33",
       }).then((result) => {
         if (result.isConfirmed) {
-          form.submit();
+          Swal.fire({
+            title: successText,
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1000 
+          });
+
+          setTimeout(() => {
+            form.submit();
+          }, 1000);
         }
       });
     });
   }
 
-  handleAction(saveBtn, "save your profile", "Yes, Save it!");
-  handleAction(updateBtn, "update your profile", "Yes, Update it!");
+  handleAction(saveBtn, "save your profile", "Yes, Save it!", "Profile Saved Successfully!");
+  handleAction(updateBtn, "update your profile", "Yes, Update it!", "Profile Updated Successfully!");
 });
-  </script>
+</script>
+
 </body>
 </html>

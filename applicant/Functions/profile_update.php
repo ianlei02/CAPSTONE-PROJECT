@@ -1,14 +1,20 @@
 <?php
 session_start();
-require "../connection/dbcon.php";
+require "../connection/dbcon.php";  
+
+    header('Content-Type: application/json');
+    $response = ['success' => false, 'message' => ''];
+
 
     if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        echo json_encode(["success" => false, "message" => "Database connection failed: " . $conn->connect_error]);
+    exit;
     }
 
 
     if (!isset($_SESSION['user_id'])) {
-        die("Error: User not logged in");
+        echo json_encode(["success" => false, "message" => "User not logged in"]);
+    exit;
     }
     
 
@@ -244,6 +250,7 @@ require "../connection/dbcon.php";
         
         $response['success'] = true;
         $response['message'] = 'Profile saved successfully!';
+
         
         
         
@@ -260,7 +267,14 @@ require "../connection/dbcon.php";
         if (isset($stmt_work_exp)) $stmt_work_exp->close();
         $conn->close();
     }
+    if ($response['success']) {
     
-    echo json_encode($response);
+    header("Location: ../pages/applicant-profile.php?status=success&msg=" . urlencode($response['message']));
+    exit();
+} else {
     
-?>
+    header("Location: ../pages/applicant-profile.php?status=error&msg=" . urlencode($response['message']));
+    exit();
+}
+
+    
