@@ -5,7 +5,39 @@ if (!isset($_SESSION['user_id'])) {
   header("Location: ../login-signup.php");
   exit();
 }
+$employer_id = $_SESSION['user_id'];
 
+$sql = "
+SELECT 
+    ea.email, ea.email, ea.password,
+    ed.business_permit, ed.dole_certification, ed.bir_certification, ed.migrant_certification, ed.philjob_certification,
+    ei.company_type, ei.company_size, ei.industry, ei.contact_number, ei.address, ei.contact_person, ei.contact_position, ei.contact_mobile, ei.contact_email
+FROM employer_account ea
+LEFT JOIN employer_company_docs ed ON ea.employer_id = ed.employer_id
+LEFT JOIN employer_company_info ei ON ea.employer_id = ei.employer_id
+WHERE ea.employer_id = ?
+";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $employer_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$data = $result->fetch_assoc();
+
+$total_fields = count($data); 
+$filled = 0;
+
+foreach ($data as $value) {
+    if (!empty($value)) {
+        $filled++;
+    }
+}
+
+$completion = round(($filled / $total_fields) * 100);
+
+$radius = 45;
+$circumference = 2 * M_PI * $radius;
+$offset = $circumference - ($completion / 100 * $circumference);
 ?>
 
 <!DOCTYPE html>
@@ -95,14 +127,15 @@ if (!isset($_SESSION['user_id'])) {
           </p> -->
       </div>
       <div class="status-card">
-        <div class="progress-circle-container">
+        <div class="progress-circle-container" style="position: relative; width:120px; height:120px;">
           <svg class="progress-circle-svg" viewBox="0 0 100 100">
             <circle class="progress-circle-bg" cx="50" cy="50" r="45"></circle>
-            <circle class="progress-circle-fill" cx="50" cy="50" r="45"
-              stroke-dasharray="282.743"
-              stroke-dashoffset="98.96"></circle> <!-- 65% complete -->
+            <circle class="progress-circle-fill"
+                    cx="50" cy="50" r="45"
+                    stroke-dasharray="<?php echo $circumference; ?>"
+                    stroke-dashoffset="<?php echo $offset; ?>"></circle>
           </svg>
-          <div class="progress-text">65%</div>
+          <div class="progress-text"><?php echo $completion; ?>%</div>
         </div>
 
         <div class="progress-details">
@@ -241,27 +274,6 @@ if (!isset($_SESSION['user_id'])) {
 
   <script src="../js/responsive.js"></script>
   <script>
-    // Update progress circle
-    function updateProgress(percent, completed, total) {
-      const circle = document.querySelector('.progress-circle-fill');
-      const text = document.querySelector('.progress-text');
-      const fieldsText = document.querySelector('.progress-header div:last-child');
-      const circumference = 282.743; // 2 * π * r (r=45)
-
-      const offset = circumference - (percent / 100) * circumference;
-      circle.style.strokeDashoffset = offset;
-      text.textContent = `${percent}%`;
-      fieldsText.textContent = `${completed}/${total} fields`;
-
-      // Change color based on completion
-      if (percent >= 75) {
-        circle.style.stroke = '#2ecc71'; // Green
-      } else if (percent >= 50) {
-        circle.style.stroke = '#3498db'; // Blue
-      } else {
-        circle.style.stroke = '#e74c3c'; // Red
-      }
-    }
 
     // Update verification status
     function setVerificationStatus(status) {
@@ -282,8 +294,7 @@ if (!isset($_SESSION['user_id'])) {
       }
     }
 
-    // Example: Update to 75% completion
-    setTimeout(() => updateProgress(75, 15, 20), 1000);
+
 
     // Example: Change to verified status
     // setVerificationStatus('verified');

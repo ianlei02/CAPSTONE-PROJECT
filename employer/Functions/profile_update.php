@@ -123,7 +123,7 @@ try {
 
     $docFields = [
         "bir" => "bir_certification",
-        "business_permit" => "business_permit",
+        "business-permit" => "business_permit",
         "dole" => "dole_certification",
         "migrant" => "migrant_certification",
         "philjob" => "philjob_certification"
