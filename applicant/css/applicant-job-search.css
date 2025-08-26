@@ -5,6 +5,7 @@
   --secondary-red-color: #ff6b6b;
   --dark-clr-700: #000;
   --dark-clr-600: #333;
+  --dark-clr-500: #494949;
   --light-clr-700: #fff;
   --light-clr-600: #fafafa;
   --light-clr-500: #f3f3f3;
@@ -13,7 +14,9 @@
   max-width: 1200px;
   margin: 0 auto;
 }
-
+/* *{
+  outline: 1px solid var(--primary-blue-color);
+} */
 .header {
   display: flex;
   justify-content: space-between;
@@ -72,19 +75,33 @@ select.filter {
   padding: 25px;
   transition: transform 0.3s;
   border: 1px solid var(--border);
+  height: fit-content;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  justify-content: space-between;
 }
-
 .job-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
-
+.job-card.expanded{
+  height: 600px;
+  overflow: hidden;
+}
+.job-card-top{
+  width: 100%;
+  height: auto;
+  color: var(--dark-clr-500) !important;
+}
 .job-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
 }
-
 .job-title {
   font-size: 20px;
   color: var(--primary-blue-color);
@@ -92,18 +109,17 @@ select.filter {
 }
 
 .job-company {
-  color: var(--dark-clr-600);
   font-weight: 500;
-  margin: 5px 0;
+  margin: 4px 0;
 }
 
 .job-meta {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  margin: 15px 0;
-  color: var(--dark-clr-600);
+  margin: 8px 0;
   font-size: 14px;
+  color: var(--dark-clr-500);
 }
 
 .job-meta span {
@@ -119,17 +135,26 @@ select.filter {
   border-radius: 20px;
   font-size: 12px;
   font-weight: 500;
-  display: inline-block;
+  width: fit-content;
+  display: block;
   margin-bottom: 10px;
 }
 
 .job-description {
   color: var(--dark-clr-600);
-  margin: 15px 0;
+  /* font-weight: 500; */
+  margin-top: 24px;
+  margin-bottom: 8px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+.job-description.expand {
+  -webkit-line-clamp: unset;
+  overflow: visible;
+  display: block;
+  height: auto;
 }
 
 .job-footer {
@@ -138,6 +163,7 @@ select.filter {
   align-items: center;
   margin-top: 20px;
   padding-top: 15px;
+  width: 100%;
   border-top: 1px solid var(--border);
 }
 
@@ -304,4 +330,11 @@ select.filter {
   }
 }
 
- 
+.read-more {
+  color: var(--primary-blue-color);
+  cursor: pointer;
+  font-size: 14px;
+  display: inline-block;
+  align-self: flex-start;
+  margin-right: 24px;
+}

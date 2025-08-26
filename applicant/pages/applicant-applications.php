@@ -54,23 +54,18 @@ if (!isset($_SESSION['user_id'])) {
           </a>
         </li>
         <li>
-
           <a href="./applicant-job-search.php">
-
             <span class="emoji"><img src="../../public-assets/icons/search.svg" alt="Job-Search-icon"></span>
             <span class="label">Job Search</span>
           </a>
         </li>
         <li>
-
           <a href="./applicant-profile.php">
-
             <span class="emoji"><img src="../../public-assets/icons/user.svg" alt="Profile-icon"></span>
             <span class="label">My Profile</span>
           </a>
         </li>
         <li>
-
           <a href="../../landing/functions/logout.php">
             <span class="emoji"><img src="../../public-assets/icons/download.svg" alt="Logout-icon" style="transform: rotate(90deg);"></span>
             <span class="label">Log Out</span>
@@ -91,6 +86,7 @@ if (!isset($_SESSION['user_id'])) {
                 <th>Industry</th>
                 <th>Status</th>
                 <th>Date Applied</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -100,6 +96,7 @@ if (!isset($_SESSION['user_id'])) {
                 <td class="industry it">IT/Software</td>
                 <td><span class="status interview">Interview</span></td>
                 <td class="table-date">2025-10-01</td>
+                <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
               </tr>
               <tr>
                 <td>Data Analyst</td>
@@ -107,6 +104,7 @@ if (!isset($_SESSION['user_id'])) {
                 <td class="industry finance">Finance</td>
                 <td><span class="status applied">Applied</span></td>
                 <td class="table-date">2025-09-15</td>
+                <td><button class="action-btn cancel-btn">Cancel</button></td>
               </tr>
               <tr>
                 <td>Manager</td>
@@ -114,6 +112,7 @@ if (!isset($_SESSION['user_id'])) {
                 <td class="industry finance">Finance</td>
                 <td><span class="status referred">Referred</span></td>
                 <td class="table-date">2025-09-15</td>
+                <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
               </tr>
               <tr>
                 <td>Data Analyst</td>
@@ -121,6 +120,7 @@ if (!isset($_SESSION['user_id'])) {
                 <td class="industry finance">Finance</td>
                 <td><span class="status hired">Hired</span></td>
                 <td class="table-date">2025-09-15</td>
+                <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
               </tr>
               <tr>
                 <td>Manager</td>
@@ -128,6 +128,7 @@ if (!isset($_SESSION['user_id'])) {
                 <td class="industry finance">Finance</td>
                 <td><span class="status declined">Declined</span></td>
                 <td class="table-date">2025-09-15</td>
+                <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
               </tr>
               <tr>
                 <td>Frontend Developer</td>
@@ -135,6 +136,7 @@ if (!isset($_SESSION['user_id'])) {
                 <td class="industry it">IT/Software</td>
                 <td><span class="status interview">Interview</span></td>
                 <td class="table-date">2025-08-22</td>
+                <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
               </tr>
               <tr>
                 <td>UX Designer</td>
@@ -142,6 +144,7 @@ if (!isset($_SESSION['user_id'])) {
                 <td class="industry others">Others</td>
                 <td><span class="status applied">Applied</span></td>
                 <td class="table-date">2025-07-30</td>
+                <td><button class="action-btn cancel-btn">Cancel</button></td>
               </tr>
               <tr>
                 <td>Project Manager</td>
@@ -149,6 +152,7 @@ if (!isset($_SESSION['user_id'])) {
                 <td class="industry engineering">Engineering</td>
                 <td><span class="status referred">Referred</span></td>
                 <td class="table-date">2025-08-10</td>
+                <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
               </tr>
               <tr>
                 <td>QA Tester</td>
@@ -156,6 +160,7 @@ if (!isset($_SESSION['user_id'])) {
                 <td class="industry it">IT/Software</td>
                 <td><span class="status hired">Hired</span></td>
                 <td class="table-date">2025-07-01</td>
+                <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
               </tr>
               <tr>
                 <td>DevOps Engineer</td>
@@ -163,6 +168,7 @@ if (!isset($_SESSION['user_id'])) {
                 <td class="industry it">IT/Software</td>
                 <td><span class="status declined">Declined</span></td>
                 <td class="table-date">2025-09-05</td>
+                <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
               </tr>
               <tr>
                 <td>Backend Developer</td>
@@ -170,6 +176,7 @@ if (!isset($_SESSION['user_id'])) {
                 <td class="industry it">IT/Software</td>
                 <td><span class="status interview">Interview</span></td>
                 <td class="table-date">2025-10-03</td>
+                <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
               </tr>
               <tr>
                 <td>AI Researcher</td>
@@ -177,6 +184,7 @@ if (!isset($_SESSION['user_id'])) {
                 <td class="industry it">IT/Software</td>
                 <td><span class="status applied">Applied</span></td>
                 <td class="table-date">2025-08-12</td>
+                <td><button class="action-btn cancel-btn">Cancel</button></td>
               </tr>
               <tr>
                 <td>Business Analyst</td>
@@ -184,6 +192,7 @@ if (!isset($_SESSION['user_id'])) {
                 <td class="industry finance">Finance</td>
                 <td><span class="status referred">Referred</span></td>
                 <td class="table-date">2025-07-25</td>
+                <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
               </tr>
               <tr>
                 <td>Scrum Master</td>
@@ -191,6 +200,7 @@ if (!isset($_SESSION['user_id'])) {
                 <td class="industry it">IT/Software</td>
                 <td><span class="status hired">Hired</span></td>
                 <td class="table-date">2025-06-18</td>
+                <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
               </tr>
               <tr>
                 <td>IT Support Specialist</td>
@@ -198,15 +208,16 @@ if (!isset($_SESSION['user_id'])) {
                 <td class="industry it">IT/Software</td>
                 <td><span class="status declined">Declined</span></td>
                 <td class="table-date">2025-07-09</td>
+                <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
               </tr>
             </tbody>
-
           </table>
         </div>
       </div>
     </main>
   </div>
-  
+
   <script src="../js/responsive.js"></script>
 </body>
+
 </html>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,7 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
 </head>
-
 <body>
     <!-- <div class="header-info">
         <div class="city-name"><a href="index.php" style="text-decoration: none; color: #fff;">PESO</a></div>
@@ -55,11 +53,27 @@
 
     <main>
         <section class="hero" id="hero">
-            <div class="hero-text">
-                <h1>PUBLIC EMPLOYMENT SERVICE OFFICE OF <br /><span class="sanmiguel">SAN MIGUEL, BULACAN</span></h1>
-                <p>Your gateway to amazing job opportunities.</p>
-                <div class="hero-btn">
-                    <a href="login-signup.php?form=signup" class="get-started">Get Started &#10132;</a>
+            <div class="hero-left">
+                <div class="hero-title">
+                    <h1>PUBLIC EMPLOYMENT SERVICE OFFICE OF SAN MIGUEL, BULACAN</h1>
+                    <p>Your gateway to amazing job opportunities.</p>
+                    <div class="hero-btn">
+                        <a href="login-signup.php?form=signup" class="get-started">Get Started &#10132;</a>
+                    </div>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <h2>1000+</h2>
+                        <p>Hired Applicants</p>
+                    </div>
+                    <div class="hero-stat">
+                        <h2>500+</h2>
+                        <p>Registered Employers</p>
+                   </div>
+                    <div class="hero-stat">
+                        <h2>200+</h2>
+                        <p>Job Listings</p>
+                    </div>
                 </div>
             </div>
             <div class="hero-image-container">
@@ -70,7 +84,7 @@
             </div>
         </section>
 
-        <section class="statistics">
+        <!-- <section class="statistics">
             <div class="container">
                 <div>
                     <h2>PORTAL STATISTICS</h2>
@@ -97,7 +111,7 @@
             </div>
 
 
-        </section>
+        </section> -->
 
 
         <section class="news">
@@ -533,40 +547,7 @@
           //  e.preventDefault();
       //  });
     </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const statNumbers = document.querySelectorAll(".stat-number");
-
-            const animateNumbers = (entry) => {
-                if (entry.isIntersecting) {
-                    const target = +entry.target.getAttribute("data-target");
-                    const increment = Math.ceil(target / 100);
-
-                    let current = 0;
-                    const updateNumber = () => {
-                        current += increment;
-                        if (current > target) {
-                            current = target;
-                        }
-                        entry.target.textContent = current;
-                        if (current < target) {
-                            requestAnimationFrame(updateNumber);
-                        }
-                    };
-                    updateNumber();
-                    observer.unobserve(entry.target);
-                }
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(animateNumbers);
-            }, {
-                threshold: 0.5
-            });
-
-            statNumbers.forEach((number) => observer.observe(number));
-        });
-    </script> -->
+  
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script>
