@@ -4,6 +4,7 @@ require_once '../../landing/functions/check_login.php';
 if (!isset($_SESSION['user_id'])) {
   header("Location: ../../landing/login-signup.php");
   exit();
+  
 }
 
 $userId = $_SESSION['user_id'];
@@ -38,6 +39,21 @@ if (isset($_SESSION['user_id'])) {
   $stmt->close();
 }
 
+$employer_id = $_SESSION['user_id'];
+
+$sql = "SELECT 
+            bir_certification, business_permit, dole_certification, 
+            migrant_certification, philjob_certification
+        FROM employer_company_docs
+        WHERE employer_id = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $employer_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$docs = $result->fetch_assoc();
+
+$baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,6 +64,7 @@ if (isset($_SESSION['user_id'])) {
   <title>Company Profile</title>
   <link rel="stylesheet" href="../css/navs.css">
   <link rel="stylesheet" href="../css/employer-profile.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -112,7 +129,7 @@ if (isset($_SESSION['user_id'])) {
     </aside>
 
     <main class="main-content">
-      <form action="../Functions/profile_update.php" method="POST" enctype="multipart/form-data" class="profile-container">
+      <form action="../Functions/profile_update.php" method="POST" enctype="multipart/form-data" class="profile-container" id="myForm">
         <div class="profile-header">
           <h1 id="companyName">ABC Manufacturing Inc.</h1>
           <p id="companyIndustry">
@@ -228,10 +245,10 @@ if (isset($_SESSION['user_id'])) {
                 <div class="document-icon">📄</div>
                 <div class="document-info">
                   <div class="document-name">BIR Certification</div>
-                  <div class="document-date">Uploaded: <span id="bir-upload-date">Not Uploaded</span></div>
+                  <div class="document-date">Uploaded:<span id="bir-upload-date"><?php echo !empty($docs['bir_certification']) ? "Uploaded":"Not Uploaded"; ?></span></div>
                 </div>
                 <div class="document-actions">
-                  <a href="#" class="view-doc" id="view-bir">View</a>
+                  <button class="view-doc" data-doc="<?php echo $baseURL . $docs['bir_certification']; ?>">View</button>
                   <label for="upload-bir" class="update-doc">Upload</label>
                   <input type="file" id="upload-bir" name="upload-bir" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                 </div>
@@ -240,10 +257,10 @@ if (isset($_SESSION['user_id'])) {
                 <div class="document-icon">📄</div>
                 <div class="document-info">
                   <div class="document-name">Business Permit</div>
-                  <div class="document-date">Uploaded: <span id="business-permit-upload-date">Not Uploaded</span></div>
+                  <div class="document-date">Uploaded:<span id="bir-upload-date"><?php echo !empty($docs['business_permit']) ? "Uploaded":"Not Uploaded"; ?></span></div>
                 </div>
                 <div class="document-actions">
-                  <a href="#" class="view-doc" id="view-business-permit">View</a>
+                  <button class="view-doc" data-doc="<?php echo $baseURL . $docs['business_permit']; ?>">View</button>
                   <label for="upload-business-permit" class="update-doc">Upload</label>
                   <input type="file" id="upload-business-permit" name="upload-business-permit" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                 </div>
@@ -252,10 +269,10 @@ if (isset($_SESSION['user_id'])) {
                 <div class="document-icon">📄</div>
                 <div class="document-info">
                   <div class="document-name">DOLE Certification</div>
-                  <div class="document-date">Uploaded: <span id="dole-upload-date">Not Uploaded</span></div>
+                  <div class="document-date">Uploaded:<span id="bir-upload-date"><?php echo !empty($docs['dole_certification']) ? "Uploaded":"Not Uploaded"; ?></span></div>
                 </div>
                 <div class="document-actions">
-                  <a href="#" class="view-doc" id="view-dole">View</a>
+                  <button class="view-doc" data-doc="<?php echo $baseURL . $docs['dole_certification']; ?>">View</button>
                   <label for="upload-dole" class="update-doc">Upload</label>
                   <input type="file" id="upload-dole" name="upload-dole" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                 </div>
@@ -264,10 +281,10 @@ if (isset($_SESSION['user_id'])) {
                 <div class="document-icon">📄</div>
                 <div class="document-info">
                   <div class="document-name">Migrant Certification</div>
-                  <div class="document-date">Uploaded: <span id="migrant-upload-date">Not Uploaded</span></div>
+                  <div class="document-date">Uploaded:<span id="bir-upload-date"><?php echo !empty($docs['migrant_certification']) ? "Uploaded":"Not Uploaded"; ?></span></div>
                 </div>
                 <div class="document-actions">
-                  <a href="#" class="view-doc" id="view-migrant">View</a>
+                  <button class="view-doc" data-doc="<?php echo $baseURL . $docs['migrant_certification']; ?>">View</button>
                   <label for="upload-migrant" class="update-doc">Upload</label>
                   <input type="file" id="upload-migrant" name="upload-migrant" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                 </div>
@@ -276,10 +293,10 @@ if (isset($_SESSION['user_id'])) {
                 <div class="document-icon">📄</div>
                 <div class="document-info">
                   <div class="document-name">PhilJob Certification</div>
-                  <div class="document-date">Uploaded: <span id="philjob-upload-date">Not Uploaded</span></div>
+                  <div class="document-date">Uploaded:<span id="bir-upload-date"><?php echo !empty($docs['philjob_certification']) ? "Uploaded":"Not Uploaded"; ?></span></div>
                 </div>
                 <div class="document-actions">
-                  <a href="#" class="view-doc" id="view-philjob">View</a>
+                  <button class="view-doc" data-doc="<?php echo $baseURL . $docs['philjob_certification']; ?>">View</button>
                   <label for="upload-philjob" class="update-doc">Upload</label>
                   <input type="file" id="upload-philjob" name="upload-philjob" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
                 </div>
@@ -291,7 +308,13 @@ if (isset($_SESSION['user_id'])) {
       </form>
     </main>
   </div>
-  
+  <div id="viewModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span id="closeModal">&times;</span>
+    <iframe id="docFrame" src="" width="100%" height="500px" style="display:none;"></iframe>
+    <img id="docImage" src="" style="max-width:100%; height:auto; display:none;"/>
+  </div>
+</div>
   <script>
     const accountData = <?php echo $accountJson; ?>;
 
@@ -323,6 +346,49 @@ if (isset($_SESSION['user_id'])) {
         reader.readAsDataURL(file);
       }
     });
+
+    document.getElementById("myForm").addEventListener("submit", function(e) {
+  e.preventDefault(); 
+
+  let form = this;
+  let formData = new FormData(form);
+
+  Swal.fire({
+    title: "Are you sure?",
+    text: "Do you want to submit this form?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#0055a5",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, submit it!"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fetch(form.action, {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.text()) // PHP returns text or JSON
+      .then(data => {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Form submitted successfully!",
+          confirmButtonColor: "#0055a5"
+        });
+        console.log("Server response:", data);
+      })
+      .catch(error => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          confirmButtonColor: "#0055a5"
+        });
+        console.error("Error:", error);
+      });
+    }
+  });
+});
   </script>
   <script src="../js/responsive.js"></script>
   <script>
@@ -348,6 +414,44 @@ if (isset($_SESSION['user_id'])) {
       editBtn.disabled = false;
     });
   </script>
+  <script>
+document.querySelectorAll(".view-doc").forEach(btn => {
+  btn.addEventListener("click", function(e) {
+    e.preventDefault();
+
+    let filePath = this.getAttribute("data-doc");
+    let modal = document.getElementById("viewModal");
+    let iframe = document.getElementById("docFrame");
+    let img = document.getElementById("docImage");
+
+    iframe.style.display = "none";
+    img.style.display = "none";
+
+    if (!filePath) {
+      alert("No file uploaded yet.");
+      return;
+    }
+
+    // detect file type by extension
+    if (filePath.match(/\.(jpg|jpeg|png|gif)$/i)) {
+      img.src = filePath;
+      img.style.display = "block";
+    } else {
+      iframe.src = filePath;
+      iframe.style.display = "block";
+    }
+
+    modal.style.display = "block";
+  });
+});
+
+document.getElementById("closeModal").addEventListener("click", function() {
+  document.getElementById("viewModal").style.display = "none";
+  document.getElementById("docFrame").src = "";
+  document.getElementById("docImage").src = "";
+});
+</script>
+
 </body>
 
 </html>
