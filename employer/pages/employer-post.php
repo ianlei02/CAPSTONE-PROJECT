@@ -1,3 +1,89 @@
+<?php
+require_once '../../landing/functions/check_login.php';
+
+if (!isset($_SESSION['user_id'])) {
+  header("Location: ../../landing/login-signup.php");
+  exit();
+}
+$employer_id = $_SESSION['user_id'];
+
+  $stmt = $conn->prepare("SELECT * FROM job_postings WHERE employer_id = ? ORDER BY created_at DESC");
+  $stmt->bind_param("i", $employer_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if(isset($_GET['action'])) {
+    $action = $_GET['action'];
+    $id = intval($_GET['id']);
+
+    if($action === 'viewApplicants') {
+        $stmt = $conn->prepare("SELECT a.*, u.name FROM job_applications a JOIN users u ON u.id = a.applicant_id WHERE a.job_id = ?");
+        $stmt->bind_param("i",$id);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        echo "<ul>";
+        while($row = $res->fetch_assoc()) {
+            echo "<li>".htmlspecialchars($row['name'])."</li>";
+        }
+        echo "</ul>";
+        exit;
+    }
+
+    if($action === 'deleteJob') {
+        $stmt = $conn->prepare("DELETE FROM job_postings WHERE job_id=?");
+        $stmt->bind_param("i",$id);
+        $stmt->execute();
+        exit;
+    }
+
+    if($action === 'editJob') {
+        $stmt = $conn->prepare("SELECT * FROM job_postings WHERE job_id=?");
+        $stmt->bind_param("i",$id);
+        $stmt->execute();
+        $job = $stmt->get_result()->fetch_assoc();
+        ?>
+        <form id="editJobForm">
+          <input type="text" name="title" value="<?= htmlspecialchars($job['job_title']) ?>" />
+          <input type="text" name="category" value="<?= htmlspecialchars($job['category']) ?>" />
+          <input type="text" name="type" value="<?= htmlspecialchars($job['job_type']) ?>" />
+          <input type="number" name="vacancies" value="<?= $job['vacancies'] ?>" />
+          <input type="date" name="expiry_date" value="<?= $job['expiry_date'] ?>" />
+        </form>
+        <?php
+        exit;
+    }
+
+    if(isset($_GET['action']) && $_GET['action'] === 'saveJob') {
+    $id = $_GET['id'];
+    
+    $title = $_POST['title'];
+    $category = $_POST['category'];
+    $type = $_POST['type'];
+    $vacancies = $_POST['vacancies'];
+    $expiry_date = $_POST['expiry_date'];
+
+    $stmt = $conn->prepare("UPDATE job_postings SET job_title=?, category=?, job_type=?, vacancies=?, expiry_date=? WHERE job_id=?");
+    $stmt->bind_param("sssssi", $title, $category, $type, $vacancies, $expiry_date, $id);
+    $stmt->execute();
+    
+    echo "Job updated successfully";
+    exit;
+}
+
+    if($action === 'saveJob') {
+        $title = $_POST['title'];
+        $category = $_POST['category'];
+        $type = $_POST['type'];
+        $vacancies = $_POST['vacancies'];
+        $expiry = $_POST['expiry_date'];
+
+        $stmt = $conn->prepare("UPDATE job_postings SET title=?, category=?, type=?, vacancies=?, expiry_date=? WHERE job_id=?");
+        $stmt->bind_param("sssisi", $title, $category, $type, $vacancies, $expiry, $id);
+        $stmt->execute();
+        exit;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +98,7 @@
   <script src="../../public-assets/JS_JQUERY/jquery-3.7.1.min.js" defer></script>
   <script src="../../public-assets/library/datatable/dataTables.js" defer></script>
   <script src="../../public-assets/js/table-init.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -74,7 +161,7 @@
     <main class="main-content">
       <section class="job-posting-section card">
         <h2>Post a New Job</h2>
-        <form id="jobPostForm" class="job-form">
+        <form id="jobPostForm" class="job-form" method="POST" action="../Functions/job_post.php">
           <div class="form-row">
             <div class="form-group">
               <label for="jobTitle">Job Title*</label>
@@ -146,6 +233,7 @@
       <!-- Job Monitoring Section -->
       <section class="job-monitoring-section card">
         <div class="section-header">
+          <form action="employer-post.php" method="GET">
           <h2>Your Job Postings</h2>
           <div class="search-filter">
             <select class="status-filter">
@@ -171,59 +259,23 @@
               </tr>
             </thead>
             <tbody id="jobsTableBody">
-              <!-- Sample rows - would be dynamically populated in a real app -->
-              <tr>
-                <td>Senior Frontend Developer (React)</td>
-                <td><span class="tag tag-it">IT</span></td>
-                <td>Full-time</td>
-                <td class="vacancies">2</td>
-                <td class="expiry-date">2023-06-30</td>
-                <td><span class="status-badge active">Active</span></td>
+            <?php while ($row = $result->fetch_assoc()): ?>
+            <tr>
+                <td><?= htmlspecialchars($row['job_title']) ?></td>
                 <td>
-                  <button class="action-btn view">View</button>
-                  <button class="action-btn edit">Edit</button>
-                  <button class="action-btn delete">Delete</button>
+                    <span class="tag tag-<?= strtolower($row['category']) ?>"><?= htmlspecialchars($row['category']) ?></span>
                 </td>
-              </tr>
-              <tr>
-                <td>Financial Analyst</td>
-                <td><span class="tag tag-business">Business</span></td>
-                <td>Full-time</td>
-                <td class="vacancies">1</td>
-                <td class="expiry-date">2023-06-15</td>
-                <td><span class="status-badge active">Active</span></td>
+                <td><?= htmlspecialchars($row['job_type']) ?></td>
+                <td class="vacancies"><?= htmlspecialchars($row['vacancies']) ?></td>
+                <td class="expiry-date"><?= htmlspecialchars($row['expiry_date']) ?></td>
+                <td><span class="status-badge <?= htmlspecialchars($row['status']) ?>"><?= ucfirst($row['status']) ?></span></td>
                 <td>
-                  <button class="action-btn view">View</button>
-                  <button class="action-btn edit">Edit</button>
-                  <button class="action-btn delete">Delete</button>
+                    <button class="action-btn view" onclick="viewApplicants(<?= $row['job_id'] ?>)">View</button>
+                    <button class="action-btn edit" onclick="editJob(<?= $row['job_id'] ?>)">Edit</button>
+                    <button class="action-btn delete" onclick="deleteJob(<?= $row['job_id'] ?>)">Delete</button>
                 </td>
-              </tr>
-              <tr>
-                <td>Mechanical Engineer</td>
-                <td><span class="tag tag-engineering">Engineering</span></td>
-                <td>Contract</td>
-                <td class="vacancies">3</td>
-                <td class="expiry-date">2023-05-31</td>
-                <td><span class="status-badge closed">Closed</span></td>
-                <td>
-                  <button class="action-btn view">View</button>
-                  <button class="action-btn edit">Edit</button>
-                  <button class="action-btn delete">Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <td>IT Support Specialist</td>
-                <td><span class="tag tag-it">IT</span></td>
-                <td>Part-time</td>
-                <td class="vacancies">2</td>
-                <td class="expiry-date">2023-07-15</td>
-                <td><span class="status-badge draft">Draft</span></td>
-                <td>
-                  <button class="action-btn view">View</button>
-                  <button class="action-btn edit">Edit</button>
-                  <button class="action-btn delete">Delete</button>
-                </td>
-              </tr>
+            </tr>
+            <?php endwhile; ?>
             </tbody>
           </table>
         </div>
@@ -232,8 +284,99 @@
   </div>
 
   <script src="../js/responsive.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+  const jobForm = document.getElementById("jobPostForm");
 
+  jobForm.addEventListener("submit", function(e) {
+    e.preventDefault();
 
+    const formData = new FormData(jobForm);
+
+    fetch(jobForm.action, {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.text())
+     .then(data => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Job Posted!',
+        text: 'Your job opening has been successfully posted.',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        jobForm.reset();
+      });
+    })
+    .catch(error => {
+       Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong. Please try again.',
+      });
+      console.error("Error posting job:", error);
+    });
+  });
+  });
+  </script>
+  <script>
+
+  function viewApplicants(jobId) {
+  fetch(`employer-post.php?action=viewApplicants&id=${jobId}`)
+  .then(res => res.text())
+  .then(data => {
+    Swal.fire({
+      title: 'Applicants',
+      html: data,
+      width: 600
+    });
+  });
+}
+
+function editJob(jobId) {
+  fetch(`employer-post.php?action=editJob&id=${jobId}`)
+  .then(res => res.text())
+  .then(data => {
+    Swal.fire({
+      title: 'Edit Job',
+      html: data,
+      showCancelButton: true,
+      confirmButtonText: 'Save',
+      preConfirm: () => {
+        const form = document.getElementById('editJobForm');
+        const formData = new FormData(form);
+        return fetch(`employer-post.php?action=saveJob&id=${jobId}`, { method:'POST', body: formData })
+          .then(res => res.text());
+      }
+    }).then(() => location.reload());
+  });
+}
+
+preConfirm: () => {
+  const form = document.getElementById('editJobForm');
+  const formData = new FormData(form);
+  return fetch(`employer-post.php?action=saveJob&id=${jobId}`, { method:'POST', body: formData })
+    .then(res => res.text());
+}
+
+function deleteJob(jobId) {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "This will permanently delete the job posting.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!'
+  }).then(result => {
+    if(result.isConfirmed) {
+      fetch(`employer-post.php?action=deleteJob&id=${jobId}`)
+      .then(res => res.text())
+      .then(() => {
+        Swal.fire('Deleted!', 'Job deleted.', 'success');
+        document.getElementById(`jobRow${jobId}`).remove();
+      });
+    }
+  });
+}
+  </script>
 </body>
-
 </html>
