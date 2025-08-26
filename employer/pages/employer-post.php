@@ -48,6 +48,7 @@ $employer_id = $_SESSION['user_id'];
           <input type="text" name="type" value="<?= htmlspecialchars($job['job_type']) ?>" />
           <input type="number" name="vacancies" value="<?= $job['vacancies'] ?>" />
           <input type="date" name="expiry_date" value="<?= $job['expiry_date'] ?>" />
+          <textarea name="description" rows="5"><?= htmlspecialchars($job['description']) ?></textarea>
         </form>
         <?php
         exit;
@@ -61,9 +62,10 @@ $employer_id = $_SESSION['user_id'];
     $type = $_POST['type'];
     $vacancies = $_POST['vacancies'];
     $expiry_date = $_POST['expiry_date'];
+    $description = $_POST['description'];
 
-    $stmt = $conn->prepare("UPDATE job_postings SET job_title=?, category=?, job_type=?, vacancies=?, expiry_date=? WHERE job_id=?");
-    $stmt->bind_param("sssssi", $title, $category, $type, $vacancies, $expiry_date, $id);
+    $stmt = $conn->prepare("UPDATE job_postings SET job_title=?, category=?, job_type=?, vacancies=?, expiry_date=?, description=? WHERE job_id=?");
+    $stmt->bind_param("ssssssi", $title, $category, $type, $vacancies, $expiry_date, $description, $id);
     $stmt->execute();
     
     echo "Job updated successfully";
