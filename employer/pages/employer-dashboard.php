@@ -38,6 +38,21 @@ $completion = round(($filled / $total_fields) * 100);
 $radius = 45;
 $circumference = 2 * M_PI * $radius;
 $offset = $circumference - ($completion / 100 * $circumference);
+
+$sql = "
+    SELECT
+        (SELECT COUNT(*) FROM job_postings WHERE employer_id = ?) AS employer_total_jobs,
+        (SELECT COUNT(*) FROM job_postings) AS total_jobs,
+        (SELECT COUNT(*) FROM employer_account) AS total_employers,
+        (SELECT COUNT(*) FROM applicant_account WHERE status = 'verified') AS total_applicants,
+        (SELECT COUNT(*) FROM job_postings WHERE status = 'active') AS total_active
+";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $employer_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$data = $result->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -183,11 +198,19 @@ $offset = $circumference - ($completion / 100 * $circumference);
       <div class="statistics-container gradient">
         <div class="statistic-card">
           <h2>Jobs Posted</h2>
-          <p>5</p>
+          <p>
+            <?php
+            echo $data['employer_total_jobs'];
+            ?>
+          </p>
         </div>
         <div class="statistic-card">
           <h2>Pending Job Vacancies</h2>
-          <p>3</p>
+          <p>
+            <?php
+            echo $data['total_active'];
+            ?>
+          </p>
         </div>
         <div class="statistic-card">
           <h2>Referred Applicants</h2>
@@ -195,15 +218,27 @@ $offset = $circumference - ($completion / 100 * $circumference);
         </div>
         <div class="statistic-card">
           <h2>Job Listings</h2>
-          <p>104</p>
+          <p>
+            <?php
+            echo $data['total_jobs'];
+            ?>
+          </p>
         </div>
         <div class="statistic-card">
           <h2>Registered Employers</h2>
-          <p>59</p>
+          <p>
+            <?php
+            echo $data['total_employers'];
+            ?>
+          </p>
         </div>
         <div class="statistic-card">
           <h2>Registered Applicants</h2>
-          <p>409</p>
+          <p>
+            <?php
+            echo $data['total_applicants'];
+            ?>
+          </p>
         </div>
       </div>
       <div class="job-application-status">
@@ -274,30 +309,23 @@ $offset = $circumference - ($completion / 100 * $circumference);
 
   <script src="../js/responsive.js"></script>
   <script>
-
-    // Update verification status
     function setVerificationStatus(status) {
-      const badge = document.querySelector('.verification-badge');
-      const button = document.querySelector('.action-button');
+  const badge = document.querySelector('.verification-badge');
+  if (!badge) return;
 
-      badge.className = `verification-badge ${status}`;
+  badge.className = `verification-badge ${status}`;
 
-      if (status === 'verified') {
-        badge.innerHTML = '<i class="fas fa-check-circle badge-icon"></i> Verified';
-        button.textContent = 'View Dashboard';
-      } else if (status === 'pending') {
-        badge.innerHTML = '<i class="fas fa-clock badge-icon"></i> Pending';
-        button.textContent = 'Continue Verification';
-      } else {
-        badge.innerHTML = '<i class="fas fa-times-circle badge-icon"></i> Unverified';
-        button.textContent = 'Begin Verification';
-      }
-    }
+  if (status === 'verified') {
+    badge.textContent = 'Verified';
+  } else if (status === 'pending') {
+    badge.textContent = 'Pending';
+  } else {
+    badge.textContent = 'Unverified';
+  }
+}
 
+ setTimeout(() => setVerificationStatus('verified'), 1000);
 
-
-    // Example: Change to verified status
-    // setVerificationStatus('verified');
   </script>
   <!-- <script>
      $(document).ready(function() {

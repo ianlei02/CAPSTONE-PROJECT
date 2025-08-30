@@ -85,7 +85,7 @@ if (isset($_SESSION['verification_success'])) {
           </div>
           <div class="input-group">
             <label for="signupPassword">Password</label>
-            <input type="password" id="signupPassword" name="password" minlength="8" title="Password must be at least 8 characters" required />
+            <input type="password" id="signupPassword" name="password" minlength="8" title="Password must be at least 8 characters" required  />
           </div>
           <div class="input-group">
             <input type="hidden" id="otp" name="otp" class="form-control" required />
