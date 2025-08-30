@@ -299,23 +299,6 @@ $data = $result->fetch_assoc();
        </div>
      </main>
    </div>
-   
-
-
-            <div id="inactivityPopup" 
-                style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-                        background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center;
-                        z-index:9999;">
-              <div style="background:#fff; padding:20px; border-radius:10px; text-align:center; width:300px;">
-                <h3>You’ve been inactive</h3>
-                <p>Your session has expired. Please log out securely.</p>
-                <form method="POST" action="../logout.php">
-                  <button type="submit" style="padding:10px 20px; background:red; color:#fff; border:none; border-radius:5px;">
-                    Logout
-                  </button>
-                </form>
-              </div>
-            </div>
    <script src="../js/responsive.js"></script>
    <script>
      document.addEventListener("DOMContentLoaded", () => {
