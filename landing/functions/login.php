@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $email = mysqli_real_escape_string($conn, $_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 $user_type = $_POST['user-type-login'] ?? '';
-$remember_me = isset($_POST['remember_login']) ? true : false;
+$remember_me = isset($_POST['remember_me']) ? 1 : 0;
 
 if (empty($email) || empty($password) || empty($user_type)) {
     echo json_encode([
@@ -61,7 +61,7 @@ if ($result && mysqli_num_rows($result) === 1) {
             ]);
         
             setcookie(
-                'remember_login', 
+                'remember_me', 
                 $cookie_value,
                 time() + (30 * 24 * 60 * 60), 
                 '/',

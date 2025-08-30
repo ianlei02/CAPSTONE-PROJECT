@@ -20,6 +20,11 @@ setcookie('remember_login', '', time() - 3600, '/');
 
 session_destroy();
 
+if (isset($_GET['timeout'])) {
+    header("Location: ../login-signup.php?timeout=1");
+    exit();
+}
+
 header("Location: ../index.php");
 exit();
 ?>
