@@ -69,9 +69,24 @@ $progress = getProfileCompletion($applicantId, $conn);
 $radius = 45;
 $circumference = 2 * M_PI * $radius;
 $offset = $circumference - ($progress / 100) * $circumference;
+
+$sql = "
+    SELECT
+        (SELECT COUNT(*) FROM job_postings WHERE employer_id = ?) AS employer_total_jobs,
+        (SELECT COUNT(*) FROM job_postings) AS total_jobs,
+        (SELECT COUNT(*) FROM employer_account) AS total_employers,
+        (SELECT COUNT(*) FROM applicant_account) AS total_applicants,
+        (SELECT COUNT(*) FROM job_postings WHERE status = 'active') AS total_active
+";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $employer_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$data = $result->fetch_assoc();
+
+
 ?>
-
-
 
 
  <!DOCTYPE html>
@@ -206,15 +221,27 @@ $offset = $circumference - ($progress / 100) * $circumference;
          </div>
          <div class="statistic-card">
            <h2>Job Listings</h2>
-           <p>104</p>
+           <p>
+            <?php
+            echo $data['total_jobs'];
+            ?>
+           </p>
          </div>
          <div class="statistic-card">
            <h2>Registered Employers</h2>
-           <p>59</p>
+           <p>
+            <?php
+            echo $data['total_employers'];
+            ?>
+           </p>
          </div>
          <div class="statistic-card">
            <h2>Registered Applicants</h2>
-           <p>409</p>
+           <p>
+            <?php
+            echo $data['total_applicants'];
+            ?>
+           </p>
          </div>
        </div>
        <div class="job-application-status">
@@ -267,13 +294,28 @@ $offset = $circumference - ($progress / 100) * $circumference;
                  <td class="table-date">2025-09-15</td>
                </tr>
              </tbody>
-
            </table>
          </div>
        </div>
      </main>
    </div>
    
+
+
+            <div id="inactivityPopup" 
+                style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+                        background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center;
+                        z-index:9999;">
+              <div style="background:#fff; padding:20px; border-radius:10px; text-align:center; width:300px;">
+                <h3>You’ve been inactive</h3>
+                <p>Your session has expired. Please log out securely.</p>
+                <form method="POST" action="../logout.php">
+                  <button type="submit" style="padding:10px 20px; background:red; color:#fff; border:none; border-radius:5px;">
+                    Logout
+                  </button>
+                </form>
+              </div>
+            </div>
    <script src="../js/responsive.js"></script>
    <script>
      document.addEventListener("DOMContentLoaded", () => {

@@ -324,7 +324,18 @@ $data = $result->fetch_assoc();
   }
 }
 
- setTimeout(() => setVerificationStatus('verified'), 1000);
+document.addEventListener("DOMContentLoaded", () => {
+  const progressText = document.querySelector('.progress-text');
+  if (!progressText) return;
+
+  const completion = parseInt(progressText.textContent.replace('%', '')); 
+
+  if (completion >= 100) {
+    setVerificationStatus('verified');
+  } else {
+    setVerificationStatus('pending');
+  }
+});
 
   </script>
   <!-- <script>

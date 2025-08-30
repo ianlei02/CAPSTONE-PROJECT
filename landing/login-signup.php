@@ -19,6 +19,7 @@ if (isset($_SESSION['verification_success'])) {
   echo "<script>alert('" . $_SESSION['verification_success'] . "');</script>";
   unset($_SESSION['verification_success']);
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -146,7 +147,7 @@ if (isset($_SESSION['verification_success'])) {
 
           <div class="input-group remember-me" style="display: flex; align-items: center; gap: 0.5rem; justify-content: space-between; ">
             <div style="display: flex; align-items: center;">
-              <input type="checkbox" id="rememberMe" name="remember_me">
+              <input type="checkbox" id="rememberMe" name="remember_login" >
               <label style="margin-top: 8px; margin-left: 4px;" for="rememberMe">Remember me</label>
             </div>
             <div class="forgot-password">

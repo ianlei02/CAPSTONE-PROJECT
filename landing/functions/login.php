@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $email = mysqli_real_escape_string($conn, $_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 $user_type = $_POST['user-type-login'] ?? '';
-$remember_me = isset($_POST['remember_me']) ? true : false;
+$remember_me = isset($_POST['remember_login']) ? true : false;
 
 if (empty($email) || empty($password) || empty($user_type)) {
     echo json_encode([
