@@ -312,9 +312,9 @@ $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
   <div class="modal-content">
     <span id="closeModal">&times;</span>
     <iframe id="docFrame" src="" width="100%" height="500px" style="display:none;"></iframe>
-    <img id="docImage" src="" style="max-width:100%; height:auto; display:none;"/>
+    <img id="docImage" src="" style="max-width:50%; height:auto; display:none;"/>
   </div>
-</div>
+  </div>
   <script>
     const accountData = <?php echo $accountJson; ?>;
 
