@@ -1,29 +1,31 @@
 :root {
-    --primary-blue-color: #4285f4;
-    --secondary-blue-color: #5c9eff;
-    --primary-red-color: #ff4c4c;
-    --secondary-red-color: #ff6b6b;
-    --dark-clr-700: #000;
-    --dark-clr-600: #333;
-    --light-clr-700: #fff;
-    --light-clr-600: #fafafa;
-    --light-clr-500: #f3f3f3;
-    --border: #ddd;
-  }
-
+  --primary-blue-color: #4285f4;
+  --secondary-blue-color: #5c9eff;
+  --primary-red-color: #ff4c4c;
+  --secondary-red-color: #ff6b6b;
+  --dark-clr-700: #000;
+  --dark-clr-600: #333;
+  --light-clr-700: #fff;
+  --light-clr-600: #fafafa;
+  --light-clr-500: #f3f3f3;
+  --border: #ddd;
+}
 .profile-container {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
+  margin-top: 70px;
   background: white;
   border-radius: 8px;
-  /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
-  overflow: hidden;
+  /* overflow: hidden; */
+  height: fit-content;
+  padding: 24px;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2);
 }
-
 .profile-header {
   background-color: var(--primary-blue-color);
   color: white;
   padding: 30px;
+  border-radius: 8px;
   text-align: center;
   position: relative;
 }
@@ -38,14 +40,12 @@ main .profile-pic-container {
   overflow: hidden;
   cursor: pointer;
 }
-
 .profile-pic {
   width: 100%;
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
 }
-
 .upload-icon {
   position: absolute;
   bottom: 10px;
@@ -61,60 +61,57 @@ main .profile-pic-container {
   opacity: 0;
   transition: all 0.3s;
 }
-
 .profile-pic-container:hover .upload-icon {
   opacity: 1;
 }
-
 .profile-pic-input {
   display: none;
 }
-
 .profile-content {
   padding: 30px;
 }
-
 .section-title {
   color: var(--primary-blue-color);
   margin: 1.5rem 0;
-  padding: .75rem .5rem;
+  padding: 0.75rem 0.5rem;
   background-color: #eaf2ff;
   border-left: var(--primary-blue-color) 5px solid;
 }
-
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 10px;
 }
-
 .form-group {
   margin-bottom: 20px;
 }
-
 label {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
 }
-
 .required:after {
   content: " *";
   color: var(--primary-red-color);
 }
-
-input, select, textarea {
+input,
+select,
+textarea {
   width: 100%;
   padding: 10px;
   border: 1px solid var(--border);
   border-radius: 4px;
   font-size: 16px;
 }
+input[type="checkbox"] {
+  margin-right: 5px;
+  transform: scale(1.4);
+  cursor: pointer;
+}
 
 textarea {
   min-height: 100px;
 }
-
 .file-upload {
   border: 2px dashed var(--border);
   padding: 20px;
@@ -123,28 +120,23 @@ textarea {
   cursor: pointer;
   transition: all 0.3s;
 }
-
 .file-upload:hover {
   border-color: var(--primary-blue-color);
 }
-
 .file-input {
   display: none;
 }
-
 .file-preview {
   margin-top: 10px;
   font-size: 14px;
   color: var(--primary-blue-color);
 }
-
 .form-actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
   margin-top: 30px;
 }
-
 .btn {
   padding: 10px 20px;
   border-radius: 4px;
@@ -153,7 +145,6 @@ textarea {
   border: none;
   transition: all 0.3s;
 }
-
 .btn-primary {
   background-color: var(--primary-blue-color);
   color: white;
@@ -162,29 +153,24 @@ textarea {
   background-color: var(--primary-red-color);
   color: white;
 }
-
 .btn-primary:hover {
   background-color: #004080;
 }
-
 .btn-outline {
   background: transparent;
   color: var(--primary-blue-color);
   border: 1px solid var(--primary-blue-color);
 }
-
 .btn-outline:hover {
   background-color: var(--primary-blue-color);
   color: white;
 }
-
 .skills-container {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 10px;
 }
-
 .skill-tag {
   background-color: var(--secondary-blue-color);
   color: var(--primary-blue-color);
@@ -194,7 +180,6 @@ textarea {
   display: flex;
   align-items: center;
 }
-
 .skill-tag button {
   background: none;
   border: none;
@@ -202,7 +187,6 @@ textarea {
   margin-left: 5px;
   cursor: pointer;
 }
-
 .add-btn {
   background-color: var(--primary-blue-color);
   color: white;
@@ -212,29 +196,125 @@ textarea {
   cursor: pointer;
   margin-top: 10px;
 }
-
 @media (max-width: 600px) {
   .form-grid {
-      grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }
-  
+
   .form-actions {
-      flex-direction: column;
+    flex-direction: column;
   }
-  
+
   .btn {
-      width: 100%;
+    width: 100%;
   }
 }
-
-.btn-secondary:hover{
+.btn-secondary:hover {
   background-color: hsl(32, 100%, 94%);
 }
-
-.btn-secondary{
+.btn-secondary {
   border: dotted 1px black;
 }
+.disabilities {
+  display: grid;
+  grid-column: span 4;
 
+  label {
+    margin-bottom: 16px;
+    justify-self: flex-start;
+  }
+  ul {
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  label {
+    cursor: pointer;
+    margin-top: 16px;
+  }
+  input[type="checkbox"] {
+    /* margin-right: 8px; */
+    /* transform: scale(1.2); */
+    width: 16px !important;
+    height: 16px !important;
+    cursor: pointer;
+    background: red;
+  }
+}
+.checkbox-flex input[type="checkbox"] {
+    width: 20px;
+    margin-right: 8px;
+  }
+  .checkbox-flex label {
+    display: inline-block;
+    margin-top: 8px;
+  }
+.employment-status {
+  display: flex;
+  flex-direction: column;
+  grid-column: span 4;
 
+  .checkbox-flex {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    border: 1px solid red;
+  }
+  .employment-checkboxes,
+  .employed-checkboxes {
+    grid-column: span 1;
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+    gap: 10px;
+  }
+  .employed-checkboxes{
+    margin-left: 20px;
+  }
+  .self-employed-checkboxes {
+    margin-left: 40px;
+    display: grid;
+    place-items: start;
+    gap: 12px 10px;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 700px;
+  }
+  .checkbox-unemployed-reasons{
+    margin-left: 40px;
+    display: grid;
+    place-items: start;
+    gap: 12px 10px;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 700px;
+  }
+  .unemployed-checkboxes{
+    display: flex;
+    flex-direction: column;
+  }
+}
+.ofw-status{
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column; 
+  gap: 20px;
 
- 
+  .checkbox-ofw{
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    gap: 10px;
+    border: 1px solid red;  
+  }
+}
