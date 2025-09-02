@@ -81,7 +81,6 @@ $result = $conn->query($sql);
     </aside>
 
     <main class="main-content">
-
       <div class="container-job-search">
         <div class="header">
           <h1>Job Listings</h1>
@@ -143,6 +142,7 @@ $result = $conn->query($sql);
   <?php else: ?>
     <p>No job postings available.</p>
   <?php endif; ?>
+
         </div>
       </div>
 
@@ -158,14 +158,10 @@ $result = $conn->query($sql);
           <div class="modal-body">
             <form class="application-form">
               <div class="section">
-                <h3
-                  style="
-                      color: var(--primary-blue-color);
-                      margin-bottom: 20px;
-                    ">
+                <h3 style="color: var(--primary-blue-color); margin-bottom: 20px;">
                   Personal Information
                 </h3>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label class="required">Full Name</label>
                   <input type="text" required />
                 </div>
@@ -176,7 +172,7 @@ $result = $conn->query($sql);
                 <div class="form-group">
                   <label class="required">Contact Number</label>
                   <input type="tel" required />
-                </div>
+                </div> -->
               </div>
 
               <div class="section">
@@ -243,16 +239,14 @@ $result = $conn->query($sql);
       </div>
     </main>
   </div>
-  
+
   <script src="../js/responsive.js"></script>
   <script>
     // Job Field Filter
     const jobFieldFilter = document.getElementById('jobFieldFilter');
     const jobCards = document.querySelectorAll('.job-card');
-
     jobFieldFilter.addEventListener('change', function() {
       const selectedField = this.value;
-
       jobCards.forEach(card => {
         if (selectedField === "" || card.getAttribute('data-field') === selectedField) {
           card.style.display = 'block';
@@ -261,7 +255,6 @@ $result = $conn->query($sql);
         }
       });
     });
-
     // Application Modal
     const modal = document.getElementById('applicationModal');
     const applyButtons = document.querySelectorAll('.apply-btn');
@@ -279,16 +272,13 @@ $result = $conn->query($sql);
         document.body.style.overflow = 'hidden';
       });
     });
-
     // Close modal
     function closeModal() {
       modal.style.display = 'none';
       document.body.style.overflow = 'auto';
     }
-
     closeBtn.addEventListener('click', closeModal);
     cancelBtn.addEventListener('click', closeModal);
-
     // Close when clicking outside modal
     window.addEventListener('click', function(e) {
       if (e.target === modal) {
@@ -303,7 +293,37 @@ $result = $conn->query($sql);
       alert('Application submitted successfully! Our office will review your application and contact you if you are shortlisted.');
       closeModal();
     });
+
+    // Job Card Expansion
+    // const jobDescription = document.querySelectorAll('.job-description');
+    // jobDescription.forEach(desc => {
+    //   desc.addEventListener('click', function() {
+    //     this.classList.toggle('expand');
+    //     if (this.classList.contains('expand')) {
+    //       this.style.maxHeight = 'none';
+    //     } else {
+    //       this.style.maxHeight = '100px'; 
+    //     }
+    //   });
+    // });
+
+    // Read More functionality
+    const readMoreLinks = document.querySelectorAll('.read-more');
+    readMoreLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        const jobDesc = this.previousElementSibling;
+        jobDesc.classList.toggle('expand');
+        if (jobDesc.classList.contains('expand')) {
+          this.textContent = 'Read Less';
+        } else {
+          this.textContent = 'Read More';
+        }
+      });
+    });
+
+    
   </script>
+
 
 </body>
 

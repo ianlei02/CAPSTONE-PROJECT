@@ -135,7 +135,9 @@
                 </div>
             </div>
         </div>
- <script>
+
+
+<script>
         // Dark mode toggle
         let darkMode = false;
         // Chart color management
@@ -273,139 +275,5 @@
             monthlyChart.update();
         }
     </script>
- <!-- <script>
-            // Sample data - replace with your actual data
-            const ageData = {
-                labels: ['18-24', '25-59', '60+'],
-                datasets: [{
-                    data: [35, 120, 15],
-                    backgroundColor: ['#3b82f6', '#10b981', '#f59e0b'],
-                    borderWidth: 0
-                }]
-            };
-
-            const genderData = {
-                labels: ['Male', 'Female'],
-                datasets: [{
-                    data: [85, 65],
-                    backgroundColor: ['#3b82f6', '#ec4899'],
-                    borderWidth: 0
-                }]
-            };
-
-            const monthlyData = {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                datasets: [{
-                    label: 'Applicants',
-                    data: [45, 60, 75, 55, 80, 95, 110, 85, 90, 78, 82, 65],
-                    borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    fill: true,
-                    tension: 0.4,
-                    borderWidth: 2
-                }]
-            };
-
-            // Initialize charts
-            document.addEventListener('DOMContentLoaded', function() {
-                // Age Chart (Doughnut)
-                new Chart(
-                    document.getElementById('ageChart'), {
-                        type: 'doughnut',
-                        data: ageData,
-                        options: {
-                            cutout: '70%',
-                            plugins: {
-                                legend: {
-                                    position: 'bottom'
-                                },
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(context) {
-                                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                            const value = context.raw;
-                                            const percentage = Math.round((value / total) * 100);
-                                            return `${context.label}: ${value} (${percentage}%)`;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                );
-
-                // Gender Chart (Bar)
-                new Chart(
-                    document.getElementById('genderChart'), {
-                        type: 'bar',
-                        data: genderData,
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    grid: {
-                                        display: false
-                                    }
-                                },
-                                x: {
-                                    grid: {
-                                        display: false
-                                    }
-                                }
-                            },
-                            plugins: {
-                                legend: {
-                                    display: false
-                                },
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(context) {
-                                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                            const value = context.raw;
-                                            const percentage = Math.round((value / total) * 100);
-                                            return `${context.label}: ${value} (${percentage}%)`;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                );
-
-                // Monthly Chart (Line)
-                new Chart(
-                    document.getElementById('monthlyChart'), {
-                        type: 'line',
-                        data: monthlyData,
-                        options: {
-                            responsive: true,
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    grid: {
-                                        display: true
-                                    }
-                                },
-                                x: {
-                                    grid: {
-                                        display: false
-                                    }
-                                }
-                            },
-                            plugins: {
-                                legend: {
-                                    display: false
-                                }
-                            }
-                        }
-                    }
-                );
-
-                // Update timestamp
-                document.getElementById('updateTime').textContent = new Date().toLocaleString();
-            });
-        </script> -->
-
 </body>
-
 </html>

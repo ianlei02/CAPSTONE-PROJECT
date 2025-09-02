@@ -1,13 +1,11 @@
 <?php
 require_once '../../landing/functions/check_login.php';
 
-if(!isset($_SESSION['user_id'])) {
-    header("Location: ../login-signup.php");
-    exit();
-
+if (!isset($_SESSION['user_id'])) {
+  header("Location: ../login-signup.php");
+  exit();
 }
 $userId = $_SESSION['user_id'];
-
 $mainSql = "
     SELECT 
         a.*, 
@@ -54,34 +52,34 @@ $skillsJson    = json_encode($skillsData ?: []);
 $workJson      = json_encode($workData ?: []);
 $docsJson      = json_encode($docsData ?: []);
 
-$profile_picture_url = '../assets/images/profile.png'; 
+$profile_picture_url = '../assets/images/profile.png';
 
 if (isset($_SESSION['user_id'])) {
-    $applicant_id = $_SESSION['user_id'];
-    $query = "SELECT profile_picture FROM applicant_profile WHERE applicant_id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $applicant_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        if (!empty($row['profile_picture'])) {
-            $filename = basename($row['profile_picture']); 
-            $absolute_path = __DIR__ . '/../uploads/profile_pictures/' . $filename;
-            $web_path = '../uploads/profile_pictures/' . $filename;
+  $applicant_id = $_SESSION['user_id'];
+  $query = "SELECT profile_picture FROM applicant_profile WHERE applicant_id = ?";
+  $stmt = $conn->prepare($query);
+  $stmt->bind_param("i", $applicant_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
 
-            error_log("Checking: " . $absolute_path);
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    if (!empty($row['profile_picture'])) {
+      $filename = basename($row['profile_picture']);
+      $absolute_path = __DIR__ . '/../uploads/profile_pictures/' . $filename;
+      $web_path = '../uploads/profile_pictures/' . $filename;
 
-            if (file_exists($absolute_path)) {
-                $profile_picture_url = $web_path;
-            }
-        }
+      error_log("Checking: " . $absolute_path);
+
+      if (file_exists($absolute_path)) {
+        $profile_picture_url = $web_path;
+      }
     }
-    $stmt->close();
+  }
+  $stmt->close();
 }
 
-$applicant_id = $userId; 
+$applicant_id = $userId;
 $stmt = $conn->prepare("SELECT street_address, region_id, province_id, city_id, barangay_id FROM applicant_contact_info WHERE applicant_ID = ?");
 $stmt->bind_param("i", $applicant_id);
 $stmt->execute();
@@ -94,65 +92,66 @@ $saved_province = $userAddress['province_id'] ?? '';
 $saved_city = $userAddress['city_id'] ?? '';
 $saved_barangay = $userAddress['barangay_id'] ?? '';
 
-    function fetchMultipleUrls($urls) {
-        $multiHandle = curl_multi_init();
-        $curlHandles = [];
-        $responses = [];
+function fetchMultipleUrls($urls)
+{
+  $multiHandle = curl_multi_init();
+  $curlHandles = [];
+  $responses = [];
 
-        foreach ($urls as $key => $url) {
-            $ch = curl_init();
-            curl_setopt_array($ch, [
-                CURLOPT_URL => $url,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_SSL_VERIFYPEER => false,
-                CURLOPT_TIMEOUT => 20
-            ]);
-            curl_multi_add_handle($multiHandle, $ch);
-            $curlHandles[$key] = $ch;
-        }
+  foreach ($urls as $key => $url) {
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+      CURLOPT_URL => $url,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_SSL_VERIFYPEER => false,
+      CURLOPT_TIMEOUT => 20
+    ]);
+    curl_multi_add_handle($multiHandle, $ch);
+    $curlHandles[$key] = $ch;
+  }
 
-        $running = null;
-        do {
-            curl_multi_exec($multiHandle, $running);
-            curl_multi_select($multiHandle);
-        } while ($running > 0);
+  $running = null;
+  do {
+    curl_multi_exec($multiHandle, $running);
+    curl_multi_select($multiHandle);
+  } while ($running > 0);
 
-        foreach ($curlHandles as $key => $ch) {
-            $responses[$key] = json_decode(curl_multi_getcontent($ch), true);
-            curl_multi_remove_handle($multiHandle, $ch);
-            curl_close($ch);
-        }
+  foreach ($curlHandles as $key => $ch) {
+    $responses[$key] = json_decode(curl_multi_getcontent($ch), true);
+    curl_multi_remove_handle($multiHandle, $ch);
+    curl_close($ch);
+  }
 
-        curl_multi_close($multiHandle);
-        return $responses;
-    }
+  curl_multi_close($multiHandle);
+  return $responses;
+}
 
-    $cacheFile = __DIR__ . "/psgc_cache.json";
-    $cacheTime = 86400; // 24h
+$cacheFile = __DIR__ . "/psgc_cache.json";
+$cacheTime = 86400; // 24h
 
-    if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTime) {
-        $data = json_decode(file_get_contents($cacheFile), true);
-    } else {
-        $urls = [
-            "regions"   => "https://psgc.rootscratch.com/region",
-            "provinces" => "https://psgc.rootscratch.com/province",
-            "cities"    => "https://psgc.rootscratch.com/municipal-city",
-            "barangays" => "https://psgc.rootscratch.com/barangay"
-        ];
-        $data = fetchMultipleUrls($urls);
-        file_put_contents($cacheFile, json_encode($data));
-    }
-    $regions   = $data["regions"] ?? [];
-    $provinces = $data["provinces"] ?? [];
-    $cities    = $data["cities"] ?? [];
-    $barangays = $data["barangays"] ?? [];
+if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTime) {
+  $data = json_decode(file_get_contents($cacheFile), true);
+} else {
+  $urls = [
+    "regions"   => "https://psgc.rootscratch.com/region",
+    "provinces" => "https://psgc.rootscratch.com/province",
+    "cities"    => "https://psgc.rootscratch.com/municipal-city",
+    "barangays" => "https://psgc.rootscratch.com/barangay"
+  ];
+  $data = fetchMultipleUrls($urls);
+  file_put_contents($cacheFile, json_encode($data));
+}
+$regions   = $data["regions"] ?? [];
+$provinces = $data["provinces"] ?? [];
+$cities    = $data["cities"] ?? [];
+$barangays = $data["barangays"] ?? [];
 
-    function getCode($item) {
-        return $item['psgc_id'];
-    }
+function getCode($item)
+{
+  return $item['psgc_id'];
+}
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -167,7 +166,7 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
     .profile-pic-container:hover .profile-pic {
       transform: scale(1.05);
       opacity: 0.8;
-      }
+    }
   </style>
 </head>
 
@@ -183,36 +182,36 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
       <div class="right-pos">
         <div class="profile">
           <label
-              class="profile-pic-container"
-              id="profilePicContainer"
-              for="profilePicInput">
-              <img
-                src="<?php echo htmlspecialchars($profile_picture_url); ?>"
-                alt="Profile Picture"
-                class="profile-pic"
-                id="profilePicc" />
-              <div class="upload-icon">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2">
-                  ['\\ ']
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="17 8 12 3 7 8"></polyline>
-                  <line x1="12" y1="3" x2="12" y2="15"></line>
-                </svg>
-              </div>
-            </label>
-          </div>
+            class="profile-pic-container"
+            id="profilePicContainer"
+            for="profilePicInput">
+            <img
+              src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+              alt="Profile Picture"
+              class="profile-pic"
+              id="profilePicc" />
+            <div class="upload-icon">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2">
+                ['\\ ']
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+            </div>
+          </label>
+        </div>
       </div>
     </div>
   </nav>
 
   <div class="container">
-  <aside class="sidebar">
+    <aside class="sidebar">
       <ul class="sidebar-menu">
         <li>
           <a href="./applicant-dashboard.php">
@@ -257,43 +256,43 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
 
         <div class="section">
           <form action="../Functions/profile_update.php" method="POST" id="profileForm" enctype="multipart/form-data">
-          <div class="profile-header">
-            <label
-              class="profile-pic-container"
-              id="profilePicContainer"
-              for="profilePicInput">
-              <img
-                src="<?php echo htmlspecialchars($profile_picture_url); ?>"
-                alt="Profile Picture"
-                class="profile-pic"
-                id="profilePic" />
-              <div class="upload-icon">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2">
-                  ['\\ ']
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="17 8 12 3 7 8"></polyline>
-                  <line x1="12" y1="3" x2="12" y2="15"></line>
-                </svg>
-              </div>
-              <input
-                type="file"
-                id="profilePicInput"
-                name="profilePicture"
-                class="profile-pic-input"
-                accept="image/*" />
-            </label>
-            <h1>My Profile</h1>
-            <p>Complete your profile to increase job opportunities</p>
-          </div>
+            <div class="profile-header">
+              <label
+                class="profile-pic-container"
+                id="profilePicContainer"
+                for="profilePicInput">
+                <img
+                  src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+                  alt="Profile Picture"
+                  class="profile-pic"
+                  id="profilePic" />
+                <div class="upload-icon">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2">
+                    ['\\ ']
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                </div>
+                <input
+                  type="file"
+                  id="profilePicInput"
+                  name="profilePicture"
+                  class="profile-pic-input"
+                  accept="image/*" />
+              </label>
+              <h1>My Profile</h1>
+              <p>Complete your profile to increase job opportunities</p>
+            </div>
 
-          <div class="profile-content">
-            
+            <div class="profile-content">
+
               <!-- Personal Information Section -->
               <div class="section">
                 <button id="editBtn" class="btn btn-outline">Edit</button>
@@ -317,7 +316,7 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
                     <input
                       type="text"
                       id="suffix"
-                      placeholder="Jr., Sr., III" name="suffix"/>
+                      placeholder="Jr., Sr., III" name="suffix" />
                   </div>
                   <div class="form-group">
                     <label class="required">Gender</label>
@@ -383,15 +382,14 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
                       name="streetAddress"
                       value="<?= htmlspecialchars($saved_street) ?>"
                       required
-                      style="margin-bottom: 10px"
-                    />
+                      style="margin-bottom: 10px" />
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
 
                       <select id="region" name="region" required>
                         <option value="">Select Region</option>
-                        <?php foreach ($regions as $reg): 
+                        <?php foreach ($regions as $reg):
                           $code = getCode($reg); ?>
-                          <option value="<?= htmlspecialchars($code) ?>" 
+                          <option value="<?= htmlspecialchars($code) ?>"
                             <?= ($saved_region == $code) ? 'selected' : '' ?>>
                             <?= htmlspecialchars($reg['name']) ?>
                           </option>
@@ -400,9 +398,9 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
 
                       <select id="province" name="province" required>
                         <option value="">Select Province</option>
-                        <?php foreach ($provinces as $prov): 
+                        <?php foreach ($provinces as $prov):
                           $code = getCode($prov); ?>
-                          <option value="<?= htmlspecialchars($code) ?>" 
+                          <option value="<?= htmlspecialchars($code) ?>"
                             <?= ($saved_province == $code) ? 'selected' : '' ?>>
                             <?= htmlspecialchars($prov['name']) ?>
                           </option>
@@ -411,9 +409,9 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
 
                       <select id="city" name="cityMunicipality" required>
                         <option value="">Select City/Municipality</option>
-                        <?php foreach ($cities as $city): 
+                        <?php foreach ($cities as $city):
                           $code = getCode($city); ?>
-                          <option value="<?= htmlspecialchars($code) ?>" 
+                          <option value="<?= htmlspecialchars($code) ?>"
                             <?= ($saved_city == $code) ? 'selected' : '' ?>>
                             <?= htmlspecialchars($city['name']) ?>
                           </option>
@@ -422,9 +420,9 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
 
                       <select id="barangay" name="barangay" required>
                         <option value="">Select Barangay</option>
-                        <?php foreach ($barangays as $brgy): 
+                        <?php foreach ($barangays as $brgy):
                           $code = getCode($brgy); ?>
-                          <option value="<?= htmlspecialchars($code) ?>" 
+                          <option value="<?= htmlspecialchars($code) ?>"
                             <?= ($saved_barangay == $code) ? 'selected' : '' ?>>
                             <?= htmlspecialchars($brgy['name']) ?>
                           </option>
@@ -435,10 +433,10 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
                   </div>
                 </div>
               </div>
-                <input type="hidden" name="region_name" id="region_name">
-                <input type="hidden" name="province_name" id="province_name">
-                <input type="hidden" name="city_name" id="city_name">
-                <input type="hidden" name="barangay_name" id="barangay_name">
+              <input type="hidden" name="region_name" id="region_name">
+              <input type="hidden" name="province_name" id="province_name">
+              <input type="hidden" name="city_name" id="city_name">
+              <input type="hidden" name="barangay_name" id="barangay_name">
               <!-- Education Section -->
               <div class="section">
                 <h2 class="section-title">Highest Educational Attainment </h2>
@@ -485,7 +483,7 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
                     </div>
                     <div class="form-group">
                       <label>Position</label>
-                      <input type="text" name="position"/>
+                      <input type="text" name="position" />
                     </div>
                     <div class="form-group">
                       <label>Industry</label>
@@ -607,7 +605,7 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
               </div>
 
               <div class="form-actions">
-               <button type="reset" class="btn btn-danger">Reset</button>
+                <button type="reset" class="btn btn-danger">Reset</button>
                 <button type="submit" class="btn btn-outline" id="updateBtn">
                   Update Profile
                 </button>
@@ -615,141 +613,140 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
                   Save Profile
                 </button>
               </div>
-            </form>
+          </form>
 
-          </div>
         </div>
+      </div>
     </main>
   </div>
-  
+
   <script>
     document.getElementById('profilePicInput').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-       
+      const file = e.target.files[0];
+      if (file) {
+
         if (!file.type.match('image.*')) {
-            alert('Please select an image file');
-            return;
+          alert('Please select an image file');
+          return;
         }
-        
+
         if (file.size > 10 * 1024 * 1024) {
-            alert('Image must be less than 10MB');
-            return;
+          alert('Image must be less than 10MB');
+          return;
         }
-        
+
         const reader = new FileReader();
         reader.onload = function(event) {
-            document.getElementById('profilePic').src = event.target.result;
-            document.getElementById('profilePicc').src = event.target.result;
-            
+          document.getElementById('profilePic').src = event.target.result;
+          document.getElementById('profilePicc').src = event.target.result;
+
         };
         reader.readAsDataURL(file);
-    }
-});
+      }
+    });
   </script>
   <script>
-  
-  const accountData = <?php echo $accountJson; ?>;
-  const profileData = <?php echo $profileJson; ?>;
-  const contactData = <?php echo $contactJson; ?>;
-  const educationData = <?php echo $educationJson; ?>;
-  const skillsData = <?php echo $skillsJson; ?>;
-  const workData = <?php echo $workJson; ?>;
-  const docsData = <?php echo $docsJson; ?>;
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    
-    if (accountData) {
-      document.getElementById('firstName').value = accountData.f_name || '';
-      document.getElementById('lastName').value = accountData.l_name || '';
-      document.getElementById('email').value = accountData.email || '';
-    }
-    
-    if (profileData) {
-      document.getElementById('middleName').value = profileData.middle_name || '';
-      document.getElementById('suffix').value = profileData.suffix || '';
-      document.getElementById('gender').value = profileData.sex || '';
-      document.getElementById('birthDate').value = profileData.date_of_birth || '';
-      document.getElementById('civilStatus').value = profileData.civil_status || '';
-      document.getElementById('nationality').value = profileData.nationality || 'Filipino';
-    }
-    
-    if (contactData) {
-      document.getElementById('mobile').value = contactData.mobile_number || '';
-      document.getElementById('alternateMobile').value = contactData.alternate_contact_number || '';
-      document.getElementById('street').value = contactData.street_address || '';
-    }
-    
-    if (educationData) {
-      const eduEntry = document.querySelector('.education-entry');
-      eduEntry.querySelector('[name="educationLevel"]').value = educationData.education_level || '';
-      eduEntry.querySelector('[name="schoolName"]').value = educationData.school_name || '';
-      eduEntry.querySelector('[name="courseDegree"]').value = educationData.course_or_degree || '';
-      eduEntry.querySelector('[name="yearGraduated"]').value = educationData.year_graduated || '';
-    }
-    
-   
-    if (workData && workData.length > 0) {
-    const expEntriesContainer = document.getElementById('experienceEntries');
-    const originalEntry = document.querySelector('.experience-entry');
-    expEntriesContainer.innerHTML = ''; // Clear the template
-    
-    workData.forEach((work, index) => {
-        const expEntry = originalEntry.cloneNode(true);
-        
-        expEntry.querySelector('[name="companyName"]').value = work.company_name || '';
-        expEntry.querySelector('[name="position"]').value = work.position || '';
-        expEntry.querySelector('[name="industry"]').value = work.industry || '';
-        
-        const startDate = (work.employment_start && work.employment_start !== '0000-00-00') ? 
-                         new Date(work.employment_start) : null;
-        const endDate = (work.employment_end && work.employment_end !== '0000-00-00') ? 
-                       new Date(work.employment_end) : null;
-        
-        expEntry.querySelector('[name="employmentStart"]').value = 
+    const accountData = <?php echo $accountJson; ?>;
+    const profileData = <?php echo $profileJson; ?>;
+    const contactData = <?php echo $contactJson; ?>;
+    const educationData = <?php echo $educationJson; ?>;
+    const skillsData = <?php echo $skillsJson; ?>;
+    const workData = <?php echo $workJson; ?>;
+    const docsData = <?php echo $docsJson; ?>;
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+      if (accountData) {
+        document.getElementById('firstName').value = accountData.f_name || '';
+        document.getElementById('lastName').value = accountData.l_name || '';
+        document.getElementById('email').value = accountData.email || '';
+      }
+
+      if (profileData) {
+        document.getElementById('middleName').value = profileData.middle_name || '';
+        document.getElementById('suffix').value = profileData.suffix || '';
+        document.getElementById('gender').value = profileData.sex || '';
+        document.getElementById('birthDate').value = profileData.date_of_birth || '';
+        document.getElementById('civilStatus').value = profileData.civil_status || '';
+        document.getElementById('nationality').value = profileData.nationality || 'Filipino';
+      }
+
+      if (contactData) {
+        document.getElementById('mobile').value = contactData.mobile_number || '';
+        document.getElementById('alternateMobile').value = contactData.alternate_contact_number || '';
+        document.getElementById('street').value = contactData.street_address || '';
+      }
+
+      if (educationData) {
+        const eduEntry = document.querySelector('.education-entry');
+        eduEntry.querySelector('[name="educationLevel"]').value = educationData.education_level || '';
+        eduEntry.querySelector('[name="schoolName"]').value = educationData.school_name || '';
+        eduEntry.querySelector('[name="courseDegree"]').value = educationData.course_or_degree || '';
+        eduEntry.querySelector('[name="yearGraduated"]').value = educationData.year_graduated || '';
+      }
+
+
+      if (workData && workData.length > 0) {
+        const expEntriesContainer = document.getElementById('experienceEntries');
+        const originalEntry = document.querySelector('.experience-entry');
+        expEntriesContainer.innerHTML = ''; // Clear the template
+
+        workData.forEach((work, index) => {
+          const expEntry = originalEntry.cloneNode(true);
+
+          expEntry.querySelector('[name="companyName"]').value = work.company_name || '';
+          expEntry.querySelector('[name="position"]').value = work.position || '';
+          expEntry.querySelector('[name="industry"]').value = work.industry || '';
+
+          const startDate = (work.employment_start && work.employment_start !== '0000-00-00') ?
+            new Date(work.employment_start) : null;
+          const endDate = (work.employment_end && work.employment_end !== '0000-00-00') ?
+            new Date(work.employment_end) : null;
+
+          expEntry.querySelector('[name="employmentStart"]').value =
             startDate ? startDate.toISOString().split('T')[0] : '';
-        expEntry.querySelector('[name="employmentEnd"]').value = 
+          expEntry.querySelector('[name="employmentEnd"]').value =
             endDate ? endDate.toISOString().split('T')[0] : '';
-        
-        expEntry.querySelector('[name="keyResponsibilities"]').value = work.key_responsibilities || '';
-        
-        if (index > 0) {
+
+          expEntry.querySelector('[name="keyResponsibilities"]').value = work.key_responsibilities || '';
+
+          if (index > 0) {
             const removeBtn = document.createElement('button');
             removeBtn.type = 'button';
             removeBtn.className = 'remove-btn';
             removeBtn.textContent = 'Remove';
             removeBtn.addEventListener('click', () => expEntry.remove());
             expEntry.appendChild(removeBtn);
-        }
+          }
 
-        expEntriesContainer.appendChild(expEntry);
-      });
+          expEntriesContainer.appendChild(expEntry);
+        });
       }
-    
-        if (skillsData) {
-          document.querySelector('[name="primarySkills"]').value = skillsData.primary_skills || '';
-          document.querySelector('[name="technicalSkills"]').value = skillsData.technical_skills || '';
-          document.querySelector('[name="language"]').value = skillsData.language || '';
-          document.querySelector('[name="proficiencyLevel"]').value = skillsData.proficiency_level || '';
-        }
-        
-        if (docsData && docsData.length > 0) {
-          docsData.forEach(doc => {
-            if (doc.document_type === 'resume') {
-              document.getElementById('resumePreview').textContent = doc.original_filename;
-            } else if (doc.document_type === 'valid_id') {
-              document.getElementById('idPreview').textContent = doc.original_filename;
-            } else if (doc.document_type === 'certification') {
-              const certPreview = document.getElementById('certPreview');
-              const fileElement = document.createElement('div');
-              fileElement.textContent = doc.original_filename;
-              certPreview.appendChild(fileElement);
-            }
-          });
-        }
-      });
+
+      if (skillsData) {
+        document.querySelector('[name="primarySkills"]').value = skillsData.primary_skills || '';
+        document.querySelector('[name="technicalSkills"]').value = skillsData.technical_skills || '';
+        document.querySelector('[name="language"]').value = skillsData.language || '';
+        document.querySelector('[name="proficiencyLevel"]').value = skillsData.proficiency_level || '';
+      }
+
+      if (docsData && docsData.length > 0) {
+        docsData.forEach(doc => {
+          if (doc.document_type === 'resume') {
+            document.getElementById('resumePreview').textContent = doc.original_filename;
+          } else if (doc.document_type === 'valid_id') {
+            document.getElementById('idPreview').textContent = doc.original_filename;
+          } else if (doc.document_type === 'certification') {
+            const certPreview = document.getElementById('certPreview');
+            const fileElement = document.createElement('div');
+            fileElement.textContent = doc.original_filename;
+            certPreview.appendChild(fileElement);
+          }
+        });
+      }
+    });
   </script>
-  <script> 
+  <script>
     document.getElementById('profileForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
@@ -768,29 +765,28 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
 
      if (result.success) {
        alert(result.message);
+
           window.location.reload();
-     } else {
-         alert('Error: ' + result.message);
-     }
- }
-    else if (e.submitter === updateBtn) {
-        
+        } else {
+          alert('Error: ' + result.message);
+        }
+      } else if (e.submitter === updateBtn) {
+
         const response = await fetch('../Functions/update.php', {
-            method: 'POST',
-            body: formData
+          method: 'POST',
+          body: formData
         });
 
         const result = await response.json();
 
         if (result.success) {
-            alert('Profile updated successfully!');
-            window.location.reload();
+          alert('Profile updated successfully!');
+          window.location.reload();
         } else {
-            alert('Error: ' + result.message);
+          alert('Error: ' + result.message);
         }
-    } 
-  });
-
+      }
+    });
   </script>
   <script src="../js/responsive.js"></script>
   <script>
@@ -835,7 +831,7 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
     const citySel = document.getElementById('city');
     const barangaySel = document.getElementById('barangay');
 
-    function reset(selectEl, placeholder){
+    function reset(selectEl, placeholder) {
       selectEl.innerHTML = `<option value="">${placeholder}</option>`;
       selectEl.disabled = true;
     }
@@ -913,48 +909,48 @@ $saved_barangay = $userAddress['barangay_id'] ?? '';
     });
 
     document.getElementById("region").addEventListener("change", function() {
-    document.getElementById("region_name").value = this.options[this.selectedIndex].text;
+      document.getElementById("region_name").value = this.options[this.selectedIndex].text;
     });
     document.getElementById("province").addEventListener("change", function() {
-        document.getElementById("province_name").value = this.options[this.selectedIndex].text;
+      document.getElementById("province_name").value = this.options[this.selectedIndex].text;
     });
     document.getElementById("city").addEventListener("change", function() {
-        document.getElementById("city_name").value = this.options[this.selectedIndex].text;
+      document.getElementById("city_name").value = this.options[this.selectedIndex].text;
     });
     document.getElementById("barangay").addEventListener("change", function() {
-        document.getElementById("barangay_name").value = this.options[this.selectedIndex].text;
+      document.getElementById("barangay_name").value = this.options[this.selectedIndex].text;
     });
 
-    window.addEventListener('DOMContentLoaded', async function () {
-    const savedRegion = "<?= $saved_region ?>";
-    const savedProvince = "<?= $saved_province ?>";
-    const savedCity = "<?= $saved_city ?>";
-    const savedBarangay = "<?= $saved_barangay ?>";
+    window.addEventListener('DOMContentLoaded', async function() {
+      const savedRegion = "<?= $saved_region ?>";
+      const savedProvince = "<?= $saved_province ?>";
+      const savedCity = "<?= $saved_city ?>";
+      const savedBarangay = "<?= $saved_barangay ?>";
 
-    async function selectValue(selectEl, value) {
+      async function selectValue(selectEl, value) {
         return new Promise(resolve => {
-            const check = setInterval(() => {
-                if ([...selectEl.options].some(opt => opt.value == value)) {
-                    selectEl.value = value;
-                    selectEl.dispatchEvent(new Event('change'));
-                    clearInterval(check);
-                    resolve();
-                }
-            }, 100);
+          const check = setInterval(() => {
+            if ([...selectEl.options].some(opt => opt.value == value)) {
+              selectEl.value = value;
+              selectEl.dispatchEvent(new Event('change'));
+              clearInterval(check);
+              resolve();
+            }
+          }, 100);
         });
-    }
+      }
 
-    if (savedRegion) {
+      if (savedRegion) {
         regionSel.value = savedRegion;
         regionSel.dispatchEvent(new Event('change'));
         await selectValue(provinceSel, savedProvince);
         await selectValue(citySel, savedCity);
         await selectValue(barangaySel, savedBarangay);
-    }
-});
-
+      }
+    });
   </script>
   <script>
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("form");
   const saveBtn = document.getElementById("saveBtnn");
@@ -995,4 +991,5 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 </body>
+
 </html>

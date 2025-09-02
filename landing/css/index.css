@@ -117,7 +117,6 @@ body {
   .nav-link:hover {
     color: #007bff;
   }
-
   .dropdown {
     position: relative;
     padding: 0;
@@ -198,18 +197,31 @@ main {
 }
 .hero {
   text-align: center;
-  /* padding: 0px 20px; */
   margin-top: 20px;
   background: var(--gradient);
   min-height: 75vh;
   width: 98%;
   border-radius: 2rem;
-  display: flex;
+  /* display: flex;
   justify-content: space-evenly;
-  align-items: center;
+  align-items: center; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
   position: relative;
 
-  .hero-text {
+  .hero-left {
+    width: 100%;
+    max-width: 700px;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+  }
+  .hero-title {
     width: 100%;
     max-width: 650px;
     height: 400px;
@@ -220,35 +232,27 @@ main {
     align-items: center;
     color: #fff;
   }
-  .hero-text h1 {
+  .hero-title h1 {
     font-size: 3.75rem;
     text-align: left;
     text-wrap: wrap;
     width: 100%;
+    max-width: 1000px;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   }
-  .hero-text h1 span {
-    /* color: transparent; */
-    /* background: linear-gradient(
-      to right,
-      rgb(53, 53, 53), rgb(163, 163, 163)
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent; */
-  }
-  .hero-text p {
+  .hero-title p {
     font-size: 1.5rem;
     text-align: left;
     width: 100%;
     color: var(--light-clr-600);
+    margin: 24px 0;
   }
   .hero-btn {
     display: flex;
     /* justify-content: center; */
     align-items: center;
     gap: 10px;
-    margin-top: 1.5rem;
+    /* margin: 1.5rem; */
     width: 100%;
 
     .get-started {
@@ -262,17 +266,23 @@ main {
       text-decoration: none;
     }
   }
+  .hero-stats{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    margin-top: 2.5rem;
+  }
 
   .hero-image-container {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 450px;
+    max-width: 500px;
   }
   .hero-img {
     width: 100%;
-    max-width: 500px;
     height: auto;
     margin-top: 20px;
     /* animation: float 3s ease-in-out infinite; */
