@@ -16,10 +16,10 @@
   --color-success: #38a169;
   --color-muted: #718096;
   --color-warning: #dd6b20;
-  --color-primary-light: #dbf2ff;
+  --color-primary-light: #e7f6ff;
   --color-success-light: #c6f6d5;
-  --color-warning-light: #feebc8;
-  --color-danger-light: #fed7d7;
+  --color-warning-light: #fff4de;
+  --color-danger-light: #ffe4e4;
   --color-danger-hover: #feb2b2;
   --color-primary-hover: #bee3f8;
   --color-warning-hover: #f6ad55;
@@ -50,6 +50,12 @@
     width: 100%;
     text-align: center;
     border-collapse: collapse;
+    /* table-layout: auto; */
+  }
+  table,
+  th,
+  td {
+    text-align: center !important;
   }
   thead {
     background: #f8fafc;
@@ -75,7 +81,7 @@
   font-weight: 600;
   display: inline-block;
   padding: 0.5rem 1rem;
-  font-size: .875rem;
+  font-size: 0.875rem;
   box-shadow: none;
 
   &.applied {
@@ -83,15 +89,14 @@
     color: var(--color-primary);
   }
 
-  &.interview{
-    background-color: rgb(255, 219, 255);
+  &.interview {
+    background-color: rgb(255, 233, 255);
     color: rgb(151, 84, 151);
   }
 
   &.referred {
     background-color: var(--color-warning-light);
     color: var(--color-warning);
-
   }
   &.hired {
     background-color: var(--color-success-light);
@@ -100,17 +105,18 @@
   &.declined {
     color: var(--color-danger);
     background-color: var(--color-danger-light);
-  
   }
 }
-.action-btns {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: .375rem;
+.action-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.375rem;
 }
-.action-btns button{
+.action-btn.cancel-btn {
   display: inline-block;
-  padding: 6px 12px;
+  padding: 8px 12px;
   margin-right: 6px;
   border: none;
   border-radius: 4px;
@@ -118,36 +124,37 @@
   font-size: 0.8rem;
   font-weight: 600;
   transition: all 0.2s;
-
-  &:nth-child(1){
-    background-color: var(--color-primary-light);
-    color: var(--color-primary);
-  }
-  &:nth-child(1):hover{
-    background-color: var(--color-primary-hover);
-  }
-  &:nth-child(2){
-    background-color: var(--color-warning-light);
-    color: var(--color-warning);
-  }
-  &:nth-child(2):hover{
-    background-color: var(--color-warning-hover);
-  }
-  &:nth-child(3){
-    background-color: var(--color-success-light);
-    color: var(--color-success);
-  }
-  &:nth-child(3):hover{
-    background-color: var(--color-success-hover);
-  }
-  &:nth-child(4){
-    background-color: var(--color-danger-light);
-    color: var(--color-danger);
-  }
-  &:nth-child(4):hover{
-    background-color: var(--color-danger-hover);
-  }
 }
+
+.action-btn.cancel-btn {
+  background-color: rgb(255, 45, 45);
+  color: white;
+}
+.action-btn.cancel-btn:hover {
+  background-color: var(--color-danger-hover);
+}
+.action-btn.view-btn {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+.action-btn.view-btn:hover {
+  background-color: var(--color-primary-hover);
+}
+.action-btn.view-btn {
+  background-color: var(--color-warning-light);
+  color: var(--color-warning);
+}
+.action-btn.view-btn:hover {
+  background-color: var(--color-warning-hover);
+}
+.action-btn.view-btn {
+  background-color: var(--color-success-light);
+  color: var(--color-success);
+}
+.action-btn.view-btn:hover {
+  background-color: var(--color-success-hover);
+}
+
 .table-date {
   font-size: 0.875rem;
   color: #718096 !important;

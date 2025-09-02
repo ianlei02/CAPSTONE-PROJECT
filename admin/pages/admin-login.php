@@ -205,80 +205,78 @@
       <p>Sign in to access your dashboard</p>
     </div>
 
-      <form class="login-form" method="POST" id="loginform">
-        <div class="form-group floating-label">
-          <input
-            type="text"
-            id="username"
-            name="username"
-            class="form-control"
-            placeholder=" "
-            required
-          />
-          <label for="username">Username</label>
-        </div>
+    <form class="login-form" method="POST" id="loginform">
+      <div class="form-group floating-label">
+        <input
+          type="text"
+          id="username"
+          name="username"
+          class="form-control"
+          placeholder=" "
+          required />
+        <label for="username">Username</label>
+      </div>
 
-        <div class="form-group floating-label" style="position:relative;">
-          <input
-            type="password"
-            id="password"
-            name="password"
-            class="form-control"
-            placeholder=" "
-            required
-          />
-          <label for="password">Password</label>
-          <button type="button" id="togglePassword" style="position:absolute; right:18px; top:18px; background:none; border:none; cursor:pointer; padding:0;">
-            <span id="toggleIcon" style="font-size:18px;">👁</span>
-          </button>
-        </div>
+      <div class="form-group floating-label" style="position:relative;">
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="form-control"
+          placeholder=" "
+          required />
+        <label for="password">Password</label>
+        <button type="button" id="togglePassword" style="position:absolute; right:18px; top:18px; background:none; border:none; cursor:pointer; padding:0;">
+          <span id="toggleIcon" style="font-size:18px;">👁</span>
+        </button>
+      </div>
 
-        <button type="submit" class="btn">Sign In →</button>
+      <button type="submit" class="btn">Sign In →</button>
 
-        <div class="form-footer">
-          <a href="/forgot-password">Forgot your password?</a>
-        </div>
-      </form>
-    </div>
-  </body>
-  <script>
-  document.getElementById('togglePassword').addEventListener('click', function () {
-      const passwordInput = document.getElementById('password');
-      const icon = document.getElementById('toggleIcon');
-      if (passwordInput.type === 'password') {
-          passwordInput.type = 'text';
-          icon.textContent = '👁'; 
-      } else {
-          passwordInput.type = 'password';
-          icon.textContent = '👁'; 
-      }
+      <div class="form-footer">
+        <a href="/forgot-password">Forgot your password?</a>
+      </div>
+    </form>
+  </div>
+</body>
+<script>
+  document.getElementById('togglePassword').addEventListener('click', function() {
+    const passwordInput = document.getElementById('password');
+    const icon = document.getElementById('toggleIcon');
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      icon.textContent = '👁';
+    } else {
+      passwordInput.type = 'password';
+      icon.textContent = '👁';
+    }
   });
 
   document.getElementById('loginform').addEventListener('submit', async function(e) {
-      e.preventDefault(); 
+    e.preventDefault();
 
-      const formData = new FormData(this);
+    const formData = new FormData(this);
 
-      try {
-          const response = await fetch('../Function/login.php', {
-              method: 'POST',
-              body: formData
-          });
+    try {
+      const response = await fetch('../Function/login.php', {
+        method: 'POST',
+        body: formData
+      });
 
-          if (!response.ok) throw new Error('Network response was not ok');
+      if (!response.ok) throw new Error('Network response was not ok');
 
-          const result = await response.json();
+      const result = await response.json();
 
-          if (result.status === 'success') {
-              alert(result.message);
-              window.location.href = result.redirect;
-          } else {
-              alert(result.message);
-          }
-      } catch (err) {
-          alert('Login failed. Please try again.');
+      if (result.status === 'success') {
+        alert(result.message);
+        window.location.href = result.redirect;
+      } else {
+        alert(result.message);
       }
+    } catch (err) {
+      alert('Login failed. Please try again.');
+    }
   });
 </script>
-</html>
 
+</html>
