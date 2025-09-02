@@ -85,7 +85,7 @@ function handleProfilePictureUpload($conn, $employer_id, $allowedTypes, $maxSize
 }
 
 
-$uploadDir = __DIR__ . '/../uploads/company_docs/';
+$uploadDir = __DIR__ . '/uploads/company_docs/';
 if (!file_exists($uploadDir)) {
     if (!mkdir($uploadDir, 0777, true)) {
         die("Failed to create upload directory");
@@ -123,7 +123,7 @@ try {
 
     $docFields = [
         "bir" => "bir_certification",
-        "business_permit" => "business_permit",
+        "business-permit" => "business_permit",
         "dole" => "dole_certification",
         "migrant" => "migrant_certification",
         "philjob" => "philjob_certification"
@@ -159,7 +159,7 @@ try {
             $targetPath = $uploadDir . $filename;
             
             if (move_uploaded_file($file['tmp_name'], $targetPath)) {
-                $uploadedFiles[$column] = $targetPath;
+                $uploadedFiles[$column] = "employer/Functions/uploads/company_docs/" . $filename;
                 $timestamps[$column . "_uploaded_at"] = date("Y-m-d H:i:s");
             } else {
                 throw new Exception("Failed to move uploaded file: " . $file['name']);
@@ -232,6 +232,7 @@ try {
         $profilePicturePath = handleProfilePictureUpload($conn, $employer_id, $allowedImageTypes, $maxImageSize);
 
         $conn->commit();
+        
         header("Location: ../pages/employer-profile.php?success=1");
         exit();
 
@@ -250,4 +251,5 @@ try {
         if (isset($stmt_insert)) $stmt_insert->close();
         $conn->close();
  }
+ 
 ?>

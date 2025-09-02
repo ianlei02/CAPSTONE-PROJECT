@@ -19,6 +19,7 @@ if (isset($_SESSION['verification_success'])) {
   echo "<script>alert('" . $_SESSION['verification_success'] . "');</script>";
   unset($_SESSION['verification_success']);
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,7 +85,7 @@ if (isset($_SESSION['verification_success'])) {
           </div>
           <div class="input-group">
             <label for="signupPassword">Password</label>
-            <input type="password" id="signupPassword" name="password" minlength="8" title="Password must be at least 8 characters" required />
+            <input type="password" id="signupPassword" name="password" minlength="8" title="Password must be at least 8 characters" required  />
           </div>
           <div class="input-group">
             <input type="hidden" id="otp" name="otp" class="form-control" required />
@@ -145,7 +146,7 @@ if (isset($_SESSION['verification_success'])) {
 
           <div class="input-group remember-me" style="display: flex; align-items: center; gap: 0.5rem; justify-content: space-between; ">
             <div style="display: flex; align-items: center;">
-              <input type="checkbox" id="rememberMe" name="remember_me">
+              <input type="checkbox" id="rememberMe" name="remember_me" >
               <label style="margin-top: 8px; margin-left: 4px;" for="rememberMe">Remember me</label>
             </div>
             <div class="forgot-password">

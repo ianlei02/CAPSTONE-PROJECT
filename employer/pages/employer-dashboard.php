@@ -5,7 +5,54 @@ if (!isset($_SESSION['user_id'])) {
   header("Location: ../login-signup.php");
   exit();
 }
+$employer_id = $_SESSION['user_id'];
 
+$sql = "
+SELECT 
+    ea.email, ea.email, ea.password,
+    ed.business_permit, ed.dole_certification, ed.bir_certification, ed.migrant_certification, ed.philjob_certification,
+    ei.company_type, ei.company_size, ei.industry, ei.contact_number, ei.address, ei.contact_person, ei.contact_position, ei.contact_mobile, ei.contact_email
+FROM employer_account ea
+LEFT JOIN employer_company_docs ed ON ea.employer_id = ed.employer_id
+LEFT JOIN employer_company_info ei ON ea.employer_id = ei.employer_id
+WHERE ea.employer_id = ?
+";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $employer_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$data = $result->fetch_assoc();
+
+$total_fields = count($data); 
+$filled = 0;
+
+foreach ($data as $value) {
+    if (!empty($value)) {
+        $filled++;
+    }
+}
+
+$completion = round(($filled / $total_fields) * 100);
+
+$radius = 45;
+$circumference = 2 * M_PI * $radius;
+$offset = $circumference - ($completion / 100 * $circumference);
+
+$sql = "
+    SELECT
+        (SELECT COUNT(*) FROM job_postings WHERE employer_id = ?) AS employer_total_jobs,
+        (SELECT COUNT(*) FROM job_postings) AS total_jobs,
+        (SELECT COUNT(*) FROM employer_account) AS total_employers,
+        (SELECT COUNT(*) FROM applicant_account WHERE status = 'verified') AS total_applicants,
+        (SELECT COUNT(*) FROM job_postings WHERE status = 'active') AS total_active
+";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $employer_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$data = $result->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -95,14 +142,15 @@ if (!isset($_SESSION['user_id'])) {
           </p> -->
       </div>
       <div class="status-card">
-        <div class="progress-circle-container">
+        <div class="progress-circle-container" style="position: relative; width:120px; height:120px;">
           <svg class="progress-circle-svg" viewBox="0 0 100 100">
             <circle class="progress-circle-bg" cx="50" cy="50" r="45"></circle>
-            <circle class="progress-circle-fill" cx="50" cy="50" r="45"
-              stroke-dasharray="282.743"
-              stroke-dashoffset="98.96"></circle> <!-- 65% complete -->
+            <circle class="progress-circle-fill"
+                    cx="50" cy="50" r="45"
+                    stroke-dasharray="<?php echo $circumference; ?>"
+                    stroke-dashoffset="<?php echo $offset; ?>"></circle>
           </svg>
-          <div class="progress-text">65%</div>
+          <div class="progress-text"><?php echo $completion; ?>%</div>
         </div>
 
         <div class="progress-details">
@@ -150,11 +198,19 @@ if (!isset($_SESSION['user_id'])) {
       <div class="statistics-container gradient">
         <div class="statistic-card">
           <h2>Jobs Posted</h2>
-          <p>5</p>
+          <p>
+            <?php
+            echo $data['employer_total_jobs'];
+            ?>
+          </p>
         </div>
         <div class="statistic-card">
           <h2>Pending Job Vacancies</h2>
-          <p>3</p>
+          <p>
+            <?php
+            echo $data['total_active'];
+            ?>
+          </p>
         </div>
         <div class="statistic-card">
           <h2>Referred Applicants</h2>
@@ -162,15 +218,27 @@ if (!isset($_SESSION['user_id'])) {
         </div>
         <div class="statistic-card">
           <h2>Job Listings</h2>
-          <p>104</p>
+          <p>
+            <?php
+            echo $data['total_jobs'];
+            ?>
+          </p>
         </div>
         <div class="statistic-card">
           <h2>Registered Employers</h2>
-          <p>59</p>
+          <p>
+            <?php
+            echo $data['total_employers'];
+            ?>
+          </p>
         </div>
         <div class="statistic-card">
           <h2>Registered Applicants</h2>
-          <p>409</p>
+          <p>
+            <?php
+            echo $data['total_applicants'];
+            ?>
+          </p>
         </div>
       </div>
       <div class="job-application-status">
@@ -241,52 +309,34 @@ if (!isset($_SESSION['user_id'])) {
 
   <script src="../js/responsive.js"></script>
   <script>
-    // Update progress circle
-    function updateProgress(percent, completed, total) {
-      const circle = document.querySelector('.progress-circle-fill');
-      const text = document.querySelector('.progress-text');
-      const fieldsText = document.querySelector('.progress-header div:last-child');
-      const circumference = 282.743; // 2 * π * r (r=45)
-
-      const offset = circumference - (percent / 100) * circumference;
-      circle.style.strokeDashoffset = offset;
-      text.textContent = `${percent}%`;
-      fieldsText.textContent = `${completed}/${total} fields`;
-
-      // Change color based on completion
-      if (percent >= 75) {
-        circle.style.stroke = '#2ecc71'; // Green
-      } else if (percent >= 50) {
-        circle.style.stroke = '#3498db'; // Blue
-      } else {
-        circle.style.stroke = '#e74c3c'; // Red
-      }
-    }
-
-    // Update verification status
     function setVerificationStatus(status) {
-      const badge = document.querySelector('.verification-badge');
-      const button = document.querySelector('.action-button');
+  const badge = document.querySelector('.verification-badge');
+  if (!badge) return;
 
-      badge.className = `verification-badge ${status}`;
+  badge.className = `verification-badge ${status}`;
 
-      if (status === 'verified') {
-        badge.innerHTML = '<i class="fas fa-check-circle badge-icon"></i> Verified';
-        button.textContent = 'View Dashboard';
-      } else if (status === 'pending') {
-        badge.innerHTML = '<i class="fas fa-clock badge-icon"></i> Pending';
-        button.textContent = 'Continue Verification';
-      } else {
-        badge.innerHTML = '<i class="fas fa-times-circle badge-icon"></i> Unverified';
-        button.textContent = 'Begin Verification';
-      }
-    }
+  if (status === 'verified') {
+    badge.textContent = 'Verified';
+  } else if (status === 'pending') {
+    badge.textContent = 'Pending';
+  } else {
+    badge.textContent = 'Unverified';
+  }
+}
 
-    // Example: Update to 75% completion
-    setTimeout(() => updateProgress(75, 15, 20), 1000);
+document.addEventListener("DOMContentLoaded", () => {
+  const progressText = document.querySelector('.progress-text');
+  if (!progressText) return;
 
-    // Example: Change to verified status
-    // setVerificationStatus('verified');
+  const completion = parseInt(progressText.textContent.replace('%', '')); 
+
+  if (completion >= 100) {
+    setVerificationStatus('verified');
+  } else {
+    setVerificationStatus('pending');
+  }
+});
+
   </script>
   <!-- <script>
      $(document).ready(function() {

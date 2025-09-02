@@ -748,23 +748,24 @@ function getCode($item)
   </script>
   <script>
     document.getElementById('profileForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const updateBtn = document.getElementById('updateBtn');
+    const saveBtnn = document.getElementById('saveBtnn');
 
-      const formData = new FormData(this);
-      const updateBtn = document.getElementById('updateBtn');
-      const saveBtnn = document.getElementById('saveBtnn');
+    if (e.submitter === saveBtnn) {
+     
+     const response = await fetch('../Functions/profile_update.php', {
+         method: 'POST',
+         body: formData
+     });
 
-      if (e.submitter === saveBtnn) {
+     const result = await response.json();
 
-        const response = await fetch('../Functions/profile_update.php', {
-          method: 'POST',
-          body: formData
-        });
+     if (result.success) {
+       alert(result.message);
 
-        const result = await response.json();
-
-        if (result.success) {
-          alert('Profile saved successfully!');
           window.location.reload();
         } else {
           alert('Error: ' + result.message);
@@ -793,35 +794,35 @@ function getCode($item)
     const saveBtn = document.getElementById('saveBtn');
     const inputs = document.querySelectorAll('#profileForm input');
     const select = document.querySelectorAll('#profileForm select');
-    const textAreas = document.querySelectorAll('#profileForm textarea'); // Correctly define textAreas
+    const textAreas = document.querySelectorAll('#profileForm textarea'); 
     const profilePicInput = document.getElementById('profilePicInput');
 
     window.addEventListener('DOMContentLoaded', () => {
-      inputs.forEach(input => input.disabled = true);
-      select.forEach(select => select.disabled = true);
-      textAreas.forEach(textArea => textArea.disabled = true); // Use textAreas here
-      saveBtn.disabled = true;
-      editBtn.disabled = false;
-      profilePicInput.disabled = true; // Disable the file input
+        inputs.forEach(input => input.disabled = true);
+        select.forEach(select => select.disabled = true);
+        textAreas.forEach(textArea => textArea.disabled = true); 
+        saveBtn.disabled = true;
+        editBtn.disabled = false;
+        profilePicInput.disabled = true; 
     });
 
     editBtn.addEventListener('click', () => {
-      inputs.forEach(input => input.disabled = false);
-      select.forEach(select => select.disabled = false);
-      textAreas.forEach(textArea => textArea.disabled = false); // Use textAreas here
-      saveBtn.disabled = false;
-      editBtn.disabled = true;
-      profilePicInput.disabled = false; // Enable the file input
+        inputs.forEach(input => input.disabled = false);
+        select.forEach(select => select.disabled = false);
+        textAreas.forEach(textArea => textArea.disabled = false); 
+        saveBtn.disabled = false;
+        editBtn.disabled = true;
+        profilePicInput.disabled = false; 
     });
 
     saveBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      inputs.forEach(input => input.disabled = true);
-      select.forEach(select => select.disabled = true);
-      textAreas.forEach(textArea => textArea.disabled = true); // Use textAreas here
-      saveBtn.disabled = true;
-      editBtn.disabled = false;
-      profilePicInput.disabled = true; // Disable the file input
+        e.preventDefault();
+        inputs.forEach(input => input.disabled = true);
+        select.forEach(select => select.disabled = true);
+        textAreas.forEach(textArea => textArea.disabled = true); 
+        saveBtn.disabled = true;
+        editBtn.disabled = false;
+        profilePicInput.disabled = true; 
     });
   </script>
   <script>
@@ -949,35 +950,46 @@ function getCode($item)
     });
   </script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.querySelector("form");
-      const saveBtn = document.getElementById("saveBtnn");
-      const updateBtn = document.getElementById("updateBtn");
 
-      function handleAction(button, actionText, confirmText) {
-        button.addEventListener("click", function(e) {
-          e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("form");
+  const saveBtn = document.getElementById("saveBtnn");
+  const updateBtn = document.getElementById("updateBtn");
 
+  function handleAction(button, actionText, confirmText, successText) {
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      Swal.fire({
+        title: `Are you sure you want to ${actionText}?`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: confirmText,
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
           Swal.fire({
-            title: `Are you sure you want to ${actionText}?`,
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonText: confirmText,
-            cancelButtonText: "Cancel",
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              form.submit();
-            }
+            title: successText,
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1000 
           });
-        });
-      }
 
-      handleAction(saveBtn, "save your profile", "Yes, Save it!");
-      handleAction(updateBtn, "update your profile", "Yes, Update it!");
+          setTimeout(() => {
+            form.submit();
+          }, 1000);
+        }
+      });
     });
-  </script>
+  }
+
+  handleAction(saveBtn, "save your profile", "Yes, Save it!", "Profile Saved Successfully!");
+  handleAction(updateBtn, "update your profile", "Yes, Update it!", "Profile Updated Successfully!");
+});
+</script>
+
 </body>
 
 </html>

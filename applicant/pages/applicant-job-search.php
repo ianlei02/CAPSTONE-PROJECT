@@ -5,6 +5,12 @@ if (!isset($_SESSION['user_id'])) {
   header("Location: ../login-signup.php");
   exit();
 }
+$sql = "SELECT job_id, job_title, job_type, category, salary_range, location, vacancies, description, created_at 
+        FROM job_postings 
+        WHERE status = 'active' 
+        ORDER BY created_at DESC";
+
+$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -101,270 +107,41 @@ if (!isset($_SESSION['user_id'])) {
         </div>
 
         <div class="job-listings">
-          <!-- Business Job -->
-          <div class="job-card" data-field="Business">
-            <div class="job-card-top">
-              <div class="job-field">Business/Finance</div>
-              <div class="job-header">
-                <div>
-                  <h3 class="job-title">Financial Analyst</h3>
-                  <div class="job-company">Prime Capital Inc.</div>
-                </div>
-                <div>
-                  <span class="job-salary">₱60,000 - ₱80,000/month</span>
-                </div>
-              </div>
-              <div class="job-meta">
-                <span><i class="fas fa-briefcase"></i> Full-time</span>
-                <span><i class="fas fa-map-marker-alt"></i> Makati City</span>
-                <span><i class="fas fa-users"></i> Vacancies: 1</span>
-              </div>
-            </div>
-            <div class="job-description">
-              Looking for a CFA with 4+ years experience in investment
-              analysis. Responsibilities include financial modeling, market
-              research, and preparing investment recommendations.
-              Looking for a CFA with 4+ years experience in investment
-              analysis. Responsibilities include financial modeling, market
-              research, and preparing investment recommendations. 
-            </div>
-            <span class="read-more">Read More</span>
-            <div class="job-footer">
-              <div class="job-posted">Expiration: May 18, 2023</div>
-              <button class="apply-btn" data-job-id="104">Apply Now</button>
-            </div>
+          <!-- IT Job -->
+          <?php if ($result->num_rows > 0): ?>
+    <?php while ($row = $result->fetch_assoc()): ?>
+      <div class="job-card" data-field="<?php echo htmlspecialchars($row['category']); ?>">
+        <div class="job-field"><?php echo htmlspecialchars($row['category']); ?></div>
+        
+        <div class="job-header">
+          <div>
+            <h3 class="job-title"><?php echo htmlspecialchars($row['job_title']); ?></h3>
+            <div class="job-company"><?php echo htmlspecialchars($row['job_title']); ?></div>
           </div>
-            <!-- IT Job -->
-            <div class="job-card" data-field="IT">
-            <div class="job-card-top">
-              <div class="job-field">IT/Software</div>
-              <div class="job-header">
-              <div>
-                <h3 class="job-title">Frontend Developer</h3>
-                <div class="job-company">Tech Innovators PH</div>
-              </div>
-              <div>
-                <span class="job-salary">₱45,000 - ₱60,000/month</span>
-              </div>
-              </div>
-              <div class="job-meta">
-              <span><i class="fas fa-briefcase"></i> Full-time</span>
-              <span><i class="fas fa-map-marker-alt"></i> Quezon City</span>
-              <span><i class="fas fa-users"></i> Vacancies: 2</span>
-              </div>
-            </div>
-            <div class="job-description">
-              Seeking a React.js developer with 2+ years experience. Responsibilities include UI development, API integration, and collaborating with backend teams.
-            </div>
-            <span class="read-more" style="color:var(--primary-blue-color)">Read More</span>
-            <div class="job-footer">
-              <div class="job-posted">Expiration: June 30, 2024</div>
-              <button class="apply-btn" data-job-id="201">Apply Now</button>
-            </div>
-            </div>
+          <div>
+            <span class="job-salary"><?php echo htmlspecialchars($row['salary_range']); ?><br> Salary/Month</span>
+          </div>
+        </div>
 
-            <!-- Engineering Job -->
-            <div class="job-card" data-field="Engineering">
-            <div class="job-card-top">
-              <div class="job-field">Engineering</div>
-              <div class="job-header">
-              <div>
-                <h3 class="job-title">Civil Engineer</h3>
-                <div class="job-company">BuildRight Construction</div>
-              </div>
-              <div>
-                <span class="job-salary">₱50,000 - ₱70,000/month</span>
-              </div>
-              </div>
-              <div class="job-meta">
-              <span><i class="fas fa-briefcase"></i> Full-time</span>
-              <span><i class="fas fa-map-marker-alt"></i> Pasig City</span>
-              <span><i class="fas fa-users"></i> Vacancies: 3</span>
-              </div>
-            </div>
-            <div class="job-description">
-              Licensed Civil Engineer needed for site supervision and project management. Must have at least 3 years experience in construction projects.
-            </div>
-            <span class="read-more" style="color:var(--primary-blue-color)">Read More</span>
-            <div class="job-footer">
-              <div class="job-posted">Expiration: July 10, 2024</div>
-              <button class="apply-btn" data-job-id="202">Apply Now</button>
-            </div>
-            </div>
+        <div class="job-meta">
+          <span><i class="fas fa-briefcase"></i> <?php echo htmlspecialchars($row['job_type']); ?></span>
+          <span><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($row['location']); ?></span>
+          <span><i class="fas fa-users"></i> Vacancies: <?php echo (int)$row['vacancies']; ?></span>
+        </div>
 
-            <!-- Medicine Job -->
-            <div class="job-card" data-field="Medicine">
-            <div class="job-card-top">
-              <div class="job-field">Medicine/Healthcare</div>
-              <div class="job-header">
-              <div>
-                <h3 class="job-title">Registered Nurse</h3>
-                <div class="job-company">St. Luke's Medical Center</div>
-              </div>
-              <div>
-                <span class="job-salary">₱35,000 - ₱45,000/month</span>
-              </div>
-              </div>
-              <div class="job-meta">
-              <span><i class="fas fa-briefcase"></i> Full-time</span>
-              <span><i class="fas fa-map-marker-alt"></i> Taguig City</span>
-              <span><i class="fas fa-users"></i> Vacancies: 5</span>
-              </div>
-            </div>
-            <div class="job-description">
-              Registered Nurse with PRC license. Experience in hospital setting preferred. Rotating shifts, patient care, and documentation required.
-            </div>
-            <span class="read-more" style="color:var(--primary-blue-color)">Read More</span>
-            <div class="job-footer">
-              <div class="job-posted">Expiration: July 5, 2024</div>
-              <button class="apply-btn" data-job-id="203">Apply Now</button>
-            </div>
-            </div>
+        <div class="job-description">
+          <?php echo nl2br(htmlspecialchars($row['description'])); ?>
+        </div>
 
-            <!-- Education Job -->
-            <div class="job-card" data-field="Education">
-            <div class="job-card-top">
-              <div class="job-field">Education</div>
-              <div class="job-header">
-              <div>
-                <h3 class="job-title">High School Math Teacher</h3>
-                <div class="job-company">Bright Future Academy</div>
-              </div>
-              <div>
-                <span class="job-salary">₱25,000 - ₱35,000/month</span>
-              </div>
-              </div>
-              <div class="job-meta">
-              <span><i class="fas fa-briefcase"></i> Full-time</span>
-              <span><i class="fas fa-map-marker-alt"></i> Manila</span>
-              <span><i class="fas fa-users"></i> Vacancies: 2</span>
-              </div>
-            </div>
-            <div class="job-description">
-              Licensed teacher for junior and senior high school math. Must have LET and at least 1 year teaching experience.
-            </div>
-            <span class="read-more" style="color:var(--primary-blue-color)">Read More</span>
-            <div class="job-footer">
-              <div class="job-posted">Expiration: June 25, 2024</div>
-              <button class="apply-btn" data-job-id="204">Apply Now</button>
-            </div>
-            </div>
-
-            <!-- Marketing Job -->
-            <div class="job-card" data-field="Marketing">
-            <div class="job-card-top">
-              <div class="job-field">Marketing</div>
-              <div class="job-header">
-              <div>
-                <h3 class="job-title">Digital Marketing Specialist</h3>
-                <div class="job-company">AdVantage Solutions</div>
-              </div>
-              <div>
-                <span class="job-salary">₱30,000 - ₱50,000/month</span>
-              </div>
-              </div>
-              <div class="job-meta">
-              <span><i class="fas fa-briefcase"></i> Full-time</span>
-              <span><i class="fas fa-map-marker-alt"></i> Cebu City</span>
-              <span><i class="fas fa-users"></i> Vacancies: 1</span>
-              </div>
-            </div>
-            <div class="job-description">
-              Manage social media campaigns, SEO/SEM, and analytics. 2+ years experience in digital marketing required.
-            </div>
-            <span class="read-more" style="color:var(--primary-blue-color)">Read More</span>
-            <div class="job-footer">
-              <div class="job-posted">Expiration: July 1, 2024</div>
-              <button class="apply-btn" data-job-id="205">Apply Now</button>
-            </div>
-            </div>
-
-            <!-- Construction Job -->
-            <div class="job-card" data-field="Construction">
-            <div class="job-card-top">
-              <div class="job-field">Construction</div>
-              <div class="job-header">
-              <div>
-                <h3 class="job-title">Site Foreman</h3>
-                <div class="job-company">MegaBuild Corp.</div>
-              </div>
-              <div>
-                <span class="job-salary">₱28,000 - ₱40,000/month</span>
-              </div>
-              </div>
-              <div class="job-meta">
-              <span><i class="fas fa-briefcase"></i> Full-time</span>
-              <span><i class="fas fa-map-marker-alt"></i> Davao City</span>
-              <span><i class="fas fa-users"></i> Vacancies: 2</span>
-              </div>
-            </div>
-            <div class="job-description">
-              Oversee daily site operations, supervise workers, and ensure safety compliance. At least 2 years experience required.
-            </div>
-            <span class="read-more" style="color:var(--primary-blue-color)">Read More</span>
-            <div class="job-footer">
-              <div class="job-posted">Expiration: June 28, 2024</div>
-              <button class="apply-btn" data-job-id="206">Apply Now</button>
-            </div>
-            </div>
-
-            <!-- Manufacturing Job -->
-            <div class="job-card" data-field="Manufacturing">
-            <div class="job-card-top">
-              <div class="job-field">Manufacturing</div>
-              <div class="job-header">
-              <div>
-                <h3 class="job-title">Production Supervisor</h3>
-                <div class="job-company">FoodPro Manufacturing</div>
-              </div>
-              <div>
-                <span class="job-salary">₱32,000 - ₱42,000/month</span>
-              </div>
-              </div>
-              <div class="job-meta">
-              <span><i class="fas fa-briefcase"></i> Full-time</span>
-              <span><i class="fas fa-map-marker-alt"></i> Calamba, Laguna</span>
-              <span><i class="fas fa-users"></i> Vacancies: 1</span>
-              </div>
-            </div>
-            <div class="job-description">
-              Supervise production line, ensure quality standards, and manage team schedules. Experience in food manufacturing preferred.
-            </div>
-            <span class="read-more" style="color:var(--primary-blue-color)">Read More</span>
-            <div class="job-footer">
-              <div class="job-posted">Expiration: July 8, 2024</div>
-              <button class="apply-btn" data-job-id="207">Apply Now</button>
-            </div>
-            </div>
-
-            <!-- Other Fields Job -->
-            <div class="job-card" data-field="Other">
-            <div class="job-card-top">
-              <div class="job-field">Other Fields</div>
-              <div class="job-header">
-              <div>
-                <h3 class="job-title">Customer Service Representative</h3>
-                <div class="job-company">Global Connect BPO</div>
-              </div>
-              <div>
-                <span class="job-salary">₱22,000 - ₱28,000/month</span>
-              </div>
-              </div>
-              <div class="job-meta">
-              <span><i class="fas fa-briefcase"></i> Full-time</span>
-              <span><i class="fas fa-map-marker-alt"></i> Iloilo City</span>
-              <span><i class="fas fa-users"></i> Vacancies: 10</span>
-              </div>
-            </div>
-            <div class="job-description">
-              Handle inbound customer calls, resolve issues, and provide excellent service. Good communication skills required.
-            </div>
-            <span class="read-more" style="color:var(--primary-blue-color)">Read More</span>
-            <div class="job-footer">
-              <div class="job-posted">Expiration: June 20, 2024</div>
-              <button class="apply-btn" data-job-id="208">Apply Now</button>
-            </div>
-            </div>
+        <div class="job-footer">
+          <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
+          <button class="apply-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">Apply Now</button>
+        </div>
+      </div>
+    <?php endwhile; ?>
+  <?php else: ?>
+    <p>No job postings available.</p>
+  <?php endif; ?>
 
         </div>
       </div>

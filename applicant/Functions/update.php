@@ -222,5 +222,14 @@ try {
     $conn->close();
 }
 
-echo json_encode($response);
-?>
+ if ($response['success']) {
+    
+    header("Location: ../pages/applicant-profile.php?status=success&msg=" . urlencode($response['message']));
+    exit();
+} else {
+    
+    header("Location: ../pages/applicant-profile.php?status=error&msg=" . urlencode($response['message']));
+    exit();
+}
+
+    

@@ -90,13 +90,33 @@
 
     $completionPercentage = ($completed / $totalTables) * 100;
     return round($completionPercentage);
-  }
 
-  $progress = getProfileCompletion($applicantId, $conn);
-  $radius = 45;
-  $circumference = 2 * M_PI * $radius;
-  $offset = $circumference - ($progress / 100) * $circumference;
-  ?>
+}
+
+$progress = getProfileCompletion($applicantId, $conn);
+$radius = 45;
+$circumference = 2 * M_PI * $radius;
+$offset = $circumference - ($progress / 100) * $circumference;
+
+$sql = "
+    SELECT
+        (SELECT COUNT(*) FROM job_postings WHERE employer_id = ?) AS employer_total_jobs,
+        (SELECT COUNT(*) FROM job_postings) AS total_jobs,
+        (SELECT COUNT(*) FROM employer_account) AS total_employers,
+        (SELECT COUNT(*) FROM applicant_account) AS total_applicants,
+        (SELECT COUNT(*) FROM job_postings WHERE status = 'active') AS total_active
+";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $employer_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$data = $result->fetch_assoc();
+
+
+?>
+
+
 
  <!DOCTYPE html>
  <html lang="en">
@@ -245,87 +265,88 @@
          </div>
          <div class="statistic-card">
            <h2>Job Listings</h2>
-           <p>104</p>
+           <p>
+            <?php
+            echo $data['total_jobs'];
+            ?>
+           </p>
          </div>
          <div class="statistic-card">
            <h2>Registered Employers</h2>
-           <p>59</p>
+           <p>
+            <?php
+            echo $data['total_employers'];
+            ?>
+           </p>
          </div>
          <div class="statistic-card">
            <h2>Registered Applicants</h2>
-           <p>409</p>
+           <p>
+            <?php
+            echo $data['total_applicants'];
+            ?>
+           </p>
          </div>
        </div>
        <div class="job-application-status">
          <h2>Recent Job Applications</h2>
-         <table class="job-application-table" id="dashboardTable">
-           <thead>
-             <tr>
-               <th>Job Title</th>
-               <th>Company</th>
-               <th>Industry</th>
-               <th>Status</th>
-               <th>Date Applied</th>
-               <th>Action</th>
-             </tr>
-           </thead>
-           <tbody>
-             <tr>
-               <td>Software Engineer</td>
-               <td>Tech Company</td>
-               <td class="industry it">IT/Software</td>
-               <td><span class="status interview">Interview</span></td>
-               <td class="table-date">2025-10-01</td>
-               <td>
-                 <button class="action-btn cancel-btn">Cancel</button>
-               </td>
-             </tr>
-             <tr>
-               <td>Financial Data Analyst</td>
-               <td>Data Corp</td>
-               <td class="industry finance">Finance</td>
-               <td><span class="status applied">Applied</span></td>
-               <td class="table-date">2025-09-15</td>
-               <td>
-                 <button class="action-btn cancel-btn">Cancel</button>
-               </td>
-             </tr>
-             <tr>
-               <td>Project Manager</td>
-               <td>BuildSmart Inc.</td>
-               <td class="industry engineering">Engineering</td>
-               <td><span class="status referred">Referred</span></td>
-               <td class="table-date">2025-09-15</td>
-               <td>
-                 <button class="action-btn cancel-btn">Cancel</button>
-               </td>
-             </tr>
-             <tr>
-               <td>Clinical Data Analyst</td>
-               <td>HealthTech</td>
-               <td class="industry medicine">Medicine</td>
-               <td><span class="status hired">Hired</span></td>
-               <td class="table-date">2025-09-15</td>
-               <td>
-                 <button class="action-btn cancel-btn">Cancel</button>
-               </td>
-             </tr>
-             <tr>
-               <td>Operations Manager</td>
-               <td>Retail Logistics</td>
-               <td class="industry others">Others</td>
-               <td><span class="status declined">Declined</span></td>
-               <td class="table-date">2025-09-15</td>
-               <td>
-                 <button class="action-btn cancel-btn">Cancel</button>
-               </td>
-             </tr>
-           </tbody>
-         </table>
+         <div class="table-responsive">
+           <table class="job-application-table" id="dashboardTable">
+             <thead>
+               <tr>
+                 <th>Job Title</th>
+                 <th>Company</th>
+                 <th>Industry</th>
+                 <th>Status</th>
+                 <th>Date Applied</th>
+               </tr>
+             </thead>
+             <tbody>
+               <tr>
+                 <td>Software Engineer</td>
+                 <td>Tech Company</td>
+                 <td class="industry it">IT/Software</td>
+                 <td><span class="status interview">Interview</span></td>
+                 <td class="table-date">2025-10-01</td>
+               </tr>
+               <tr>
+                 <td>Financial Data Analyst</td>
+                 <td>Data Corp</td>
+                 <td class="industry finance">Finance</td>
+                 <td><span class="status applied">Applied</span></td>
+                 <td class="table-date">2025-09-15</td>
+               </tr>
+               <tr>
+                 <td>Project Manager</td>
+                 <td>BuildSmart Inc.</td>
+                 <td class="industry engineering">Engineering</td>
+                 <td><span class="status referred">Referred</span></td>
+                 <td class="table-date">2025-09-15</td>
+               </tr>
+               <tr>
+                 <td>Clinical Data Analyst</td>
+                 <td>HealthTech</td>
+                 <td class="industry medicine">Medicine</td>
+                 <td><span class="status hired">Hired</span></td>
+                 <td class="table-date">2025-09-15</td>
+               </tr>
+               <tr>
+                 <td>Operations Manager</td>
+                 <td>Retail Logistics</td>
+                 <td class="industry others">Others</td>
+                 <td><span class="status declined">Declined</span></td>
+                 <td class="table-date">2025-09-15</td>
+               </tr>
+             </tbody>
+           </table>
+         </div>
+
        </div>
    </div>
+
    </main>
    </div>
+
 
    <script src="../js/responsive.js"></script>
    <script>

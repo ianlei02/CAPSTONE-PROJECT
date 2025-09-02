@@ -5,7 +5,9 @@ if (!isset($_SESSION['user_id'])) {
   header("Location: ../login-signup.php");
   exit();
 }
-
+$sql = "SELECT applicant_ID, f_name, l_name, email, status, date_created  
+        FROM applicant_account";
+        $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,141 +96,27 @@ if (!isset($_SESSION['user_id'])) {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>John Doe</td>
-                <td>john.doe@example.com</td>
-                <td><span class="status interview">Interview</span></td>
-                <td class="table-date">2025-10-01</td>
-                <td class="action-btns">
-                  <button>View</button><button>Interview</button><button>Hire</button><button>Decline</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Jane Smith</td>
-                <td>jane.smith@example.com</td>
-                <td><span class="status applied">Applied</span></td>
-                <td class="table-date">2025-09-15</td>
-                <td class="action-btns">
-                  <button>View</button><button>Interview</button><button>Hire</button><button>Decline</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Alice Johnson</td>
-                <td>alice.johnson@example.com</td>
-                <td><span class="status declined">Declined</span></td>
-                <td class="table-date">2025-09-14</td>
-                <td class="action-btns">
-                  <button>View</button><button>Interview</button><button>Hire</button><button>Decline</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Bob Brown</td>
-                <td>bob.brown@example.com</td>
-                <td><span class="status hired">Hired</span></td>
-                <td class="table-date">2025-09-13</td>
-                <td class="action-btns">
-                  <button>View</button><button>Interview</button><button>Hire</button><button>Decline</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Charlie Davis</td>
-                <td>charlie.davis@example.com</td>
-                <td><span class="status pending">Pending</span></td>
-                <td class="table-date">2025-09-12</td>
-                <td class="action-btns">
-                  <button>View</button><button>Interview</button><button>Hire</button><button>Decline</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Emily Clark</td>
-                <td>emily.clark@example.com</td>
-                <td><span class="status applied">Applied</span></td>
-                <td class="table-date">2025-09-11</td>
-                <td class="action-btns">
-                  <button>View</button><button>Interview</button><button>Hire</button><button>Decline</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Daniel Lee</td>
-                <td>daniel.lee@example.com</td>
-                <td><span class="status interview">Interview</span></td>
-                <td class="table-date">2025-09-10</td>
-                <td class="action-btns">
-                  <button>View</button><button>Interview</button><button>Hire</button><button>Decline</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Grace Miller</td>
-                <td>grace.miller@example.com</td>
-                <td><span class="status declined">Declined</span></td>
-                <td class="table-date">2025-09-09</td>
-                <td class="action-btns">
-                  <button>View</button><button>Interview</button><button>Hire</button><button>Decline</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Henry Wilson</td>
-                <td>henry.wilson@example.com</td>
-                <td><span class="status hired">Hired</span></td>
-                <td class="table-date">2025-09-08</td>
-                <td class="action-btns">
-                  <button>View</button><button>Interview</button><button>Hire</button><button>Decline</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Ivy Moore</td>
-                <td>ivy.moore@example.com</td>
-                <td><span class="status pending">Pending</span></td>
-                <td class="table-date">2025-09-07</td>
-                <td class="action-btns">
-                  <button>View</button><button>Interview</button><button>Hire</button><button>Decline</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Jack Nguyen</td>
-                <td>jack.nguyen@example.com</td>
-                <td><span class="status applied">Applied</span></td>
-                <td class="table-date">2025-09-06</td>
-                <td class="action-btns">
-                  <button>View</button><button>Interview</button><button>Hire</button><button>Decline</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Karen White</td>
-                <td>karen.white@example.com</td>
-                <td><span class="status interview">Interview</span></td>
-                <td class="table-date">2025-09-05</td>
-                <td class="action-btns">
-                  <button>View</button><button>Interview</button><button>Hire</button><button>Decline</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Liam Thompson</td>
-                <td>liam.thompson@example.com</td>
-                <td><span class="status declined">Declined</span></td>
-                <td class="table-date">2025-09-04</td>
-                <td class="action-btns">
-                  <button>View</button><button>Interview</button><button>Hire</button><button>Decline</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Mia Taylor</td>
-                <td>mia.taylor@example.com</td>
-                <td><span class="status hired">Hired</span></td>
-                <td class="table-date">2025-09-03</td>
-                <td class="action-btns">
-                  <button>View</button><button>Interview</button><button>Hire</button><button>Decline</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Noah Anderson</td>
-                <td>noah.anderson@example.com</td>
-                <td><span class="status pending">Pending</span></td>
-                <td class="table-date">2025-09-02</td>
-                <td class="action-btns">
-                  <button>View</button><button>Interview</button><button>Hire</button><button>Decline</button>
-                </td>
-              </tr>
+              <?php
+                if ($result->num_rows > 0) {
+                  while ($row = $result->fetch_assoc()) {
+                      echo "<tr>";
+                      echo "<td>" . htmlspecialchars($row['f_name'] . " " . $row['l_name']) . "</td>";
+                      echo "<td>" . htmlspecialchars($row['email']) . "</td>";
+                      echo "<td><span class='status " . strtolower($row['status']) . "'>" 
+                              . htmlspecialchars($row['status']) . "</span></td>";
+                      echo "<td class='table-date'>" . htmlspecialchars($row['date_created']) . "</td>";
+                      echo "<td class='action-btns'>
+                              <button>View</button>
+                              <button>Interview</button>
+                              <button>Hire</button>
+                              <button>Decline</button>
+                            </td>";
+                      echo "</tr>";
+                  }
+              } else {
+                  echo "<tr><td colspan='5'>No applicants found</td></tr>";
+              }
+              ?>
             </tbody>
 
           </table>
