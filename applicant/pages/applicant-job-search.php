@@ -31,7 +31,7 @@ $result = $conn->query($sql);
       <div class="left-pos" style="display: flex; width: auto; height: auto">
         <button class="hamburger">☰</button>
         <div class="logo">
-          <img src="../assets/images/logo without glass.png" alt="" />
+          <img src="../assets/images/peso-logo.png" alt="" />
         </div>
       </div>
       <div class="right-pos">

@@ -150,7 +150,6 @@ function getCode($item)
 {
   return $item['psgc_id'];
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

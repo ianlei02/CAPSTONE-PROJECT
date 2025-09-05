@@ -1,3 +1,5 @@
+<?php
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +24,7 @@
       <div class="left-pos" style="display: flex; width: auto; height: auto">
         <button class="hamburger">☰</button>
         <div class="logo">
-          <img src="../assets/images/logo without glass.png" alt="" />
+          <img src="../assets/images/peso-logo.png" alt="" />
         </div>
       </div>
       <div class="right-pos">
@@ -97,7 +99,8 @@
   <main class="main-content">
     <div class="profile-container">
       <form action="../Functions/profile_update.php" method="POST" id="profileForm" enctype="multipart/form-data">
-        <div class="section">
+        <div class="section"">
+          <button class=" btn btn-outline" id="editBtn">Edit</button>
           <div class="profile-header">
             <label
               class="profile-pic-container"
@@ -133,11 +136,18 @@
             <p>Upload a photo below 1mb</p>
           </div>
         </div>
-        <button id="editBtn" class="btn btn-outline">Edit</button>
-        <button id="saveBtn" class="btn btn-primary">Save</button>
-        <!-- Personal Information Section -->
+        <div class="section form-instructions">
+          <strong>INSTRUCTIONS:</strong>
+          Please fill out the form accurately and completely. Fields marked with
+          <span class="required-mark">*</span> are required. Upload only the following file types:
+          <strong>PDF</strong>, <strong>JPG/JPEG</strong>, and <strong>PNG</strong>, with a maximum file size of
+          <strong>5 MB</strong> each. Ensure all documents are clear and readable before submission. Double-check your information prior to submitting, as changes may not be allowed once the form has been submitted.
+        </div>
+        <!-- <button id="saveBtn" class="btn btn-primary">Save</button> -->
+
+        <!--Section I:  Personal Information Section -->
         <div class="section">
-          <h2 class="section-title">I. PERSONAL INFORMATION</h2>
+          <h2 class=" section-title">I. PERSONAL INFORMATION</h2>
           <div class="form-grid">
             <div class="form-group">
               <label class="required">First Name</label>
@@ -187,25 +197,7 @@
             </div>
             <div class="form-group" style="grid-column: span 4">
               <label class="required">Complete Address</label>
-              <input
-                type="text"
-                id="street"
-                placeholder="Street Address"
-                name="streetAddress"
-                value="<?= htmlspecialchars($saved_street) ?>"
-                required
-                style="margin-bottom: 10px" />
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <select id="region" name="region" required>
-                  <option value="">Select Region</option>
-                  <?php foreach ($regions as $reg):
-                    $code = getCode($reg); ?>
-                    <option value="<?= htmlspecialchars($code) ?>"
-                      <?= ($saved_region == $code) ? 'selected' : '' ?>>
-                      <?= htmlspecialchars($reg['name']) ?>
-                    </option>
-                  <?php endforeach; ?>
-                </select>
                 <select id="province" name="province" required>
                   <option value="">Select Province</option>
                   <?php foreach ($provinces as $prov):
@@ -226,7 +218,6 @@
                     </option>
                   <?php endforeach; ?>
                 </select>
-
                 <select id="barangay" name="barangay" required>
                   <option value="">Select Barangay</option>
                   <?php foreach ($barangays as $brgy):
@@ -237,7 +228,12 @@
                     </option>
                   <?php endforeach; ?>
                 </select>
-
+                <input
+                  type="text"
+                  id="street"
+                  placeholder="House No/Street Address"
+                  name="streetAddress"
+                  required />
               </div>
               <input type="hidden" name="region_name" id="region_name">
               <input type="hidden" name="province_name" id="province_name">
@@ -272,12 +268,6 @@
                 placeholder="09123456789" name="mobileNumber"
                 required />
             </div>
-            <!-- REMOVE THIS -->
-            <div class="form-group" style="display: none;">
-              <label>Alternate Contact Number</label>
-              <input type="tel" id="alternateMobile" name="alternateContact" />
-            </div>
-            <!-- NOT THIS -->
             <div class="form-group disabilities">
               <label for="">Disability</label>
               <ul>
@@ -305,7 +295,7 @@
             </div>
             <div class="form-group employment-status">
               <label class="required">EMPLOYMENT STATUS/TYPE</label>
-              <div class="employment-checkboxes">
+              <div class="employment-checkboxes ">
                 <div class="employed-checkbox checkbox-flex">
                   <input type="checkbox" id="employed" name="employmentStatus" value="Employed">
                   <label for="employed">Employed</label>
@@ -315,7 +305,7 @@
                   <label for="unemployed">Unemployed </label>
                 </div>
               </div>
-              <div class="employed-checkboxes">
+              <div class="employed-checkboxes" style="display: none;">
                 <div class="wage-employed-checkbox checkbox-flex">
                   <input type="checkbox" id="wage-employed" name="wageEmployed" value="WageEmployed">
                   <label for="wageEmployed">Wage Employed</label>
@@ -325,7 +315,7 @@
                   <label for="self-employed">Self-Employed (Please Specify)</label>
                 </div>
               </div>
-              <div class="self-employed-checkboxes">
+              <div class="self-employed-checkboxes " style="display: none;">
                 <div class="checkbox-flex">
                   <input type="checkbox" id="fisherman" name="selfEmployedType[]" value="Fisherman/Fisherfolk">
                   <label for="fisherman">Fisherman/Fisherfolk</label>
@@ -359,7 +349,7 @@
                   <input type="text" name="selfEmployedOther" placeholder="Please specify" style="margin-left: 5px;">
                 </div>
               </div>
-              <div class="unemployed-checkboxes">
+              <div class="unemployed-checkboxes " style="display: none;">
                 <div style="display:flex; width:50%; margin:1rem 0;">
                   <label for="jobSearchDuration">How long have you been looking for work? (months)</label>
                   <input type="number" id="jobSearchDuration" name="jobSearchDuration" min="0">
@@ -416,7 +406,7 @@
                     <label for="ofw-no">No</label>
                   </div>
                 </div>
-                <div style="display:flex" id="ofw-country-group">
+                <div style="display:none" id="ofw-country-group">
                   <label for="ofwCountry">Specify country</label>
                   <input type="text" id="ofwCountry" name="ofwCountry">
                 </div>
@@ -433,186 +423,464 @@
                     <label for="former-ofw-no">No</label>
                   </div>
                 </div>
-                <div class="checkbox-flex" id="former-ofw-country-group">
+                <div class="checkbox-flex" id="former-ofw-country-group" style="display:none">
                   <label for="formerOfwCountry">Latest country of deployment</label>
                   <input type="text" id="formerOfwCountry" name="formerOfwCountry">
                 </div>
-                <div class="checkbox-flex" id="return-date-group">
+                <div class="checkbox-flex" id="return-date-group" style="display:none">
                   <label for="returnDate">Month and year of return to Philippines</label>
                   <input type="month" id="returnDate" name="returnDate">
                 </div>
               </div>
             </div>
-
-
           </div>
         </div>
-        <!-- Job Preference -->
-        <div class="section">
+
+        <!-- Section II: Job Preference -->
+        <div class="section ">
           <h2 class="section-title">II. JOB PREFERENCE</h2>
           <div class="form-grid">
-            <div class="form-group" style="grid-column: span 3; display: flex; flex-direction: column;padding-left: 20px; ">
-              <h3>PREFERRED OCCUPATION</h3>
-              <div style="display: flex; gap: 20px; margin-bottom: 10px;  ">
-                <di ">
-                      <input type=" checkbox" id="partTime" name="jobType[]" value="Part-Time">
-                  <label for="partTime">Part-time</label>
-              </div>
-              <div style="display: flex; justify-content: center; align-items: center;">
-                <input type="checkbox" id="fullTime" name="jobType[]" value="Full-Time">
-                <label for="fullTime">Full-time</label>
-              </div>
-            </div>
-            <ol style="width: 50%; padding-left: 20px; margin: 0;">
-              <li display="width:50% !important">
-                <input type="text">
-              </li>
-              <li display="width:50% !important">
-                <input type="text">
-              </li>
-              <li display="width:50% !important">
-                <input type="text">
-              </li>
-            </ol>
-          </div>
-        </div>
-        <!-- Education Section -->
-        <div class="section">
-          <h2 class="section-title">Highest Educational Attainment </h2>
-          <div id="educationEntries">
-            <div class="form-grid education-entry">
-              <div class="form-group">
-                <label class="required">Education Level</label>
-                <select name="educationLevel" required>
-                  <option value="">Select</option>
-                  <option value="Elementary">Elementary</option>
-                  <option value="High School">High School</option>
-                  <option value="Vocational">Vocational</option>
-                  <option value="College">College</option>
-                  <option value="Postgraduate">Postgraduate</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="required">School Name</label>
-                <input type="text" name="schoolName" required />
-              </div>
-              <div class="form-group">
-                <label>Course/Degree</label>
-                <input type="text" name="courseDegree" />
-              </div>
-              <div class="form-group">
-                <label>Year Graduated</label>
-                <input type="number" min="1900" max="2099" name="yearGraduated" />
-              </div>
-            </div>
-          </div>
-          <!-- <button type="button" class="add-btn" id="addEducation">
-                  + Add Education
-                </button> -->
-        </div>
-        <!-- Work Experience Section -->
-        <div class="section">
-          <h2 class="section-title">Work Experience</h2>
-          <div id="experienceEntries">
-            <div class="form-grid experience-entry">
-              <div class="form-group">
-                <label>Company Name</label>
-                <input type="text" name="companyName" />
-              </div>
-              <div class="form-group">
-                <label>Position</label>
-                <input type="text" name="position" />
-              </div>
-              <div class="form-group">
-                <label>Industry</label>
-                <select name="industry">
-                  <option value="">Select</option>
-                  <option value="Agriculture">Agriculture</option>
-                  <option value="Construction">Construction</option>
-                  <option value="Manufacturing">Manufacturing</option>
-                  <option value="Retail">Retail</option>
-                  <option value="IT/BPO">IT/BPO</option>
-                </select>
-              </div>
-              <div class="form-group" style="grid-column: span 2">
-                <label>Employment Period</label>
-                <div style="display: flex; gap: 10px">
-                  <input
-                    type="date"
-                    placeholder="From"
-                    style="flex: 1" name="employmentStart" />
-                  <input type="date" placeholder="To" style="flex: 1" name="employmentEnd" />
+            <div class="form-group employment-status">
+              <label class="required">EMPLOYMENT TYPE</label>
+              <div class="employment-checkboxes">
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="pref-parttime" name="prefEmploymentType" value="parttime">
+                  <label for="pref-parttime">Part-time</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="pref-fulltime" name="prefEmploymentType" value="fulltime">
+                  <label for="pref-fulltime">Full-time</label>
                 </div>
               </div>
-              <div class="form-group" style="grid-column: span 3">
-                <label>Key Responsibilities</label>
-                <textarea rows="4" name="keyResponsibilities"></textarea>
+              <div class="error" id="prefEmploymentType-error">Please select at least one employment type</div>
+            </div>
+            <div class="form-group">
+              <label class="required">PREFERRED OCCUPATION</label>
+              <div class="form-group">
+                <input type="text" id="prefOccupation1" name="prefOccupation1" placeholder="1.">
+                <div class="error" id="prefOccupation1-error">Please enter your preferred occupation</div>
+              </div>
+              <div class="form-group">
+                <input type="text" id="prefOccupation2" name="prefOccupation2" placeholder="2.">
+              </div>
+              <div class="form-group">
+                <input type="text" id="prefOccupation3" name="prefOccupation3" placeholder="3.">
               </div>
             </div>
+            <div class="form-group">
+              <label class="required">PREFERRED WORK LOCATION</label>
+              <div class="form-group">
+                <input type="text" id="prefLocal1" name="prefLocal1" placeholder="Local (specify cities/municipalities): 1.">
+              </div>
+              <div class="form-group">
+                <input type="text" id="prefLocal2" name="prefLocal2" placeholder="2.">
+              </div>
+              <div class="form-group">
+                <input type="text" id="prefLocal3" name="prefLocal3" placeholder="3.">
+              </div>
+              <div class="form-group">
+                <input type="text" id="prefOverseas1" name="prefOverseas1" placeholder="Overseas (specify countries): 1.">
+              </div>
+              <div class="form-group">
+                <input type="text" id="prefOverseas2" name="prefOverseas2" placeholder="2.">
+              </div>
+              <div class="form-group">
+                <input type="text" id="prefOverseas3" name="prefOverseas3" placeholder="3.">
+              </div>
+            </div>
+
           </div>
-          <!-- <button type="button" class="add-btn" id="addExperience">
-                  + Add Work Experience
-                </button> -->
         </div>
-        <!-- Skills Section -->
-        <div class="section">
-          <h2 class="section-title">Skills & Qualifications</h2>
+
+        <!-- Section III: Language/Dialect Proficiency -->
+        <div class="section ">
+          <h2 class=" section-title">III. LANGUAGE / DIALECT PROFICIENCY</h2>
+          <div class="form-grid">
+            <div class="form-group language-dialect-container">
+              <table class="language-table">
+                <thead>
+                  <tr>
+                    <th>LANGUAGE/DIALECT</th>
+                    <th>READ</th>
+                    <th>WRITE</th>
+                    <th>SPEAK</th>
+                    <th>UNDERSTAND</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>English</td>
+                    <td><input type="checkbox" name="englishRead"></td>
+                    <td><input type="checkbox" name="englishWrite"></td>
+                    <td><input type="checkbox" name="englishSpeak"></td>
+                    <td><input type="checkbox" name="englishUnderstand"></td>
+                  </tr>
+                  <tr>
+                    <td>Filipino</td>
+                    <td><input type="checkbox" name="filipinoRead"></td>
+                    <td><input type="checkbox" name="filipinoWrite"></td>
+                    <td><input type="checkbox" name="filipinoSpeak"></td>
+                    <td><input type="checkbox" name="filipinoUnderstand"></td>
+                  </tr>
+                  <tr>
+                    <td>Mandarin</td>
+                    <td><input type="checkbox" name="mandarinRead"></td>
+                    <td><input type="checkbox" name="mandarinWrite"></td>
+                    <td><input type="checkbox" name="mandarinSpeak"></td>
+                    <td><input type="checkbox" name="mandarinUnderstand"></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" placeholder="Others:" name="otherLanguage">
+                    </td>
+                    <td><input type="checkbox" name="otherRead"></td>
+                    <td><input type="checkbox" name="otherWrite"></td>
+                    <td><input type="checkbox" name="otherSpeak"></td>
+                    <td><input type="checkbox" name="otherUnderstand"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section IV: Educational Background -->
+        <div class="section ">
+          <h2 class=" section-title">IV. EDUCATIONAL BACKGROUND</h2>
           <div class="form-grid">
             <div class="form-group">
-              <label class="required">Primary Skills</label>
-              <input id="primarySkills" multiple style="height: auto" name="primarySkills" placeholder="Add skills separated by commas">
-              <!-- <option>Computer Literacy</option>
-                      <option>Customer Service</option>
-                      <option>Microsoft Office</option>
-                      <option>Accounting</option>
-                      <option>Graphic Design</option> -->
-              </input>
-              <div class="skills-container" id="selectedSkills">
-                <!-- Selected skills will appear here -->
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Technical Skills</label>
-              <input
-                type="text"
-                id="techSkills" name="technicalSkills"
-                placeholder="Add skills separated by commas" />
-            </div>
-            <div class="form-group">
-              <label>Language Proficiency</label>
-              <div class="language-entry">
-                <div
-                  style="display: flex; gap: 10px; margin-bottom: 10px">
-                  <select style="flex: 1" name="language" id="language">
-                    <option>English</option>
-                    <option>Filipino</option>
-                    <option>Other</option>
-                  </select>
-                  <select style="flex: 1" name="proficiencyLevel" id="proficiencyLevel">
-                    <option>Basic</option>
-                    <option>Intermediate</option>
-                    <option>Advanced</option>
-                    <option>Fluent</option>
-                  </select>
+              <label class="required">Currently in school?</label>
+              <div class="checkbox-group">
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="inSchool-yes" name="inSchool" value="yes" required>
+                  <label for="inSchool-yes">Yes</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="inSchool-no" name="inSchool" value="no">
+                  <label for="inSchool-no">No</label>
                 </div>
               </div>
-              <!-- <button
-                      type="button"
-                      class="add-btn"
-                      style="margin-top: 10px">
-                      + Add Language
-                    </button> -->
+            </div>
+            <div class="form-group" style="grid-column:span 4;">
+              <table class="education-table">
+                <thead>
+                  <tr>
+                    <th>LEVEL</th>
+                    <th>COURSE</th>
+                    <th>YEAR GRADUATED</th>
+                    <th colspan="2">IF UNDERGRADUATE</th>
+                  </tr>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>LEVEL REACHED</th>
+                    <th>YEAR LAST ATTENDED</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Elementary</td>
+                    <td><input type="text" name="elementaryCourse"></td>
+                    <td><input type="text" name="elementaryYear"></td>
+                    <td><input type="text" name="elementaryLevel"></td>
+                    <td><input type="text" name="elementaryLastYear"></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <select name="secondaryType">
+                        <option value="non-k12">Secondary (Non-K12)</option>
+                        <option value="k12">Secondary (K-12)</option>
+                      </select>
+                    </td>
+                    <td><input type="text" name="secondaryCourse"></td>
+                    <td><input type="text" name="secondaryYear"></td>
+                    <td><input type="text" name="secondaryLevel"></td>
+                    <td><input type="text" name="secondaryLastYear"></td>
+                  </tr>
+                  <tr id="seniorHighStrandRow" style="display: none;">
+                    <td colspan="5">
+                      <label for="seniorHighStrand">Senior High Strand:</label>
+                      <input type="text" id="seniorHighStrand" name="seniorHighStrand">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Tertiary</td>
+                    <td><input type="text" name="tertiaryCourse"></td>
+                    <td><input type="text" name="tertiaryYear"></td>
+                    <td><input type="text" name="tertiaryLevel"></td>
+                    <td><input type="text" name="tertiaryLastYear"></td>
+                  </tr>
+                  <tr>
+                    <td>Graduate Studies / Post-graduate</td>
+                    <td><input type="text" name="gradStudiesCourse"></td>
+                    <td><input type="text" name="gradStudiesYear"></td>
+                    <td><input type="text" name="gradStudiesLevel"></td>
+                    <td><input type="text" name="gradStudiesLastYear"></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-        <!-- Documents Section -->
-        <div class="section">
-          <h2 class="section-title">Documents</h2>
+
+        <!-- Section V: Technical/Vocational Training -->
+        <div class="section ">
+          <h2 class="section-title">V. TECHNICAL/VOCATIONAL AND OTHER TRAINING</h2>
+          <p style="margin-bottom: 15px; font-style: italic;">
+            (include courses taken as part of college education)
+          </p>
+          <div class="form-grid">
+            <div class="form-group">
+              <table>
+                <thead>
+                  <tr>
+                    <th>TRAINING/VOCATIONAL COURSE</th>
+                    <th>HOURS OF TRAINING</th>
+                    <th>TRAINING INSTITUTION</th>
+                    <th>SKILLS ACQUIRED</th>
+                    <th>CERTIFICATES RECEIVED (NC I, NC II, NC III, NC IV, etc.)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" name="trainingCourse1"></td>
+                    <td><input type="number" name="trainingHours1"></td>
+                    <td><input type="text" name="trainingInstitution1"></td>
+                    <td><input type="text" name="trainingSkills1"></td>
+                    <td><input type="text" name="trainingCertificates1"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" name="trainingCourse2"></td>
+                    <td><input type="number" name="trainingHours2"></td>
+                    <td><input type="text" name="trainingInstitution2"></td>
+                    <td><input type="text" name="trainingSkills2"></td>
+                    <td><input type="text" name="trainingCertificates2"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" name="trainingCourse3"></td>
+                    <td><input type="number" name="trainingHours3"></td>
+                    <td><input type="text" name="trainingInstitution3"></td>
+                    <td><input type="text" name="trainingSkills3"></td>
+                    <td><input type="text" name="trainingCertificates3"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section VI: Eligibility/Professional License -->
+        <div class="section ">
+          <h2 class="section-title">VI. ELIGIBILITY/ PROFESSIONAL LICENSE</h2>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ELIGIBILITY (Civil Service)</th>
+                    <th>DATE TAKEN</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" name="eligibility1"></td>
+                    <td><input type="date" name="eligibilityDate1"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" name="eligibility2"></td>
+                    <td><input type="date" name="eligibilityDate2"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="form-group">
+              <table>
+                <thead>
+                  <tr>
+                    <th>PROFESSIONAL LICENSE (PRC)</th>
+                    <th>VALID UNTIL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" name="license1"></td>
+                    <td><input type="date" name="licenseValid1"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" name="license2"></td>
+                    <td><input type="date" name="licenseValid2"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section VII: Work Experience -->
+        <div class="section ">
+          <h2 class="section-title">VII. WORK EXPERIENCE</h2>
+          <p style="margin-bottom: 15px; font-style: italic;">
+            (Limit to 10 year period, start with the most recent employment)
+          </p>
+          <div class="form-grid">
+            <div class="form-group">
+              <table>
+                <thead>
+                  <tr>
+                    <th>COMPANY NAME</th>
+                    <th>ADDRESS (City/Municipality)</th>
+                    <th>POSITION</th>
+                    <th>NUMBER OF MONTHS</th>
+                    <th>STATUS (Permanent, Contractual, Part-time, Probationary)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" name="company1"></td>
+                    <td><input type="text" name="companyAddress1"></td>
+                    <td><input type="text" name="position1"></td>
+                    <td><input type="number" name="months1"></td>
+                    <td>
+                      <select name="status1">
+                        <option value="">Select Status</option>
+                        <option value="permanent">Permanent</option>
+                        <option value="contractual">Contractual</option>
+                        <option value="part-time">Part-time</option>
+                        <option value="probationary">Probationary</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" name="company2"></td>
+                    <td><input type="text" name="companyAddress2"></td>
+                    <td><input type="text" name="position2"></td>
+                    <td><input type="number" name="months2"></td>
+                    <td>
+                      <select name="status2">
+                        <option value="">Select Status</option>
+                        <option value="permanent">Permanent</option>
+                        <option value="contractual">Contractual</option>
+                        <option value="part-time">Part-time</option>
+                        <option value="probationary">Probationary</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" name="company3"></td>
+                    <td><input type="text" name="companyAddress3"></td>
+                    <td><input type="text" name="position3"></td>
+                    <td><input type="number" name="months3"></td>
+                    <td>
+                      <select name="status3">
+                        <option value="">Select Status</option>
+                        <option value="permanent">Permanent</option>
+                        <option value="contractual">Contractual</option>
+                        <option value="part-time">Part-time</option>
+                        <option value="probationary">Probationary</option>
+                      </select>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section VIII: Other Skills -->
+        <div class="section ">
+          <h2 class="section-title">VIII. OTHER SKILLS ACQUIRED WITHOUT CERTIFICATE</h2>
+          <div class="form-grid">
+            <div class="form-group">
+              <div class="checkbox-group" style="display:grid;grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-auto" name="skills" value="auto">
+                  <label for="skill-auto">AUTO MECHANIC</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-beautician" name="skills" value="beautician">
+                  <label for="skill-beautician">BEAUTICIAN</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-carpentry" name="skills" value="carpentry">
+                  <label for="skill-carpentry">CARPENTRY WORK</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-computer" name="skills" value="computer">
+                  <label for="skill-computer">COMPUTER LITERATE</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-domestic" name="skills" value="domestic">
+                  <label for="skill-domestic">DOMESTIC CHORES</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-driver" name="skills" value="driver">
+                  <label for="skill-driver">DRIVER</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-electrician" name="skills" value="electrician">
+                  <label for="skill-electrician">ELECTRICIAN</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-embroidery" name="skills" value="embroidery">
+                  <label for="skill-embroidery">EMBROIDERY</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-gardening" name="skills" value="gardening">
+                  <label for="skill-gardening">GARDENING</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-masonry" name="skills" value="masonry">
+                  <label for="skill-masonry">MASONRY</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-painter" name="skills" value="painter">
+                  <label for="skill-painter">PAINTER/ARTIST</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-painting" name="skills" value="painting">
+                  <label for="skill-painting">PAINTING JOBS</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-photography" name="skills" value="photography">
+                  <label for="skill-photography">PHOTOGRAPHY</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-plumbing" name="skills" value="plumbing">
+                  <label for="skill-plumbing">PLUMBING</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-sewing" name="skills" value="sewing">
+                  <label for="skill-sewing">SEWING DRESSES</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-stenography" name="skills" value="stenography">
+                  <label for="skill-stenography">STENOGRAPHY</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-tailoring" name="skills" value="tailoring">
+                  <label for="skill-tailoring">TAILORING</label>
+                </div>
+                <div class="checkbox-flex">
+                  <input type="checkbox" id="skill-others" name="skills" value="others">
+                  <label for="skill-others">OTHERS</label>
+                </div>
+              </div>
+              <input type="text" id="skill-other-specify" name="skillOtherSpecify" placeholder="Please specify other skills" style="margin-top: 10px; display: none;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section IX. Documents Section -->
+        <div class="section ">
+          <h2 class="section-title">IX. Documents</h2>
           <div class="form-grid">
             <div class="form-group">
               <label class="required">Resume/CV</label>
               <label class="file-upload" id="resumeUpload" for="resumeFile">
-                <p>Drag & drop your file here or click to browse</p>
+                <p>Upload your Resume in a PDF format. Below 10mb.</p>
                 <input type="file" class="file-input" id="resumeFile" name="resumeFile" />
               </label>
               <div class="file-preview" id="resumePreview"></div>
@@ -639,6 +907,52 @@
             </div>
           </div>
         </div>
+
+        <!-- Section X. Links Section -->
+        <div class="section ">
+          <h2 class="section-title">X. Links</h2>
+          <div class="form-grid">
+
+            <!-- Portfolio Website -->
+            <div class="form-group">
+              <label>Portfolio Website</label>
+              <input
+                type="url"
+                class="form-input"
+                id="portfolioLink"
+                name="portfolioLink"
+                placeholder="https://yourportfolio.com" />
+              <small class="input-note">Optional — link to your personal website, online portfolio, or projects.</small>
+            </div>
+
+            <!-- Google Drive Link -->
+            <div class="form-group">
+              <label>Google Drive Link</label>
+              <input
+                type="url"
+                class="form-input"
+                id="gdriveLink"
+                name="gdriveLink"
+                placeholder="https://drive.google.com/..."
+                pattern="https:\/\/drive\.google\.com\/.*" />
+              <small class="input-note">Use only shareable view links. Example: https://drive.google.com/file/d/.../view</small>
+            </div>
+
+            <!-- Other Relevant Links -->
+            <div class="form-group">
+              <label>Other Relevant Links</label>
+              <input
+                type="url"
+                class="form-input"
+                id="otherLinks"
+                name="otherLinks"
+                placeholder="https://example.com" />
+              <small class="input-note">Optional — links to LinkedIn, GitHub, Behance, or any other professional platform.</small>
+            </div>
+
+          </div>
+        </div>
+
         <div class="form-actions">
           <button type="reset" class="btn btn-danger">Reset</button>
           <button type="submit" class="btn btn-outline" id="updateBtn">
@@ -651,7 +965,112 @@
       </form>
     </div>
   </main>
+  <script>
+    const editBtn = document.getElementById('editBtn');
+    const inputs = document.querySelectorAll('#profileForm input');
+    const select = document.querySelectorAll('#profileForm select');
+    const textAreas = document.querySelectorAll('#profileForm textarea');
+    const profilePicInput = document.getElementById('profilePicInput');
 
+    window.addEventListener('DOMContentLoaded', () => {
+      inputs.forEach(input => input.disabled = true);
+      select.forEach(select => select.disabled = true);
+      textAreas.forEach(textArea => textArea.disabled = true);
+      editBtn.disabled = false;
+      profilePicInput.disabled = true;
+      const employed = document.getElementById("employed");
+      const unemployed = document.getElementById("unemployed");
+      const wageEmployed = document.getElementById("wage-employed");
+      const selfEmployed = document.getElementById("self-employed");
+      const employedBoxes = document.querySelector(".employed-checkboxes:nth-of-type(2)");
+      const selfEmployedBoxes = document.querySelector(".self-employed-checkboxes");
+      const unemployedBoxes = document.querySelector(".unemployed-checkboxes");
+      employed.addEventListener("change", () => {
+        employedBoxes.style.display = employed.checked ? "grid" : "none";
+        unemployed.checked = false;
+        unemployedBoxes.style.display = 'none';
+        document.querySelectorAll(".unemployed-checkboxes .checkbox-flex input").forEach(checkbox => checkbox.checked = false);
+        if (!employed.checked) {
+          selfEmployed.checked = false;
+          selfEmployedBoxes.style.display = "none";
+        }
+      });
+      selfEmployed.addEventListener("change", () => {
+        selfEmployedBoxes.style.display = selfEmployed.checked ? "grid" : "none";
+      });
+      unemployed.addEventListener("change", () => {
+        employed.checked = false;
+        wageEmployed.checked = false;
+        selfEmployed.checked = false;
+        employedBoxes.style.display = 'none';
+        selfEmployedBoxes.style.display = 'none';
+        document.querySelectorAll(".self-employed-checkboxes .checkbox-flex input").forEach(checkbox => checkbox.checked = false);
+        unemployedBoxes.style.display = unemployed.checked ? "flex" : "none";
+      });
+      const ofwYes = document.getElementById("ofw-yes");
+      const ofwNo = document.getElementById("ofw-no");
+      const ofwCountryGroup = document.getElementById("ofw-country-group");
+      const ofwCountryInput = document.getElementById("ofwCountry");
+      ofwYes.addEventListener("change", () => {
+        if (ofwYes.checked) {
+          ofwCountryGroup.style.display = "flex";
+          ofwNo.checked = false;
+        } else {
+          ofwCountryGroup.style.display = "none";
+          ofwCountryInput.value = "";
+        }
+      });
+      ofwNo.addEventListener("change", () => {
+        if (ofwNo.checked) {
+          ofwCountryGroup.style.display = "none";
+          ofwCountryInput.value = "";
+          ofwYes.checked = false;
+        }
+      });
+      const formerOfwYes = document.getElementById("former-ofw-yes");
+      const formerOfwNo = document.getElementById("former-ofw-no");
+      const formerOfwCountryGroup = document.getElementById("former-ofw-country-group");
+      const returnDateGroup = document.getElementById("return-date-group");
+      const formerOfwCountryInput = document.getElementById("formerOfwCountry");
+      const returnDateInput = document.getElementById("returnDate");
+      formerOfwYes.addEventListener("change", () => {
+        if (formerOfwYes.checked) {
+          formerOfwCountryGroup.style.display = "flex";
+          returnDateGroup.style.display = "flex";
+          formerOfwNo.checked = false;
+        } else {
+          formerOfwCountryGroup.style.display = "none";
+          returnDateGroup.style.display = "none";
+          formerOfwCountryInput.value = "";
+          returnDateInput.value = "";
+        }
+      });
+      formerOfwNo.addEventListener("change", () => {
+        if (formerOfwNo.checked) {
+          formerOfwCountryGroup.style.display = "none";
+          returnDateGroup.style.display = "none";
+          formerOfwCountryInput.value = "";
+          returnDateInput.value = "";
+          formerOfwYes.checked = false;
+        }
+      });
+    });
+    editBtn.addEventListener('click', () => {
+      if (editBtn.textContent === 'Edit') {
+        inputs.forEach(input => input.disabled = false);
+        select.forEach(select => select.disabled = false);
+        textAreas.forEach(textArea => textArea.disabled = false);
+        profilePicInput.disabled = false;
+        editBtn.textContent = 'Cancel';
+      } else {
+        inputs.forEach(input => input.disabled = true);
+        select.forEach(select => select.disabled = true);
+        textAreas.forEach(textArea => textArea.disabled = true);
+        profilePicInput.disabled = true;
+        editBtn.textContent = 'Edit';
+      }
+    });
+  </script>
   <script>
     document.getElementById('profilePicInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -817,42 +1236,6 @@
   </script>
   <script src="../js/responsive.js"></script>
   <script>
-    const editBtn = document.getElementById('editBtn');
-    const saveBtn = document.getElementById('saveBtn');
-    const inputs = document.querySelectorAll('#profileForm input');
-    const select = document.querySelectorAll('#profileForm select');
-    const textAreas = document.querySelectorAll('#profileForm textarea'); // Correctly define textAreas
-    const profilePicInput = document.getElementById('profilePicInput');
-
-    window.addEventListener('DOMContentLoaded', () => {
-      inputs.forEach(input => input.disabled = true);
-      select.forEach(select => select.disabled = true);
-      textAreas.forEach(textArea => textArea.disabled = true); // Use textAreas here
-      saveBtn.disabled = true;
-      editBtn.disabled = false;
-      profilePicInput.disabled = true; // Disable the file input
-    });
-
-    editBtn.addEventListener('click', () => {
-      inputs.forEach(input => input.disabled = false);
-      select.forEach(select => select.disabled = false);
-      textAreas.forEach(textArea => textArea.disabled = false); // Use textAreas here
-      saveBtn.disabled = false;
-      editBtn.disabled = true;
-      profilePicInput.disabled = false; // Enable the file input
-    });
-
-    saveBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      inputs.forEach(input => input.disabled = true);
-      select.forEach(select => select.disabled = true);
-      textAreas.forEach(textArea => textArea.disabled = true); // Use textAreas here
-      saveBtn.disabled = true;
-      editBtn.disabled = false;
-      profilePicInput.disabled = true; // Disable the file input
-    });
-  </script>
-  <script>
     const regionSel = document.getElementById('region');
     const provinceSel = document.getElementById('province');
     const citySel = document.getElementById('city');
@@ -1005,6 +1388,7 @@
       handleAction(updateBtn, "update your profile", "Yes, Update it!");
     });
   </script>
+
 </body>
 
 </html>
