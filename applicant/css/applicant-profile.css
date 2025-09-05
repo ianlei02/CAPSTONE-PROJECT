@@ -70,6 +70,44 @@ main .profile-pic-container {
 .profile-content {
   padding: 30px;
 }
+.section {
+  position: relative;
+
+  .btn.btn-outline {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    background-color: white;
+    font-size: 700;
+
+    &:hover {
+      background-color: transparent;
+      border: 1px solid white;
+      color: white;
+    }
+  }
+  &.form-instructions {
+    background: #ffeba9;
+    /* border-left: 5px solid #0077cc; */
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+    text-align: justify;
+  }
+  .form-instructions strong {
+    color: #005fa3;
+  }
+  .required-mark {
+    color: red;
+    font-weight: bold;
+    font-size: 16px;
+  }
+}
 .section-title {
   color: var(--primary-blue-color);
   margin: 1.5rem 0;
@@ -90,8 +128,16 @@ label {
   margin-bottom: 8px;
   font-weight: 500;
 }
+.required {
+  position: relative;
+  /* padding: 0 10px 0 0; */
+}
 .required:after {
   content: " *";
+  font-size: 20px;
+  position: absolute;
+  top: -4px;
+  /* font-weight: bold; */
   color: var(--primary-red-color);
 }
 input,
@@ -244,22 +290,20 @@ textarea {
     margin-top: 16px;
   }
   input[type="checkbox"] {
-    /* margin-right: 8px; */
-    /* transform: scale(1.2); */
     width: 16px !important;
     height: 16px !important;
     cursor: pointer;
-    background: red;
   }
 }
 .checkbox-flex input[type="checkbox"] {
-    width: 20px;
-    margin-right: 8px;
-  }
-  .checkbox-flex label {
-    display: inline-block;
-    margin-top: 8px;
-  }
+  width: 20px;
+  margin-right: 8px;
+  accent-color: red !important;
+}
+.checkbox-flex label {
+  display: inline-block;
+  margin-top: 8px;
+}
 .employment-status {
   display: flex;
   flex-direction: column;
@@ -271,7 +315,6 @@ textarea {
     height: 100%;
     align-items: center;
     justify-content: flex-start;
-    border: 1px solid red;
   }
   .employment-checkboxes,
   .employed-checkboxes {
@@ -280,7 +323,7 @@ textarea {
     grid-template-columns: repeat(2, 200px);
     gap: 10px;
   }
-  .employed-checkboxes{
+  .employed-checkboxes {
     margin-left: 20px;
   }
   .self-employed-checkboxes {
@@ -291,7 +334,7 @@ textarea {
     grid-template-columns: repeat(3, 1fr);
     max-width: 700px;
   }
-  .checkbox-unemployed-reasons{
+  .checkbox-unemployed-reasons {
     margin-left: 40px;
     display: grid;
     place-items: start;
@@ -299,22 +342,61 @@ textarea {
     grid-template-columns: repeat(3, 1fr);
     max-width: 700px;
   }
-  .unemployed-checkboxes{
+  .unemployed-checkboxes {
     display: flex;
     flex-direction: column;
   }
 }
-.ofw-status{
+.ofw-status {
   grid-column: span 2;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   gap: 20px;
 
-  .checkbox-ofw{
+  .checkbox-ofw {
     display: flex;
     align-items: center;
-    /* justify-content: center; */
     gap: 10px;
-    border: 1px solid red;  
+  }
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+
+  th,
+  td {
+    border: 1px solid var(--border);
+    padding: 10px;
+    text-align: left;
+    text-overflow: ellipsis;
+    /* white-space:nowrap; */
+  }
+
+  th {
+    background-color: #f1f5f9;
+    font-weight: 600;
+  }
+}
+.hide {
+  display: none !important;
+}
+.appear {
+  display: block !important;
+}
+/* respponsive */
+@media (max-width: 768px) {
+  .employment-status .employment-checkboxes,
+  .employment-status .employed-checkboxes,
+  .employment-status .self-employed-checkboxes,
+  .employment-status .checkbox-unemployed-reasons {
+    grid-template-columns: repeat(1, 1fr);
+    margin-left: 0px;
+  }
+
+  .form-group:has(table) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
   }
 }

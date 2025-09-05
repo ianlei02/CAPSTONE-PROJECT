@@ -73,7 +73,7 @@ $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
       <div class="left-pos" style="display: flex; width: auto; height: auto">
         <button class="hamburger">☰</button>
         <div class="logo">
-          <img src="../assets/images/logo without glass.png" alt="" />
+          <img src="../assets/images/peso-logo.png" alt="" />
         </div>
       </div>
       <div class="right-pos">
@@ -85,8 +85,6 @@ $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
       </div>
     </div>
   </nav>
-
-  <div class="container">
     <aside class="sidebar">
       <ul class="sidebar-menu">
         <li>
@@ -131,11 +129,7 @@ $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
     <main class="main-content">
       <form action="../Functions/profile_update.php" method="POST" enctype="multipart/form-data" class="profile-container" id="myForm">
         <div class="profile-header">
-          <h1 id="companyName">ABC Manufacturing Inc.</h1>
-          <p id="companyIndustry">
-            Industrial Machinery Manufacturing | Established 2005
-          </p>
-
+          <input type="text" id="companyName" placeholder="Put Your Company Name Here">
           <div class="profile-actions">
             <button class="btn btn-outline" id="editProfileBtn">
               Edit Profile
@@ -307,7 +301,7 @@ $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
         </div>
       </form>
     </main>
-  </div>
+  
   <div id="viewModal" class="modal" style="display:none;">
   <div class="modal-content">
     <span id="closeModal">&times;</span>
