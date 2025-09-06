@@ -129,7 +129,7 @@ $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
     <main class="main-content">
       <form action="../Functions/profile_update.php" method="POST" enctype="multipart/form-data" class="profile-container" id="myForm">
         <div class="profile-header">
-          <input type="text" id="companyName" placeholder="Put Your Company Name Here">
+          <input type="text" id="companyName" name="companyName" placeholder="Put Your Company Name Here">
           <div class="profile-actions">
             <button class="btn btn-outline" id="editProfileBtn">
               Edit Profile
@@ -317,6 +317,7 @@ $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
       if (accountData) {
         document.getElementById('companyType').value = accountData.company_type || '';
         document.getElementById('industry').value = accountData.industry || '';
+        document.getElementById('companyName').value = accountData.company_name || '';
         document.getElementById('companySize').value = accountData.company_size || '';
         document.getElementById('companyAddress').value = accountData.address || '';
         document.getElementById('contactNumber').value = accountData.contact_number || '';

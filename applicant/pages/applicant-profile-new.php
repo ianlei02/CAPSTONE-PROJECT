@@ -1,4 +1,155 @@
 <?php
+require_once '../../landing/functions/check_login.php';
+
+if (!isset($_SESSION['user_id'])) {
+  header("Location: ../login-signup.php");
+  exit();
+}
+$userId = $_SESSION['user_id'];
+$mainSql = "
+    SELECT 
+        a.*, 
+        p.*, 
+        c.*, 
+        e.*, 
+        s.* 
+    FROM applicant_account a
+    LEFT JOIN applicant_profile p ON a.applicant_id = p.applicant_id
+    LEFT JOIN applicant_contact_info c ON a.applicant_id = c.applicant_id
+    LEFT JOIN applicant_educ e ON a.applicant_id = e.applicant_id
+    LEFT JOIN applicant_skills s ON a.applicant_id = s.applicant_id
+    WHERE a.applicant_id = ?
+";
+$mainStmt = $conn->prepare($mainSql);
+$mainStmt->bind_param("i", $userId);
+$mainStmt->execute();
+$mainResult = $mainStmt->get_result();
+$mainData = $mainResult->fetch_assoc();
+
+$accountData   = $mainData ? array_intersect_key($mainData, array_flip(array_keys($mainData))) : [];
+$profileData   = $mainData ? $mainData : [];
+$contactData   = $mainData ? $mainData : [];
+$educationData = $mainData ? $mainData : [];
+$skillsData    = $mainData ? $mainData : [];
+
+$workStmt = $conn->prepare("SELECT * FROM applicant_work_exp WHERE applicant_id = ?");
+$workStmt->bind_param("i", $userId);
+$workStmt->execute();
+$workResult = $workStmt->get_result();
+$workData = $workResult->fetch_all(MYSQLI_ASSOC);
+
+$docsStmt = $conn->prepare("SELECT * FROM applicant_documents WHERE applicant_id = ?");
+$docsStmt->bind_param("i", $userId);
+$docsStmt->execute();
+$docsResult = $docsStmt->get_result();
+$docsData = $docsResult->fetch_all(MYSQLI_ASSOC);
+
+$accountJson   = json_encode($accountData ?: []);
+$profileJson   = json_encode($profileData ?: []);
+$contactJson   = json_encode($contactData ?: []);
+$educationJson = json_encode($educationData ?: []);
+$skillsJson    = json_encode($skillsData ?: []);
+$workJson      = json_encode($workData ?: []);
+$docsJson      = json_encode($docsData ?: []);
+
+$profile_picture_url = '../assets/images/profile.png';
+
+if (isset($_SESSION['user_id'])) {
+  $applicant_id = $_SESSION['user_id'];
+  $query = "SELECT profile_picture FROM applicant_profile WHERE applicant_id = ?";
+  $stmt = $conn->prepare($query);
+  $stmt->bind_param("i", $applicant_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    if (!empty($row['profile_picture'])) {
+      $filename = basename($row['profile_picture']);
+      $absolute_path = __DIR__ . '/../uploads/profile_pictures/' . $filename;
+      $web_path = '../uploads/profile_pictures/' . $filename;
+
+      error_log("Checking: " . $absolute_path);
+
+      if (file_exists($absolute_path)) {
+        $profile_picture_url = $web_path;
+      }
+    }
+  }
+  $stmt->close();
+}
+
+$applicant_id = $userId;
+$stmt = $conn->prepare("SELECT street_address, region_id, province_id, city_id, barangay_id FROM applicant_contact_info WHERE applicant_ID = ?");
+$stmt->bind_param("i", $applicant_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$userAddress = $result->fetch_assoc();
+
+$saved_street = $userAddress['street_address'] ?? '';
+$saved_region = $userAddress['region_id'] ?? '';
+$saved_province = $userAddress['province_id'] ?? '';
+$saved_city = $userAddress['city_id'] ?? '';
+$saved_barangay = $userAddress['barangay_id'] ?? '';
+
+function fetchMultipleUrls($urls)
+{
+  $multiHandle = curl_multi_init();
+  $curlHandles = [];
+  $responses = [];
+
+  foreach ($urls as $key => $url) {
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+      CURLOPT_URL => $url,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_SSL_VERIFYPEER => false,
+      CURLOPT_TIMEOUT => 20
+    ]);
+    curl_multi_add_handle($multiHandle, $ch);
+    $curlHandles[$key] = $ch;
+  }
+
+  $running = null;
+  do {
+    curl_multi_exec($multiHandle, $running);
+    curl_multi_select($multiHandle);
+  } while ($running > 0);
+
+  foreach ($curlHandles as $key => $ch) {
+    $responses[$key] = json_decode(curl_multi_getcontent($ch), true);
+    curl_multi_remove_handle($multiHandle, $ch);
+    curl_close($ch);
+  }
+
+  curl_multi_close($multiHandle);
+  return $responses;
+}
+
+$cacheFile = __DIR__ . "/psgc_cache.json";
+$cacheTime = 86400; // 24h
+
+if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTime) {
+  $data = json_decode(file_get_contents($cacheFile), true);
+} else {
+  $urls = [
+    "regions"   => "https://psgc.cloud/api/v2/regions",
+    "provinces" => "https://psgc.cloud/api/v2/provinces",
+    "cities"    => "https://psgc.cloud/api/v2/cities-municipalities",
+    "barangays" => "https://psgc.cloud/api/v2/barangays"
+  ];
+  $data = fetchMultipleUrls($urls);
+  file_put_contents($cacheFile, json_encode($data));
+}
+$regions   = $data["regions"] ?? [];
+$provinces = $data["provinces"] ?? [];
+$cities    = $data["cities"] ?? [];
+$barangays = $data["barangays"] ?? [];
+
+function getCode($item)
+{
+  return $item['psgc_id'] ?? null;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -197,7 +348,26 @@
             </div>
             <div class="form-group" style="grid-column: span 4">
               <label class="required">Complete Address</label>
+              <input
+                  type="text"
+                  id="street"
+                  placeholder="House No/Street Address"
+                  name="streetAddress"
+                  required />
+
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+
+                <select id="region" name="region" required>
+                        <option value="">Select Region</option>
+                        <?php foreach ($regions as $reg):
+                          $code = getCode($reg); ?>
+                          <option value="<?= htmlspecialchars($code) ?>"
+                            <?= ($saved_region == $code) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($reg['name']) ?>
+                          </option>
+                        <?php endforeach; ?>
+                      </select>
+
                 <select id="province" name="province" required>
                   <option value="">Select Province</option>
                   <?php foreach ($provinces as $prov):
@@ -228,12 +398,7 @@
                     </option>
                   <?php endforeach; ?>
                 </select>
-                <input
-                  type="text"
-                  id="street"
-                  placeholder="House No/Street Address"
-                  name="streetAddress"
-                  required />
+                
               </div>
               <input type="hidden" name="region_name" id="region_name">
               <input type="hidden" name="province_name" id="province_name">
@@ -865,7 +1030,10 @@
                 </div>
                 <div class="checkbox-flex">
                   <input type="checkbox" id="skill-others" name="skills" value="others">
-                  <label for="skill-others">OTHERS</label>
+                  <label for="skill-others">OTHERS</label> 
+                </div>
+                <div class="checkbox-flex">
+                  <input type="text" id="skill-others-text" name="skill" placeorder="Type here:">
                 </div>
               </div>
               <input type="text" id="skill-other-specify" name="skillOtherSpecify" placeholder="Please specify other skills" style="margin-top: 10px; display: none;">

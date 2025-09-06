@@ -17,15 +17,10 @@ $employer_id = $_SESSION['user_id'];
     $id = intval($_GET['id']);
 
     if($action === 'viewApplicants') {
-        $stmt = $conn->prepare("SELECT a.*, u.name FROM job_applications a JOIN users u ON u.id = a.applicant_id WHERE a.job_id = ?");
-        $stmt->bind_param("i",$id);
-        $stmt->execute();
-        $res = $stmt->get_result();
-        echo "<ul>";
-        while($row = $res->fetch_assoc()) {
-            echo "<li>".htmlspecialchars($row['name'])."</li>";
-        }
-        echo "</ul>";
+        ?>
+        <h2>HADUKEN</h2>
+        
+        <?php
         exit;
     }
 

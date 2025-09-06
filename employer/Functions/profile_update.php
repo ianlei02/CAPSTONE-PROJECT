@@ -15,6 +15,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $employer_id = $_SESSION['user_id'];
 
+$company_name = $_POST['companyName'] ?? '';
 $company_type = $_POST['companyType'] ?? '';
 $industry = $_POST['industry'] ?? '';
 $company_size = $_POST['companySize'] ?? '';
@@ -100,12 +101,13 @@ $conn->begin_transaction();
 try {
    
     $stmt_info = $conn->prepare("INSERT INTO employer_company_info (
-        employer_id, company_type, industry, company_size, address,
-        contact_number, email, contact_person, contact_position, contact_mobile, contact_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        employer_id, company_type, company_name, industry, company_size, address,
+        contact_number, email, contact_person, contact_position, contact_mobile, contact_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-    $stmt_info->bind_param("issssssssss", 
+    $stmt_info->bind_param("isssssssssss", 
         $employer_id, 
         $company_type, 
+        $company_name,
         $industry, 
         $company_size, 
         $address,
