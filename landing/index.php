@@ -1,3 +1,20 @@
+<?php
+require 'connection/dbcon.php';
+
+$sql = "
+    SELECT
+        (SELECT COUNT(*) FROM job_postings WHERE employer_id = 0) AS employer_total_jobs,
+        (SELECT COUNT(*) FROM job_postings) AS total_jobs,
+        (SELECT COUNT(*) FROM employer_account) AS total_employers,
+        (SELECT COUNT(*) FROM applicant_account) AS total_applicants,
+        (SELECT COUNT(*) FROM job_postings WHERE status = 'active') AS total_active
+";
+
+$result = $conn->query($sql);
+$data = $result->fetch_assoc();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,15 +80,24 @@
                 </div>
                 <div class="hero-stats">
                     <div class="hero-stat">
-                        <h2>1000+</h2>
-                        <p>Hired Applicants</p>
+                        <h2><?php
+                        echo $data['total_applicants'],'+';
+                        ?>
+                        </h2>
+                        <p>Registered Applicants</p>
                     </div>
                     <div class="hero-stat">
-                        <h2>500+</h2>
+                        <h2><?php
+                        echo $data['total_employers'],'+';
+                        ?>
+                        </h2>
                         <p>Registered Employers</p>
                    </div>
                     <div class="hero-stat">
-                        <h2>200+</h2>
+                        <h2><?php
+                        echo $data['total_jobs'],'+';
+                        ?>
+                        </h2>
                         <p>Job Listings</p>
                     </div>
                 </div>
