@@ -863,9 +863,10 @@
                   <input type="checkbox" id="skill-tailoring" name="skills" value="tailoring">
                   <label for="skill-tailoring">TAILORING</label>
                 </div>
-                <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-others" name="skills" value="others">
+                <div class="checkbox-flex" style="grid-column: span 2; display: flex; gap: 5px;">
+                  <input type="checkbox" id="skill-others" name="skills" value="others" style="display:inline-block; width: auto; height:auto;">
                   <label for="skill-others">OTHERS</label>
+                  <input type="text" style="max-width: fit-content;">
                 </div>
               </div>
               <input type="text" id="skill-other-specify" name="skillOtherSpecify" placeholder="Please specify other skills" style="margin-top: 10px; display: none;">

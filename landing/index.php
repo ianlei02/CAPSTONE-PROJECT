@@ -37,8 +37,8 @@
             <li class="dropdown">
                 Job Portal <span style="rotate: 90deg; padding: 4px;">></span>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="login-signup.php?form=signup">Job Listings</a></li>
-                    <li><a class="dropdown-item" href="login-signup.php?form=signup">Post a Job</a></li>
+                    <li><a class="dropdown-item" href="./pages/find-job.php">Job Listings</a></li>
+                    <!-- <li><a class="dropdown-item" href="login-signup.php?form=signup">Post a Job</a></li> -->
                     <li><a class="dropdown-item" href="./pages/user-guide.php">User's Guide</a></li>
                 </ul>
             </li>
