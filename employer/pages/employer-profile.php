@@ -84,7 +84,6 @@ $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
       </div>
     </div>
   </nav>
-
   <aside class="sidebar">
     <ul class="sidebar-menu">
       <li>
@@ -105,6 +104,13 @@ $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
         </a>
       </li>
       <li>
+
+        <a href="./applicant-job-search.php">
+          <span class="emoji"><img src="../../public-assets/icons/search.svg" alt=""></span>
+          <span class="label">Applicant Search</span>
+        </a>
+      </li>
+      <li>
         <a href="employer-profile.php">
           <span class="emoji"><img src="../../public-assets/icons/user.svg" alt=""></span>
           <span class="label">My Profile</span>
@@ -119,16 +125,16 @@ $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
     </ul>
   </aside>
 
-    <main class="main-content">
-      <form action="../Functions/profile_update.php" method="POST" enctype="multipart/form-data" class="profile-container" id="myForm">
-        <div class="profile-header">
-          <input type="text" id="companyName" name="companyName" placeholder="Put Your Company Name Here">
-          <div class="profile-actions">
-            <button class="btn btn-outline" id="editProfileBtn">
-              Edit Profile
-            </button>
-            <button type="submit" class="btn btn-primary" id="saveProfileBtn"> Save Profile</button>
-          </div>
+  <main class="main-content">
+    <form action="../Functions/profile_update.php" method="POST" enctype="multipart/form-data" class="profile-container" id="myForm">
+      <div class="profile-header">
+        <input type="text" id="companyName" name="companyName" placeholder="Put Your Company Name Here">
+        <div class="profile-actions">
+          <button class="btn btn-outline" id="editProfileBtn">
+            Edit Profile
+          </button>
+          <button type="submit" class="btn btn-primary" id="saveProfileBtn"> Save Profile</button>
+        </div>
 
         <div class="profile-picture-container">
           <label class="company-logo-container" id="logoContainer" form="uploadLogo">

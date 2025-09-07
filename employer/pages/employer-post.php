@@ -16,13 +16,13 @@ if (isset($_GET['action'])) {
   $action = $_GET['action'];
   $id = intval($_GET['id']);
 
-    if($action === 'viewApplicants') {
-        ?>
-        <h2>HADUKEN</h2>
-        
-        <?php
-        exit;
-    }
+  if ($action === 'viewApplicants') {
+?>
+    <h2>HADUKEN</h2>
+
+  <?php
+    exit;
+  }
 
   if ($action === 'deleteJob') {
     $stmt = $conn->prepare("DELETE FROM job_postings WHERE job_id=?");
@@ -36,7 +36,7 @@ if (isset($_GET['action'])) {
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $job = $stmt->get_result()->fetch_assoc();
-?>
+  ?>
     <form id="editJobForm">
       <input type="text" name="title" value="<?= htmlspecialchars($job['job_title']) ?>" />
       <input type="text" name="category" value="<?= htmlspecialchars($job['category']) ?>" />
