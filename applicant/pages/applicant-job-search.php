@@ -40,128 +40,127 @@ $result = $conn->query($sql);
     </div>
   </nav>
 
-  <div class="container">
-    <aside class="sidebar">
-      <ul class="sidebar-menu">
-        <li>
-          <a href="./applicant-dashboard.php">
-            <span class="emoji"><img src="../../public-assets/icons/chart-histogram.svg" alt="Dashboard-icon"></span>
-            <span class="label">Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a href="./applicant-applications.php">
-            <span class="emoji"><img src="../../public-assets/icons/briefcase.svg" alt="Applications-icon"></span>
-            <span class="label">My Applications</span>
-          </a>
-        </li>
-        <li>
+  <aside class="sidebar">
+    <ul class="sidebar-menu">
+      <li>
+        <a href="./applicant-dashboard.php">
+          <span class="emoji"><img src="../../public-assets/icons/chart-histogram.svg" alt="Dashboard-icon"></span>
+          <span class="label">Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="./applicant-applications.php">
+          <span class="emoji"><img src="../../public-assets/icons/briefcase.svg" alt="Applications-icon"></span>
+          <span class="label">My Applications</span>
+        </a>
+      </li>
+      <li>
 
-          <a href="./applicant-job-search.php">
+        <a href="./applicant-job-search.php">
 
-            <span class="emoji"><img src="../../public-assets/icons/search.svg" alt="Job-Search-icon"></span>
-            <span class="label">Job Search</span>
-          </a>
-        </li>
-        <li>
+          <span class="emoji"><img src="../../public-assets/icons/search.svg" alt="Job-Search-icon"></span>
+          <span class="label">Job Search</span>
+        </a>
+      </li>
+      <li>
 
-          <a href="./applicant-profile.php">
+        <a href="./applicant-profile.php">
 
-            <span class="emoji"><img src="../../public-assets/icons/user.svg" alt="Profile-icon"></span>
-            <span class="label">My Profile</span>
-          </a>
-        </li>
-        <li>
-          <a href="../../landing/functions/logout.php">
-            <span class="emoji"><img src="../../public-assets/icons/download.svg" alt="Logout-icon" style="transform: rotate(90deg);"></span>
-            <span class="label">Log Out</span>
-          </a>
-        </li>
-      </ul>
-    </aside>
+          <span class="emoji"><img src="../../public-assets/icons/user.svg" alt="Profile-icon"></span>
+          <span class="label">My Profile</span>
+        </a>
+      </li>
+      <li>
+        <a href="../../landing/functions/logout.php">
+          <span class="emoji"><img src="../../public-assets/icons/download.svg" alt="Logout-icon" style="transform: rotate(90deg);"></span>
+          <span class="label">Log Out</span>
+        </a>
+      </li>
+    </ul>
+  </aside>
 
-    <main class="main-content">
-      <div class="container-job-search">
-        <div class="header">
-          <h1>Job Listings</h1>
-          <div>Showing 10 jobs</div>
-        </div>
-
-        <div class="search-filter">
-          <div class="search-box">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" placeholder="Search for jobs..." />
-          </div>
-          <select class="filter" id="jobFieldFilter">
-            <option value="">All Fields</option>
-            <option value="IT">IT/Software</option>
-            <option value="Engineering">Engineering</option>
-            <option value="Medicine">Medicine/Healthcare</option>
-            <option value="Business">Business/Finance</option>
-            <option value="Education">Education</option>
-            <option value="Marketing">Marketing</option>
-            <option value="Construction">Construction</option>
-            <option value="Manufacturing">Manufacturing</option>
-            <option value="Other">Other Fields</option>
-          </select>
-        </div>
-
-        <div class="job-listings">
-          <!-- IT Job -->
-          <?php if ($result->num_rows > 0): ?>
-    <?php while ($row = $result->fetch_assoc()): ?>
-      <div class="job-card" data-field="<?php echo htmlspecialchars($row['category']); ?>">
-        <div class="job-field"><?php echo htmlspecialchars($row['category']); ?></div>
-        
-        <div class="job-header">
-          <div>
-            <h3 class="job-title"><?php echo htmlspecialchars($row['job_title']); ?></h3>
-            <div class="job-company"><?php echo htmlspecialchars($row['job_title']); ?></div>
-          </div>
-          <div>
-            <span class="job-salary"><?php echo htmlspecialchars($row['salary_range']); ?><br> Salary/Month</span>
-          </div>
-        </div>
-
-        <div class="job-meta">
-          <span><i class="fas fa-briefcase"></i> <?php echo htmlspecialchars($row['job_type']); ?></span>
-          <span><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($row['location']); ?></span>
-          <span><i class="fas fa-users"></i> Vacancies: <?php echo (int)$row['vacancies']; ?></span>
-        </div>
-
-        <div class="job-description">
-          <?php echo nl2br(htmlspecialchars($row['description'])); ?>
-        </div>
-
-        <div class="job-footer">
-          <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
-          <button class="apply-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">Apply Now</button>
-        </div>
-      </div>
-    <?php endwhile; ?>
-  <?php else: ?>
-    <p>No job postings available.</p>
-  <?php endif; ?>
-
-        </div>
+  <main class="main-content">
+    <div class="container-job-search">
+      <div class="header">
+        <h1>Job Listings</h1>
+        <div>Showing 10 jobs</div>
       </div>
 
-      <!-- Application Modal -->
-      <div class="modal" id="applicationModal">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="modal-title">
-              Apply for <span id="modalJobTitle">Frontend Developer</span>
-            </h2>
-            <button class="close-btn">&times;</button>
-          </div>
-          <div class="modal-body">
-            <form class="application-form">
-              <div class="section">
-                <h3 style="color: var(--primary-blue-color); margin-bottom: 20px;">
-                  Personal Information
-                </h3>
-                <!-- <div class="form-group">
+      <div class="search-filter">
+        <div class="search-box">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" placeholder="Search for jobs..." />
+        </div>
+        <select class="filter" id="jobFieldFilter">
+          <option value="">All Fields</option>
+          <option value="IT">IT/Software</option>
+          <option value="Engineering">Engineering</option>
+          <option value="Medicine">Medicine/Healthcare</option>
+          <option value="Business">Business/Finance</option>
+          <option value="Education">Education</option>
+          <option value="Marketing">Marketing</option>
+          <option value="Construction">Construction</option>
+          <option value="Manufacturing">Manufacturing</option>
+          <option value="Other">Other Fields</option>
+        </select>
+      </div>
+
+      <div class="job-listings">
+        <!-- IT Job -->
+        <?php if ($result->num_rows > 0): ?>
+          <?php while ($row = $result->fetch_assoc()): ?>
+            <div class="job-card" data-field="<?php echo htmlspecialchars($row['category']); ?>">
+              <div class="job-field"><?php echo htmlspecialchars($row['category']); ?></div>
+
+              <div class="job-header">
+                <div>
+                  <h3 class="job-title"><?php echo htmlspecialchars($row['job_title']); ?></h3>
+                  <div class="job-company"><?php echo htmlspecialchars($row['job_title']); ?></div>
+                </div>
+                <div>
+                  <span class="job-salary"><?php echo htmlspecialchars($row['salary_range']); ?><br> Salary/Month</span>
+                </div>
+              </div>
+
+              <div class="job-meta">
+                <span><i class="fas fa-briefcase"></i> <?php echo htmlspecialchars($row['job_type']); ?></span>
+                <span><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($row['location']); ?></span>
+                <span><i class="fas fa-users"></i> Vacancies: <?php echo (int)$row['vacancies']; ?></span>
+              </div>
+
+              <div class="job-description">
+                <?php echo nl2br(htmlspecialchars($row['description'])); ?>
+              </div>
+
+              <div class="job-footer">
+                <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
+                <button class="apply-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">Apply Now</button>
+              </div>
+            </div>
+          <?php endwhile; ?>
+        <?php else: ?>
+          <p>No job postings available.</p>
+        <?php endif; ?>
+
+      </div>
+    </div>
+
+    <!-- Application Modal -->
+    <div class="modal" id="applicationModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">
+            Apply for <span id="modalJobTitle">Frontend Developer</span>
+          </h2>
+          <button class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form class="application-form">
+            <div class="section">
+              <h3 style="color: var(--primary-blue-color); margin-bottom: 20px;">
+                Personal Information
+              </h3>
+              <!-- <div class="form-group">
                   <label class="required">Full Name</label>
                   <input type="text" required />
                 </div>
@@ -173,72 +172,71 @@ $result = $conn->query($sql);
                   <label class="required">Contact Number</label>
                   <input type="tel" required />
                 </div> -->
-              </div>
+            </div>
 
-              <div class="section">
-                <h3
-                  style="
+            <div class="section">
+              <h3
+                style="
                       color: var(--primary-blue-color);
                       margin-bottom: 20px;
                     ">
-                  Application Details
-                </h3>
-                <div class="form-group">
-                  <label>Cover Letter</label>
-                  <textarea
-                    placeholder="Tell the employer why you're a good fit for this position..."></textarea>
-                </div>
-                <div class="form-group">
-                  <label>How did you hear about this position?</label>
-                  <select>
-                    <option value="">Select</option>
-                    <option>Job Portal</option>
-                    <option>Company Website</option>
-                    <option>Referral</option>
-                    <option>Social Media</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Availability to Start</label>
-                  <input type="date" />
-                </div>
+                Application Details
+              </h3>
+              <div class="form-group">
+                <label>Cover Letter</label>
+                <textarea
+                  placeholder="Tell the employer why you're a good fit for this position..."></textarea>
               </div>
+              <div class="form-group">
+                <label>How did you hear about this position?</label>
+                <select>
+                  <option value="">Select</option>
+                  <option>Job Portal</option>
+                  <option>Company Website</option>
+                  <option>Referral</option>
+                  <option>Social Media</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Availability to Start</label>
+                <input type="date" />
+              </div>
+            </div>
 
-              <div class="section">
-                <div
-                  style="
+            <div class="section">
+              <div
+                style="
                       background-color: var(--light-clr-500);
                       padding: 15px;
                       border-radius: 4px;
                     ">
-                  <p style="margin: 0; color: var(--dark-clr-600)">
-                    <i
-                      class="fas fa-info-circle"
-                      style="color: var(--primary-blue-color)"></i>
-                    Your resume/CV and other documents from your profile will
-                    be automatically included with this application.
-                  </p>
-                </div>
+                <p style="margin: 0; color: var(--dark-clr-600)">
+                  <i
+                    class="fas fa-info-circle"
+                    style="color: var(--primary-blue-color)"></i>
+                  Your resume/CV and other documents from your profile will
+                  be automatically included with this application.
+                </p>
               </div>
+            </div>
 
-              <div class="form-actions">
-                <button
-                  type="button"
-                  class="btn btn-outline"
-                  id="cancelApplication">
-                  Cancel
-                </button>
-                <button type="submit" class="btn btn-primary">
-                  Submit Application
-                </button>
-              </div>
-            </form>
-          </div>
+            <div class="form-actions">
+              <button
+                type="button"
+                class="btn btn-outline"
+                id="cancelApplication">
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Submit Application
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-    </main>
-  </div>
+    </div>
+  </main>
 
   <script src="../js/responsive.js"></script>
   <script>
@@ -320,8 +318,6 @@ $result = $conn->query($sql);
         }
       });
     });
-
-    
   </script>
 
 
