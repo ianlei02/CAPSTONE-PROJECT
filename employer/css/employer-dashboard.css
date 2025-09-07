@@ -29,11 +29,11 @@
 
 }
 .main-header {
+  margin-top: 75px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   padding: 1rem 0;
-  /* border: 1px solid #33333361; */
 
   h1 {
     font-size: 2rem;
