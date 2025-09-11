@@ -8,17 +8,13 @@ if (!isset($_SESSION['user_id'])) {
 $userId = $_SESSION['user_id'];
 $mainSql = "
     SELECT 
-        a.*, 
-        p.*, 
-        c.*, 
-        e.*, 
-        s.* 
-    FROM applicant_account a
-    LEFT JOIN applicant_profile p ON a.applicant_id = p.applicant_id
-    LEFT JOIN applicant_contact_info c ON a.applicant_id = c.applicant_id
-    LEFT JOIN applicant_educ e ON a.applicant_id = e.applicant_id
-    LEFT JOIN applicant_skills s ON a.applicant_id = s.applicant_id
-    WHERE a.applicant_id = ?
+    a.*, 
+    p.*, 
+    c.*
+  FROM applicant_account a
+  LEFT JOIN applicant_profile p ON a.applicant_id = p.applicant_id
+  LEFT JOIN applicant_contact_info c ON a.applicant_id = c.applicant_id
+  WHERE a.applicant_id = ?
 ";
 $mainStmt = $conn->prepare($mainSql);
 $mainStmt->bind_param("i", $userId);
@@ -29,14 +25,6 @@ $mainData = $mainResult->fetch_assoc();
 $accountData   = $mainData ? array_intersect_key($mainData, array_flip(array_keys($mainData))) : [];
 $profileData   = $mainData ? $mainData : [];
 $contactData   = $mainData ? $mainData : [];
-$educationData = $mainData ? $mainData : [];
-$skillsData    = $mainData ? $mainData : [];
-
-$workStmt = $conn->prepare("SELECT * FROM applicant_work_exp WHERE applicant_id = ?");
-$workStmt->bind_param("i", $userId);
-$workStmt->execute();
-$workResult = $workStmt->get_result();
-$workData = $workResult->fetch_all(MYSQLI_ASSOC);
 
 $docsStmt = $conn->prepare("SELECT * FROM applicant_documents WHERE applicant_id = ?");
 $docsStmt->bind_param("i", $userId);
@@ -47,9 +35,6 @@ $docsData = $docsResult->fetch_all(MYSQLI_ASSOC);
 $accountJson   = json_encode($accountData ?: []);
 $profileJson   = json_encode($profileData ?: []);
 $contactJson   = json_encode($contactData ?: []);
-$educationJson = json_encode($educationData ?: []);
-$skillsJson    = json_encode($skillsData ?: []);
-$workJson      = json_encode($workData ?: []);
 $docsJson      = json_encode($docsData ?: []);
 
 $profile_picture_url = '../assets/images/profile.png';
@@ -437,22 +422,22 @@ function getCode($item)
               <label for="">Disability</label>
               <ul>
                 <li>
-                  <input type="checkbox"><label for="">Visual</label>
+                  <input type="checkbox" name="disability[]" value="Visual"><label for="">Visual</label>
                 </li>
                 <li>
-                  <input type="checkbox"><label for="">Speech</label>
+                  <input type="checkbox" name="disability[]" value="Speech"><label for="">Speech</label>
                 </li>
                 <li>
-                  <input type="checkbox"><label for="">Mental</label>
+                  <input type="checkbox" name="disability[]" value="Mental"><label for="">Mental</label>
                 </li>
                 <li>
-                  <input type="checkbox"><label for="">Hearing</label>
+                  <input type="checkbox" name="disability[]" value="Hearing"><label for="">Hearing</label>
                 </li>
                 <li>
-                  <input type="checkbox"><label for="">Physical</label>
+                  <input type="checkbox" name="disability[]" value="Physical"><label for="">Physical</label>
                 </li>
                 <li>
-                  <input type="checkbox">
+                  <input type="checkbox" name="disability[]" value="Others">
                   <label for="">Others:</label>
                   <input type="text" id="others" name="others">
                 </li>
@@ -1267,9 +1252,6 @@ function getCode($item)
     const accountData = <?php echo $accountJson; ?>;
     const profileData = <?php echo $profileJson; ?>;
     const contactData = <?php echo $contactJson; ?>;
-    const educationData = <?php echo $educationJson; ?>;
-    const skillsData = <?php echo $skillsJson; ?>;
-    const workData = <?php echo $workJson; ?>;
     const docsData = <?php echo $docsJson; ?>;
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -1294,60 +1276,7 @@ function getCode($item)
         document.getElementById('alternateMobile').value = contactData.alternate_contact_number || '';
         document.getElementById('street').value = contactData.street_address || '';
       }
-
-      if (educationData) {
-        const eduEntry = document.querySelector('.education-entry');
-        eduEntry.querySelector('[name="educationLevel"]').value = educationData.education_level || '';
-        eduEntry.querySelector('[name="schoolName"]').value = educationData.school_name || '';
-        eduEntry.querySelector('[name="courseDegree"]').value = educationData.course_or_degree || '';
-        eduEntry.querySelector('[name="yearGraduated"]').value = educationData.year_graduated || '';
-      }
-
-
-      if (workData && workData.length > 0) {
-        const expEntriesContainer = document.getElementById('experienceEntries');
-        const originalEntry = document.querySelector('.experience-entry');
-        expEntriesContainer.innerHTML = ''; // Clear the template
-
-        workData.forEach((work, index) => {
-          const expEntry = originalEntry.cloneNode(true);
-
-          expEntry.querySelector('[name="companyName"]').value = work.company_name || '';
-          expEntry.querySelector('[name="position"]').value = work.position || '';
-          expEntry.querySelector('[name="industry"]').value = work.industry || '';
-
-          const startDate = (work.employment_start && work.employment_start !== '0000-00-00') ?
-            new Date(work.employment_start) : null;
-          const endDate = (work.employment_end && work.employment_end !== '0000-00-00') ?
-            new Date(work.employment_end) : null;
-
-          expEntry.querySelector('[name="employmentStart"]').value =
-            startDate ? startDate.toISOString().split('T')[0] : '';
-          expEntry.querySelector('[name="employmentEnd"]').value =
-            endDate ? endDate.toISOString().split('T')[0] : '';
-
-          expEntry.querySelector('[name="keyResponsibilities"]').value = work.key_responsibilities || '';
-
-          if (index > 0) {
-            const removeBtn = document.createElement('button');
-            removeBtn.type = 'button';
-            removeBtn.className = 'remove-btn';
-            removeBtn.textContent = 'Remove';
-            removeBtn.addEventListener('click', () => expEntry.remove());
-            expEntry.appendChild(removeBtn);
-          }
-
-          expEntriesContainer.appendChild(expEntry);
-        });
-      }
-
-      if (skillsData) {
-        document.querySelector('[name="primarySkills"]').value = skillsData.primary_skills || '';
-        document.querySelector('[name="technicalSkills"]').value = skillsData.technical_skills || '';
-        document.querySelector('[name="language"]').value = skillsData.language || '';
-        document.querySelector('[name="proficiencyLevel"]').value = skillsData.proficiency_level || '';
-      }
-
+      
       if (docsData && docsData.length > 0) {
         docsData.forEach(doc => {
           if (doc.document_type === 'resume') {
