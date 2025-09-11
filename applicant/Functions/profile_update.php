@@ -67,7 +67,7 @@ require "../connection/dbcon.php";
     ini_set('memory_limit', '32M');
 
     
-    function handleFileUpload($fieldName, $docType, $conn, $applicant_id, $allowedTypes, $maxFileSize) {
+    function handleFileUpload($fieldName, $docType, $conn, $applicant_id, $data, $allowedTypes, $maxFileSize) {
         if (empty($_FILES[$fieldName]['name'])) {
             return true; 
         }
@@ -105,8 +105,8 @@ require "../connection/dbcon.php";
         $relativePath = '../uploads/documents/' . $storedName;
 
         $stmt = $conn->prepare("INSERT INTO applicant_documents 
-                            (applicant_id, document_type, original_filename, stored_filename, file_path, file_type, file_size) 
-                            VALUES (?, ?, ?, ?, ?, ?, ?)");
+                            (applicant_id, document_type, original_filename, stored_filename, file_path, file_type, file_size, portfolio_link, gdrive_link, other_links) 
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         $stmt->bind_param("isssssi", 
             $applicant_id,
@@ -115,7 +115,10 @@ require "../connection/dbcon.php";
             $storedName,
             $relativePath,
             $fileType,
-            $file['size']
+            $file['size'],
+            $data['portfolioLink'],
+            $data['gdriveLink'],
+            $data['otherLinks']
         );
 
         return $stmt->execute();
@@ -186,6 +189,145 @@ require "../connection/dbcon.php";
         return $relativePath;
     }
 
+    function saveEmploymentStatus($conn, $applicant_id) {
+    $employmentStatus = $_POST['employmentStatus'] ?? 'Unemployed';
+
+    $wageEmployed = isset($_POST['wageEmployed']) ? 1 : 0;
+    $selfEmployed = ($employmentStatus === "Self-Employed") ? 1 : 0;
+
+    $selfEmployedType = !empty($_POST['selfEmployedType']) ? implode(', ', (array)$_POST['selfEmployedType']) : null;
+    $selfEmployedOther = $_POST['selfEmployedOther'] ?? null;
+
+    $jobSearchDuration = !empty($_POST['jobSearchDuration']) ? (int)$_POST['jobSearchDuration'] : null;
+    $unempReasons = !empty($_POST['unempReason']) ? implode(', ', (array)$_POST['unempReason']) : null;
+
+    $ofw = $_POST['ofw'] ?? 'no';
+    $ofwCountry = $_POST['ofwCountry'] ?? null;
+
+    $formerOfw = $_POST['formerOfw'] ?? 'no';
+    $formerOfwCountry = $_POST['formerOfwCountry'] ?? null;
+    $returnDateInput = $_POST['returnDate'] ?? null;
+    $returnDate = null;
+
+    if (!empty($returnDateInput)) {
+        if (preg_match('/^\d{4}-\d{2}$/', $returnDateInput)) {
+            $returnDate = $returnDateInput . '-01';
+        } elseif (preg_match('/^\d{4}-\d{2}-\d{2}$/', $returnDateInput)) {
+            $returnDate = $returnDateInput;
+        } else {
+             $returnDate = null;
+        }
+    }
+
+    $stmt = $conn->prepare("
+        INSERT INTO applicant_employment_stat 
+        (applicant_id, employment_status, wage_employed, self_employed, self_employed_type, self_employed_other, job_search_duration, unemp_reasons, ofw, ofw_country, former_ofw, former_ofw_country, return_date)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE
+            employment_status = VALUES(employment_status),
+            wage_employed = VALUES(wage_employed),
+            self_employed = VALUES(self_employed),
+            self_employed_type = VALUES(self_employed_type),
+            self_employed_other = VALUES(self_employed_other),
+            job_search_duration = VALUES(job_search_duration),
+            unemp_reasons = VALUES(unemp_reasons),
+            ofw = VALUES(ofw),
+            ofw_country = VALUES(ofw_country),
+            former_ofw = VALUES(former_ofw),
+            former_ofw_country = VALUES(former_ofw_country),
+            return_date = VALUES(return_date),
+            updated_at = CURRENT_TIMESTAMP
+    ");
+
+    $stmt->bind_param(
+        "isiiissssssss",
+        $applicant_id,       
+        $employmentStatus,   
+        $wageEmployed,       
+        $selfEmployed,       
+        $selfEmployedType,   
+        $selfEmployedOther,  
+        $jobSearchDuration,  
+        $unempReasons,       
+        $ofw,               
+        $ofwCountry,        
+        $formerOfw,         
+        $formerOfwCountry,   
+        $returnDate          
+    );
+
+    if (!$stmt->execute()) {
+        throw new Exception("Employment status save failed: " . $stmt->error);
+    }
+    $stmt->close();
+    }
+
+    function saveJobLanguageData($conn, $applicant_id) {
+        $prefEmploymentTypes = !empty($_POST['prefEmploymentType']) ? json_encode((array)$_POST['prefEmploymentType']) : json_encode([]);
+        $prefOccupations = json_encode(array_filter([
+            $_POST['prefOccupation1'] ?? null,
+            $_POST['prefOccupation2'] ?? null,
+            $_POST['prefOccupation3'] ?? null
+        ]));
+        $prefLocalWorkLocations = json_encode(array_filter([
+            $_POST['prefLocal1'] ?? null,
+            $_POST['prefLocal2'] ?? null,
+            $_POST['prefLocal3'] ?? null
+        ]));
+        $prefOverseasWorkLocations = json_encode(array_filter([
+            $_POST['prefOverseas1'] ?? null,
+            $_POST['prefOverseas2'] ?? null,
+            $_POST['prefOverseas3'] ?? null
+        ]));
+        
+        $languages = ['english', 'filipino', 'mandarin', 'other'];
+        $languageProficiency = [];
+
+        foreach ($languages as $lang) {
+            $languageProficiency[$lang] = [
+                'read' => isset($_POST["{$lang}Read"]) ? 1 : 0,
+                'write' => isset($_POST["{$lang}Write"]) ? 1 : 0,
+                'speak' => isset($_POST["{$lang}Speak"]) ? 1 : 0,
+                'understand' => isset($_POST["{$lang}Understand"]) ? 1 : 0
+        ];
+
+        if ($lang === 'other') {
+            $languageProficiency[$lang]['name'] = $_POST['otherLanguage'] ?? '';
+        }
+        }
+
+        $languageProficiencyJson = json_encode($languageProficiency);
+
+        $stmt = $conn->prepare("
+                INSERT INTO applicant_job_language_data 
+                (applicant_id, pref_employment_types, pref_occupations, pref_local_work_locations, pref_overseas_work_locations, language_proficiency)
+                VALUES (?, ?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE
+                    pref_employment_types = VALUES(pref_employment_types),
+                    pref_occupations = VALUES(pref_occupations),
+                    pref_local_work_locations = VALUES(pref_local_work_locations),
+                    pref_overseas_work_locations = VALUES(pref_overseas_work_locations),
+                    language_proficiency = VALUES(language_proficiency),
+                    updated_at = CURRENT_TIMESTAMP
+            ");
+
+            $stmt->bind_param(
+                "isssss",
+                $applicant_id,
+                $prefEmploymentTypes,
+                $prefOccupations,
+                $prefLocalWorkLocations,
+                $prefOverseasWorkLocations,
+                $languageProficiencyJson
+            );
+
+            if (!$stmt->execute()) {
+                throw new Exception("Job/Language data save failed: " . $stmt->error);
+            }
+
+            $stmt->close();
+    }
+            
     $conn->begin_transaction();
 
 
@@ -198,43 +340,81 @@ require "../connection/dbcon.php";
         }
 
        $stmt_profile = $conn->prepare("
-        INSERT INTO applicant_profile 
-        (applicant_id, middle_name, suffix, sex, date_of_birth, civil_status, nationality, height, tin, disability, profile_picture, religion) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE");
+            INSERT INTO applicant_profile 
+            (applicant_id, middle_name, suffix, sex, date_of_birth, civil_status, nationality, height, tin, disability, profile_picture, religion) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE
+                middle_name = VALUES(middle_name),
+                suffix = VALUES(suffix),
+                sex = VALUES(sex),
+                date_of_birth = VALUES(date_of_birth),
+                civil_status = VALUES(civil_status),
+                nationality = VALUES(nationality),
+                height = VALUES(height),
+                tin = VALUES(tin),
+                disability = VALUES(disability),
+                profile_picture = VALUES(profile_picture),
+                religion = VALUES(religion)
+        ");
+
         $stmt_profile->bind_param(
-        "isssssssssss",
-        $applicant_id,
-        $data['middleName'],
-        $data['suffix'],
-        $data['sex'],
-        $data['birthDate'],
-        $data['civilStatus'],
-        $data['nationality'],
-        $data['height'],
-        $data['tin'],
-        $data_array['disability'],
-        $profile_picture,
-        $data['religion']
+            "isssssssssss",
+            $applicant_id,
+            $data['middleName'],
+            $data['suffix'],
+            $data['sex'],
+            $data['birthDate'],
+            $data['civilStatus'],
+            $data['nationality'],
+            $data['height'],
+            $data['tin'],
+            $data_array['disability'],
+            $profile_picture,
+            $data['religion']
     );
-    $stmt_profile->execute();
-            
-        $stmt_contact = $conn->prepare("INSERT INTO applicant_contact_info (applicant_id, mobile_number, street_address, region, province, city_municipality, barangay, region_id, province_id, city_id, barangay_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE");
-        $stmt_contact->bind_param("issssssssss", $applicant_id, $data['mobileNumber'], 
-        $data ['streetAddress'],
-        $data ['region_name'], 
-        $data ['province_name'], 
-        $data ['city_name'], 
-        $data ['barangay_name'], 
-        $data ['region_id'], 
-        $data ['province_id'], 
-        $data ['city_id'], 
-        $data ['barangay_id']
-    );
+
+        $stmt_profile->execute();
+                
+            $stmt_contact = $conn->prepare("
+            INSERT INTO applicant_contact_info 
+            (applicant_id, mobile_number, street_address, region, province, city_municipality, barangay, region_id, province_id, city_id, barangay_id) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE
+                mobile_number = VALUES(mobile_number),
+                street_address = VALUES(street_address),
+                region = VALUES(region),
+                province = VALUES(province),
+                city_municipality = VALUES(city_municipality),
+                barangay = VALUES(barangay),
+                region_id = VALUES(region_id),
+                province_id = VALUES(province_id),
+                city_id = VALUES(city_id),
+                barangay_id = VALUES(barangay_id)
+        ");
+
+        $stmt_contact->bind_param(
+            "issssssssss",
+            $applicant_id,
+            $data['mobileNumber'],
+            $data['streetAddress'],
+            $data['region_name'],
+            $data['province_name'],
+            $data['city_name'],
+            $data['barangay_name'],
+            $data['region_id'],
+            $data['province_id'],
+            $data['city_id'],
+            $data['barangay_id']
+        );
+
         $stmt_contact->execute();
         
-                
-        handleFileUpload('resumeFile', 'resume', $conn, $applicant_id, $allowedTypes, $maxFileSize);
-        handleFileUpload('idFile', 'valid_id', $conn, $applicant_id, $allowedTypes, $maxFileSize);
+        saveEmploymentStatus($conn, $applicant_id);
+        saveJobLanguageData($conn, $applicant_id);
+        
+        handleFileUpload('resumeFile', 'resume', $conn, $applicant_id, $data, $allowedTypes, $maxFileSize);
+        handleFileUpload('idFile', 'valid_id', $conn, $applicant_id, $data, $allowedTypes, $maxFileSize);
+
 
         if (!empty($_FILES['certFiles']['name'][0])) {
             foreach ($_FILES['certFiles']['name'] as $index => $filename) {
@@ -248,7 +428,8 @@ require "../connection/dbcon.php";
 
                 $_FILES['singleCertFile'] = $fileArray;
 
-                handleFileUpload('singleCertFile', 'certification', $conn, $applicant_id, $allowedTypes, $maxFileSize);
+                handleFileUpload('singleCertFile', 'certification', $conn, $applicant_id, $data, $allowedTypes, $maxFileSize);
+
             }
         }
 
