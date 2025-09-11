@@ -286,6 +286,7 @@ if (isset($_SESSION['verification_success'])) {
     </form>
   </div>
 </div>
+
 <div id="preloader">
   <div class="loader"></div>
 </div>
