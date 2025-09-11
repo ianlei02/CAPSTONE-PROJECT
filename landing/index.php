@@ -13,6 +13,26 @@ $sql = "
 $result = $conn->query($sql);
 $data = $result->fetch_assoc();
 
+$sql_job = "
+    SELECT 
+        jp.job_id, 
+        jp.job_title, 
+        jp.job_type, 
+        jp.category, 
+        jp.salary_range, 
+        jp.location, 
+        jp.vacancies, 
+        jp.description, 
+        jp.created_at,
+        eci.company_name
+    FROM job_postings jp
+    INNER JOIN employer_company_info eci 
+        ON jp.employer_id = eci.employer_id
+    WHERE jp.status = 'active'
+    ORDER BY jp.created_at DESC
+";
+$result_job = $conn->query($sql_job);
+
 ?>
 
 <!DOCTYPE html>
@@ -346,89 +366,42 @@ $data = $result->fetch_assoc();
             <div class="job-list-heading">
                 <h2>Recent Job Listings</h2>
             </div>
-            <div class="job-cards">
+              <div class="job-cards">
                 <div class="job-cards">
-                    <div class="job-card" data-field="Engineering">
-                        <div class="job-field">Engineering</div>
-                        <div class="job-header">
-                            <div>
-                                <h3 class="job-title">Civil Engineer</h3>
-                                <div class="job-company">BuildRight Construction</div>
-                            </div>
-                            <div>
-                                <span class="job-salary">₱45,000 - ₱60,000/month</span>
-                            </div>
+                    <?php
+                    if ($result_job->num_rows > 0) {
+                    while ($row = $result_job->fetch_assoc()) {
+                    ?>
+                <div class="job-card" data-field="<?php echo htmlspecialchars($row['category']); ?>">
+                    <div class="job-field"><?php echo htmlspecialchars($row['category']); ?></div>
+                    <div class="job-header">
+                        <div>
+                            <h3 class="job-title"><?php echo htmlspecialchars($row['job_title']); ?></h3>
+                            <div class="job-company"><?php echo htmlspecialchars($row['company_name']); ?></div>
                         </div>
-                        <div class="job-meta">
-                            <span><i class="fas fa-briefcase"></i> Full-time</span>
-                            <span><i class="fas fa-map-marker-alt"></i> Quezon City</span>
-                            <span><i class="fas fa-users"></i> Vacancies: 2</span>
-                        </div>
-                        <div class="job-description">
-                            Seeking a licensed Civil Engineer to oversee construction
-                            projects. Must have at least 5 years experience in high-rise
-                            building construction. Knowledge of AutoCAD and project
-                            management required.
-                        </div>
-                        <div class="job-footer">
-                            <div class="job-posted">Posted: May 17, 2023</div>
-                            <button class="apply-btn" data-job-id="102">Apply Now</button>
+                        <div>
+                            <span class="job-salary"><?php echo htmlspecialchars($row['salary_range']); ?></span>
                         </div>
                     </div>
-                    <div class="job-card" data-field="Engineering">
-                        <div class="job-field">Engineering</div>
-                        <div class="job-header">
-                            <div>
-                                <h3 class="job-title">Civil Engineer</h3>
-                                <div class="job-company">BuildRight Construction</div>
-                            </div>
-                            <div>
-                                <span class="job-salary">₱45,000 - ₱60,000/month</span>
-                            </div>
-                        </div>
-                        <div class="job-meta">
-                            <span><i class="fas fa-briefcase"></i> Full-time</span>
-                            <span><i class="fas fa-map-marker-alt"></i> Quezon City</span>
-                            <span><i class="fas fa-users"></i> Vacancies: 2</span>
-                        </div>
-                        <div class="job-description">
-                            Seeking a licensed Civil Engineer to oversee construction
-                            projects. Must have at least 5 years experience in high-rise
-                            building construction. Knowledge of AutoCAD and project
-                            management required.
-                        </div>
-                        <div class="job-footer">
-                            <div class="job-posted">Posted: May 17, 2023</div>
-                            <button class="apply-btn" data-job-id="102">Apply Now</button>
-                        </div>
+                    <div class="job-meta">
+                        <span><i class="fas fa-briefcase"></i> <?php echo htmlspecialchars($row['job_type']); ?></span>
+                        <span><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($row['location']); ?></span>
+                        <span><i class="fas fa-users"></i> Vacancies: <?php echo htmlspecialchars($row['vacancies']); ?></span>
                     </div>
-                    <div class="job-card" data-field="Engineering">
-                        <div class="job-field">Engineering</div>
-                        <div class="job-header">
-                            <div>
-                                <h3 class="job-title">Civil Engineer</h3>
-                                <div class="job-company">BuildRight Construction</div>
-                            </div>
-                            <div>
-                                <span class="job-salary">₱45,000 - ₱60,000/month</span>
-                            </div>
-                        </div>
-                        <div class="job-meta">
-                            <span><i class="fas fa-briefcase"></i> Full-time</span>
-                            <span><i class="fas fa-map-marker-alt"></i> Quezon City</span>
-                            <span><i class="fas fa-users"></i> Vacancies: 2</span>
-                        </div>
-                        <div class="job-description">
-                            Seeking a licensed Civil Engineer to oversee construction
-                            projects. Must have at least 5 years experience in high-rise
-                            building construction. Knowledge of AutoCAD and project
-                            management required.
-                        </div>
-                        <div class="job-footer">
-                            <div class="job-posted">Posted: May 17, 2023</div>
-                            <button class="apply-btn" data-job-id="102">Apply Now</button>
-                        </div>
+                    <div class="job-description">
+                        <?php echo nl2br(htmlspecialchars($row['description'])); ?>
                     </div>
+                    <div class="job-footer">
+                        <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
+                        <button class="apply-btn" data-job-id="<?php echo $row['job_id']; ?>">Apply Now</button>
+                    </div>
+                </div>
+                    <?php
+                    }
+                } else {
+                    echo "<p>No active job postings found.</p>";
+                }
+                ?>
                 </div>
             </div>
         </section>

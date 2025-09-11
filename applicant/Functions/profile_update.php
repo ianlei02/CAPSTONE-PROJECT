@@ -20,43 +20,38 @@ require "../connection/dbcon.php";
 
     $applicant_id = $_SESSION['user_id'];
 
-    
-    $middle_name = $_POST['middleName'] ?? '';
-    $suffix = !empty($_POST['suffix']) ? $_POST['suffix'] : "N/A";
-    $sex = $_POST['gender'] ?? '';
-    $date_of_birth = $_POST['birthDate'] ?? '';
-    $civil_status = $_POST['civilStatus'] ?? '';
-    $nationality = $_POST['nationality'] ?? '';
-    $profile_picture = null;
-    
-    $mobile_number = $_POST['mobileNumber'] ?? '';
-    $alternate_contact = $_POST['alternateContact'] ?? '';
-    $street_address = $_POST['streetAddress'] ?? '';
-    $region = $_POST['region_name'] ?? '';
-    $province = $_POST['province_name'] ?? '';
-    $city_municipality = $_POST['city_name'] ?? '';
-    $barangay = $_POST['barangay_name'] ?? '';
-    $region_id   = $_POST['region'] ?? '';
-    $province_id = $_POST['province'] ?? '';
-    $city_id     = $_POST['cityMunicipality'] ?? '';
-    $barangay_id = $_POST['barangay'] ?? '';
-   
-    $primary_skills = $_POST['primarySkills'] ?? '';
-    $technical_skills = $_POST['technicalSkills'] ?? '';
-    $language = $_POST['language'] ?? 'English'; 
-    $proficiency_level = $_POST['proficiencyLevel'] ?? 'Basic'; 
+    $disability = $_POST['disability'] ?? [];
+    $other = $_POST['others'] ?? '';
 
-    $education_level = $_POST['educationLevel'] ?? '';
-    $school_name = $_POST['schoolName'] ?? '';
-    $course_or_degree = $_POST['courseDegree'] ?? '';
-    $year_graduated = $_POST['yearGraduated'] ?? '';
+    if (!empty($other)) {
+    $disability[] = $other;
+    }
+    $data_array['disability'] = implode(', ', $disability);
 
-    $company_name = $_POST['companyName'] ?? '';
-    $position = $_POST['position'] ?? '';
-    $industry = $_POST['industry'] ?? '';
-    $employment_start = $_POST['employmentStart'] ?? '';
-    $employment_end = $_POST['employmentEnd'] ?? null;
-    $key_responsibilities = $_POST['keyResponsibilities'] ?? '';
+    $data = [
+        'middleName'       => $_POST['middleName'] ?? '',
+        'suffix'           => !empty($_POST['suffix']) ? $_POST['suffix'] : "N/A",
+        'sex'              => $_POST['gender'] ?? '',
+        'religion'         => $_POST['religion'] ?? '',
+        'birthDate'        => $_POST['birthDate'] ?? '',
+        'civilStatus'      => $_POST['civilStatus'] ?? '',
+        'nationality'      => $_POST['nationality'] ?? '',
+        'height'           => $_POST['height'] ?? '',
+        'tin'              => $_POST['tin'] ?? '',
+        'mobileNumber'     => $_POST['mobileNumber'] ?? '',
+        'streetAddress'    => $_POST['streetAddress'] ?? '',
+        'region_name'      => $_POST['region_name'] ?? '',
+        'province_name'    => $_POST['province_name'] ?? '',
+        'city_name'        => $_POST['city_name'] ?? '',
+        'barangay_name'    => $_POST['barangay_name'] ?? '',
+        'region_id'        => $_POST['region'] ?? '',
+        'province_id'      => $_POST['province'] ?? '',
+        'city_id'          => $_POST['cityMunicipality'] ?? '',
+        'barangay_id'      => $_POST['barangay'] ?? '',
+        'portfolioLink'    => $_POST['portfolioLink'] ?? '',
+        'gdriveLink'       => $_POST['gdriveLink'] ?? '',
+        'otherLinks'       => $_POST['otherLinks'] ?? ''
+    ];
    
     $allowedTypes = [
         'application/pdf',
@@ -190,8 +185,6 @@ require "../connection/dbcon.php";
     
         return $relativePath;
     }
-    
-
 
     $conn->begin_transaction();
 
@@ -204,27 +197,41 @@ require "../connection/dbcon.php";
             $profile_picture = $uploadedProfilePic;
         }
 
-        $stmt_profile = $conn->prepare("INSERT INTO applicant_profile (applicant_id, middle_name, suffix, sex, date_of_birth, civil_status, nationality, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt_profile->bind_param("isssssss", $applicant_id, $middle_name, $suffix, $sex, $date_of_birth, $civil_status, $nationality, $profile_picture);
-        $stmt_profile->execute();
-        
-        $stmt_contact = $conn->prepare("INSERT INTO applicant_contact_info (applicant_id, mobile_number, alternate_contact_number, street_address, region, province, city_municipality, barangay, region_id, province_id, city_id, barangay_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?)");
-        $stmt_contact->bind_param("isssssssssss", $applicant_id, $mobile_number, $alternate_contact, $street_address, $region, $province, $city_municipality, $barangay, $region_id, $province_id, $city_id, $barangay_id);
+       $stmt_profile = $conn->prepare("
+        INSERT INTO applicant_profile 
+        (applicant_id, middle_name, suffix, sex, date_of_birth, civil_status, nationality, height, tin, disability, profile_picture, religion) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE");
+        $stmt_profile->bind_param(
+        "isssssssssss",
+        $applicant_id,
+        $data['middleName'],
+        $data['suffix'],
+        $data['sex'],
+        $data['birthDate'],
+        $data['civilStatus'],
+        $data['nationality'],
+        $data['height'],
+        $data['tin'],
+        $data_array['disability'],
+        $profile_picture,
+        $data['religion']
+    );
+    $stmt_profile->execute();
+            
+        $stmt_contact = $conn->prepare("INSERT INTO applicant_contact_info (applicant_id, mobile_number, street_address, region, province, city_municipality, barangay, region_id, province_id, city_id, barangay_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE");
+        $stmt_contact->bind_param("issssssssss", $applicant_id, $data['mobileNumber'], 
+        $data ['streetAddress'],
+        $data ['region_name'], 
+        $data ['province_name'], 
+        $data ['city_name'], 
+        $data ['barangay_name'], 
+        $data ['region_id'], 
+        $data ['province_id'], 
+        $data ['city_id'], 
+        $data ['barangay_id']
+    );
         $stmt_contact->execute();
         
-        $stmt_skills = $conn->prepare("INSERT INTO applicant_skills (applicant_id, primary_skills, technical_skills, language, proficiency_level) VALUES (?, ?, ?, ?, ?)");
-        $stmt_skills->bind_param("issss", $applicant_id, $primary_skills, $technical_skills, $language, $proficiency_level);
-        $stmt_skills->execute();
-
-        if (!empty($education_level) && !empty($school_name)) {
-        $stmt_educ = $conn->prepare("INSERT INTO applicant_educ (applicant_id, education_level, school_name, course_or_degree, year_graduated) VALUES (?, ?, ?, ?, ?)");
-        $stmt_educ->bind_param("issss", $applicant_id, $education_level, $school_name, $course_or_degree, $year_graduated);
-        $stmt_educ->execute();
-        }
-
-        $stmt_work_exp = $conn->prepare("INSERT INTO applicant_work_exp (applicant_id, company_name, position, industry, employment_start, employment_end, key_responsibilities) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt_work_exp->bind_param("issssss", $applicant_id, $company_name, $position, $industry, $employment_start, $employment_end, $key_responsibilities);
-        $stmt_work_exp->execute();
                 
         handleFileUpload('resumeFile', 'resume', $conn, $applicant_id, $allowedTypes, $maxFileSize);
         handleFileUpload('idFile', 'valid_id', $conn, $applicant_id, $allowedTypes, $maxFileSize);
@@ -262,9 +269,6 @@ require "../connection/dbcon.php";
         
         if (isset($stmt_profile)) $stmt_profile->close();
         if (isset($stmt_contact)) $stmt_contact->close();
-        if (isset($stmt_skills)) $stmt_skills->close();
-        if (isset($stmt_educ)) $stmt_educ->close();
-        if (isset($stmt_work_exp)) $stmt_work_exp->close();
         $conn->close();
     }
     if ($response['success']) {

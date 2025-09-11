@@ -34,7 +34,7 @@
   $applicantId = $_SESSION['user_id'] ?? 0;
   function getProfileCompletion($applicantId, $conn)
   {
-    $totalTables = 7;
+    $totalTables = 4;
     $completed = 0;
 
     $stmt = $conn->prepare("SELECT f_name, l_name, email FROM applicant_account WHERE applicant_ID = ?");
@@ -52,29 +52,7 @@
       $completed++;
     }
 
-    $stmt = $conn->prepare("SELECT * FROM applicant_educ WHERE applicant_ID = ?");
-    $stmt->bind_param("i", $applicantId);
-    $stmt->execute();
-    if ($stmt->get_result()->num_rows > 0) {
-      $completed++;
-    }
-
-    $stmt = $conn->prepare("SELECT * FROM applicant_work_exp WHERE applicant_ID = ?");
-    $stmt->bind_param("i", $applicantId);
-    $stmt->execute();
-    if ($stmt->get_result()->num_rows > 0) {
-      $completed++;
-    }
-
-
     $stmt = $conn->prepare("SELECT * FROM applicant_documents WHERE applicant_ID = ?");
-    $stmt->bind_param("i", $applicantId);
-    $stmt->execute();
-    if ($stmt->get_result()->num_rows > 0) {
-      $completed++;
-    }
-
-    $stmt = $conn->prepare("SELECT * FROM applicant_skills WHERE applicant_ID = ?");
     $stmt->bind_param("i", $applicantId);
     $stmt->execute();
     if ($stmt->get_result()->num_rows > 0) {
