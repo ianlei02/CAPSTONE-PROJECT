@@ -95,7 +95,7 @@ $result = $conn->query($sql);
           <option value="">All Fields</option>
           <option value="IT">IT/Software</option>
           <option value="Engineering">Engineering</option>
-          <option value="Medicine">Medicine/Healthcare</option>
+          <option value="Healthcare">Medicine/Healthcare</option>
           <option value="Business">Business/Finance</option>
           <option value="Education">Education</option>
           <option value="Marketing">Marketing</option>
@@ -106,10 +106,9 @@ $result = $conn->query($sql);
       </div>
 
       <div class="job-listings">
-        <!-- IT Job -->
         <?php if ($result->num_rows > 0): ?>
           <?php while ($row = $result->fetch_assoc()): ?>
-            <div class="job-card" data-field="<?php echo htmlspecialchars($row['category']); ?>">
+            <div class="job-card hidden" data-field="<?php echo htmlspecialchars($row['category']); ?>">
               <div class="job-field"><?php echo htmlspecialchars($row['category']); ?></div>
 
               <div class="job-header">
@@ -319,7 +318,27 @@ $result = $conn->query($sql);
       });
     });
   </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const jobCards = document.querySelectorAll(".job-card");
 
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove("hidden");
+            entry.target.classList.add("visible");
+            obs.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+
+      jobCards.forEach(card => {
+        observer.observe(card);
+      });
+    });
+  </script>
 
 </body>
 
