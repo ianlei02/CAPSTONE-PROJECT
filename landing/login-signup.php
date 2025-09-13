@@ -23,6 +23,7 @@ if (isset($_SESSION['verification_success'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -45,7 +46,6 @@ if (isset($_SESSION['verification_success'])) {
       <div class="form signup-form ">
         <h2>Create an Account</h2>
         <form action="functions/register.php" method="POST">
-
           <div class="user-type">
             <h4>Register as:</h4>
             <div class="radio-container">
@@ -76,7 +76,6 @@ if (isset($_SESSION['verification_success'])) {
             <div class="input-group">
               <label for="lastName">Last Name</label>
               <input type="text" id="lastName" name="l_name" required />
-
             </div>
           </div>
           <div class="input-group">
@@ -85,7 +84,14 @@ if (isset($_SESSION['verification_success'])) {
           </div>
           <div class="input-group">
             <label for="signupPassword">Password</label>
-            <input type="password" id="signupPassword" name="password" minlength="8" title="Password must be at least 8 characters" required  />
+            <div style="display:flex;align-items:center;">
+              <input type="password" id="signupPassword" name="password" minlength="8" title="Password must be at least 8 characters" required />
+              <label id="password-rules">?</label>
+            </div>
+            <div id="password-strength">
+              <div id="strength-bar"></div>
+              <span id="strength-text"></span>
+            </div>
           </div>
           <div class="input-group">
             <input type="hidden" id="otp" name="otp" class="form-control" required />
@@ -108,7 +114,6 @@ if (isset($_SESSION['verification_success'])) {
       <div class="form login-form active">
         <h2>Welcome Back</h2>
         <form action="" method="POST">
-
           <div class="user-type">
             <h4>Login as:</h4>
             <div class="radio-container">
@@ -139,24 +144,21 @@ if (isset($_SESSION['verification_success'])) {
           <div class="input-group" style="position:relative;">
             <label for="loginPassword">Password</label>
             <input type="password" id="loginPassword" name="password" required />
-            <button type="button" id="togglePassword" style="position:absolute; right:10px; top:40px; background:none; border:none; cursor:pointer; padding:0;">
-              <span id="toggleIcon" style="font-size:18px;">👁</span>
+            <button type="button" id="togglePassword" style="position:absolute; right:10px; top:45px; background:none; border:none; cursor:pointer; padding:0;">
+              <span id="toggleIcon" style="display:none; font-size:14px; color: #131313ff;">Show</span>
             </button>
           </div>
 
           <div class="input-group remember-me" style="display: flex; align-items: center; gap: 0.5rem; justify-content: space-between; ">
             <div style="display: flex; align-items: center;">
-              <input type="checkbox" id="rememberMe" name="remember_me" >
+              <input type="checkbox" id="rememberMe" name="remember_me">
               <label style="margin-top: 8px; margin-left: 4px;" for="rememberMe">Remember me</label>
             </div>
             <div class="forgot-password">
-              <a  href="#" onclick="openForgotPasswordModal()">Forgot Password?</a>
+              <a href="#" onclick="openForgotPasswordModal()">Forgot Password?</a>
             </div>
           </div>
-
-
           <button type="submit" class="btn" id="loginBtn" name="remember_login">Login</button>
-
           <div class="toggle-form">
             Don't have an account? <a onclick="showTab('signup')">Sign Up</a>
           </div>
@@ -232,28 +234,66 @@ if (isset($_SESSION['verification_success'])) {
     </div>
   </div>
 
-  <div id="forgotPasswordModal" class="forgot-modal">
-      <div class="modal-content">
-        <span class="close-modal">&times;</span>
-        <h2>Reset Your Password</h2>
+  <div class="modal" id="password-rules-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">Password Rules</div>
+        <span class="close">&times;</span>
+      </div>
+      <div class="modal-body">
         <p>
-          Enter your email address and we'll send you a link to reset your
-          password.
+          To keep your account safe and secure, your password must follow these rules:
         </p>
+        <br>
+        <h3>1. Minimum Length</h3>
+        <p>
+          Your password must be at least 8 characters long.
+        </p>
+        <h3>2. Uppercase Letters</h3>
+        <p>
+          Include at least one uppercase letter (A–Z).
+        </p>
+        <h3>3. Lowercase Letters</h3>
+        <p>
+          Include at least one lowercase letter (a–z).
+        </p>
+        <h3>4. Numbers</h3>
+        <p>
+          Include at least one number (0–9).
+        </p>
+        <h3>5. Unique Password</h3>
+        <p>
+          Do not reuse passwords from other accounts. Always use a unique password for this platform.
+        </p>
+      </div>
 
-        <form action="" method="POST" id="forgotPasswordForm">
-          <div class="form-group">
-            <label for="forgot-email">Email Address</label>
-            <input
-              type="email"
-              id="forgot-email"
-              name="email-reset"
-              required
-              placeholder="cardodalisay@gmail.com"
-            />
-          </div>
+      <div class="modal-footer">
+        <button class="close btn btn-danger">Close</button>
+      </div>
+    </div>
+  </div>
 
-          <button type="submit" name="resetLink" value="Submit" class="submit-btn">Send Reset Link</button>
+  <div id="forgotPasswordModal" class="forgot-modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>Reset Your Password</h2>
+      <p>
+        Enter your email address and we'll send you a link to reset your
+        password.
+      </p>
+
+      <form action="" method="POST" id="forgotPasswordForm">
+        <div class="form-group">
+          <label for="forgot-email">Email Address</label>
+          <input
+            type="email"
+            id="forgot-email"
+            name="email-reset"
+            required
+            placeholder="cardodalisay@gmail.com" />
+        </div>
+
+        <button type="submit" name="resetLink" value="Submit" class="submit-btn">Send Reset Link</button>
 
         <div class="modal-footer">
           <p>
@@ -265,42 +305,44 @@ if (isset($_SESSION['verification_success'])) {
   </div>
 
   <div id="resetPasswordModal" class="forgot-modal">
-  <div class="modal-content">
-    <span class="close-reset">&times;</span>
-    <h2>Reset Your Password</h2>
-    <form id="resetPasswordForm" method="POST">
-      <input type="hidden" id="reset-email" name="email">
-      <input type="hidden" id="reset-token" name="token">
+    <div class="modal-content">
+      <span class="close-reset">&times;</span>
+      <h2>Reset Your Password</h2>
+      <form id="resetPasswordForm" method="POST">
+        <input type="hidden" id="reset-email" name="email">
+        <input type="hidden" id="reset-token" name="token">
 
-      <div class="form-group">
-        <label for="newPassword">New Password</label>
-        <input type="password" id="newPassword" name="new_password" minlength="8" required>
-      </div>
+        <div class="form-group">
+          <label for="newPassword">New Password</label>
+          <input type="password" id="newPassword" name="new_password" minlength="8" required>
+        </div>
 
-      <div class="form-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" name="confirm_password" minlength="8" required>
-      </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" name="confirm_password" minlength="8" required>
+        </div>
 
-      <button type="submit" onclick="success()" class="submit-btn">Change Password</button>
-    </form>
+        <button type="submit" onclick="success()" class="submit-btn">Change Password</button>
+      </form>
+    </div>
   </div>
-</div>
 
-<div id="preloader">
-  <div class="loader"></div>
-</div>
+  <div id="preloader">
+    <div class="loader"></div>
+  </div>
 
-    <script>
-    window.addEventListener("load", function () {
-        const preloader = document.getElementById("preloader");
-        preloader.style.opacity = "0";
-        setTimeout(() => {
+  <!-- Preloader -->
+  <script>
+    window.addEventListener("load", function() {
+      const preloader = document.getElementById("preloader");
+      preloader.style.opacity = "0";
+      setTimeout(() => {
         preloader.style.display = "none";
-        }, 500); 
+      }, 500);
     });
-    </script>
+  </script>
   <script src="login-signup.js"></script>
+  <!-- OTP -->
   <script>
     function generateRandomNumber() {
 
@@ -321,11 +363,11 @@ if (isset($_SESSION['verification_success'])) {
       document.getElementById('otp').value = generateRandomNumber();
     });
   </script>
+  <!-- Performance -->
   <script>
     if (window.history.replaceState) {
       window.history.replaceState(null, null, window.location.href);
     }
-
     window.addEventListener("pageshow", function(event) {
       if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
 
@@ -333,165 +375,176 @@ if (isset($_SESSION['verification_success'])) {
       }
     });
   </script>
+  <!-- Login Validation -->
   <script>
     document.querySelector('.login-form form').addEventListener('submit', function(e) {
-  e.preventDefault();
+      e.preventDefault();
 
-  const email = document.getElementById('loginEmail').value;
-  const password = document.getElementById('loginPassword').value;
-  const userType = document.querySelector('input[name="user-type-login"]:checked').value;
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      const userType = document.querySelector('input[name="user-type-login"]:checked').value;
 
-  fetch("functions/login.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&user-type-login=${userType}`
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === "success") {
-        Swal.fire({
-          title: "Login Successful",
-          text: "Redirecting to your dashboard...",
-          icon: "success",
-          timer: 2000,
-          showConfirmButton: false
-        }).then(() => {
-          window.location.href = data.redirect_url;
+      fetch("functions/login.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&user-type-login=${userType}`
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === "success") {
+            Swal.fire({
+              title: "Login Successful",
+              text: "Redirecting to your dashboard...",
+              icon: "success",
+              timer: 2000,
+              showConfirmButton: false
+            }).then(() => {
+              window.location.href = data.redirect_url;
+            });
+          } else {
+            Swal.fire({
+              title: "Login Failed",
+              text: data.message,
+              icon: "error"
+            });
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          Swal.fire({
+            title: "Error",
+            text: "Login failed. Please try again.",
+            icon: "error"
+          });
         });
-      } else {
-        Swal.fire({
-          title: "Login Failed",
-          text: data.message,
-          icon: "error"
-        });
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      Swal.fire({
-        title: "Error",
-        text: "Login failed. Please try again.",
-        icon: "error"
-      });
     });
-});
+    const icon = document.getElementById('toggleIcon');
+    const passwordInput = document.getElementById('loginPassword');
 
-  
-    document.getElementById('togglePassword').addEventListener('click', function () {
-      const passwordInput = document.getElementById('loginPassword');
-      const icon = document.getElementById('toggleIcon');
+    passwordInput.addEventListener('input',() => {
+      if (loginPassword.value.length > 0) {
+        icon.style.display = 'inline-block';
+      } else {
+        icon.style.display = 'none';
+      }
+    });
+    document.getElementById('togglePassword').addEventListener('click', function() {
       if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        icon.textContent = '🙈'; 
+        icon.textContent = 'Hide';
       } else {
         passwordInput.type = 'password';
-        icon.textContent = '👁'; 
+        icon.textContent = 'Show';
       }
     });
-
   </script>
+  <!-- Forgot Password Function -->
   <script>
-  document.getElementById("forgotPasswordForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const email = document.getElementById("forgot-email").value;
+    document.getElementById("forgotPasswordForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const email = document.getElementById("forgot-email").value;
 
-  fetch("functions/forgot_password.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: `email-reset=${encodeURIComponent(email)}`
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.status === "success") {
-      Swal.fire({
-        title: "Success!",
-        text: data.message,
-        icon: "success",
-        confirmButtonText: "OK"
-      });
-    } else {
-      Swal.fire({
-        title: "Error",
-        text: data.message,
-        icon: "error",
-        confirmButtonText: "Try Again"
-      });
-    }
-  })
-  .catch(err => {
-    Swal.fire({
-      title: "Oops...",
-      text: "Error sending reset link.",
-      icon: "error"
+      fetch("functions/forgot_password.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: `email-reset=${encodeURIComponent(email)}`
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === "success") {
+            Swal.fire({
+              title: "Success!",
+              text: data.message,
+              icon: "success",
+              confirmButtonText: "OK"
+            });
+          } else {
+            Swal.fire({
+              title: "Error",
+              text: data.message,
+              icon: "error",
+              confirmButtonText: "Try Again"
+            });
+          }
+        })
+        .catch(err => {
+          Swal.fire({
+            title: "Oops...",
+            text: "Error sending reset link.",
+            icon: "error"
+          });
+        });
     });
-  });
-});
+  </script>
+  <!-- Reset Password Function -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has("reset")) {
+        const email = urlParams.get("email");
+        const token = urlParams.get("token");
 
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has("reset")) {
-    const email = urlParams.get("email");
-    const token = urlParams.get("token");
+        document.getElementById("reset-email").value = email;
+        document.getElementById("reset-token").value = token;
 
-    document.getElementById("reset-email").value = email;
-    document.getElementById("reset-token").value = token;
+        document.getElementById("resetPasswordModal").style.display = "block";
+      }
 
-    document.getElementById("resetPasswordModal").style.display = "block";
-  }
-
-  document.querySelector(".close-reset").onclick = function () {
-    document.getElementById("resetPasswordModal").style.display = "none";
-  };
-});
-</script>
-<script>
-document.getElementById("resetPasswordForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  const email = document.getElementById("reset-email").value;
-  const token = document.getElementById("reset-token").value;
-  const newPassword = document.getElementById("newPassword").value;
-  const confirmPassword = document.getElementById("confirmPassword").value;
-
-  fetch("functions/reset_password.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: `email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}&new_password=${encodeURIComponent(newPassword)}&confirm_password=${encodeURIComponent(confirmPassword)}`
-  })
-  .then(res => res.json()) 
-  .then(data => {
-    if (data.status === "success") {
-      Swal.fire({
-        title: "Password Updated!",
-        text: data.message,
-        icon: "success",
-        confirmButtonText: "OK"
-      }).then(() => {
-        window.location.href = "login-signup.php";
-      });
-    } else {
-      Swal.fire({
-        title: "Oops...",
-        text: data.message,
-        icon: "error",
-        confirmButtonText: "Try Again"
-      });
-    }
-  })
-  .catch(() => {
-    Swal.fire({
-      title: "Error!",
-      text: "Something went wrong while resetting your password.",
-      icon: "error"
+      document.querySelector(".close-reset").onclick = function() {
+        document.getElementById("resetPasswordModal").style.display = "none";
+      };
     });
-  });
-});
+  </script>
+  <!-- New Password Validation -->
+  <script>
+    document.getElementById("resetPasswordForm").addEventListener("submit", function(e) {
+      e.preventDefault();
 
-</script>
+      const email = document.getElementById("reset-email").value;
+      const token = document.getElementById("reset-token").value;
+      const newPassword = document.getElementById("newPassword").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      fetch("functions/reset_password.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: `email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}&new_password=${encodeURIComponent(newPassword)}&confirm_password=${encodeURIComponent(confirmPassword)}`
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === "success") {
+            Swal.fire({
+              title: "Password Updated!",
+              text: data.message,
+              icon: "success",
+              confirmButtonText: "OK"
+            }).then(() => {
+              window.location.href = "login-signup.php";
+            });
+          } else {
+            Swal.fire({
+              title: "Oops...",
+              text: data.message,
+              icon: "error",
+              confirmButtonText: "Try Again"
+            });
+          }
+        })
+        .catch(() => {
+          Swal.fire({
+            title: "Error!",
+            text: "Something went wrong while resetting your password.",
+            icon: "error"
+          });
+        });
+    });
+  </script>
 </body>
 
 </html>

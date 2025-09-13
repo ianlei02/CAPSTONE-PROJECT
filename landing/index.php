@@ -9,34 +9,14 @@ $sql = "
         (SELECT COUNT(*) FROM applicant_account) AS total_applicants,
         (SELECT COUNT(*) FROM job_postings WHERE status = 'active') AS total_active
 ";
-
 $result = $conn->query($sql);
 $data = $result->fetch_assoc();
-
-$sql_job = "
-    SELECT 
-        jp.job_id, 
-        jp.job_title, 
-        jp.job_type, 
-        jp.category, 
-        jp.salary_range, 
-        jp.location, 
-        jp.vacancies, 
-        jp.description, 
-        jp.created_at,
-        eci.company_name
-    FROM job_postings jp
-    INNER JOIN employer_company_info eci 
-        ON jp.employer_id = eci.employer_id
-    WHERE jp.status = 'active'
-    ORDER BY jp.created_at DESC
-";
-$result_job = $conn->query($sql_job);
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -49,15 +29,8 @@ $result_job = $conn->query($sql_job);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
 </head>
-<body>
-    <!-- <div class="header-info">
-        <div class="city-name"><a href="index.php" style="text-decoration: none; color: #fff;">PESO</a></div>
-        <div class="office-hours">
-            <span>Office Hours: Mon - Fri: 8.00 am. - 5.00 pm.</span>
-            <span style="margin-left: 2rem;">Email: sanmiguelbulacanpeso@gmail.com</span>
-        </div>
-    </div> -->
 
+<body>
     <nav class="navbar">
         <a class="navbar-brand" href="#">
             <img
@@ -70,15 +43,8 @@ $result_job = $conn->query($sql_job);
                 class="logo" />
         </a>
         <ul class="navbar-links">
-            <li><a class="nav-link" href="#">Home</a></li>
-            <li class="dropdown">
-                Job Portal <span style="rotate: 90deg; padding: 4px;">></span>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="./pages/find-job.php">Job Listings</a></li>
-                    <!-- <li><a class="dropdown-item" href="login-signup.php?form=signup">Post a Job</a></li> -->
-                    <li><a class="dropdown-item" href="./pages/user-guide.php">User's Guide</a></li>
-                </ul>
-            </li>
+            <li><a class="nav-link" href="index.php">Home</a></li>
+            <li><a class="nav-link" href="./pages/find-job.php">Job Listings</a></li>
             <li><a class="nav-link" href="./pages/aboutus.php">About Us</a></li>
             <li class="auth-buttons">
                 <a href="login-signup.php?form=login"><button <a class="btn-login">Login</button></a>
@@ -101,22 +67,22 @@ $result_job = $conn->query($sql_job);
                 <div class="hero-stats">
                     <div class="hero-stat">
                         <h2><?php
-                        echo $data['total_applicants'],'+';
-                        ?>
+                            echo $data['total_applicants'], '+';
+                            ?>
                         </h2>
                         <p>Registered Applicants</p>
                     </div>
                     <div class="hero-stat">
                         <h2><?php
-                        echo $data['total_employers'],'+';
-                        ?>
+                            echo $data['total_employers'], '+';
+                            ?>
                         </h2>
                         <p>Registered Employers</p>
-                   </div>
+                    </div>
                     <div class="hero-stat">
                         <h2><?php
-                        echo $data['total_jobs'],'+';
-                        ?>
+                            echo $data['total_jobs'], '+';
+                            ?>
                         </h2>
                         <p>Job Listings</p>
                     </div>
@@ -129,36 +95,6 @@ $result_job = $conn->query($sql_job);
                     class="hero-img" />
             </div>
         </section>
-
-        <!-- <section class="statistics">
-            <div class="container">
-                <div>
-                    <h2>PORTAL STATISTICS</h2>
-                    <hr />
-                </div>
-                <div class="stats-container">
-                    <div class="stats-card appear-animation">
-                        <h4>Registered Applicants</h4>
-                        <p class="stat-number" data-target="123">0</p>
-                    </div>
-                    <div class="stats-card appear-animation">
-                        <h4>Registered Employers</h4>
-                        <p class="stat-number" data-target="456">0</p>
-                    </div>
-                    <div class="stats-card appear-animation">
-                        <h4>Job Listings</h4>
-                        <p class="stat-number" data-target="789">0</p>
-                    </div>
-                    <div class="stats-card appear-animation">
-                        <h4>Hired Applicants</h4>
-                        <p class="stat-number" data-target="312">0</p>
-                    </div>
-                </div>
-            </div>
-
-
-        </section> -->
-
 
         <section class="news">
             <div class="section-header">
@@ -263,34 +199,6 @@ $result_job = $conn->query($sql_job);
             </div>
         </section>
 
-        <!-- <section class="registered-employers">
-            <h2>REGISTERED EMPLOYERS</h2>
-            <div class="scroller" data-direction="right" data-speed="fast">
-                <div class="scroller__inner">
-                    <img src="./assets/images/company-logos/7-eleven_logo.svg.png" alt="" />
-                    <img src="./assets/images/company-logos/Chowking_logo.svg.png" alt="" />
-                    <img src="./assets/images/company-logos/Jollibee.png" alt="" />
-                    <img src="./assets/images/company-logos/kfc.png" alt="" />
-                    <img src="./assets/images/company-logos/mang-inasal-logo-png_seeklogo-543182.png" alt="" />
-                    <img src="./assets/images/company-logos/robinsons.png" alt="" />
-                    <img src="./assets/images/company-logos/rcs.png" alt="">
-
-                </div>
-            </div>
-            <br>
-            <div class="scroller" data-direction="left" data-speed="fast">
-                <div class="scroller__inner">
-                    <img src="./assets/images/company-logos/7-eleven_logo.svg.png" alt="" />
-                    <img src="./assets/images/company-logos/Chowking_logo.svg.png" alt="" />
-                    <img src="./assets/images/company-logos/Jollibee.png" alt="" />
-                    <img src="./assets/images/company-logos/kfc.png" alt="" />
-                    <img src="./assets/images/company-logos/mang-inasal-logo-png_seeklogo-543182.png" alt="" />
-                    <img src="./assets/images/company-logos/robinsons.png" alt="" />
-                    <img src="./assets/images/company-logos/rcs.png" alt="">
-                </div>
-            </div>
-        </section> -->
-
         <section class="features">
             <div class="container">
                 <div class="section-title">
@@ -330,7 +238,6 @@ $result_job = $conn->query($sql_job);
             </div>
         </section>
 
-        <!-- How It Works Section -->
         <section class="how-it-works">
             <div class="container">
                 <div class="section-title">
@@ -361,99 +268,6 @@ $result_job = $conn->query($sql_job);
                 </div>
             </div>
         </section>
-
-        <section class="job-listings">
-            <div class="job-list-heading">
-                <h2>Recent Job Listings</h2>
-            </div>
-              <div class="job-cards">
-                <div class="job-cards">
-                    <?php
-                    if ($result_job->num_rows > 0) {
-                    while ($row = $result_job->fetch_assoc()) {
-                    ?>
-                <div class="job-card" data-field="<?php echo htmlspecialchars($row['category']); ?>">
-                    <div class="job-field"><?php echo htmlspecialchars($row['category']); ?></div>
-                    <div class="job-header">
-                        <div>
-                            <h3 class="job-title"><?php echo htmlspecialchars($row['job_title']); ?></h3>
-                            <div class="job-company"><?php echo htmlspecialchars($row['company_name']); ?></div>
-                        </div>
-                        <div>
-                            <span class="job-salary"><?php echo htmlspecialchars($row['salary_range']); ?></span>
-                        </div>
-                    </div>
-                    <div class="job-meta">
-                        <span><i class="fas fa-briefcase"></i> <?php echo htmlspecialchars($row['job_type']); ?></span>
-                        <span><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($row['location']); ?></span>
-                        <span><i class="fas fa-users"></i> Vacancies: <?php echo htmlspecialchars($row['vacancies']); ?></span>
-                    </div>
-                    <div class="job-description">
-                        <?php echo nl2br(htmlspecialchars($row['description'])); ?>
-                    </div>
-                    <div class="job-footer">
-                        <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
-                        <button class="apply-btn" data-job-id="<?php echo $row['job_id']; ?>">Apply Now</button>
-                    </div>
-                </div>
-                    <?php
-                    }
-                } else {
-                    echo "<p>No active job postings found.</p>";
-                }
-                ?>
-                </div>
-            </div>
-        </section>
-        <!-- Job Categories Section -->
-        <section class="job-categories">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Popular Job Categories</h2>
-                    <p>Explore opportunities in these high-demand fields</p>
-                </div>
-                <div class="categories-grid">
-                    <div class="category-card">
-                        <i class="fas fa-laptop-code"></i>
-                        <h3>IT & Software</h3>
-                    </div>
-                    <div class="category-card">
-                        <i class="fas fa-hard-hat"></i>
-                        <h3>Engineering</h3>
-                    </div>
-                    <div class="category-card">
-                        <i class="fas fa-stethoscope"></i>
-                        <h3>Healthcare</h3>
-                    </div>
-                    <div class="category-card">
-                        <i class="fas fa-chart-line"></i>
-                        <h3>Finance</h3>
-                    </div>
-                    <div class="category-card">
-                        <i class="fas fa-graduation-cap"></i>
-                        <h3>Education</h3>
-                    </div>
-                    <div class="category-card">
-                        <i class="fas fa-store"></i>
-                        <h3>Retail</h3>
-                    </div>
-                    <div class="category-card">
-                        <i class="fas fa-utensils"></i>
-                        <h3>Hospitality</h3>
-                    </div>
-                    <div class="category-card">
-                        <i class="fas fa-paint-brush"></i>
-                        <h3>Creative</h3>
-                    </div>
-                    <div class="category-card">
-                        <i class="fas fa-hammer"></i>
-                        <h3>Construction</h3>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
 
         <section class="cta" ">
             <div class=" container" style="width: auto;">
@@ -508,18 +322,18 @@ $result_job = $conn->query($sql_job);
         </div>
     </footer>
 
-<div id="preloader">
-  <div class="loader"></div>
-</div>
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
 
     <script>
-    window.addEventListener("load", function () {
-        const preloader = document.getElementById("preloader");
-        preloader.style.opacity = "0";
-        setTimeout(() => {
-        preloader.style.display = "none";
-        }, 500); 
-    });
+        window.addEventListener("load", function() {
+            const preloader = document.getElementById("preloader");
+            preloader.style.opacity = "0";
+            setTimeout(() => {
+                preloader.style.display = "none";
+            }, 500);
+        });
     </script>
 
     <!-- <script>
