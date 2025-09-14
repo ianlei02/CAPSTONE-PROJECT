@@ -111,30 +111,21 @@ function fetchMultipleUrls($urls)
   return $responses;
 }
 
-$cacheFile = __DIR__ . "/psgc_cache.json";
-$cacheTime = 86400; // 24h
+$cacheFile = __DIR__ . "/psgc_offline_full.json";
+$data = json_decode(file_get_contents($cacheFile), true);
+$regions   = $data["regions"]["data"] ?? [];
+$provinces = $data["provinces"]["data"] ?? [];
+$cities    = $data["cities"]["data"] ?? [];
+$barangays = $data["barangays"]["data"] ?? [];
 
-if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTime) {
-  $data = json_decode(file_get_contents($cacheFile), true);
-} else {
-  $urls = [
-    "regions"   => "https://psgc.cloud/api/v2/regions",
-    "provinces" => "https://psgc.cloud/api/v2/provinces",
-    "cities"    => "https://psgc.cloud/api/v2/cities-municipalities",
-    "barangays" => "https://psgc.cloud/api/v2/barangays"
-  ];
-  $data = fetchMultipleUrls($urls);
-  file_put_contents($cacheFile, json_encode($data));
+function getName($item) {
+    return $item['name'] ?? $item['regionName'] ?? $item['provinceName'] ?? $item['cityName'] ?? $item['barangayName'] ?? 'Unknown';
 }
-$regions   = $data["regions"] ?? [];
-$provinces = $data["provinces"] ?? [];
-$cities    = $data["cities"] ?? [];
-$barangays = $data["barangays"] ?? [];
 
-function getCode($item)
-{
-  return $item['psgc_id'] ?? null;
+function getCode($item) {
+    return $item['code'] ?? $item['psgc_id'] ?? null;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -343,15 +334,15 @@ function getCode($item)
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
 
                 <select id="region" name="region" required>
-                        <option value="">Select Region</option>
-                        <?php foreach ($regions as $reg):
-                          $code = getCode($reg); ?>
-                          <option value="<?= htmlspecialchars($code) ?>"
-                            <?= ($saved_region == $code) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($reg['name']) ?>
-                          </option>
-                        <?php endforeach; ?>
-                      </select>
+                  <option value="">Select Region</option>
+                  <?php foreach ($regions as $reg):
+                    $code = getCode($reg); ?>
+                    <option value="<?= htmlspecialchars($code) ?>"
+                      <?= ($saved_region == $code) ? 'selected' : '' ?>>
+                      <?= htmlspecialchars(getName($reg)) ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
 
                 <select id="province" name="province" required>
                   <option value="">Select Province</option>
@@ -359,30 +350,33 @@ function getCode($item)
                     $code = getCode($prov); ?>
                     <option value="<?= htmlspecialchars($code) ?>"
                       <?= ($saved_province == $code) ? 'selected' : '' ?>>
-                      <?= htmlspecialchars($prov['name']) ?>
+                      <?= htmlspecialchars(getName($prov)) ?>
                     </option>
                   <?php endforeach; ?>
                 </select>
+
                 <select id="city" name="cityMunicipality" required>
                   <option value="">Select City/Municipality</option>
                   <?php foreach ($cities as $city):
                     $code = getCode($city); ?>
                     <option value="<?= htmlspecialchars($code) ?>"
                       <?= ($saved_city == $code) ? 'selected' : '' ?>>
-                      <?= htmlspecialchars($city['name']) ?>
+                      <?= htmlspecialchars(getName($city)) ?>
                     </option>
                   <?php endforeach; ?>
                 </select>
+
                 <select id="barangay" name="barangay" required>
                   <option value="">Select Barangay</option>
                   <?php foreach ($barangays as $brgy):
                     $code = getCode($brgy); ?>
                     <option value="<?= htmlspecialchars($code) ?>"
                       <?= ($saved_barangay == $code) ? 'selected' : '' ?>>
-                      <?= htmlspecialchars($brgy['name']) ?>
+                      <?= htmlspecialchars(getName($brgy)) ?>
                     </option>
                   <?php endforeach; ?>
                 </select>
+
                 
               </div>
               <input type="hidden" name="region_name" id="region_name">
@@ -1332,129 +1326,88 @@ function getCode($item)
   </script>
   <script src="../js/responsive.js"></script>
   <script>
-    const regionSel = document.getElementById('region');
-    const provinceSel = document.getElementById('province');
-    const citySel = document.getElementById('city');
-    const barangaySel = document.getElementById('barangay');
+const regionSel = document.getElementById('region');
+const provinceSel = document.getElementById('province');
+const citySel = document.getElementById('city');
+const barangaySel = document.getElementById('barangay');
 
-    function reset(selectEl, placeholder) {
-      selectEl.innerHTML = `<option value="">${placeholder}</option>`;
-      selectEl.disabled = true;
-    }
+// Reset helper
+function reset(selectEl, placeholder) {
+  selectEl.innerHTML = `<option value="">${placeholder}</option>`;
+  selectEl.disabled = true;
+}
 
-    /* initial reset */
-    reset(provinceSel, 'Select Province');
-    reset(citySel, 'Select City/Municipality');
-    reset(barangaySel, 'Select Barangay');
+// Inject PHP JSON arrays into JS
+const regions   = <?= json_encode($regions) ?>;
+const provinces = <?= json_encode($provinces) ?>;
+const cities    = <?= json_encode($cities) ?>;
+const barangays = <?= json_encode($barangays) ?>;
 
-    regionSel.addEventListener('change', async () => {
-      const regionId = regionSel.value;
-      reset(provinceSel, 'Select Province');
-      reset(citySel, 'Select City/Municipality');
-      reset(barangaySel, 'Select Barangay');
-      if (!regionId) return;
+/* --- Region Change --- */
+regionSel.addEventListener('change', () => {
+  const regionName = regionSel.options[regionSel.selectedIndex].text;
 
-      try {
-        const res = await fetch(`https://psgc.rootscratch.com/province?id=${encodeURIComponent(regionId)}`);
-        if (!res.ok) throw new Error('Network response not ok');
-        const provinces = await res.json();
-        provinces.forEach(p => {
-          const opt = document.createElement('option');
-          opt.value = p.psgc_id;
-          opt.textContent = p.name;
-          provinceSel.appendChild(opt);
-        });
-        provinceSel.disabled = false;
-      } catch (err) {
-        console.error('Failed to load provinces', err);
-        alert('Unable to load provinces. Check console for details.');
-      }
+  reset(provinceSel, 'Select Province');
+  reset(citySel, 'Select City/Municipality');
+  reset(barangaySel, 'Select Barangay');
+
+  if (!regionSel.value) return;
+
+  provinces
+    .filter(p => p.region === regionName)
+    .forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p.code;
+      opt.textContent = p.name;
+      provinceSel.appendChild(opt);
     });
 
-    provinceSel.addEventListener('change', async () => {
-      const provId = provinceSel.value;
-      reset(citySel, 'Select City/Municipality');
-      reset(barangaySel, 'Select Barangay');
-      if (!provId) return;
+  provinceSel.disabled = false;
+});
 
-      try {
-        const res = await fetch(`https://psgc.rootscratch.com/municipal-city?id=${encodeURIComponent(provId)}`);
-        if (!res.ok) throw new Error('Network response not ok');
-        const cities = await res.json();
-        cities.forEach(c => {
-          const opt = document.createElement('option');
-          opt.value = c.psgc_id;
-          opt.textContent = c.name;
-          citySel.appendChild(opt);
-        });
-        citySel.disabled = false;
-      } catch (err) {
-        console.error('Failed to load cities', err);
-      }
+/* --- Province Change --- */
+provinceSel.addEventListener('change', () => {
+  const provName = provinceSel.options[provinceSel.selectedIndex].text;
+
+  reset(citySel, 'Select City/Municipality');
+  reset(barangaySel, 'Select Barangay');
+
+  if (!provinceSel.value) return;
+
+  cities
+    .filter(c => c.province === provName)
+    .forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c.code;
+      opt.textContent = c.name;
+      citySel.appendChild(opt);
     });
 
-    citySel.addEventListener('change', async () => {
-      const cityId = citySel.value;
-      reset(barangaySel, 'Select Barangay');
-      if (!cityId) return;
+  citySel.disabled = false;
+});
 
-      try {
-        const res = await fetch(`https://psgc.rootscratch.com/barangay?id=${encodeURIComponent(cityId)}`);
-        if (!res.ok) throw new Error('Network response not ok');
-        const brgys = await res.json();
-        brgys.forEach(b => {
-          const opt = document.createElement('option');
-          opt.value = b.psgc_id;
-          opt.textContent = b.name;
-          barangaySel.appendChild(opt);
-        });
-        barangaySel.disabled = false;
-      } catch (err) {
-        console.error('Failed to load barangays', err);
-      }
-    });
+/* --- City Change --- */
+citySel.addEventListener('change', () => {
+  const cityName = citySel.options[citySel.selectedIndex].text;
 
-    document.getElementById("region").addEventListener("change", function() {
-      document.getElementById("region_name").value = this.options[this.selectedIndex].text;
-    });
-    document.getElementById("province").addEventListener("change", function() {
-      document.getElementById("province_name").value = this.options[this.selectedIndex].text;
-    });
-    document.getElementById("city").addEventListener("change", function() {
-      document.getElementById("city_name").value = this.options[this.selectedIndex].text;
-    });
-    document.getElementById("barangay").addEventListener("change", function() {
-      document.getElementById("barangay_name").value = this.options[this.selectedIndex].text;
+  reset(barangaySel, 'Select Barangay');
+
+  if (!citySel.value) return;
+
+  barangays
+    .filter(b => b.city_municipality === cityName)
+    .forEach(b => {
+      const opt = document.createElement('option');
+      opt.value = b.code;
+      opt.textContent = b.name;
+      barangaySel.appendChild(opt);
     });
 
-    window.addEventListener('DOMContentLoaded', async function() {
-      const savedRegion = "<?= $saved_region ?>";
-      const savedProvince = "<?= $saved_province ?>";
-      const savedCity = "<?= $saved_city ?>";
-      const savedBarangay = "<?= $saved_barangay ?>";
+  barangaySel.disabled = false;
+});
 
-      async function selectValue(selectEl, value) {
-        return new Promise(resolve => {
-          const check = setInterval(() => {
-            if ([...selectEl.options].some(opt => opt.value == value)) {
-              selectEl.value = value;
-              selectEl.dispatchEvent(new Event('change'));
-              clearInterval(check);
-              resolve();
-            }
-          }, 100);
-        });
-      }
+</script>
 
-      if (savedRegion) {
-        regionSel.value = savedRegion;
-        regionSel.dispatchEvent(new Event('change'));
-        await selectValue(provinceSel, savedProvince);
-        await selectValue(citySel, savedCity);
-        await selectValue(barangaySel, savedBarangay);
-      }
-    });
-  </script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const form = document.querySelector("form");

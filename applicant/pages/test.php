@@ -1,25 +1,42 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    var_dump($_FILES);
+// generate_psgc_offline.php
 
-    $uploadDir = __DIR__ . '/../uploads/documents/';
-    if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0755, true);
+// Function to fetch a URL
+function fetchUrl($url) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+    $data = curl_exec($ch);
+    $err = curl_error($ch);
+    curl_close($ch);
+    if ($err) {
+        throw new Exception("Curl error fetching $url: $err");
     }
-
-    $file = $_FILES['testfile'];
-
-    $targetPath = $uploadDir . basename($file['name']);
-
-    if (move_uploaded_file($file['tmp_name'], $targetPath)) {
-        echo "File uploaded successfully!"; 
-    } else {
-        echo "Failed to upload file.";
-    }
+    return $data;
 }
-?>
 
-<form method="POST" enctype="multipart/form-data">
-    <input type="file" name="testfile" />
-    <button type="submit">Upload</button>
-</form>
+$urls = [
+    "regions"   => "https://psgc.cloud/api/v2/regions",
+    "provinces" => "https://psgc.cloud/api/v2/provinces",
+    "cities"    => "https://psgc.cloud/api/v2/cities-municipalities",
+    "barangays" => "https://psgc.rootscratch.com/barangay"
+];
+
+$all = [];
+foreach ($urls as $key => $url) {
+    echo "Fetching $key...\n";
+    $response = fetchUrl($url);
+    $decoded = json_decode($response, true);
+    if ($decoded === null) {
+        throw new Exception("Failed to decode JSON for $key");
+    }
+    $all[$key] = $decoded;
+}
+
+// Save to offline file
+$offlineFile = __DIR__ . "/psgc_offline_full(2).json";
+file_put_contents($offlineFile, json_encode($all, JSON_PRETTY_PRINT));
+
+echo "Offline PSGC data saved to $offlineFile\n";
