@@ -51,7 +51,6 @@ $data = $result->fetch_assoc();
                 <a href="login-signup.php?form=signup"><button <a class="btn-signup">Sign Up</button></a>
             </li>
         </ul>
-
     </nav>
 
     <main>
@@ -335,60 +334,35 @@ $data = $result->fetch_assoc();
             }, 500);
         });
     </script>
-
-    <!-- <script>
-        const scrollers = document.querySelectorAll(".scroller");
-        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-            addAnimation();
-        }
-
-        function addAnimation() {
-            scrollers.forEach((scroller) => {
-                scroller.setAttribute("data-animated", true);
-
-                const scrollerInner = scroller.querySelector(".scroller__inner");
-                const scrollerContent = Array.from(scrollerInner.children);
-
-                scrollerContent.forEach((item) => {
-                    const duplicatedItem = item.cloneNode(true);
-                    duplicatedItem.setAttribute("aria-hidden", true);
-                    scrollerInner.appendChild(duplicatedItem);
-                });
-            });
-        }
-        //document.addEventListener("contextmenu", (e) => {
-          //  e.preventDefault();
-      //  });
-    </script>
-  
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script>
         const swiper = new Swiper('.newsSwiper', {
-            slidesPerView: 3,
+            slidesPerView: 1,
             spaceBetween: 20,
             loop: true,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
             breakpoints: {
-                320: {
-                    slidesPerView: 1,
+                640: {
+                    slidesPerView: 1
                 },
                 768: {
-                    slidesPerView: 2,
+                    slidesPerView: 2
                 },
                 1024: {
-                    slidesPerView: 3,
+                    slidesPerView: 3
                 }
             }
         });
     </script>
+
 </body>
 
 </html>

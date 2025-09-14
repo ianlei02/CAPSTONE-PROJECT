@@ -5,6 +5,31 @@ if (!isset($_SESSION['user_id'])) {
   header("Location: ../login-signup.php");
   exit();
 }
+$profile_picture_url = '../assets/images/profile.png';
+if (isset($_SESSION['user_id'])) {
+  $applicant_id = $_SESSION['user_id'];
+  $query = "SELECT profile_picture FROM applicant_profile WHERE applicant_id = ?";
+  $stmt = $conn->prepare($query);
+  $stmt->bind_param("i", $applicant_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    if (!empty($row['profile_picture'])) {
+      $filename = basename($row['profile_picture']);
+      $absolute_path = __DIR__ . '/../uploads/profile_pictures/' . $filename;
+      $web_path = '../uploads/profile_pictures/' . $filename;
+
+      error_log("Checking: " . $absolute_path);
+
+      if (file_exists($absolute_path)) {
+        $profile_picture_url = $web_path;
+      }
+    }
+  }
+  $stmt->close();
+}
 $sql = "SELECT job_id, job_title, job_type, category, salary_range, location, vacancies, description, created_at 
         FROM job_postings 
         WHERE status = 'active' 
@@ -34,8 +59,15 @@ $result = $conn->query($sql);
           <img src="../assets/images/peso-logo.png" alt="" />
         </div>
       </div>
+      <button onclick="toggleTheme()" style="padding: 0.5rem; font-size: 1rem;">DARK MODE PRACTICE LANG MUNA</button>
       <div class="right-pos">
-        <div class="profile">IAN</div>
+        <div class="profile">
+          <img
+            src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+            alt="Profile Picture"
+            class="profile-pic"
+            id="profilePicc" style="width: 50px !important;" />
+        </div>
       </div>
     </div>
   </nav>
@@ -106,10 +138,9 @@ $result = $conn->query($sql);
       </div>
 
       <div class="job-listings">
-        <!-- IT Job -->
         <?php if ($result->num_rows > 0): ?>
           <?php while ($row = $result->fetch_assoc()): ?>
-            <div class="job-card" data-field="<?php echo htmlspecialchars($row['category']); ?>">
+            <div class="job-card hidden" data-field="<?php echo htmlspecialchars($row['category']); ?>">
               <div class="job-field"><?php echo htmlspecialchars($row['category']); ?></div>
 
               <div class="job-header">
@@ -239,6 +270,7 @@ $result = $conn->query($sql);
   </main>
 
   <script src="../js/responsive.js"></script>
+  <script src="../js/dark-mode.js"></script>
   <script>
     // Job Field Filter
     const jobFieldFilter = document.getElementById('jobFieldFilter');
@@ -319,7 +351,29 @@ $result = $conn->query($sql);
       });
     });
   </script>
+  <script>
+    //FOR LAZY LOAD ANIMATION NOT YET FINISHED BECAUSE I NEED AJAX BRUHHHHHHHHHH
+    document.addEventListener("DOMContentLoaded", () => {
+      const jobCards = document.querySelectorAll(".job-card");
 
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove("hidden");
+            entry.target.classList.add("visible");
+            obs.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+
+      jobCards.forEach(card => {
+        observer.observe(card);
+      });
+    });
+  </script>
+  
 
 </body>
 

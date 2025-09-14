@@ -28,15 +28,17 @@
 
 .job-application-status {
   justify-self: center;
+  margin-top: 70px;
   width: 95%;
   border-radius: 1rem;
   padding: 1rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  color: var(--dark-clr-700);
+  background-color: var(--white);
+  box-shadow: var(--shadow-md);
+  border: 2px solid var(--border);
+  color: var(--black-light);
 
   h2 {
     color: var(--dark-clr-600);
@@ -139,20 +141,6 @@
 }
 .action-btn.view-btn:hover {
   background-color: var(--color-primary-hover);
-}
-.action-btn.view-btn {
-  background-color: var(--color-warning-light);
-  color: var(--color-warning);
-}
-.action-btn.view-btn:hover {
-  background-color: var(--color-warning-hover);
-}
-.action-btn.view-btn {
-  background-color: var(--color-success-light);
-  color: var(--color-success);
-}
-.action-btn.view-btn:hover {
-  background-color: var(--color-success-hover);
 }
 
 .table-date {
