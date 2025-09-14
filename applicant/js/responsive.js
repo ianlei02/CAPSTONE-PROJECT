@@ -1,38 +1,39 @@
 document.addEventListener("DOMContentLoaded", () => {
   const hamburger = document.querySelector(".hamburger");
+  const body = document.body; // use body instead of sidebar
   const sidebar = document.querySelector(".sidebar");
 
   function isMobile() {
     return window.matchMedia("(max-width: 767px)").matches;
   }
 
-  // Check for saved sidebar state in localStorage
+  // Load saved sidebar state
   function loadSidebarState() {
     const savedState = localStorage.getItem("sidebar-collapsed");
     if (savedState === "true") {
-      sidebar.classList.add("collapsed");
+      body.classList.add("collapsed");
     } else {
-      sidebar.classList.remove("collapsed");
+      body.classList.remove("collapsed");
     }
   }
 
   function saveSidebarState() {
-    const isCollapsed = sidebar.classList.contains("collapsed");
+    const isCollapsed = body.classList.contains("collapsed");
     localStorage.setItem("sidebar-collapsed", isCollapsed);
   }
 
   hamburger.addEventListener("click", function () {
     if (isMobile()) {
-      sidebar.classList.toggle("visible");
+      sidebar.classList.toggle("visible"); // mobile slide-in
     } else {
-      sidebar.classList.toggle("collapsed");
+      body.classList.toggle("collapsed"); // desktop collapse
       saveSidebarState();
     }
   });
 
   function initSidebar() {
     if (isMobile()) {
-      sidebar.classList.remove("collapsed");
+      body.classList.remove("collapsed");
       sidebar.classList.remove("visible");
     } else {
       loadSidebarState();
@@ -42,4 +43,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("resize", initSidebar);
   initSidebar();
+
 });

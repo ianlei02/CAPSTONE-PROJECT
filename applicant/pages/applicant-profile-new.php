@@ -175,35 +175,16 @@ function getCode($item)
       <div class="left-pos" style="display: flex; width: auto; height: auto">
         <button class="hamburger">☰</button>
         <div class="logo">
-          <img src="../assets/images/logo without glass.png" alt="" />
+          <img src="../assets/images/peso-logo.png" alt="" />
         </div>
       </div>
       <div class="right-pos">
         <div class="profile">
-          <label
-            class="profile-pic-container"
-            id="profilePicContainer"
-            for="profilePicInput">
-            <img
-              src="<?php echo htmlspecialchars($profile_picture_url); ?>"
-              alt="Profile Picture"
-              class="profile-pic"
-              id="profilePicc" />
-            <div class="upload-icon">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2">
-                ['\\ ']
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="17 8 12 3 7 8"></polyline>
-                <line x1="12" y1="3" x2="12" y2="15"></line>
-              </svg>
-            </div>
-          </label>
+          <img
+            src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+            alt="Profile Picture"
+            class="profile-pic"
+            id="profilePicc" style="width: 50px !important;" />
         </div>
       </div>
     </div>
@@ -747,23 +728,23 @@ function getCode($item)
   </script>
   <script>
     document.getElementById('profileForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(this);
-    const updateBtn = document.getElementById('updateBtn');
-    const saveBtnn = document.getElementById('saveBtnn');
+      e.preventDefault();
 
-    if (e.submitter === saveBtnn) {
-     
-     const response = await fetch('../Functions/profile_update.php', {
-         method: 'POST',
-         body: formData
-     });
+      const formData = new FormData(this);
+      const updateBtn = document.getElementById('updateBtn');
+      const saveBtnn = document.getElementById('saveBtnn');
 
-     const result = await response.json();
+      if (e.submitter === saveBtnn) {
 
-     if (result.success) {
-       alert(result.message);
+        const response = await fetch('../Functions/profile_update.php', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          alert(result.message);
 
           window.location.reload();
         } else {
@@ -793,35 +774,35 @@ function getCode($item)
     const saveBtn = document.getElementById('saveBtn');
     const inputs = document.querySelectorAll('#profileForm input');
     const select = document.querySelectorAll('#profileForm select');
-    const textAreas = document.querySelectorAll('#profileForm textarea'); 
+    const textAreas = document.querySelectorAll('#profileForm textarea');
     const profilePicInput = document.getElementById('profilePicInput');
 
     window.addEventListener('DOMContentLoaded', () => {
-        inputs.forEach(input => input.disabled = true);
-        select.forEach(select => select.disabled = true);
-        textAreas.forEach(textArea => textArea.disabled = true); 
-        saveBtn.disabled = true;
-        editBtn.disabled = false;
-        profilePicInput.disabled = true; 
+      inputs.forEach(input => input.disabled = true);
+      select.forEach(select => select.disabled = true);
+      textAreas.forEach(textArea => textArea.disabled = true);
+      saveBtn.disabled = true;
+      editBtn.disabled = false;
+      profilePicInput.disabled = true;
     });
 
     editBtn.addEventListener('click', () => {
-        inputs.forEach(input => input.disabled = false);
-        select.forEach(select => select.disabled = false);
-        textAreas.forEach(textArea => textArea.disabled = false); 
-        saveBtn.disabled = false;
-        editBtn.disabled = true;
-        profilePicInput.disabled = false; 
+      inputs.forEach(input => input.disabled = false);
+      select.forEach(select => select.disabled = false);
+      textAreas.forEach(textArea => textArea.disabled = false);
+      saveBtn.disabled = false;
+      editBtn.disabled = true;
+      profilePicInput.disabled = false;
     });
 
     saveBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        inputs.forEach(input => input.disabled = true);
-        select.forEach(select => select.disabled = true);
-        textAreas.forEach(textArea => textArea.disabled = true); 
-        saveBtn.disabled = true;
-        editBtn.disabled = false;
-        profilePicInput.disabled = true; 
+      e.preventDefault();
+      inputs.forEach(input => input.disabled = true);
+      select.forEach(select => select.disabled = true);
+      textAreas.forEach(textArea => textArea.disabled = true);
+      saveBtn.disabled = true;
+      editBtn.disabled = false;
+      profilePicInput.disabled = true;
     });
   </script>
   <script>
@@ -949,45 +930,44 @@ function getCode($item)
     });
   </script>
   <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.querySelector("form");
+      const saveBtn = document.getElementById("saveBtnn");
+      const updateBtn = document.getElementById("updateBtn");
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.querySelector("form");
-  const saveBtn = document.getElementById("saveBtnn");
-  const updateBtn = document.getElementById("updateBtn");
+      function handleAction(button, actionText, confirmText, successText) {
+        button.addEventListener("click", function(e) {
+          e.preventDefault();
 
-  function handleAction(button, actionText, confirmText, successText) {
-    button.addEventListener("click", function (e) {
-      e.preventDefault();
-
-      Swal.fire({
-        title: `Are you sure you want to ${actionText}?`,
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonText: confirmText,
-        cancelButtonText: "Cancel",
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-      }).then((result) => {
-        if (result.isConfirmed) {
           Swal.fire({
-            title: successText,
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1000 
+            title: `Are you sure you want to ${actionText}?`,
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: confirmText,
+            cancelButtonText: "Cancel",
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: successText,
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1000
+              });
+
+              setTimeout(() => {
+                form.submit();
+              }, 1000);
+            }
           });
+        });
+      }
 
-          setTimeout(() => {
-            form.submit();
-          }, 1000);
-        }
-      });
+      handleAction(saveBtn, "save your profile", "Yes, Save it!", "Profile Saved Successfully!");
+      handleAction(updateBtn, "update your profile", "Yes, Update it!", "Profile Updated Successfully!");
     });
-  }
-
-  handleAction(saveBtn, "save your profile", "Yes, Save it!", "Profile Saved Successfully!");
-  handleAction(updateBtn, "update your profile", "Yes, Update it!", "Profile Updated Successfully!");
-});
-</script>
+  </script>
 
 </body>
 
