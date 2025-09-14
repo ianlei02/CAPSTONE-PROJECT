@@ -163,32 +163,14 @@ function getCode($item)
           <img src="../assets/images/peso-logo.png" alt="" />
         </div>
       </div>
+      <button onclick="toggleTheme()" style="padding: 0.5rem; font-size: 1rem;">DARK MODE PRACTICE LANG MUNA</button>
       <div class="right-pos">
         <div class="profile">
-          <label
-            class="profile-pic-container"
-            id="profilePicContainer"
-            for="profilePicInput">
-            <img
-              src="<?php echo htmlspecialchars($profile_picture_url); ?>"
-              alt="Profile Picture"
-              class="profile-pic"
-              id="profilePicc" />
-            <div class="upload-icon">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2">
-                ['\\ ']
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="17 8 12 3 7 8"></polyline>
-                <line x1="12" y1="3" x2="12" y2="15"></line>
-              </svg>
-            </div>
-          </label>
+          <img
+            src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+            alt="Profile Picture"
+            class="profile-pic"
+            id="profilePicc" style="width: 50px !important;" />
         </div>
       </div>
     </div>
@@ -334,24 +316,24 @@ function getCode($item)
             <div class="form-group" style="grid-column: span 4">
               <label class="required">Complete Address</label>
               <input
-                  type="text"
-                  id="street"
-                  placeholder="House No/Street Address"
-                  name="streetAddress"
-                  required />
+                type="text"
+                id="street"
+                placeholder="House No/Street Address"
+                name="streetAddress"
+                required />
 
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
 
                 <select id="region" name="region" required>
-                        <option value="">Select Region</option>
-                        <?php foreach ($regions as $reg):
-                          $code = getCode($reg); ?>
-                          <option value="<?= htmlspecialchars($code) ?>"
-                            <?= ($saved_region == $code) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($reg['name']) ?>
-                          </option>
-                        <?php endforeach; ?>
-                      </select>
+                  <option value="">Select Region</option>
+                  <?php foreach ($regions as $reg):
+                    $code = getCode($reg); ?>
+                    <option value="<?= htmlspecialchars($code) ?>"
+                      <?= ($saved_region == $code) ? 'selected' : '' ?>>
+                      <?= htmlspecialchars($reg['name']) ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
 
                 <select id="province" name="province" required>
                   <option value="">Select Province</option>
@@ -383,7 +365,7 @@ function getCode($item)
                     </option>
                   <?php endforeach; ?>
                 </select>
-                
+
               </div>
               <input type="hidden" name="region_name" id="region_name">
               <input type="hidden" name="province_name" id="province_name">
@@ -1276,7 +1258,7 @@ function getCode($item)
         document.getElementById('alternateMobile').value = contactData.alternate_contact_number || '';
         document.getElementById('street').value = contactData.street_address || '';
       }
-      
+
       if (docsData && docsData.length > 0) {
         docsData.forEach(doc => {
           if (doc.document_type === 'resume') {
@@ -1331,6 +1313,7 @@ function getCode($item)
     });
   </script>
   <script src="../js/responsive.js"></script>
+  <script src="../js/dark-mode.js"></script>
   <script>
     const regionSel = document.getElementById('region');
     const provinceSel = document.getElementById('province');
