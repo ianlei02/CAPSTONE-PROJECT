@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
       body.classList.remove("collapsed");
     }
   }
-
   function saveSidebarState() {
     const isCollapsed = body.classList.contains("collapsed");
     localStorage.setItem("sidebar-collapsed", isCollapsed);
