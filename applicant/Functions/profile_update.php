@@ -29,28 +29,48 @@ require "../connection/dbcon.php";
     $data_array['disability'] = implode(', ', $disability);
 
     $data = [
-        'middleName'       => $_POST['middleName'] ?? '',
-        'suffix'           => !empty($_POST['suffix']) ? $_POST['suffix'] : "N/A",
-        'sex'              => $_POST['gender'] ?? '',
-        'religion'         => $_POST['religion'] ?? '',
-        'birthDate'        => $_POST['birthDate'] ?? '',
-        'civilStatus'      => $_POST['civilStatus'] ?? '',
-        'nationality'      => $_POST['nationality'] ?? '',
-        'height'           => $_POST['height'] ?? '',
-        'tin'              => $_POST['tin'] ?? '',
-        'mobileNumber'     => $_POST['mobileNumber'] ?? '',
-        'streetAddress'    => $_POST['streetAddress'] ?? '',
-        'region_name'      => $_POST['region_name'] ?? '',
-        'province_name'    => $_POST['province_name'] ?? '',
-        'city_name'        => $_POST['city_name'] ?? '',
-        'barangay_name'    => $_POST['barangay_name'] ?? '',
-        'region_id'        => $_POST['region'] ?? '',
-        'province_id'      => $_POST['province'] ?? '',
-        'city_id'          => $_POST['cityMunicipality'] ?? '',
-        'barangay_id'      => $_POST['barangay'] ?? '',
-        'portfolioLink'    => $_POST['portfolioLink'] ?? '',
-        'gdriveLink'       => $_POST['gdriveLink'] ?? '',
-        'otherLinks'       => $_POST['otherLinks'] ?? ''
+        'middleName'            => $_POST['middleName'] ?? '',
+        'suffix'                => !empty($_POST['suffix']) ? $_POST['suffix'] : "N/A",
+        'sex'                   => $_POST['gender'] ?? '',
+        'religion'              => $_POST['religion'] ?? '',
+        'birthDate'             => $_POST['birthDate'] ?? '',
+        'civilStatus'           => $_POST['civilStatus'] ?? '',
+        'nationality'           => $_POST['nationality'] ?? '',
+        'height'                => $_POST['height'] ?? '',
+        'tin'                   => $_POST['tin'] ?? '',
+        'mobileNumber'          => $_POST['mobileNumber'] ?? '',
+        'streetAddress'         => $_POST['streetAddress'] ?? '',
+        'region_name'           => $_POST['region_name'] ?? '',
+        'province_name'         => $_POST['province_name'] ?? '',
+        'city_name'             => $_POST['city_name'] ?? '',
+        'barangay_name'         => $_POST['barangay_name'] ?? '',
+        'region_id'             => $_POST['region'] ?? '',
+        'province_id'           => $_POST['province'] ?? '',
+        'city_id'               => $_POST['cityMunicipality'] ?? '',
+        'barangay_id'           => $_POST['barangay'] ?? '',
+        'portfolioLink'         => $_POST['portfolioLink'] ?? '',
+        'gdriveLink'            => $_POST['gdriveLink'] ?? '',
+        'otherLinks'            => $_POST['otherLinks'] ?? '',
+
+        'inSchool'              => $_POST['inSchool'] ?? 'no',
+        'elementaryCourse'      => $_POST['elementaryCourse'] ?? null,
+        'elementaryYear'        => $_POST['elementaryYear'] ?? null,
+        'elementaryLevel'       => $_POST['elementaryLevel'] ?? null,
+        'elementaryLastYear'    => $_POST['elementaryLastYear'] ?? null,
+        'secondaryType'         => $_POST['secondaryType'] ?? null,
+        'secondaryCourse'       => $_POST['secondaryCourse'] ?? null,
+        'secondaryYear'         => $_POST['secondaryYear'] ?? null,
+        'secondaryLevel'        => $_POST['secondaryLevel'] ?? null,
+        'secondaryLastYear'     => $_POST['secondaryLastYear'] ?? null,
+        'seniorHighStrand'      => $_POST['seniorHighStrand'] ?? null,
+        'tertiaryCourse'        => $_POST['tertiaryCourse'] ?? null,
+        'tertiaryYear'          => $_POST['tertiaryYear'] ?? null,
+        'tertiaryLevel'         => $_POST['tertiaryLevel'] ?? null,
+        'tertiaryLastYear'      => $_POST['tertiaryLastYear'] ?? null,
+        'gradStudiesCourse'     => $_POST['gradStudiesCourse'] ?? null,
+        'gradStudiesYear'       => $_POST['gradStudiesYear'] ?? null,
+        'gradStudiesLevel'      => $_POST['gradStudiesLevel'] ?? null,
+        'gradStudiesLastYea'    => $_POST['gradStudiesLastYear'] ?? null
     ];
    
     $allowedTypes = [
@@ -105,10 +125,10 @@ require "../connection/dbcon.php";
         $relativePath = '../uploads/documents/' . $storedName;
 
         $stmt = $conn->prepare("INSERT INTO applicant_documents 
-                            (applicant_id, document_type, original_filename, stored_filename, file_path, file_type, file_size, portfolio_link, gdrive_link, other_links) 
+                            (applicant_id, document_type, original_filename, stored_filename, file_path, file_type, file_size, port_link, drive_link, other_link) 
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-        $stmt->bind_param("isssssi", 
+        $stmt->bind_param("isssssisss", 
             $applicant_id,
             $docType,
             $file['name'],
@@ -122,6 +142,35 @@ require "../connection/dbcon.php";
         );
 
         return $stmt->execute();
+    }
+
+        if (
+        !empty($data['portfolioLink']) || 
+        !empty($data['gdriveLink']) || 
+        !empty($data['otherLinks'])
+    ) {
+        $stmt = $conn->prepare("INSERT INTO applicant_documents 
+            (applicant_id, document_type, original_filename, stored_filename, file_path, file_type, file_size, port_link, drive_link, other_link) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+        $empty = ""; 
+        $zero = 0; 
+        $linkType = "links";
+
+        $stmt->bind_param("isssssisss", 
+            $applicant_id,
+            $linkType,
+            $empty,   
+            $empty,   
+            $empty,   
+            $empty,   
+            $zero,    
+            $data['portfolioLink'],
+            $data['gdriveLink'],
+            $data['otherLinks']
+        );
+
+        $stmt->execute();
     }
 
     function handleApplicantProfilePictureUpload($conn, $applicant_id, $allowedTypes, $maxFileSize) {
@@ -327,7 +376,102 @@ require "../connection/dbcon.php";
 
             $stmt->close();
     }
-            
+
+    function saveEducationAndTraining($conn, $applicant_id, $data) {
+    try {
+
+        $stmtEdu = $conn->prepare("INSERT INTO applicant_educ (
+            applicant_id, in_school,
+            elementary_course, elementary_year, elementary_level, elementary_last_year,
+            secondary_type, secondary_course, secondary_year, secondary_level, secondary_last_year, senior_high_strand,
+            tertiary_course, tertiary_year, tertiary_level, tertiary_last_year,
+            grad_studies_course, grad_studies_year, grad_studies_level, grad_studies_last_year
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE
+            in_school = VALUES(in_school),
+            elementary_course = VALUES(elementary_course),
+            elementary_year = VALUES(elementary_year),
+            elementary_level = VALUES(elementary_level),
+            elementary_last_year = VALUES(elementary_last_year),
+            secondary_type = VALUES(secondary_type),
+            secondary_course = VALUES(secondary_course),
+            secondary_year = VALUES(secondary_year),
+            secondary_level = VALUES(secondary_level),
+            secondary_last_year = VALUES(secondary_last_year),
+            senior_high_strand = VALUES(senior_high_strand),
+            tertiary_course = VALUES(tertiary_course),
+            tertiary_year = VALUES(tertiary_year),
+            tertiary_level = VALUES(tertiary_level),
+            tertiary_last_year = VALUES(tertiary_last_year),
+            grad_studies_course = VALUES(grad_studies_course),
+            grad_studies_year = VALUES(grad_studies_year),
+            grad_studies_level = VALUES(grad_studies_level),
+            grad_studies_last_year = VALUES(grad_studies_last_year),
+            updated_at = CURRENT_TIMESTAMP
+        ");
+
+        $stmtEdu->bind_param(
+            "isssssssssssssssssss",
+            $applicant_id, 
+            $data['inSchool'],
+            $data['elementaryCourse'], 
+            $data['elementaryYear'],
+            $data['elementaryLevel'], 
+            $data['elementaryLastYear'],
+            $data['secondaryType'], 
+            $data['secondaryCourse'], 
+            $data['secondaryYear'], 
+            $data['secondaryLevel'], 
+            $data['secondaryLastYear'], 
+            $data['seniorHighStrand'],
+            $data['tertiaryCourse'], 
+            $data['tertiaryYear'], 
+            $data['tertiaryLevel'], 
+            $data['tertiaryLastYear'],
+            $data['gradStudiesCourse'], 
+            $data['gradStudiesYear'], 
+            $data['gradStudiesLevel'], 
+            $data['gradStudiesLastYear']
+        );
+
+        if (!$stmtEdu->execute()) {
+            throw new Exception("Failed to save/update education: " . $stmtEdu->error);
+        }
+
+       $delStmt = $conn->prepare("DELETE FROM applicant_training_info WHERE applicant_id = ?");
+        $delStmt->bind_param("i", $applicant_id);
+        $delStmt->execute();
+
+        $course = $hours = $institution = $skills = $certificates = null;
+        $stmtVoc = $conn->prepare("INSERT INTO applicant_training_info (
+            applicant_id, training_course, training_hours, training_institution, training_skills, training_certificates
+        ) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmtVoc->bind_param("isisss", $applicant_id, $course, $hours, $institution, $skills, $certificates);
+
+        for ($i = 1; $i <= 3; $i++) {
+            $course       = $_POST["trainingCourse{$i}"] ?? null;
+            $hours        = !empty($_POST["trainingHours{$i}"]) ? (int)$_POST["trainingHours{$i}"] : null;
+            $institution  = $_POST["trainingInstitution{$i}"] ?? null;
+            $skills       = $_POST["trainingSkills{$i}"] ?? null;
+            $certificates = $_POST["trainingCertificates{$i}"] ?? null;
+
+            if (!empty($course) || !empty($institution)) {
+                if (!$stmtVoc->execute()) {
+                    throw new Exception("Failed to save training {$i}: " . $stmtVoc->error);
+                }
+            }
+        }
+
+
+        $stmtEdu->close();
+        $delStmt->close();
+        $stmtVoc->close();
+
+    } catch (Exception $e) {
+        throw $e;
+    }
+    }
+
     $conn->begin_transaction();
 
 
@@ -353,7 +497,7 @@ require "../connection/dbcon.php";
                 height = VALUES(height),
                 tin = VALUES(tin),
                 disability = VALUES(disability),
-                profile_picture = VALUES(profile_picture),
+                profile_picture = IF(VALUES(profile_picture) IS NULL OR VALUES(profile_picture) = '', profile_picture, VALUES(profile_picture)),
                 religion = VALUES(religion)
         ");
 
@@ -411,6 +555,7 @@ require "../connection/dbcon.php";
         
         saveEmploymentStatus($conn, $applicant_id);
         saveJobLanguageData($conn, $applicant_id);
+        saveEducationAndTraining($conn, $applicant_id, $data);
         
         handleFileUpload('resumeFile', 'resume', $conn, $applicant_id, $data, $allowedTypes, $maxFileSize);
         handleFileUpload('idFile', 'valid_id', $conn, $applicant_id, $data, $allowedTypes, $maxFileSize);
