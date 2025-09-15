@@ -22,6 +22,7 @@ require "../connection/dbcon.php";
 
     $disability = $_POST['disability'] ?? [];
     $other = $_POST['others'] ?? '';
+    
 
     if (!empty($other)) {
     $disability[] = $other;
@@ -472,6 +473,109 @@ require "../connection/dbcon.php";
     }
     }
 
+    function saveEligibilityExp($conn, $applicant_id) {
+
+    $maxRows = max(2, 2, 3);
+
+     for ($i = 1; $i <= $maxRows; $i++) {
+        $eligibility = $_POST["eligibility$i"] ?? null;
+        $eligibilityDate = !empty($_POST["eligibilityDate$i"]) ? $_POST["eligibilityDate$i"] : null;
+
+        $license = $_POST["license$i"] ?? null;
+        $licenseValid = !empty($_POST["licenseValid$i"]) ? $_POST["licenseValid$i"] : null;
+
+        $company = $_POST["company$i"] ?? null;
+        $address = $_POST["companyAddress$i"] ?? null;
+        $position = $_POST["position$i"] ?? null;
+        $months = !empty($_POST["months$i"]) ? intval($_POST["months$i"]) : null;
+        $status = $_POST["status$i"] ?? null;
+
+        if (!empty($eligibility) || !empty($license) || !empty($company)) {
+            $stmt = $conn->prepare("
+                INSERT INTO applicant_eligibility_exp 
+                    (applicant_id, eligibility, eligibility_date, license, license_valid, 
+                     company_name, company_address, position, months_worked, status)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE 
+                    eligibility = VALUES(eligibility),
+                    eligibility_date = VALUES(eligibility_date),
+                    license = VALUES(license),
+                    license_valid = VALUES(license_valid),
+                    company_name = VALUES(company_name),
+                    company_address = VALUES(company_address),
+                    position = VALUES(position),
+                    months_worked = VALUES(months_worked),
+                    status = VALUES(status)
+            ");
+
+             $stmt->bind_param(
+                "isssssssis",
+                $applicant_id,
+                $eligibility,
+                $eligibilityDate,
+                $license,
+                $licenseValid,
+                $company,
+                $address,
+                $position,
+                $months,
+                $status
+            );
+
+            $stmt->execute();
+            $stmt->close();
+        }
+    }
+    }
+
+    function saveApplicantSkills($conn, $applicant_id) {
+    $skills = $_POST['skills'] ?? [];
+    $otherSkill = $_POST['skillOtherSpecify'] ?? null;
+
+    if (!empty($otherSkill) && !in_array("others", $skills)) {
+        $skills[] = "others";
+    }
+
+    $skills = array_unique($skills);
+
+    if (!empty($skills)) {
+        $placeholders = implode(',', array_fill(0, count($skills), '?'));
+        $types = str_repeat('s', count($skills));
+        $sqlDelete = "DELETE FROM applicant_skills 
+                      WHERE applicant_id = ? 
+                      AND skill NOT IN ($placeholders)";
+        $stmtDelete = $conn->prepare($sqlDelete);
+        $stmtDelete->bind_param("i" . $types, $applicant_id, ...$skills);
+        $stmtDelete->execute();
+        $stmtDelete->close();
+    } else {
+        $stmtClear = $conn->prepare("DELETE FROM applicant_skills WHERE applicant_id = ?");
+        $stmtClear->bind_param("i", $applicant_id);
+        $stmtClear->execute();
+        $stmtClear->close();
+    }
+
+    $stmt = $conn->prepare("
+        INSERT INTO applicant_skills (applicant_id, skill, other_skill)
+        VALUES (?, ?, ?)
+        ON DUPLICATE KEY UPDATE
+            other_skill = VALUES(other_skill)
+    ");
+
+    foreach ($skills as $skill) {
+        if ($skill === "others") {
+            $otherSkill = !empty($otherSkill) ? $otherSkill : null;
+            $stmt->bind_param("iss", $applicant_id, $skill, $otherSkill);
+        } else {
+            $null = null;
+            $stmt->bind_param("iss", $applicant_id, $skill, $null);
+        }
+        $stmt->execute();
+    }
+
+    $stmt->close();
+    }
+
     $conn->begin_transaction();
 
 
@@ -488,17 +592,17 @@ require "../connection/dbcon.php";
             (applicant_id, middle_name, suffix, sex, date_of_birth, civil_status, nationality, height, tin, disability, profile_picture, religion) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE
-                middle_name = VALUES(middle_name),
-                suffix = VALUES(suffix),
-                sex = VALUES(sex),
-                date_of_birth = VALUES(date_of_birth),
-                civil_status = VALUES(civil_status),
-                nationality = VALUES(nationality),
-                height = VALUES(height),
-                tin = VALUES(tin),
-                disability = VALUES(disability),
+                middle_name = IF(VALUES(middle_name) IS NULL OR VALUES(middle_name) = '', middle_name, VALUES(middle_name)),
+                suffix = IF(VALUES(suffix) IS NULL OR VALUES(suffix) = '', suffix, VALUES(suffix)),
+                sex = IF(VALUES(sex) IS NULL OR VALUES(sex) = '', sex, VALUES(sex)),
+                date_of_birth = IF(VALUES(date_of_birth) IS NULL OR VALUES(date_of_birth) = '', date_of_birth, VALUES(date_of_birth)),
+                civil_status = IF(VALUES(civil_status) IS NULL OR VALUES(civil_status) = '', civil_status, VALUES(civil_status)),
+                nationality = IF(VALUES(nationality) IS NULL OR VALUES(nationality) = '', nationality, VALUES(nationality)),
+                height = IF(VALUES(height) IS NULL OR VALUES(height) = '', height, VALUES(height)),
+                tin = IF(VALUES(tin) IS NULL OR VALUES(tin) = '', tin, VALUES(tin)),
+                disability = IF(VALUES(disability) IS NULL OR VALUES(disability) = '', disability, VALUES(disability)),
                 profile_picture = IF(VALUES(profile_picture) IS NULL OR VALUES(profile_picture) = '', profile_picture, VALUES(profile_picture)),
-                religion = VALUES(religion)
+                religion = IF(VALUES(religion) IS NULL OR VALUES(religion) = '', religion, VALUES(religion))
         ");
 
         $stmt_profile->bind_param(
@@ -556,6 +660,8 @@ require "../connection/dbcon.php";
         saveEmploymentStatus($conn, $applicant_id);
         saveJobLanguageData($conn, $applicant_id);
         saveEducationAndTraining($conn, $applicant_id, $data);
+        saveEligibilityExp($conn, $applicant_id);
+        saveApplicantSkills($conn, $applicant_id);
         
         handleFileUpload('resumeFile', 'resume', $conn, $applicant_id, $data, $allowedTypes, $maxFileSize);
         handleFileUpload('idFile', 'valid_id', $conn, $applicant_id, $data, $allowedTypes, $maxFileSize);
