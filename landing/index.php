@@ -187,6 +187,40 @@ $data = $result->fetch_assoc();
                             </div>
                         </article>
                     </div>
+                    <div class="swiper-slide">
+                        <article class="news-card">
+                            <img src="" alt="Training" class="news-image">
+                            <div class="news-content">
+                                <h3 class="news-title">Skills Development Program</h3>
+                                <div class="news-date">
+                                    <i class="far fa-calendar-alt"></i> October 5, 2023
+                                </div>
+                                <p class="news-excerpt">
+                                    Free technical training programs now available for unemployed youth and career changers.
+                                </p>
+                                <a href="#" class="news-link">
+                                    Read More <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="swiper-slide">
+                        <article class="news-card">
+                            <img src="" alt="Business" class="news-image">
+                            <div class="news-content">
+                                <h3 class="news-title">Employer Networking Event</h3>
+                                <div class="news-date">
+                                    <i class="far fa-calendar-alt"></i> November 15, 2023
+                                </div>
+                                <p class="news-excerpt">
+                                    Connect with local employers and learn about current job openings in our monthly networking event.
+                                </p>
+                                <a href="#" class="news-link">
+                                    Read More <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
                 </div>
 
                 <!-- Navigation buttons -->
