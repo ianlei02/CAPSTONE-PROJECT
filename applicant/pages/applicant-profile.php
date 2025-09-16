@@ -921,81 +921,81 @@ function getCode($item) {
             <div class="form-group">
               <div class="checkbox-group" style="display:grid;grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-auto" name="skills" value="auto">
+                  <input type="checkbox" id="skill-auto" name="skills[]" value="auto">
                   <label for="skill-auto">AUTO MECHANIC</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-beautician" name="skills" value="beautician">
+                  <input type="checkbox" id="skill-beautician" name="skills[]" value="beautician">
                   <label for="skill-beautician">BEAUTICIAN</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-carpentry" name="skills" value="carpentry">
+                  <input type="checkbox" id="skill-carpentry" name="skills[]" value="carpentry">
                   <label for="skill-carpentry">CARPENTRY WORK</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-computer" name="skills" value="computer">
+                  <input type="checkbox" id="skill-computer" name="skills[]" value="computer">
                   <label for="skill-computer">COMPUTER LITERATE</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-domestic" name="skills" value="domestic">
+                  <input type="checkbox" id="skill-domestic" name="skills[]" value="domestic">
                   <label for="skill-domestic">DOMESTIC CHORES</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-driver" name="skills" value="driver">
+                  <input type="checkbox" id="skill-driver" name="skills[]" value="driver">
                   <label for="skill-driver">DRIVER</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-electrician" name="skills" value="electrician">
+                  <input type="checkbox" id="skill-electrician" name="skills[]" value="electrician">
                   <label for="skill-electrician">ELECTRICIAN</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-embroidery" name="skills" value="embroidery">
+                  <input type="checkbox" id="skill-embroidery" name="skills[]" value="embroidery">
                   <label for="skill-embroidery">EMBROIDERY</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-gardening" name="skills" value="gardening">
+                  <input type="checkbox" id="skill-gardening" name="skills[]" value="gardening">
                   <label for="skill-gardening">GARDENING</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-masonry" name="skills" value="masonry">
+                  <input type="checkbox" id="skill-masonry" name="skills[]" value="masonry">
                   <label for="skill-masonry">MASONRY</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-painter" name="skills" value="painter">
+                  <input type="checkbox" id="skill-painter" name="skills[]" value="painter">
                   <label for="skill-painter">PAINTER/ARTIST</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-painting" name="skills" value="painting">
+                  <input type="checkbox" id="skill-painting" name="skills[]" value="painting">
                   <label for="skill-painting">PAINTING JOBS</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-photography" name="skills" value="photography">
+                  <input type="checkbox" id="skill-photography" name="skills[]" value="photography">
                   <label for="skill-photography">PHOTOGRAPHY</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-plumbing" name="skills" value="plumbing">
+                  <input type="checkbox" id="skill-plumbing" name="skills[]" value="plumbing">
                   <label for="skill-plumbing">PLUMBING</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-sewing" name="skills" value="sewing">
+                  <input type="checkbox" id="skill-sewing" name="skills[]" value="sewing">
                   <label for="skill-sewing">SEWING DRESSES</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-stenography" name="skills" value="stenography">
+                  <input type="checkbox" id="skill-stenography" name="skills[]" value="stenography">
                   <label for="skill-stenography">STENOGRAPHY</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="skill-tailoring" name="skills" value="tailoring">
+                  <input type="checkbox" id="skill-tailoring" name="skills[]" value="tailoring">
                   <label for="skill-tailoring">TAILORING</label>
                 </div>
                 <div class="checkbox-flex" style="grid-column: span 2; display: flex; gap: 5px;">
-                  <input type="checkbox" id="skill-others" name="skills" value="others" style="display:inline-block; width: auto; height:auto;">
+                  <input type="checkbox" id="skill-others" name="skills[]" value="others" style="display:inline-block; width: auto; height:auto;">
                   <label for="skill-others">OTHERS</label>
                   <input type="text" style="max-width: fit-content;">
 
                 </div>
               </div>
-              <input type="text" id="skill-other-specify" name="skillOtherSpecify" placeholder="Please specify other skills" style="margin-top: 10px; display: none;">
+              <input type="text" id="skill-other-specify" name="skillOtherSpecify"  placeholder="Please specify other skills" style="margin-top: 10px; display: none;">
             </div>
           </div>
         </div>
