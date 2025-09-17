@@ -32,12 +32,13 @@ if (isset($_SESSION['user_id'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light" data-state="expanded">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Applications</title>
+  <script src="../js/load-saved.js"></script>
   <link rel="stylesheet" href="../css/applicant-dashboard.css" />
   <link rel="stylesheet" href="../css/navs.css" />
   <link rel="stylesheet" href="../css/table.css" />

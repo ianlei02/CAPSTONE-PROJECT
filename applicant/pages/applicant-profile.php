@@ -137,12 +137,13 @@ function getCode($item)
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light" data-state="expanded">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Applicant Dashboard</title>
+  <script src="../js/load-saved.js"></script>
   <link rel="stylesheet" href="../css/applicant-profile.css" />
   <link rel="stylesheet" href="../css/navs.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
