@@ -47,8 +47,8 @@ $data = $result->fetch_assoc();
             <li><a class="nav-link" href="./pages/find-job.php">Job Listings</a></li>
             <li><a class="nav-link" href="./pages/aboutus.php">About Us</a></li>
             <li class="auth-buttons">
-                <a href="login-signup.php?form=login"><button <a class="btn-login">Login</button></a>
-                <a href="login-signup.php?form=signup"><button <a class="btn-signup">Sign Up</button></a>
+                <a href="login-signup.php?form=login"><button class="btn-login">Login</button></a>
+                <a href="login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a>
             </li>
         </ul>
     </nav>
