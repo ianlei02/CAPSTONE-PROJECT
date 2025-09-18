@@ -4,4 +4,6 @@ function toggleTheme() {
   const newTheme = currentTheme === "dark" ? "light" : "dark";
   html.setAttribute("data-theme", newTheme);
   console.log("Theme toggled to:", newTheme);
+
+  localStorage.setItem("theme", newTheme);
 }

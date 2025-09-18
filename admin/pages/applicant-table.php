@@ -16,118 +16,453 @@
 </head>
 
 <body>
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="logo">
-      <div class="logo-icon">
-        <img
-          src="../../landing/assets/images/pesosmb.png"
-          style="width: 50px; height: 50px; margin-top: 10px"
-          alt="PESO Logo" />
-      </div>
-      <h2 style="font-size: 2.25rem">PESO</h2>
-    </div>
-    <div class="nav-menu">
-      <a class="nav-item active" href="dashboard.php">
-        <i class="fas fa-home"></i>
-        <span>Dashboard</span>
-      </a>
-      <a class="nav-item" href="./employer-table.php">
-        <i class="fas fa-building"></i>
-        <span>Employers</span>
-      </a>
-      <a class="nav-item" href="#posted-jobs">
-        <i class="fas fa-list-alt"></i>
-        <span>Posted Jobs</span>
-      </a>
-      <a class="nav-item" href="./applicant-table.php">
-        <i class="fas fa-users"></i>
-        <span>Applicants</span>
-      </a>
-      <a class="nav-item " href="./reports.php">
-        <i class="fas fa-chart-bar"></i>
-        <span>Reports</span>
-      </a>
-      <a class="nav-item" href="./news-upload.php">
-        <i class="fas fa-newspaper"></i>
-        <span>News</span>
-      </a>
-      <a class="nav-item" href="../Function/logout.php">
-        <i class="fas fa-cog"></i>
-        <span>Logout</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- Main Content -->
-  <div class="main-content">
-    <!-- Header -->
-    <div class="header">
-      <h1 style="padding: 1rem 0 0 1rem">Admin Dashboard</h1>
-      <div style="display: flex; align-items: center; gap: 20px">
-        <div class="user-profile">
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">
           <img
-            src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff"
-            alt="Admin User" />
-          <div>
-            <p>Ian Lei Castillo</p>
-            <span>SUPER ADMIN</span>
-          </div>
-          <!-- <i class="fas fa-chevron-down"></i> -->
+            src="../../landing/assets/images/pesosmb.png"
+            style="width: 50px; height: 50px; margin-top: 10px"
+            alt="PESO Logo" />
         </div>
+        <h2 style="font-size: 2.25rem">PESO</h2>
+      </div>
+      <div class="nav-menu">
+        <a class="nav-item active" href="dashboard.php">
+          <i class="fas fa-home"></i>
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-item" href="#pending-employers">
+          <i class="fas fa-building"></i>
+          <span>Employers</span>
+        </a>
+        <a class="nav-item" href="#posted-jobs">
+          <i class="fas fa-list-alt"></i>
+          <span>Posted Jobs</span>
+        </a>
+        <a class="nav-item" href="#applicants">
+          <i class="fas fa-users"></i>
+          <span>Applicants</span>
+        </a>
+        <a class="nav-item " href="reports.php">
+          <i class="fas fa-chart-bar"></i>
+          <span>Reports</span>
+        </a>
+        <a class="nav-item" href="news-upload.php">
+          <i class="fas fa-newspaper"></i>
+          <span>News</span>
+        </a>
+        <a class="nav-item" href="../Function/logout.php">
+          <i class="fas fa-cog"></i>
+          <span>Logout</span>
+        </a>
       </div>
     </div>
-    <!-- Content Wrapper -->
-    <div class="content-wrapper">
-      <!-- Stats Cards -->
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-header">
-            <h3 class="stat-title">Employers</h3>
-            <div class="stat-icon bg-primary-light">
-              <i class="fas fa-building"></i>
-            </div>
-          </div>
-          <div class="stat-value">128</div>
-          <div class="stat-label">24 pending verification</div>
-        </div>
 
-        <div class="stat-card">
-          <div class="stat-header">
-            <h3 class="stat-title">Applicants</h3>
-            <div class="stat-icon bg-success-light">
-              <i class="fas fa-user-graduate"></i>
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="header">
+        <h1>Admin Dashboard</h1>
+        <div style="display: flex; align-items: center; gap: 20px">
+          <div class="user-profile">
+            <img
+              src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff"
+              alt="Admin User" />
+            <div>
+              <p>Ian Lei Castillo</p>
+              <span>SUPER IDOL</span>
             </div>
+            <!-- <i class="fas fa-chevron-down"></i> -->
           </div>
-          <div class="stat-value">542</div>
-          <div class="stat-label">89 this week</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-header">
-            <h3 class="stat-title">Job Listings</h3>
-            <div class="stat-icon bg-warning-light">
-              <i class="fas fa-briefcase"></i>
-            </div>
-          </div>
-          <div class="stat-value">76</div>
-          <div class="stat-label">15 new listings</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-header">
-            <h3 class="stat-title">Pending Tasks</h3>
-            <div class="stat-icon bg-danger-light">
-              <i class="fas fa-tasks"></i>
-            </div>
-          </div>
-          <div class="stat-value">18</div>
-          <div class="stat-label">7 high priority</div>
         </div>
       </div>
+      <!-- Content Wrapper -->
+      <div class="content-wrapper">
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <h3 class="stat-title">Employers</h3>
+              <div class="stat-icon bg-primary-light">
+                <i class="fas fa-building"></i>
+              </div>
+            </div>
+            <div class="stat-value">128</div>
+            <div class="stat-label">24 pending verification</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <h3 class="stat-title">Applicants</h3>
+              <div class="stat-icon bg-success-light">
+                <i class="fas fa-user-graduate"></i>
+              </div>
+            </div>
+            <div class="stat-value">542</div>
+            <div class="stat-label">89 this week</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <h3 class="stat-title">Job Listings</h3>
+              <div class="stat-icon bg-warning-light">
+                <i class="fas fa-briefcase"></i>
+              </div>
+            </div>
+            <div class="stat-value">76</div>
+            <div class="stat-label">15 new listings</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <h3 class="stat-title">Pending Tasks</h3>
+              <div class="stat-icon bg-danger-light">
+                <i class="fas fa-tasks"></i>
+              </div>
+            </div>
+            <div class="stat-value">18</div>
+            <div class="stat-label">7 high priority</div>
+          </div>
+        </div>
+
+        <!-- Pending Employer Verifications Table -->
+        <div class="table-section">
+          <div class="section-header">
+            <h2 class="section-title">
+              <i class="fas fa-clock text-warning"></i>
+              Pending Employer Verifications
+            </h2>
+
+          </div>
+          <div class="table-responsive">
+            <table class="table custom-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Company Name</th>
+                  <th>Contact Person</th>
+                  <th>Email</th>
+                  <th>Submitted On</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>EMP-1025</td>
+                  <td>TechSolutions Inc.</td>
+                  <td>John Smith</td>
+                  <td>john@techsolutions.com</td>
+                  <td>2023-10-15</td>
+                  <td>
+                    <span class="status-badge badge-pending"><i class="fas fa-clock"></i> Pending</span>
+                  </td>
+                  <td>
+                    <button
+                      class="btn-view"
+                      data-bs-toggle="modal"
+                      data-bs-target="#employerModal"
+                      data-id="EMP-1025">
+                      <i class="fas fa-eye"></i> View
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>EMP-1026</td>
+                  <td>DataWorks LLC</td>
+                  <td>Sarah Johnson</td>
+                  <td>sarah@dataworks.com</td>
+                  <td>2023-10-16</td>
+                  <td>
+                    <span class="status-badge badge-pending"><i class="fas fa-clock"></i> Pending</span>
+                  </td>
+                  <td>
+                    <button
+                      class="btn-view"
+                      data-bs-toggle="modal"
+                      data-bs-target="#employerModal"
+                      data-id="EMP-1026">
+                      <i class="fas fa-eye"></i> View
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>EMP-1027</td>
+                  <td>CloudNet Systems</td>
+                  <td>Michael Brown</td>
+                  <td>michael@cloudnet.com</td>
+                  <td>2023-10-17</td>
+                  <td>
+                    <span class="status-badge badge-pending"><i class="fas fa-clock"></i> Pending</span>
+                  </td>
+                  <td>
+                    <button
+                      class="btn-view"
+                      data-bs-toggle="modal"
+                      data-bs-target="#employerModal"
+                      data-id="EMP-1027">
+                      <i class="fas fa-eye"></i> View
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Job List Table -->
+        <div class="table-section">
+          <div class="section-header">
+            <h2 class="section-title">
+              <i class="fas fa-briefcase text-primary"></i>
+              Job List
+            </h2>
+
+          </div>
+          <div class="table-responsive">
+            <table class="table custom-table">
+              <thead>
+                <tr>
+                  <th>Job ID</th>
+                  <th>Job Title</th>
+                  <th>Company</th>
+                  <th>Location</th>
+                  <th>Posted On</th>
+                  <th>Applications</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>J-2056</td>
+                  <td>Senior Software Engineer</td>
+                  <td>TechSolutions Inc.</td>
+                  <td>San Francisco, CA</td>
+                  <td>2023-10-10</td>
+                  <td>42</td>
+                  <td>
+                    <button
+                      class="btn-view"
+                      data-bs-toggle="modal"
+                      data-bs-target="#jobModal"
+                      data-id="J-2056">
+                      <i class="fas fa-eye"></i> View
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>J-2057</td>
+                  <td>Data Analyst</td>
+                  <td>DataWorks LLC</td>
+                  <td>New York, NY</td>
+                  <td>2023-10-12</td>
+                  <td>35</td>
+                  <td>
+                    <button
+                      class="btn-view"
+                      data-bs-toggle="modal"
+                      data-bs-target="#jobModal"
+                      data-id="J-2057">
+                      <i class="fas fa-eye"></i> View
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>J-2058</td>
+                  <td>Cloud Architect</td>
+                  <td>CloudNet Systems</td>
+                  <td>Remote</td>
+                  <td>2023-10-14</td>
+                  <td>28</td>
+                  <td>
+                    <button
+                      class="btn-view"
+                      data-bs-toggle="modal"
+                      data-bs-target="#jobModal"
+                      data-id="J-2058">
+                      <i class="fas fa-eye"></i> View
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Verified Employers Table -->
+        <div class="table-section">
+          <div class="section-header">
+            <h2 class="section-title">
+              <i class="fas fa-check-circle text-success"></i>
+              Verified Employers
+            </h2>
+
+          </div>
+          <div class="table-responsive">
+            <table class="table custom-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Company Name</th>
+                  <th>Industry</th>
+                  <th>Contact Email</th>
+                  <th>Verified On</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>EMP-1001</td>
+                  <td>InnovateTech Ltd.</td>
+                  <td>Information Technology</td>
+                  <td>contact@innovatetech.com</td>
+                  <td>2023-09-15</td>
+                  <td>
+                    <span class="status-badge badge-verified"><i class="fas fa-check"></i> Verified</span>
+                  </td>
+                  <td>
+                    <button
+                      class="btn-view"
+                      data-bs-toggle="modal"
+                      data-bs-target="#employerModal"
+                      data-id="EMP-1001">
+                      <i class="fas fa-eye"></i> View
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>EMP-1002</td>
+                  <td>GreenSolutions Co.</td>
+                  <td>Environmental Services</td>
+                  <td>info@greensolutions.com</td>
+                  <td>2023-09-20</td>
+                  <td>
+                    <span class="status-badge badge-verified"><i class="fas fa-check"></i> Verified</span>
+                  </td>
+                  <td>
+                    <button
+                      class="btn-view"
+                      data-bs-toggle="modal"
+                      data-bs-target="#employerModal"
+                      data-id="EMP-1002">
+                      <i class="fas fa-eye"></i> View
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>EMP-1003</td>
+                  <td>HealthCare Partners</td>
+                  <td>Healthcare</td>
+                  <td>admin@healthcarepartners.com</td>
+                  <td>2023-09-25</td>
+                  <td>
+                    <span class="status-badge badge-verified"><i class="fas fa-check"></i> Verified</span>
+                  </td>
+                  <td>
+                    <button
+                      class="btn-view"
+                      data-bs-toggle="modal"
+                      data-bs-target="#employerModal"
+                      data-id="EMP-1003">
+                      <i class="fas fa-eye"></i> View
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Recent Applicants Table -->
+        <div class="table-section">
+          <div class="section-header">
+            <h2 class="section-title">
+              <i class="fas fa-users text-info"></i>
+              Recent Applicants
+            </h2>
+          </div>
+          <div class="table-responsive">
+            <table class="table custom-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Position Applied</th>
+                  <th>Email</th>
+                  <th>Applied On</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>APP-3050</td>
+                  <td>Jennifer Wilson</td>
+                  <td>Senior Software Engineer</td>
+                  <td>jennifer.wilson@example.com</td>
+                  <td>2023-10-18</td>
+                  <td>
+                    <span class="status-badge badge-review"><i class="fas fa-clock"></i> Review</span>
+                  </td>
+                  <td>
+                    <button
+                      class="btn-view"
+                      data-bs-toggle="modal"
+                      data-bs-target="#applicantModal"
+                      data-id="APP-3050">
+                      <i class="fas fa-eye"></i> View
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>APP-3051</td>
+                  <td>Robert Davis</td>
+                  <td>Data Analyst</td>
+                  <td>robert.davis@example.com</td>
+                  <td>2023-10-17</td>
+                  <td>
+                    <span class="status-badge badge-review"><i class="fas fa-clock"></i> Review</span>
+                  </td>
+                  <td>
+                    <button
+                      class="btn-view"
+                      data-bs-toggle="modal"
+                      data-bs-target="#applicantModal"
+                      data-id="APP-3051">
+                      <i class="fas fa-eye"></i> View
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>APP-3052</td>
+                  <td>Emily Clark</td>
+                  <td>Cloud Architect</td>
+                  <td>emily.clark@example.com</td>
+                  <td>2023-10-16</td>
+                  <td>
+                    <span class="status-badge badge-review"><i class="fas fa-clock"></i> Review</span>
+                  </td>
+                  <td>
+                    <button
+                      class="btn-view"
+                      data-bs-toggle="modal"
+                      data-bs-target="#applicantModal"
+                      data-id="APP-3052">
+                      <i class="fas fa-eye"></i> View
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-
   <!-- Employer Modal -->
   <div
     class="modal fade"

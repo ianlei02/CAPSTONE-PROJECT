@@ -1,0 +1,9 @@
+{
+    "name": "user/capstone-project",
+    "description": "Capstone project: Job Hiring Decision Support System for PESO SMB.",
+    "type": "project",
+    "require": {
+        "phpmailer/phpmailer": "^6.10"
+    },
+    "license": "proprietary"
+}

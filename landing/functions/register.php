@@ -5,9 +5,9 @@ require "../connection/dbcon.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../../phpmailer/src/Exception.php';
-require '../../phpmailer/src/SMTP.php';
-require '../../phpmailer/src/PhpMailer.php';
+require '../../vendor/phpmailer/phpmailer/src/Exception.php';
+require '../../vendor/phpmailer/phpmailer/src/SMTP.php';
+require '../../vendor/phpmailer/phpmailer/src/PhpMailer.php';
 
 if(isset($_POST['signupBtn'])) {
     $user_type = mysqli_real_escape_string($conn, $_POST['user-type']); 

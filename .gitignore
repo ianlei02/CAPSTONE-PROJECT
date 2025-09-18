@@ -1,2 +1,4 @@
-phpmailer/
+# phpmailer/
 .vscode/
+
+# /vendor/
