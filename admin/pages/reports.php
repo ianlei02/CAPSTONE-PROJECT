@@ -31,7 +31,6 @@
         <div class="sidebar">
             <div class="logo">
                 <div class="logo-icon">
-                   
                     <img
                         src="../../landing/assets/images/pesosmb.png"
                         style="width: 50px; height: 50px; margin-top: 10px"
