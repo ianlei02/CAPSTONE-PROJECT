@@ -39,12 +39,13 @@ $result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light" data-state="expanded">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Job Search</title>
+  <script src="../js/load-saved.js"></script>
   <link rel="stylesheet" href="../css/applicant-job-search.css" />
   <link rel="stylesheet" href="../css/navs.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">

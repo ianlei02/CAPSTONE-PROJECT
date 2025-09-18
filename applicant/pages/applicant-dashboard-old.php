@@ -93,7 +93,6 @@ $data = $result->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -107,26 +106,25 @@ $data = $result->fetch_assoc();
   <script src="../../public-assets/library/datatable/dataTables.js" defer></script>
   <script src="../../public-assets/js/table-init.js" defer></script>
 </head>
-
-<body>
+<body >
   <nav class="navbar">
     <div class="navbar-left">
       <div class="left-pos" style="display: flex; width: auto; height: auto">
         <button class="hamburger" ">☰</button>
-        <div class=" logo">
+        <div class="logo">
           <img src="../assets/images/peso-logo.png" alt="" />
+        </div>
       </div>
-    </div>
-    <button onclick="toggleTheme()" style="padding: 0.5rem; font-size: 1rem;">DARK MODE PRACTICE LANG MUNA</button>
-    <div class="right-pos">
-      <div class="profile">
-        <img
-          src="<?php echo htmlspecialchars($profile_picture_url); ?>"
-          alt="Profile Picture"
-          class="profile-pic"
-          id="profilePicc" style="width: 50px !important;" />
+      <button onclick="toggleTheme()" style="padding: 0.5rem; font-size: 1rem;">DARK MODE PRACTICE LANG MUNA</button>
+      <div class="right-pos">
+        <div class="profile">
+          <img
+            src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+            alt="Profile Picture"
+            class="profile-pic"
+            id="profilePicc" style="width: 50px !important;" />
+        </div>
       </div>
-    </div>
     </div>
   </nav>
   <aside class="sidebar">
@@ -237,68 +235,58 @@ $data = $result->fetch_assoc();
       </div>
     </div>
     <div class="job-application-status">
-      <div class="job-application-header">
-        <h2>Recent Job Applications</h2> <a href="./applicant-applications.php" class="view-all">View All &RightArrow;</a>
+      <h2>Recent Job Applications</h2>
+      <div class="table-responsive">
+        <table class="job-application-table" id="dashboardTable">
+          <thead>
+            <tr>
+              <th>Job Title</th>
+              <th>Company</th>
+              <th>Industry</th>
+              <th>Status</th>
+              <th>Date Applied</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Software Engineer</td>
+              <td>Tech Company</td>
+              <td class="industry it">IT/Software</td>
+              <td><span class="status interview">Interview</span></td>
+              <td class="table-date">2025-10-01</td>
+            </tr>
+            <tr>
+              <td>Financial Data Analyst</td>
+              <td>Data Corp</td>
+              <td class="industry finance">Finance</td>
+              <td><span class="status applied">Applied</span></td>
+              <td class="table-date">2025-09-15</td>
+            </tr>
+            <tr>
+              <td>Project Manager</td>
+              <td>BuildSmart Inc.</td>
+              <td class="industry engineering">Engineering</td>
+              <td><span class="status referred">Referred</span></td>
+              <td class="table-date">2025-09-15</td>
+            </tr>
+            <tr>
+              <td>Clinical Data Analyst</td>
+              <td>HealthTech</td>
+              <td class="industry medicine">Medicine</td>
+              <td><span class="status hired">Hired</span></td>
+              <td class="table-date">2025-09-15</td>
+            </tr>
+            <tr>
+              <td>Operations Manager</td>
+              <td>Retail Logistics</td>
+              <td class="industry others">Others</td>
+              <td><span class="status declined">Declined</span></td>
+              <td class="table-date">2025-09-15</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="application-cards">
-        <div class="application-item">
-          <div class="application-info">
-            <div class="application-logo">
-              <img src="../../landing/assets/images/company-logos/Jollibee.png" alt="company-logo">
-            </div>
-            <div class="application-details">
-              <h3 class="application-title">Waiter</h3>
-              <div class="application-company">Jollibee Corp.</div>
-              <div class="application-location-date">
-                <span>San Ildefonso, Bulacan</span>
-                <span>9/20/2025</span>
-              </div>
-            </div>
-          </div>
-          <div class="status-action">
-            <span class="application-status status-scheduled">Interview Scheduled</span>
-            <button>View</button>
-          </div>
-        </div>
-        <div class="application-item">
-          <div class="application-info">
-            <div class="application-logo">
-              <img src="../../landing/assets/images/company-logos/7-eleven_logo.svg.png" alt="company-logo">
-            </div>
-            <div class="application-details">
-              <h3 class="application-title">Cashier</h3>
-              <div class="application-company">7-11</div>
-              <div class="application-location-date">
-                <span>San Ildefonso, Bulacan</span>
-                <span>9/20/2025</span>
-              </div>
-            </div>
-          </div>
-          <div class="status-action">
-            <span class="application-status status-scheduled">Interview Scheduled</span>
-            <button>View</button>
-          </div>
-        </div>
-        <div class="application-item">
-          <div class="application-info">
-            <div class="application-logo">
-              <img src="../../landing/assets/images/company-logos/mang-inasal-logo-png_seeklogo-543182.png" alt="company-logo">
-            </div>
-            <div class="application-details">
-              <h3 class="application-title">Janitor</h3>
-              <div class="application-company">Mang Inasal</div>
-              <div class="application-location-date">
-                <span>San Ildefonso, Bulacan</span>
-                <span>9/20/2025</span>
-              </div>
-            </div>
-          </div>
-          <div class="status-action">
-            <span class="application-status status-scheduled">Interview Scheduled</span>
-            <button>View</button>
-          </div>
-        </div>
-      </div>
+
     </div>
   </main>
 
