@@ -48,6 +48,7 @@ $result = $conn->query($sql);
   <script src="../js/load-saved.js"></script>
   <link rel="stylesheet" href="../css/applicant-job-search.css" />
   <link rel="stylesheet" href="../css/navs.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -77,35 +78,39 @@ $result = $conn->query($sql);
     <ul class="sidebar-menu">
       <li>
         <a href="./applicant-dashboard.php">
-          <span class="emoji"><img src="../../public-assets/icons/chart-histogram.svg" alt="Dashboard-icon"></span>
+          <span class="material-symbols-outlined icon">grid_view</span>
           <span class="label">Dashboard</span>
         </a>
       </li>
       <li>
         <a href="./applicant-applications.php">
-          <span class="emoji"><img src="../../public-assets/icons/briefcase.svg" alt="Applications-icon"></span>
+          <span class="material-symbols-outlined icon">work</span>
           <span class="label">My Applications</span>
         </a>
       </li>
       <li>
-
         <a href="./applicant-job-search.php">
-
-          <span class="emoji"><img src="../../public-assets/icons/search.svg" alt="Job-Search-icon"></span>
+          <span class="material-symbols-outlined icon">search</span>
           <span class="label">Job Search</span>
         </a>
       </li>
       <li>
-
         <a href="./applicant-profile.php">
-
-          <span class="emoji"><img src="../../public-assets/icons/user.svg" alt="Profile-icon"></span>
+          <span class="material-symbols-outlined icon">id_card</span>
           <span class="label">My Profile</span>
         </a>
       </li>
       <li>
-        <a href="../../landing/functions/logout.php">
-          <span class="emoji"><img src="../../public-assets/icons/download.svg" alt="Logout-icon" style="transform: rotate(90deg);"></span>
+        <button onclick="toggleTheme()" class="dark-mode-toggle">
+          <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+          <span id="themeLabel">Dark Mode</span>
+        </button>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <a href="../../landing/functions/logout.php" class="log-out-btn">
+          <span class="material-symbols-outlined icon">logout</span>
           <span class="label">Log Out</span>
         </a>
       </li>
@@ -374,7 +379,7 @@ $result = $conn->query($sql);
       });
     });
   </script>
-  
+
 
 </body>
 

@@ -1,16 +1,17 @@
 .profile-completion-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   justify-self: center;
   background: var(--white);
   border: 2px solid var(--border);
-  /* box-shadow: var(--shadow-md); */
+  width: auto;
+  height: 100%;
+  gap: 1rem;
   border-radius: 10px;
-  width: 95%;
   padding: 1rem;
   text-align: center;
-  gap: 2rem;
 }
 
 .completion-title {
@@ -22,8 +23,8 @@
 
 .progress-circle {
   position: relative;
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   /* margin: 0 auto 25px; */
 }
 
@@ -45,10 +46,9 @@
 
 .progress-text {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 24px;
+  inset: 1rem;
+  margin: 0 auto;
+  font-size: 20px;
   font-weight: bold;
   color: var(--black-light);
 }
@@ -61,16 +61,13 @@
 }
 
 .completion-message {
-  color: #7f8c8d;
-  margin-bottom: 20px;
-  font-size: 14px;
-  width: 65ch;
+  color: var(--black-light);
+  margin-bottom: 10px;
+  font-size: 12px;
   line-height: 1.5;
   font-weight: 400;
   text-align: center;
-  padding: 0 20px;
-  text-wrap: pretty;
-  /* border-left: 8px solid var(--primary-blue-color); */
+  text-wrap: wrap;
   border-radius: 1rem;
 }
 
@@ -84,7 +81,6 @@
   font-size: 14px;
   transition: background 0.3s;
 }
-
 .complete-profile-btn:hover {
   background: #2980b9;
 }
