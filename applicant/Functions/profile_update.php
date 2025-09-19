@@ -555,7 +555,7 @@ require "../connection/dbcon.php";
         $stmtClear->close();
     }
 
-    $stmt = $conn->prepare("
+     $stmt = $conn->prepare("
         INSERT INTO applicant_skills (applicant_id, skill, other_skill)
         VALUES (?, ?, ?)
         ON DUPLICATE KEY UPDATE
@@ -564,7 +564,6 @@ require "../connection/dbcon.php";
 
     foreach ($skills as $skill) {
         if ($skill === "others") {
-            $otherSkill = !empty($otherSkill) ? $otherSkill : null;
             $stmt->bind_param("iss", $applicant_id, $skill, $otherSkill);
         } else {
             $null = null;
