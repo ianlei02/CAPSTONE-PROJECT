@@ -168,7 +168,6 @@ function getCode($item)
     }
   </style>
 </head>
-
 <body>
   <nav class="navbar">
     <div class="navbar-left">

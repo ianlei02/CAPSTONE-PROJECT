@@ -32,7 +32,7 @@ if (isset($_POST['email-reset'])) {
     $stmt->bind_param("sssss", $email, $token, $expires, $token, $expires);
     $stmt->execute();
 
-    $resetLink = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/landing/login-signup.php?reset=1&email=" . urlencode($email) . "&token=$token";
+    $resetLink = "http://localhost/CAPSTONE-PROJECT/landing/login-signup.php?reset=1&email=" . urlencode($email) . "&token=$token";
 
     $mail = new PHPMailer(true);
 

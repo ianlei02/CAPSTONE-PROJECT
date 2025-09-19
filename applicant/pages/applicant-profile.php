@@ -118,12 +118,14 @@ $provinces = $data["provinces"]["data"] ?? [];
 $cities    = $data["cities"]["data"] ?? [];
 $barangays = $data["barangays"]["data"] ?? [];
 
-function getName($item) {
-    return $item['name'] ?? $item['regionName'] ?? $item['provinceName'] ?? $item['cityName'] ?? $item['barangayName'] ?? 'Unknown';
+function getName($item)
+{
+  return $item['name'] ?? $item['regionName'] ?? $item['provinceName'] ?? $item['cityName'] ?? $item['barangayName'] ?? 'Unknown';
 }
 
-function getCode($item) {
-    return $item['code'] ?? $item['psgc_id'] ?? null;
+function getCode($item)
+{
+  return $item['code'] ?? $item['psgc_id'] ?? null;
 }
 
 ?>
@@ -137,6 +139,7 @@ function getCode($item) {
   <script src="../js/load-saved.js"></script>
   <link rel="stylesheet" href="../css/applicant-profile.css" />
   <link rel="stylesheet" href="../css/navs.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     .profile-pic-container:hover .profile-pic {
@@ -167,45 +170,50 @@ function getCode($item) {
       </div>
     </div>
   </nav>
+
   <aside class="sidebar">
     <ul class="sidebar-menu">
       <li>
         <a href="./applicant-dashboard.php">
-          <span class="emoji"><img src="../../public-assets/icons/chart-histogram.svg" alt="Dashboard-icon"></span>
+          <span class="material-symbols-outlined icon">grid_view</span>
           <span class="label">Dashboard</span>
         </a>
       </li>
       <li>
         <a href="./applicant-applications.php">
-          <span class="emoji"><img src="../../public-assets/icons/briefcase.svg" alt="Applications-icon"></span>
+          <span class="material-symbols-outlined icon">work</span>
           <span class="label">My Applications</span>
         </a>
       </li>
       <li>
-
         <a href="./applicant-job-search.php">
-
-          <span class="emoji"><img src="../../public-assets/icons/search.svg" alt="Job-Search-icon"></span>
+          <span class="material-symbols-outlined icon">search</span>
           <span class="label">Job Search</span>
         </a>
       </li>
       <li>
-
         <a href="./applicant-profile.php">
-
-          <span class="emoji"><img src="../../public-assets/icons/user.svg" alt="Profile-icon"></span>
+          <span class="material-symbols-outlined icon">id_card</span>
           <span class="label">My Profile</span>
         </a>
       </li>
       <li>
-
-        <a href="../../landing/functions/logout.php">
-          <span class="emoji"><img src="../../public-assets/icons/download.svg" alt="Logout-icon" style="transform: rotate(90deg);"></span>
+        <button onclick="toggleTheme()" class="dark-mode-toggle">
+          <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+          <span id="themeLabel">Dark Mode</span>
+        </button>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <a href="../../landing/functions/logout.php" class="log-out-btn">
+          <span class="material-symbols-outlined icon">logout</span>
           <span class="label">Log Out</span>
         </a>
       </li>
     </ul>
   </aside>
+
   <main class="main-content">
     <div class="profile-container">
       <form action="../Functions/profile_update.php" method="POST" id="profileForm" enctype="multipart/form-data">
@@ -317,15 +325,15 @@ function getCode($item) {
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
 
                 <select id="region" name="region" required>
-                        <option value="">Select Region</option>
-                        <?php foreach ($regions as $reg):
-                          $code = getCode($reg); ?>
-                          <option value="<?= htmlspecialchars($code) ?>"
-                            <?= ($saved_region == $code) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($reg['name']) ?>
-                          </option>
-                        <?php endforeach; ?>
-                      </select>
+                  <option value="">Select Region</option>
+                  <?php foreach ($regions as $reg):
+                    $code = getCode($reg); ?>
+                    <option value="<?= htmlspecialchars($code) ?>"
+                      <?= ($saved_region == $code) ? 'selected' : '' ?>>
+                      <?= htmlspecialchars($reg['name']) ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
 
                 <select id="province" name="province" required>
                   <option value="">Select Province</option>
@@ -349,17 +357,7 @@ function getCode($item) {
                   <?php endforeach; ?>
                 </select>
 
-                <select id="barangay" name="barangay" required>
-                  <option value="">Select Barangay</option>
-                  <?php foreach ($barangays as $brgy):
-                    $code = getCode($brgy); ?>
-                    <option value="<?= htmlspecialchars($code) ?>"
-                      <?= ($saved_barangay == $code) ? 'selected' : '' ?>>
-                      <?= htmlspecialchars(getName($brgy)) ?>
-                    </option>
-                  <?php endforeach; ?>
-                </select>
-                
+                <input type="text" id="barangay" name="barangay" placeholder="Barangay" required>
               </div>
               <input type="hidden" name="region_name" id="region_name">
               <input type="hidden" name="province_name" id="province_name">
@@ -996,7 +994,7 @@ function getCode($item) {
 
                 </div>
               </div>
-              <input type="text" id="skill-other-specify" name="skillOtherSpecify"  placeholder="Please specify other skills" style="margin-top: 10px; display: none;">
+              <input type="text" id="skill-other-specify" name="skillOtherSpecify" placeholder="Please specify other skills" style="margin-top: 10px; display: none;">
             </div>
           </div>
         </div>
@@ -1309,87 +1307,86 @@ function getCode($item) {
   <script src="../js/responsive.js"></script>
   <script src="../js/dark-mode.js"></script>
   <script>
-const regionSel = document.getElementById('region');
-const provinceSel = document.getElementById('province');
-const citySel = document.getElementById('city');
-const barangaySel = document.getElementById('barangay');
+    const regionSel = document.getElementById('region');
+    const provinceSel = document.getElementById('province');
+    const citySel = document.getElementById('city');
+    const barangaySel = document.getElementById('barangay');
 
-// Reset helper
-function reset(selectEl, placeholder) {
-  selectEl.innerHTML = `<option value="">${placeholder}</option>`;
-  selectEl.disabled = true;
-}
+    // Reset helper
+    function reset(selectEl, placeholder) {
+      selectEl.innerHTML = `<option value="">${placeholder}</option>`;
+      selectEl.disabled = true;
+    }
 
-// Inject PHP JSON arrays into JS
-const regions   = <?= json_encode($regions) ?>;
-const provinces = <?= json_encode($provinces) ?>;
-const cities    = <?= json_encode($cities) ?>;
-const barangays = <?= json_encode($barangays) ?>;
+    // Inject PHP JSON arrays into JS
+    const regions = <?= json_encode($regions) ?>;
+    const provinces = <?= json_encode($provinces) ?>;
+    const cities = <?= json_encode($cities) ?>;
+    const barangays = <?= json_encode($barangays) ?>;
 
-/* --- Region Change --- */
-regionSel.addEventListener('change', () => {
-  const regionName = regionSel.options[regionSel.selectedIndex].text;
+    /* --- Region Change --- */
+    regionSel.addEventListener('change', () => {
+      const regionName = regionSel.options[regionSel.selectedIndex].text;
 
-  reset(provinceSel, 'Select Province');
-  reset(citySel, 'Select City/Municipality');
-  reset(barangaySel, 'Select Barangay');
+      reset(provinceSel, 'Select Province');
+      reset(citySel, 'Select City/Municipality');
+      reset(barangaySel, 'Select Barangay');
 
-  if (!regionSel.value) return;
+      if (!regionSel.value) return;
 
-  provinces
-    .filter(p => p.region === regionName)
-    .forEach(p => {
-      const opt = document.createElement('option');
-      opt.value = p.code;
-      opt.textContent = p.name;
-      provinceSel.appendChild(opt);
+      provinces
+        .filter(p => p.region === regionName)
+        .forEach(p => {
+          const opt = document.createElement('option');
+          opt.value = p.code;
+          opt.textContent = p.name;
+          provinceSel.appendChild(opt);
+        });
+
+      provinceSel.disabled = false;
     });
 
-  provinceSel.disabled = false;
-});
+    /* --- Province Change --- */
+    provinceSel.addEventListener('change', () => {
+      const provName = provinceSel.options[provinceSel.selectedIndex].text;
 
-/* --- Province Change --- */
-provinceSel.addEventListener('change', () => {
-  const provName = provinceSel.options[provinceSel.selectedIndex].text;
+      reset(citySel, 'Select City/Municipality');
+      reset(barangaySel, 'Select Barangay');
 
-  reset(citySel, 'Select City/Municipality');
-  reset(barangaySel, 'Select Barangay');
+      if (!provinceSel.value) return;
 
-  if (!provinceSel.value) return;
+      cities
+        .filter(c => c.province === provName)
+        .forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = c.code;
+          opt.textContent = c.name;
+          citySel.appendChild(opt);
+        });
 
-  cities
-    .filter(c => c.province === provName)
-    .forEach(c => {
-      const opt = document.createElement('option');
-      opt.value = c.code;
-      opt.textContent = c.name;
-      citySel.appendChild(opt);
+      citySel.disabled = false;
     });
 
-  citySel.disabled = false;
-});
+    /* --- City Change --- */
+    citySel.addEventListener('change', () => {
+      const cityName = citySel.options[citySel.selectedIndex].text;
 
-/* --- City Change --- */
-citySel.addEventListener('change', () => {
-  const cityName = citySel.options[citySel.selectedIndex].text;
+      reset(barangaySel, 'Select Barangay');
 
-  reset(barangaySel, 'Select Barangay');
+      if (!citySel.value) return;
 
-  if (!citySel.value) return;
+      barangays
+        .filter(b => b.city_municipality === cityName)
+        .forEach(b => {
+          const opt = document.createElement('option');
+          opt.value = b.code;
+          opt.textContent = b.name;
+          barangaySel.appendChild(opt);
+        });
 
-  barangays
-    .filter(b => b.city_municipality === cityName)
-    .forEach(b => {
-      const opt = document.createElement('option');
-      opt.value = b.code;
-      opt.textContent = b.name;
-      barangaySel.appendChild(opt);
+      barangaySel.disabled = false;
     });
-
-  barangaySel.disabled = false;
-});
-
-</script>
+  </script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
