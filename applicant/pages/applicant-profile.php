@@ -644,21 +644,21 @@ require_once '../Functions/getDataDisplay.php';
                 <tbody>
                   <tr>
                     <td><input type="text" name="trainingCourse1"></td>
-                    <td><input type="number" name="trainingHours1"></td>
+                    <td><input type="number" min="1" name="trainingHours1"></td>
                     <td><input type="text" name="trainingInstitution1"></td>
                     <td><input type="text" name="trainingSkills1"></td>
                     <td><input type="text" name="trainingCertificates1"></td>
                   </tr>
                   <tr>
                     <td><input type="text" name="trainingCourse2"></td>
-                    <td><input type="number" name="trainingHours2"></td>
+                    <td><input type="number" min="1" name="trainingHours2"></td>
                     <td><input type="text" name="trainingInstitution2"></td>
                     <td><input type="text" name="trainingSkills2"></td>
                     <td><input type="text" name="trainingCertificates2"></td>
                   </tr>
                   <tr>
                     <td><input type="text" name="trainingCourse3"></td>
-                    <td><input type="number" name="trainingHours3"></td>
+                    <td><input type="number" min="1" name="trainingHours3"></td>
                     <td><input type="text" name="trainingInstitution3"></td>
                     <td><input type="text" name="trainingSkills3"></td>
                     <td><input type="text" name="trainingCertificates3"></td>
@@ -1100,6 +1100,7 @@ require_once '../Functions/getDataDisplay.php';
     const profileData = <?php echo $profileJson; ?>;
     const contactData = <?php echo $contactJson; ?>;
     const docsData = <?php echo $docsJson; ?>;
+    const trainingData = <?php echo $trainingJson; ?>;
 
     document.addEventListener('DOMContentLoaded', function() {
 
@@ -1142,7 +1143,6 @@ require_once '../Functions/getDataDisplay.php';
       });
       }
 
-
       if (contactData) {
         document.getElementById('mobile').value = contactData.mobile_number || '';
         document.getElementById('street').value = contactData.street_address || '';
@@ -1162,8 +1162,39 @@ require_once '../Functions/getDataDisplay.php';
           }
         });
       }
+      if (trainingData && trainingData.length > 0) {
+      trainingData.forEach((training, index) => {
+      const i = index + 1;
+      if (document.querySelector(`[name="trainingCourse${i}"]`)) {
+        document.querySelector(`[name="trainingCourse${i}"]`).value = training.training_course || '';
+        document.querySelector(`[name="trainingHours${i}"]`).value = training.training_hours || '';
+        document.querySelector(`[name="trainingInstitution${i}"]`).value = training.training_institution || '';
+        document.querySelector(`[name="trainingSkills${i}"]`).value = training.training_skills || '';
+        document.querySelector(`[name="trainingCertificates${i}"]`).value = training.training_certificates || '';
+      }
     });
-       
+  }
+  });
+  
+    const savedSkills = <?php echo json_encode($skills); ?>;
+    const savedOtherSkill = <?php echo json_encode($otherSkill); ?>;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      savedSkills.forEach(skill => {
+    const checkbox = document.querySelector('input[name="skills[]"][value="' + skill + '"]');
+    if (checkbox) checkbox.checked = true;
+    });
+      if (savedOtherSkill && savedOtherSkill.trim() !== "") {
+      const othersCheckbox = document.querySelector('input[name="skills[]"][value="others"]');
+      const othersInput = document.getElementById("skill-other-specify");
+
+      if (othersCheckbox) othersCheckbox.checked = true;
+      if (othersInput) {
+        othersInput.style.display = "block";
+        othersInput.value = savedOtherSkill;
+      }
+    }
+  });
   </script>
   <script>
     document.getElementById('profileForm').addEventListener('submit', async function(e) {
@@ -1290,7 +1321,6 @@ require_once '../Functions/getDataDisplay.php';
       barangaySel.disabled = false;
     });
   </script>
-
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const form = document.querySelector("form");

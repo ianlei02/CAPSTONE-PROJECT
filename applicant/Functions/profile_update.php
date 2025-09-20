@@ -23,6 +23,7 @@ require "../connection/dbcon.php";
     $disability = $_POST['disability'] ?? [];
     $other = $_POST['others'] ?? '';
     
+    
 
     if (!empty($other)) {
     $disability[] = $other;
@@ -143,13 +144,13 @@ require "../connection/dbcon.php";
         );
 
         return $stmt->execute();
-    }
-
+    
         if (
         !empty($data['portfolioLink']) || 
         !empty($data['gdriveLink']) || 
         !empty($data['otherLinks'])
-    ) {
+        ) 
+        {
         $stmt = $conn->prepare("INSERT INTO applicant_documents 
             (applicant_id, document_type, original_filename, stored_filename, file_path, file_type, file_size, port_link, drive_link, other_link) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -173,6 +174,8 @@ require "../connection/dbcon.php";
 
         $stmt->execute();
     }
+
+}
 
     function handleApplicantProfilePictureUpload($conn, $applicant_id, $allowedTypes, $maxFileSize) {
         if (empty($_FILES['profilePicture']['name']) || $_FILES['profilePicture']['error'] !== UPLOAD_ERR_OK) {
@@ -438,35 +441,50 @@ require "../connection/dbcon.php";
         if (!$stmtEdu->execute()) {
             throw new Exception("Failed to save/update education: " . $stmtEdu->error);
         }
+        $stmtEdu->close();
 
-       $delStmt = $conn->prepare("DELETE FROM applicant_training_info WHERE applicant_id = ?");
-        $delStmt->bind_param("i", $applicant_id);
-        $delStmt->execute();
-
-        $course = $hours = $institution = $skills = $certificates = null;
-        $stmtVoc = $conn->prepare("INSERT INTO applicant_training_info (
-            applicant_id, training_course, training_hours, training_institution, training_skills, training_certificates
-        ) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmtVoc->bind_param("isisss", $applicant_id, $course, $hours, $institution, $skills, $certificates);
-
+        $newDataExists = false;
         for ($i = 1; $i <= 3; $i++) {
-            $course       = $_POST["trainingCourse{$i}"] ?? null;
-            $hours        = !empty($_POST["trainingHours{$i}"]) ? (int)$_POST["trainingHours{$i}"] : null;
-            $institution  = $_POST["trainingInstitution{$i}"] ?? null;
-            $skills       = $_POST["trainingSkills{$i}"] ?? null;
-            $certificates = $_POST["trainingCertificates{$i}"] ?? null;
-
-            if (!empty($course) || !empty($institution)) {
-                if (!$stmtVoc->execute()) {
-                    throw new Exception("Failed to save training {$i}: " . $stmtVoc->error);
-                }
+            if (
+                !empty($_POST["trainingCourse{$i}"]) ||
+                !empty($_POST["trainingHours{$i}"]) ||
+                !empty($_POST["trainingInstitution{$i}"]) ||
+                !empty($_POST["trainingSkills{$i}"]) ||
+                !empty($_POST["trainingCertificates{$i}"])
+            ) {
+                $newDataExists = true;
+                break;
             }
         }
+        
+        if ($newDataExists) {
+        $delStmt = $conn->prepare("DELETE FROM applicant_training_info WHERE applicant_id = ?");
+            $delStmt->bind_param("i", $applicant_id);
+            $delStmt->execute();
+            $delStmt->close();
 
+            $course = $hours = $institution = $skills = $certificates = null;
+            $stmtVoc = $conn->prepare("INSERT INTO applicant_training_info (
+                applicant_id, training_course, training_hours, training_institution, training_skills, training_certificates
+            ) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmtVoc->bind_param("isisss", $applicant_id, $course, $hours, $institution, $skills, $certificates);
 
-        $stmtEdu->close();
-        $delStmt->close();
-        $stmtVoc->close();
+            for ($i = 1; $i <= 3; $i++) {
+                $course       = $_POST["trainingCourse{$i}"] ?? null;
+                $hours        = !empty($_POST["trainingHours{$i}"]) ? (int)$_POST["trainingHours{$i}"] : null;
+                $institution  = $_POST["trainingInstitution{$i}"] ?? null;
+                $skills       = $_POST["trainingSkills{$i}"] ?? null;
+                $certificates = $_POST["trainingCertificates{$i}"] ?? null;
+
+                if (!empty($course) || !empty($institution) || !empty($skills) || !empty($certificates) || !empty($hours)) {
+                    if (!$stmtVoc->execute()) {
+                        throw new Exception("Failed to save training {$i}: " . $stmtVoc->error);
+                    }
+                }
+            }
+
+            $stmtVoc->close();
+        }
 
     } catch (Exception $e) {
         throw $e;
