@@ -13,16 +13,14 @@ require_once '../Functions/getinfo.php';
   <script src="../js/load-saved.js"></script>
   <link rel="stylesheet" href="../css/applicant-dashboard.css" />
   <link rel="stylesheet" href="../css/navs.css">
-  <link rel="stylesheet" href="../css/table.css">
   <link rel="stylesheet" href="../css/profile-completion.css">
-  <link rel="stylesheet" href="../../public-assets/library/datatable/dataTables.css">
-
-  <script src="../../public-assets/JS_JQUERY/jquery-3.7.1.min.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <!-- <script src="../../public-assets/JS_JQUERY/jquery-3.7.1.min.js" defer></script>
   <script src="../../public-assets/library/datatable/dataTables.js" defer></script>
-  <script src="../../public-assets/js/table-init.js" defer></script>
+  <script src="../../public-assets/js/table-init.js" defer></script> -->
 </head>
 
-<body data-state="expanded">
+<body>
   <nav class="navbar">
     <div class="navbar-left">
       <div class="left-pos" style="display: flex; width: auto; height: auto">
@@ -31,7 +29,7 @@ require_once '../Functions/getinfo.php';
           <img src="../assets/images/peso-logo.png" alt="" />
       </div>
     </div>
-    <button onclick="toggleTheme()" style="padding: 0.5rem; font-size: 1rem;">DARK MODE PRACTICE LANG MUNA</button>
+
     <div class="right-pos">
       <div class="profile">
         <img
@@ -47,31 +45,39 @@ require_once '../Functions/getinfo.php';
     <ul class="sidebar-menu">
       <li>
         <a href="./applicant-dashboard.php">
-          <span class="emoji"><img src="../../public-assets/icons/chart-histogram.svg" alt="Dashboard-icon"></span>
+          <span class="material-symbols-outlined icon">grid_view</span>
           <span class="label">Dashboard</span>
         </a>
       </li>
       <li>
         <a href="./applicant-applications.php">
-          <span class="emoji"><img src="../../public-assets/icons/briefcase.svg" alt="Applications-icon"></span>
+          <span class="material-symbols-outlined icon">work</span>
           <span class="label">My Applications</span>
         </a>
       </li>
       <li>
         <a href="./applicant-job-search.php">
-          <span class="emoji"><img src="../../public-assets/icons/search.svg" alt="Job-Search-icon"></span>
+          <span class="material-symbols-outlined icon">search</span>
           <span class="label">Job Search</span>
         </a>
       </li>
       <li>
         <a href="./applicant-profile.php">
-          <span class="emoji"><img src="../../public-assets/icons/user.svg" alt="Profile-icon"></span>
+          <span class="material-symbols-outlined icon">id_card</span>
           <span class="label">My Profile</span>
         </a>
       </li>
       <li>
-        <a href="../../landing/functions/logout.php">
-          <span class="emoji"><img src="../../public-assets/icons/download.svg" alt="Logout-icon" style="transform: rotate(90deg);"></span>
+        <button onclick="toggleTheme()" class="dark-mode-toggle">
+          <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+          <span id="themeLabel">Dark Mode</span>
+        </button>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <a href="../../landing/functions/logout.php" class="log-out-btn">
+          <span class="material-symbols-outlined icon">logout</span>
           <span class="label">Log Out</span>
         </a>
       </li>
@@ -81,75 +87,84 @@ require_once '../Functions/getinfo.php';
     <div class="main-header">
       <h1>Welcome, Applicant!</h1>
     </div>
-    <div class="profile-completion-container">
-      <div class="progress-circle">
-        <svg viewBox="0 0 100 100">
-          <circle class="progress-circle-background" cx="50" cy="50" r="<?php echo $radius; ?>"></circle>
-          <circle class="progress-circle-progress"
-            cx="50" cy="50" r="<?php echo $radius; ?>"
-            stroke-dasharray="<?php echo $circumference; ?>"
-            stroke-dashoffset="<?php echo $offset; ?>">
-          </circle>
-        </svg>
-        <div class="progress-text">
-          <?php echo $progress; ?>%
-          <span>COMPLETE</span>
+    <div class="statistics-container ">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-header">
+            <h3 class="stat-title">Applications</h3>
+            <div class="stat-icon bg-primary-light">
+              <i class="fas fa-building"></i>
+            </div>
+          </div>
+          <div class="stat-value">10</div>
+          <div class="stat-label">5 pending applications</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <h3 class="stat-title">Interviews</h3>
+            <div class="stat-icon bg-success-light">
+              <i class="fas fa-user-graduate"></i>
+            </div>
+          </div>
+          <div class="stat-value">2</div>
+          <div class="stat-label">This month</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <h3 class="stat-title">Referred</h3>
+            <div class="stat-icon bg-warning-light">
+              <i class="fas fa-briefcase"></i>
+            </div>
+          </div>
+          <div class="stat-value">4</div>
+          <div class="stat-label">2 new referrals</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <h3 class="stat-title">Hired</h3>
+            <div class="stat-icon bg-danger-light">
+              <i class="fas fa-tasks"></i>
+            </div>
+          </div>
+          <div class="stat-value">1</div>
+          <div class="stat-label">7 high priority</div>
         </div>
       </div>
-      <div class="message-button">
-        <div class="completion-message">
-          Complete your profile to find jobs before you can apply. The more complete your profile is, the better
-          your chances of getting hired.
+      <div class="profile-completion-container">
+        <div class="progress-circle">
+          <svg viewBox="0 0 100 100">
+            <circle class="progress-circle-background" cx="50" cy="50" r="<?php echo $radius; ?>"></circle>
+            <circle class="progress-circle-progress"
+              cx="50" cy="50" r="<?php echo $radius; ?>"
+              stroke-dasharray="<?php echo $circumference; ?>"
+              stroke-dashoffset="<?php echo $offset; ?>">
+            </circle>
+          </svg>
+          <div class="progress-text">
+            <?php echo $progress; ?>%
+            <span>COMPLETE</span>
+          </div>
         </div>
-        <button class="complete-profile-btn" onclick=" windows.location.href = 'application-profile.php'">Complete My Profile</button>
-      </div>
-      <div class="missing-items">
-        <strong>Missing information:</strong>
-        <ul>
-          <li>Work history</li>
-          <li>Skills</li>
-          <li>Profile photo</li>
-        </ul>
-      </div>
-    </div>
-    <div class="statistics-container gradient">
-      <div class="statistic-card">
-        <h2>Applications</h2>
-        <p>5</p>
-      </div>
-      <div class="statistic-card">
-        <h2>Interviews</h2>
-        <p>3</p>
-      </div>
-      <div class="statistic-card">
-        <h2>Referred</h2>
-        <p>2</p>
-      </div>
-      <div class="statistic-card">
-        <h2>Job Listings</h2>
-        <p>
-          <?php
-          echo $data['total_jobs'];
-          ?>
-        </p>
-      </div>
-      <div class="statistic-card">
-        <h2>Registered Employers</h2>
-        <p>
-          <?php
-          echo $data['total_employers'];
-          ?>
-        </p>
-      </div>
-      <div class="statistic-card">
-        <h2>Registered Applicants</h2>
-        <p>
-          <?php
-          echo $data['total_applicants'];
-          ?>
-        </p>
+        <div class="message-button">
+          <div class="completion-message">
+            Complete your profile before you apply.
+          </div>
+          <button class="complete-profile-btn" onclick=" windows.location.href = 'application-profile.php'">Complete My Profile</button>
+        </div>
+        <!-- <div class="missing-items">
+          <strong>Missing information:</strong>
+          <ul>
+            <li>Work history</li>
+            <li>Skills</li>
+            <li>Profile photo</li>
+          </ul>
+        </div> -->
       </div>
     </div>
+
     <div class="job-application-status">
       <div class="job-application-header">
         <h2>Recent Job Applications</h2> <a href="./applicant-applications.php" class="view-all">View All &RightArrow;</a>
@@ -215,6 +230,9 @@ require_once '../Functions/getinfo.php';
       </div>
     </div>
   </main>
+  <!-- <button class="floating-icon">
+    <span class="material-symbols-outlined">dark_mode</span>
+  </button> -->
 
   <script src="../js/responsive.js"></script>
   <script src="../js/dark-mode.js"></script>

@@ -39,13 +39,14 @@ if (isset($_SESSION['user_id'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Applications</title>
   <script src="../js/load-saved.js"></script>
-  <link rel="stylesheet" href="../css/applicant-dashboard.css" />
+  <!-- <link rel="stylesheet" href="../css/applicant-dashboard.css" /> -->
   <link rel="stylesheet" href="../css/navs.css" />
-  <link rel="stylesheet" href="../css/table.css" />
+  <link rel="stylesheet" href="../css/applicant-applications.css" />
   <link rel="stylesheet" href="../../public-assets/library/datatable/dataTables.css">
-  <script src="../../public-assets/JS_JQUERY/jquery-3.7.1.min.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <!-- <script src="../../public-assets/JS_JQUERY/jquery-3.7.1.min.js" defer></script>
   <script src="../../public-assets/library/datatable/dataTables.js" defer></script>
-  <script src="../../public-assets/js/table-init.js" defer></script>
+  <script src="../../public-assets/js/table-init.js" defer></script> -->
 </head>
 
 <body>
@@ -74,31 +75,39 @@ if (isset($_SESSION['user_id'])) {
     <ul class="sidebar-menu">
       <li>
         <a href="./applicant-dashboard.php">
-          <span class="emoji"><img src="../../public-assets/icons/chart-histogram.svg" alt="Dashboard-icon"></span>
+          <span class="material-symbols-outlined icon">grid_view</span>
           <span class="label">Dashboard</span>
         </a>
       </li>
       <li>
         <a href="./applicant-applications.php">
-          <span class="emoji"><img src="../../public-assets/icons/briefcase.svg" alt="Applications-icon"></span>
+          <span class="material-symbols-outlined icon">work</span>
           <span class="label">My Applications</span>
         </a>
       </li>
       <li>
         <a href="./applicant-job-search.php">
-          <span class="emoji"><img src="../../public-assets/icons/search.svg" alt="Job-Search-icon"></span>
+          <span class="material-symbols-outlined icon">search</span>
           <span class="label">Job Search</span>
         </a>
       </li>
       <li>
         <a href="./applicant-profile.php">
-          <span class="emoji"><img src="../../public-assets/icons/user.svg" alt="Profile-icon"></span>
+          <span class="material-symbols-outlined icon">id_card</span>
           <span class="label">My Profile</span>
         </a>
       </li>
       <li>
-        <a href="../../landing/functions/logout.php">
-          <span class="emoji"><img src="../../public-assets/icons/download.svg" alt="Logout-icon" style="transform: rotate(90deg);"></span>
+        <button onclick="toggleTheme()" class="dark-mode-toggle">
+          <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+          <span id="themeLabel">Dark Mode</span>
+        </button>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <a href="../../landing/functions/logout.php" class="log-out-btn">
+          <span class="material-symbols-outlined icon">logout</span>
           <span class="label">Log Out</span>
         </a>
       </li>
@@ -106,143 +115,68 @@ if (isset($_SESSION['user_id'])) {
   </aside>
 
   <main class="main-content">
+    <div class="job-application-header">
+      <h2>Job Applications</h2>
+    </div>
     <div class="job-application-status">
-      <h2>Job Application/s</h2>
-      <div class="table-responsive">
-        <table class="job-application-table" id="dashboardTable">
-          <thead>
-            <tr>
-              <th>Job Title</th>
-              <th>Company</th>
-              <th>Industry</th>
-              <th>Status</th>
-              <th>Date Applied</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Software Engineer</td>
-              <td>Tech Company</td>
-              <td class="industry it">IT/Software</td>
-              <td><span class="status interview">Interview</span></td>
-              <td class="table-date">2025-10-01</td>
-              <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
-            </tr>
-            <tr>
-              <td>Data Analyst</td>
-              <td>Data Corp</td>
-              <td class="industry finance">Finance</td>
-              <td><span class="status applied">Applied</span></td>
-              <td class="table-date">2025-09-15</td>
-              <td><button class="action-btn cancel-btn">Cancel</button></td>
-            </tr>
-            <tr>
-              <td>Manager</td>
-              <td>Data Corp</td>
-              <td class="industry finance">Finance</td>
-              <td><span class="status referred">Referred</span></td>
-              <td class="table-date">2025-09-15</td>
-              <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
-            </tr>
-            <tr>
-              <td>Data Analyst</td>
-              <td>Data Corp</td>
-              <td class="industry finance">Finance</td>
-              <td><span class="status hired">Hired</span></td>
-              <td class="table-date">2025-09-15</td>
-              <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
-            </tr>
-            <tr>
-              <td>Manager</td>
-              <td>Data Corp</td>
-              <td class="industry finance">Finance</td>
-              <td><span class="status declined">Declined</span></td>
-              <td class="table-date">2025-09-15</td>
-              <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
-            </tr>
-            <tr>
-              <td>Frontend Developer</td>
-              <td>Web Solutions</td>
-              <td class="industry it">IT/Software</td>
-              <td><span class="status interview">Interview</span></td>
-              <td class="table-date">2025-08-22</td>
-              <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
-            </tr>
-            <tr>
-              <td>UX Designer</td>
-              <td>Design Studio</td>
-              <td class="industry others">Others</td>
-              <td><span class="status applied">Applied</span></td>
-              <td class="table-date">2025-07-30</td>
-              <td><button class="action-btn cancel-btn">Cancel</button></td>
-            </tr>
-            <tr>
-              <td>Project Manager</td>
-              <td>BuildSmart Inc.</td>
-              <td class="industry engineering">Engineering</td>
-              <td><span class="status referred">Referred</span></td>
-              <td class="table-date">2025-08-10</td>
-              <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
-            </tr>
-            <tr>
-              <td>QA Tester</td>
-              <td>QualitySoft</td>
-              <td class="industry it">IT/Software</td>
-              <td><span class="status hired">Hired</span></td>
-              <td class="table-date">2025-07-01</td>
-              <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
-            </tr>
-            <tr>
-              <td>DevOps Engineer</td>
-              <td>CloudStack</td>
-              <td class="industry it">IT/Software</td>
-              <td><span class="status declined">Declined</span></td>
-              <td class="table-date">2025-09-05</td>
-              <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
-            </tr>
-            <tr>
-              <td>Backend Developer</td>
-              <td>ServerTech</td>
-              <td class="industry it">IT/Software</td>
-              <td><span class="status interview">Interview</span></td>
-              <td class="table-date">2025-10-03</td>
-              <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
-            </tr>
-            <tr>
-              <td>AI Researcher</td>
-              <td>NeuralNet AI</td>
-              <td class="industry it">IT/Software</td>
-              <td><span class="status applied">Applied</span></td>
-              <td class="table-date">2025-08-12</td>
-              <td><button class="action-btn cancel-btn">Cancel</button></td>
-            </tr>
-            <tr>
-              <td>Business Analyst</td>
-              <td>MarketWise</td>
-              <td class="industry finance">Finance</td>
-              <td><span class="status referred">Referred</span></td>
-              <td class="table-date">2025-07-25</td>
-              <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
-            </tr>
-            <tr>
-              <td>Scrum Master</td>
-              <td>AgileWorks</td>
-              <td class="industry it">IT/Software</td>
-              <td><span class="status hired">Hired</span></td>
-              <td class="table-date">2025-06-18</td>
-              <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
-            </tr>
-            <tr>
-              <td>IT Support Specialist</td>
-              <td>HelpDesk Pro</td>
-              <td class="industry it">IT/Software</td>
-              <td><span class="status declined">Declined</span></td>
-              <td class="table-date">2025-07-09</td>
-              <td><button class="action-btn cancel-btn" disabled>Cancel</button></td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="application-cards">
+        <div class="application-item">
+          <div class="application-info">
+            <div class="application-logo">
+              <img src="../../landing/assets/images/company-logos/Jollibee.png" alt="company-logo">
+            </div>
+            <div class="application-details">
+              <h3 class="application-title">Waiter</h3>
+              <div class="application-company">Jollibee Corp.</div>
+              <div class="application-location-date">
+                <span>San Ildefonso, Bulacan</span>
+                <span>9/20/2025</span>
+              </div>
+            </div>
+          </div>
+          <div class="status-action">
+            <span class="application-status status-scheduled">Interview Scheduled</span>
+            <button>View</button>
+          </div>
+        </div>
+        <div class="application-item">
+          <div class="application-info">
+            <div class="application-logo">
+              <img src="../../landing/assets/images/company-logos/7-eleven_logo.svg.png" alt="company-logo">
+            </div>
+            <div class="application-details">
+              <h3 class="application-title">Cashier</h3>
+              <div class="application-company">7-11</div>
+              <div class="application-location-date">
+                <span>San Ildefonso, Bulacan</span>
+                <span>9/20/2025</span>
+              </div>
+            </div>
+          </div>
+          <div class="status-action">
+            <span class="application-status status-scheduled">Interview Scheduled</span>
+            <button>View</button>
+          </div>
+        </div>
+        <div class="application-item">
+          <div class="application-info">
+            <div class="application-logo">
+              <img src="../../landing/assets/images/company-logos/mang-inasal-logo-png_seeklogo-543182.png" alt="company-logo">
+            </div>
+            <div class="application-details">
+              <h3 class="application-title">Janitor</h3>
+              <div class="application-company">Mang Inasal</div>
+              <div class="application-location-date">
+                <span>San Ildefonso, Bulacan</span>
+                <span>9/20/2025</span>
+              </div>
+            </div>
+          </div>
+          <div class="status-action">
+            <span class="application-status status-scheduled">Interview Scheduled</span>
+            <button>View</button>
+          </div>
+        </div>
       </div>
     </div>
   </main>
