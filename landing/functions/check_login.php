@@ -5,6 +5,9 @@ require __DIR__ . '/../connection/dbcon.php';
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 3600)) {
     session_unset();
     session_destroy();
+
+    //TODO check_login should be in every user function since calling this function only goes back outside one folder. Calling it in applicant-dashboard and when the timesout comes, it will only go outside the pages but still inside the applicant folder. 
+    // ! http:localhost/applicant/pages/applicant-dashboard.php => timeout => http:localhost/applicant/login-signup.php
     header("Location: ../login-signup.php?timeout=1");
     exit();
 }
