@@ -2,6 +2,8 @@
 session_start();
 require __DIR__ . '/../connection/dbcon.php';
 
+define('ROOT', 'http://localhost/CAPSTONE/CAPSTONE-PROJECT/landing');
+
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 3600)) {
     session_unset();
     session_destroy();
@@ -45,6 +47,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 
         }
     </script>
 <?php
+
     exit();
 }
 $_SESSION['last_activity'] = time();

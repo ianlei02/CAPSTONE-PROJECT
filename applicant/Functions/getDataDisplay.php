@@ -13,9 +13,7 @@ $mainSql = "
       e.*, 
       el.*, 
       es.*, 
-      jl.*, 
-      s.*, 
-      t.*
+      jl.*
     FROM applicant_account a
     LEFT JOIN applicant_profile p 
       ON a.applicant_id = p.applicant_id
@@ -29,10 +27,7 @@ $mainSql = "
       ON a.applicant_id = es.applicant_id
     LEFT JOIN applicant_job_language_data jl 
       ON a.applicant_id = jl.applicant_id
-    LEFT JOIN applicant_skills s 
-      ON a.applicant_id = s.applicant_id
-    LEFT JOIN applicant_training_info t 
-      ON a.applicant_id = t.applicant_id
+    
     WHERE a.applicant_id = ?
 ";
 $mainStmt = $conn->prepare($mainSql);
@@ -145,3 +140,31 @@ function getCode($item) {
     return $item['code'] ?? $item['psgc_id'] ?? null;
 }
 
+$skills = [];
+$otherSkill = "";
+
+$sql = "SELECT skill, other_skill FROM applicant_skills WHERE applicant_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $applicant_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+while ($row = $result->fetch_assoc()) {
+    if ($row['skill'] === 'others') {
+        $otherSkill = $row['other_skill'] ?? "";
+    } else {
+        $skills[] = $row['skill'];
+    }
+}
+
+$trainingSql = "SELECT * FROM applicant_training_info WHERE applicant_id = ?";
+$stmt2 = $conn->prepare($trainingSql);
+$stmt2->bind_param("i", $userId);
+$stmt2->execute();
+$trainingResult = $stmt2->get_result();
+
+$trainingInfo = [];
+while ($row = $trainingResult->fetch_assoc()) {
+    $trainingInfo[] = $row;
+}
+$trainingJson = json_encode($trainingInfo ?: []);
