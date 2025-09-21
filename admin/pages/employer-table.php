@@ -1,68 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Office Management Dashboard</title>
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-    rel="stylesheet" />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="../css/dashboard.css">
-
+  <title>Employers</title>
+  <script src="../js/dark-mode.js"></script>
+  <link rel="stylesheet" href="../css/navs.css">
+  <link rel="stylesheet" href="../css/employer-table.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="../assets/library/datatable/dataTables.css">
 </head>
-
 <body>
   <!-- Sidebar -->
-  <div class="sidebar">
+ <div class="sidebar">
     <div class="logo">
       <div class="logo-icon">
         <img
           src="../../landing/assets/images/pesosmb.png"
-          style="width: 50px; height: 50px; margin-top: 10px"
           alt="PESO Logo" />
       </div>
       <h2 style="font-size: 2.25rem">PESO</h2>
     </div>
-    <div class="nav-menu">
-      <a class="nav-item active" href="dashboard.php">
-        <i class="fas fa-home"></i>
-        <span>Dashboard</span>
-      </a>
-      <a class="nav-item" href="#pending-employers">
-        <i class="fas fa-building"></i>
-        <span>Employers</span>
-      </a>
-      <a class="nav-item" href="#posted-jobs">
-        <i class="fas fa-list-alt"></i>
-        <span>Posted Jobs</span>
-      </a>
-      <a class="nav-item" href="#applicants">
-        <i class="fas fa-users"></i>
-        <span>Applicants</span>
-      </a>
-      <a class="nav-item " href="reports.php">
-        <i class="fas fa-chart-bar"></i>
-        <span>Reports</span>
-      </a>
-      <a class="nav-item" href="news-upload.php">
-        <i class="fas fa-newspaper"></i>
-        <span>News</span>
-      </a>
-      <a class="nav-item" href="../Function/logout.php">
-        <i class="fas fa-cog"></i>
-        <span>Logout</span>
-      </a>
-    </div>
+    <ul class="nav-menu">
+      <li>
+        <a class="nav-item" href="./dashboard.php">
+          <span class="material-symbols-outlined">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="nav-item active" href="./employer-table.php">
+          <span class="material-symbols-outlined">apartment</span>
+          <span>Employers</span>
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" href="./job-listings.php">
+          <span class="material-symbols-outlined">list_alt</span>
+          <span>Job Listings</span>
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" href="./new-admin.php">
+          <span class="material-symbols-outlined">groups</span>
+          <span>New Admin</span>
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" href="./news-upload.php">
+          <span class="material-symbols-outlined">newspaper</span>
+          <span>News</span>
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" href="../Function/logout.php">
+          <span class="material-symbols-outlined">settings</span>
+          <span>Logout</span>
+        </a>
+      </li>
+      <li></li>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+        <span class="material-symbols-outlined">dark_mode</span>
+      </button>
+    </ul>
+
   </div>
 
   <!-- Main Content -->
   <div class="main-content">
     <div class="header">
-      <h1>Admin Dashboard</h1>
+      <h1>Employers</h1>
       <div style="display: flex; align-items: center; gap: 20px">
         <div class="user-profile">
           <img
@@ -76,718 +84,688 @@
         </div>
       </div>
     </div>
+    
     <div class="content-wrapper">
-      <!-- Pending Employer Verifications Table -->
       <div class="table-section">
-        <div class="section-header">
-          <h2 class="section-title">
-            <i class="fas fa-clock text-warning"></i>
-            Pending Employer Verifications
-          </h2>
-
+        <div class="table-header">
+          <span class="material-symbols-outlined">pending_actions</span>
+          <h2> Pending Employers</h2>
         </div>
-        <div class="table-responsive">
-          <table class="table custom-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Company Name</th>
-                <th>Contact Person</th>
-                <th>Email</th>
-                <th>Submitted On</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>EMP-1025</td>
-                <td>TechSolutions Inc.</td>
-                <td>John Smith</td>
-                <td>john@techsolutions.com</td>
-                <td>2023-10-15</td>
-                <td>
-                  <span class="status-badge badge-pending"><i class="fas fa-clock"></i> Pending</span>
-                </td>
-                <td>
-                  <button
-                    class="btn-view"
-                    data-bs-toggle="modal"
-                    data-bs-target="#pendingEmployerModal"
-                    data-id="EMP-1025">
-                    <i class="fas fa-eye"></i> View
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>EMP-1026</td>
-                <td>DataWorks LLC</td>
-                <td>Sarah Johnson</td>
-                <td>sarah@dataworks.com</td>
-                <td>2023-10-16</td>
-                <td>
-                  <span class="status-badge badge-pending"><i class="fas fa-clock"></i> Pending</span>
-                </td>
-                <td>
-                  <button
-                    class="btn-view"
-                    data-bs-toggle="modal"
-                    data-bs-target="#pendingEmployerModal"
-                    data-id="EMP-1026">
-                    <i class="fas fa-eye"></i> View
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>EMP-1027</td>
-                <td>CloudNet Systems</td>
-                <td>Michael Brown</td>
-                <td>michael@cloudnet.com</td>
-                <td>2023-10-17</td>
-                <td>
-                  <span class="status-badge badge-pending"><i class="fas fa-clock"></i> Pending</span>
-                </td>
-                <td>
-                  <button
-                    class="btn-view"
-                    data-bs-toggle="modal"
-                    data-bs-target="#pendingEmployerModal"
-                    data-id="EMP-1027">
-                    <i class="fas fa-eye"></i> View
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <table id="pendingTable" class="display">
+          <thead>
+              <th>Company Name</th>
+              <th>Contact Person</th>
+              <th>Email</th>
+              <th>Industry</th>
+              <th>Status</th>
+              <th>Actions</th>
+          </thead>
+          <tbody>
+            <!-- Data will be populated by JavaScript -->
+          </tbody>
+        </table>
       </div>
 
-      <!-- Verified Employers Table -->
       <div class="table-section">
-        <div class="section-header">
-          <h2 class="section-title">
-            <i class="fas fa-check-circle text-success"></i>
-            Verified Employers
-          </h2>
-
+        <div class="table-header">
+          <span class="material-symbols-outlined">verified</span>
+          <h2> Verified Employers</h2>
         </div>
-        <div class="table-responsive">
-          <table class="table custom-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Company Name</th>
-                <th>Industry</th>
-                <th>Contact Email</th>
-                <th>Verified On</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>EMP-1001</td>
-                <td>InnovateTech Ltd.</td>
-                <td>Information Technology</td>
-                <td>contact@innovatetech.com</td>
-                <td>2023-09-15</td>
-                <td>
-                  <span class="status-badge badge-verified"><i class="fas fa-check"></i> Verified</span>
-                </td>
-                <td>
-                  <button
-                    class="btn-view"
-                    data-bs-toggle="modal"
-                    data-bs-target="#verifiedEmployerModal"
-                    data-id="EMP-1001">
-                    <i class="fas fa-eye"></i> View
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>EMP-1002</td>
-                <td>GreenSolutions Co.</td>
-                <td>Environmental Services</td>
-                <td>info@greensolutions.com</td>
-                <td>2023-09-20</td>
-                <td>
-                  <span class="status-badge badge-verified"><i class="fas fa-check"></i> Verified</span>
-                </td>
-                <td>
-                  <button
-                    class="btn-view"
-                    data-bs-toggle="modal"
-                    data-bs-target="#verifiedEmployerModal"
-                    data-id="EMP-1002">
-                    <i class="fas fa-eye"></i> View
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>EMP-1003</td>
-                <td>HealthCare Partners</td>
-                <td>Healthcare</td>
-                <td>admin@healthcarepartners.com</td>
-                <td>2023-09-25</td>
-                <td>
-                  <span class="status-badge badge-verified"><i class="fas fa-check"></i> Verified</span>
-                </td>
-                <td>
-                  <button
-                    class="btn-view"
-                    data-bs-toggle="modal"
-                    data-bs-target="#verifiedEmployerModal"
-                    data-id="EMP-1003">
-                    <i class="fas fa-eye"></i> View
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <table id="verifiedTable" class="display">
+          <thead>
+              <th>Company Name</th>
+              <th>Contact Person</th>
+              <th>Email</th>
+              <th>Industry</th>
+              <th>Status</th>
+              <th>Actions</th>
+          </thead>
+          <tbody>
+            <!-- Data will be populated by JavaScript -->
+          </tbody>
+        </table>
       </div>
     </div>
-
   </div>
-
   <!-- Pending Employer Modal -->
-  <div
-    class="modal fade"
-    id="pendingEmployerModal"
-    tabindex="-1"
-    aria-labelledby="employerModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="employerModalLabel">
-            <i class="fas fa-building"></i> Employer Details
-          </h5>
-          <button
-            type="button"
-            class="btn-close btn-close-white"
-            data-bs-dismiss="modal"
-            aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="container-fluid">
-            <div class="row mb-4">
-              <div class="col-md-6">
-                <h5>Company Information</h5>
-                <p>
-                  <strong>Company Name:</strong>
-                  <span id="employer-company-name">TechSolutions Inc.</span>
-                </p>
-                <p>
-                  <strong>Contact Person:</strong>
-                  <span id="employer-contact">John Smith</span>
-                </p>
-                <p>
-                  <strong>Email:</strong>
-                  <span id="employer-email">john@techsolutions.com</span>
-                </p>
-                <p>
-                  <strong>Phone:</strong>
-                  <span id="employer-phone">+1 (555) 123-4567</span>
-                </p>
-              </div>
-              <div class="col-md-6">
-                <h5>Business Details</h5>
-                <p>
-                  <strong>Industry:</strong>
-                  <span id="employer-industry">Information Technology</span>
-                </p>
-                <p>
-                  <strong>Company Size:</strong>
-                  <span id="employer-size">150 employees</span>
-                </p>
-                <p>
-                  <strong>Website:</strong>
-                  <span id="employer-website">www.techsolutions.com</span>
-                </p>
-                <p>
-                  <strong>Status:</strong>
-                  <span
-                    class="status-badge badge-pending"
-                    id="employer-status">Pending</span>
-                </p>
-              </div>
+  <div id="pendingModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><span class="material-symbols-outlined">business</span> Company Details</h2>
+        <button class="close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="profile-section">
+          <h3 class="section-title"><span class="material-symbols-outlined">info</span> Company Profile</h3>
+          <div class="profile-details">
+            <div class="detail-item">
+              <label>Company Name</label>
+              <p id="modal-company-name">Tech Solutions Inc.</p>
             </div>
-
-            <h5>Uploaded Documents</h5>
-            <div class="modal-document">
-              <div class="document-info">
-                <div class="document-icon text-danger">
-                  <i class="fas fa-file-pdf fa-lg"></i>
-                </div>
-                <div class="document-details">
-                  <h6>Business Registration Certificate</h6>
-                  <p>PDF Document • 2.4 MB</p>
-                </div>
-              </div>
-              <button class="btn-view">
-                <i class="fas fa-download"></i> Download
-              </button>
+            <div class="detail-item">
+              <label>Address</label>
+              <p id="modal-address">123 Business Ave, New York, NY</p>
             </div>
-            <div class="modal-document">
-              <div class="document-info">
-                <div class="document-icon text-success">
-                  <i class="fas fa-file-image fa-lg"></i>
-                </div>
-                <div class="document-details">
-                  <h6>Tax Identification Document</h6>
-                  <p>JPG Image • 1.2 MB</p>
-                </div>
-              </div>
-              <button class="btn-view">
-                <i class="fas fa-download"></i> Download
-              </button>
+            <div class="detail-item">
+              <label>Industry</label>
+              <p id="modal-industry">Information Technology</p>
             </div>
-            <div class="modal-document">
-              <div class="document-info">
-                <div class="document-icon text-danger">
-                  <i class="fas fa-file-pdf fa-lg"></i>
-                </div>
-                <div class="document-details">
-                  <h6>Company Profile</h6>
-                  <p>PDF Document • 3.1 MB</p>
-                </div>
-              </div>
-              <button class="btn-view">
-                <i class="fas fa-download"></i> Download
-              </button>
+            <div class="detail-item">
+              <label>Contact Person</label>
+              <p id="modal-contact-person">John Smith</p>
+            </div>
+            <div class="detail-item">
+              <label>Email</label>
+              <p id="modal-email">john@techsolutions.com</p>
+            </div>
+            <div class="detail-item">
+              <label>Phone</label>
+              <p id="modal-phone">+1 (555) 123-4567</p>
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-success" id="verifyEmployer">
-            Verify Employer
-          </button>
-          <button type="button" class="btn btn-danger" id="rejectEmployer">
-            Reject
-          </button>
+
+        <div class="documents-section">
+          <h3 class="section-title"><span class="material-symbols-outlined">description</span> Documents</h3>
+          <div class="documents-list">
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Business License
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc">
+                  <span class="material-symbols-outlined">visibility</span>
+                  View
+                </button>
+                <button class="btn-doc btn-download">
+                  <span class="material-symbols-outlined">download</span>
+                  Download
+                </button>
+              </div>
+            </div>
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Tax Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc">
+                  <span class="material-symbols-outlined">visibility</span>
+                  View
+                </button>
+                <button class="btn-doc btn-download">
+                  <span class="material-symbols-outlined">download</span>
+                  Download
+                </button>
+              </div>
+            </div>
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                ID Proof
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc">
+                  <span class="material-symbols-outlined">visibility</span>
+                  View
+                </button>
+                <button class="btn-doc btn-download">
+                  <span class="material-symbols-outlined">download</span>
+                  Download
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-verify">
+          <span class="material-symbols-outlined">check_circle</span>
+          Verify
+        </button>
+        <button class="btn btn-reject">
+          <span class="material-symbols-outlined">cancel</span>
+          Reject
+        </button>
+        <button class="btn btn-close">
+          <span class="material-symbols-outlined">close</span>
+          Close
+        </button>
       </div>
     </div>
   </div>
+
   <!-- Verified Employer Modal -->
-  <div
-    class="modal fade"
-    id="verifiedEmployerModal"
-    tabindex="-1"
-    aria-labelledby="employerModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="employerModalLabel">
-            <i class="fas fa-building"></i> Employer Details
-          </h5>
-          <button
-            type="button"
-            class="btn-close btn-close-white"
-            data-bs-dismiss="modal"
-            aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="container-fluid">
-            <div class="row mb-4">
-              <div class="col-md-6">
-                <h5>Company Information</h5>
-                <p>
-                  <strong>Company Name:</strong>
-                  <span id="employer-company-name">TechSolutions Inc.</span>
-                </p>
-                <p>
-                  <strong>Contact Person:</strong>
-                  <span id="employer-contact">John Smith</span>
-                </p>
-                <p>
-                  <strong>Email:</strong>
-                  <span id="employer-email">john@techsolutions.com</span>
-                </p>
-                <p>
-                  <strong>Phone:</strong>
-                  <span id="employer-phone">+1 (555) 123-4567</span>
-                </p>
-              </div>
-              <div class="col-md-6">
-                <h5>Business Details</h5>
-                <p>
-                  <strong>Industry:</strong>
-                  <span id="employer-industry">Information Technology</span>
-                </p>
-                <p>
-                  <strong>Company Size:</strong>
-                  <span id="employer-size">150 employees</span>
-                </p>
-                <p>
-                  <strong>Website:</strong>
-                  <span id="employer-website">www.techsolutions.com</span>
-                </p>
-                <p>
-                  <strong>Status:</strong>
-                  <span
-                    class="status-badge badge-pending"
-                    id="employer-status">Pending</span>
-                </p>
-              </div>
+  <div id="verifiedModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><span class="material-symbols-outlined">business</span> Company Details</h2>
+        <button class="close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="profile-section">
+          <h3 class="section-title"><span class="material-symbols-outlined">info</span> Company Profile</h3>
+          <div class="profile-details">
+            <div class="detail-item">
+              <label>Company Name</label>
+              <p id="v-modal-company-name">Global Services Ltd.</p>
             </div>
-
-            <h5>Uploaded Documents</h5>
-            <div class="modal-document">
-              <div class="document-info">
-                <div class="document-icon text-danger">
-                  <i class="fas fa-file-pdf fa-lg"></i>
-                </div>
-                <div class="document-details">
-                  <h6>Business Registration Certificate</h6>
-                  <p>PDF Document • 2.4 MB</p>
-                </div>
-              </div>
-              <button class="btn-view">
-                <i class="fas fa-download"></i> Download
-              </button>
+            <div class="detail-item">
+              <label>Address</label>
+              <p id="v-modal-address">456 Corporate Blvd, London, UK</p>
             </div>
-            <div class="modal-document">
-              <div class="document-info">
-                <div class="document-icon text-success">
-                  <i class="fas fa-file-image fa-lg"></i>
-                </div>
-                <div class="document-details">
-                  <h6>Tax Identification Document</h6>
-                  <p>JPG Image • 1.2 MB</p>
-                </div>
-              </div>
-              <button class="btn-view">
-                <i class="fas fa-download"></i> Download
-              </button>
+            <div class="detail-item">
+              <label>Industry</label>
+              <p id="v-modal-industry">Financial Services</p>
             </div>
-            <div class="modal-document">
-              <div class="document-info">
-                <div class="document-icon text-danger">
-                  <i class="fas fa-file-pdf fa-lg"></i>
-                </div>
-                <div class="document-details">
-                  <h6>Company Profile</h6>
-                  <p>PDF Document • 3.1 MB</p>
-                </div>
-              </div>
-              <button class="btn-view">
-                <i class="fas fa-download"></i> Download
-              </button>
+            <div class="detail-item">
+              <label>Contact Person</label>
+              <p id="v-modal-contact-person">Emma Johnson</p>
+            </div>
+            <div class="detail-item">
+              <label>Email</label>
+              <p id="v-modal-email">emma@globalservices.com</p>
+            </div>
+            <div class="detail-item">
+              <label>Phone</label>
+              <p id="v-modal-phone">+44 20 1234 5678</p>
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-success" id="revokeVerification">
-            Revoke Verification
-          </button>
-          
+
+        <div class="documents-section">
+          <h3 class="section-title"><span class="material-symbols-outlined">description</span> Documents</h3>
+          <div class="documents-list">
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Business License
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc">
+                  <span class="material-symbols-outlined">visibility</span>
+                  View
+                </button>
+                <button class="btn-doc btn-download">
+                  <span class="material-symbols-outlined">download</span>
+                  Download
+                </button>
+              </div>
+            </div>
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Tax Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc">
+                  <span class="material-symbols-outlined">visibility</span>
+                  View
+                </button>
+                <button class="btn-doc btn-download">
+                  <span class="material-symbols-outlined">download</span>
+                  Download
+                </button>
+              </div>
+            </div>
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                ID Proof
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc">
+                  <span class="material-symbols-outlined">visibility</span>
+                  View
+                </button>
+                <button class="btn-doc btn-download">
+                  <span class="material-symbols-outlined">download</span>
+                  Download
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-revoke">
+          <span class="material-symbols-outlined">block</span>
+          Revoke Verification
+        </button>
+        <button class="btn btn-close">
+          <span class="material-symbols-outlined">close</span>
+          Close
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Applicant Modal -->
-  <div
-    class="modal fade"
-    id="applicantModal"
-    tabindex="-1"
-    aria-labelledby="applicantModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="applicantModalLabel">
-            <i class="fas fa-user"></i> Applicant Profile
-          </h5>
-          <button
-            type="button"
-            class="btn-close btn-close-white"
-            data-bs-dismiss="modal"
-            aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="container-fluid">
-            <div class="row mb-4">
-              <div class="col-md-4 text-center">
-                <img
-                  src="https://via.placeholder.com/150"
-                  class="img-fluid rounded-circle mb-3"
-                  alt="Applicant Photo" />
-                <h5 id="applicant-name">Jennifer Wilson</h5>
-                <p class="text-muted" id="applicant-title">
-                  Software Developer
-                </p>
-              </div>
-              <div class="col-md-8">
-                <h5>Personal Information</h5>
-                <div class="row">
-                  <div class="col-md-6">
-                    <p>
-                      <strong>Email:</strong>
-                      <span id="applicant-email">jennifer.wilson@example.com</span>
-                    </p>
-                    <p>
-                      <strong>Phone:</strong>
-                      <span id="applicant-phone">+1 (555) 987-6543</span>
-                    </p>
-                    <p>
-                      <strong>Location:</strong>
-                      <span id="applicant-location">San Francisco, CA</span>
-                    </p>
-                  </div>
-                  <div class="col-md-6">
-                    <p>
-                      <strong>Applied For:</strong>
-                      <span id="applicant-position">Senior Software Engineer</span>
-                    </p>
-                    <p>
-                      <strong>Applied On:</strong>
-                      <span id="applicant-date">2023-10-18</span>
-                    </p>
-                    <p>
-                      <strong>Status:</strong>
-                      <span
-                        class="status-badge badge-pending"
-                        id="applicant-status">Review</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <h5>Education & Experience</h5>
-            <p id="applicant-education">
-              MSc in Computer Science, Stanford University
-            </p>
-            <p id="applicant-experience">
-              5 years of experience in software development with focus on web
-              technologies
-            </p>
 
-            <h5>Uploaded Documents</h5>
-            <div class="modal-document">
-              <div class="document-info">
-                <div class="document-icon text-danger">
-                  <i class="fas fa-file-pdf fa-lg"></i>
-                </div>
-                <div class="document-details">
-                  <h6>Resume</h6>
-                  <p>PDF Document • 1.8 MB</p>
-                </div>
-              </div>
-              <button class="btn-view">
-                <i class="fas fa-download"></i> Download
-              </button>
-            </div>
-            <div class="modal-document">
-              <div class="document-info">
-                <div class="document-icon text-danger">
-                  <i class="fas fa-file-pdf fa-lg"></i>
-                </div>
-                <div class="document-details">
-                  <h6>Cover Letter</h6>
-                  <p>PDF Document • 0.8 MB</p>
-                </div>
-              </div>
-              <button class="btn-view">
-                <i class="fas fa-download"></i> Download
-              </button>
-            </div>
-            <div class="modal-document">
-              <div class="document-info">
-                <div class="document-icon text-success">
-                  <i class="fas fa-file-image fa-lg"></i>
-                </div>
-                <div class="document-details">
-                  <h6>Portfolio</h6>
-                  <p>JPG Image • 2.5 MB</p>
-                </div>
-              </div>
-              <button class="btn-view">
-                <i class="fas fa-download"></i> Download
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-success" id="approveApplicant">
-            Approve
-          </button>
-          <button type="button" class="btn btn-danger" id="rejectApplicant">
-            Reject
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Job Modal -->
-  <div
-    class="modal fade"
-    id="jobModal"
-    tabindex="-1"
-    aria-labelledby="jobModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="jobModalLabel">
-            <i class="fas fa-briefcase"></i> Job Details
-          </h5>
-          <button
-            type="button"
-            class="btn-close btn-close-white"
-            data-bs-dismiss="modal"
-            aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="container-fluid">
-            <div class="row mb-4">
-              <div class="col-md-8">
-                <h4 id="job-title">Senior Software Engineer</h4>
-                <p>
-                  <strong>Company:</strong>
-                  <span id="job-company">TechSolutions Inc.</span>
-                </p>
-                <p>
-                  <strong>Location:</strong>
-                  <span id="job-location">San Francisco, CA</span>
-                </p>
-                <p>
-                  <strong>Job Type:</strong>
-                  <span id="job-type">Full-time</span>
-                </p>
-                <p>
-                  <strong>Salary Range:</strong>
-                  <span id="job-salary">$120,000 - $150,000</span>
-                </p>
-              </div>
-              <div class="col-md-4">
-                <div class="card bg-light p-3">
-                  <h6>Job Metrics</h6>
-                  <p>
-                    <strong>Posted On:</strong>
-                    <span id="job-posted">2023-10-10</span>
-                  </p>
-                  <p>
-                    <strong>Applications:</strong>
-                    <span id="job-applications">42</span>
-                  </p>
-                  <p>
-                    <strong>Status:</strong>
-                    <span class="status-badge badge-verified" id="job-status">Active</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <h5>Job Description</h5>
-            <p id="job-description">
-              We are looking for a skilled Senior Software Engineer to join
-              our development team. The ideal candidate will have experience
-              in building high-performing, scalable, enterprise-grade
-              applications. You will be part of a talented software team that
-              works on mission-critical applications.
-            </p>
-
-            <h5>Requirements</h5>
-            <ul id="job-requirements">
-              <li>Bachelor's degree in Computer Science or related field</li>
-              <li>5+ years of software development experience</li>
-              <li>Proficiency in Java, Python, or JavaScript</li>
-              <li>Experience with cloud technologies (AWS, Azure, or GCP)</li>
-              <li>Strong problem-solving skills and attention to detail</li>
-            </ul>
-
-            <h5>Benefits</h5>
-            <ul id="job-benefits">
-              <li>Health, dental, and vision insurance</li>
-              <li>401(k) matching</li>
-              <li>Flexible work hours</li>
-              <li>Remote work options</li>
-              <li>Professional development allowance</li>
-            </ul>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-primary" id="editJob">
-            Edit Job
-          </button>
-          <button type="button" class="btn btn-danger" id="closeJob">
-            Close Job
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Sample data for modals - in a real application, this would come from PHP
-    const employerData = {
-      "EMP-1025": {
-        companyName: "TechSolutions Inc.",
-        contactPerson: "John Smith",
+    // Sample data for employers
+    const pendingEmployers = [{
+        id: 1,
+        company: "Tech Solutions Inc.",
+        contact: "John Smith",
         email: "john@techsolutions.com",
-        phone: "+1 (555) 123-4567",
         industry: "Information Technology",
-        companySize: "150 employees",
-        website: "www.techsolutions.com",
-        status: "Pending",
+        status: "Pending"
       },
-      "EMP-1026": {
-        companyName: "DataWorks LLC",
-        contactPerson: "Sarah Johnson",
-        email: "sarah@dataworks.com",
-        phone: "+1 (555) 234-5678",
+      {
+        id: 2,
+        company: "MediCare Providers",
+        contact: "Sarah Johnson",
+        email: "sarah@medicare.com",
+        industry: "Healthcare",
+        status: "Pending"
+      },
+      {
+        id: 3,
+        company: "EcoBuild Constructions",
+        contact: "Michael Brown",
+        email: "michael@ecobuild.com",
+        industry: "Construction",
+        status: "Pending"
+      },
+      {
+        id: 4,
+        company: "FoodExpress Delivery",
+        contact: "Jessica Lee",
+        email: "jessica@foodexpress.com",
+        industry: "Logistics",
+        status: "Pending"
+      },
+      {
+        id: 5,
+        company: "EduTech Innovations",
+        contact: "Robert Wilson",
+        email: "robert@edutech.com",
+        industry: "Education",
+        status: "Pending"
+      },
+      {
+        id: 6,
+        company: "GreenEnergy Solutions",
+        contact: "Emily Davis",
+        email: "emily@greenenergy.com",
+        industry: "Energy",
+        status: "Pending"
+      },
+      {
+        id: 7,
+        company: "FinSecure Advisors",
+        contact: "David Miller",
+        email: "david@finsecure.com",
+        industry: "Finance",
+        status: "Pending"
+      },
+      {
+        id: 8,
+        company: "RetailPlus Stores",
+        contact: "Amanda Taylor",
+        email: "amanda@retailplus.com",
+        industry: "Retail",
+        status: "Pending"
+      },
+      {
+        id: 9,
+        company: "AutoMech Repairs",
+        contact: "Christopher Moore",
+        email: "chris@automech.com",
+        industry: "Automotive",
+        status: "Pending"
+      },
+      {
+        id: 10,
+        company: "TravelWorld Agency",
+        contact: "Jennifer Anderson",
+        email: "jennifer@travelworld.com",
+        industry: "Tourism",
+        status: "Pending"
+      },
+      {
+        id: 21,
+        company: "CloudTech Innovations",
+        contact: "Alex Turner",
+        email: "alex@cloudtech.com",
+        industry: "Cloud Computing",
+        status: "Pending"
+      },
+      {
+        id: 22,
+        company: "DataSphere Analytics",
+        contact: "Megan Clark",
+        email: "megan@datasphere.com",
         industry: "Data Analytics",
-        companySize: "80 employees",
-        website: "www.dataworks.com",
-        status: "Pending",
+        status: "Pending"
       },
-      "EMP-1027": {
-        companyName: "CloudNet Systems",
-        contactPerson: "Michael Brown",
-        email: "michael@cloudnet.com",
-        phone: "+1 (555) 345-6789",
-        industry: "Cloud Services",
-        companySize: "200 employees",
-        website: "www.cloudnet.com",
-        status: "Pending",
+      {
+        id: 23,
+        company: "SecureNet Systems",
+        contact: "Brian Wilson",
+        email: "brian@securenet.com",
+        industry: "Cybersecurity",
+        status: "Pending"
       },
-    };
+      {
+        id: 24,
+        company: "NextGen Robotics",
+        contact: "Olivia Martinez",
+        email: "olivia@nextgen.com",
+        industry: "Robotics",
+        status: "Pending"
+      },
+      {
+        id: 25,
+        company: "BioPharm Solutions",
+        contact: "Kevin Harris",
+        email: "kevin@biopharm.com",
+        industry: "Pharmaceuticals",
+        status: "Pending"
+      }
+    ];
+    const verifiedEmployers = [{
+        id: 11,
+        company: "Global Services Ltd.",
+        contact: "Emma Johnson",
+        email: "emma@globalservices.com",
+        industry: "Financial Services",
+        status: "Verified"
+      },
+      {
+        id: 12,
+        company: "SoftWorks Development",
+        contact: "Daniel Martin",
+        email: "daniel@softworks.com",
+        industry: "Software",
+        status: "Verified"
+      },
+      {
+        id: 13,
+        company: "HealthFirst Clinics",
+        contact: "Sophia Williams",
+        email: "sophia@healthfirst.com",
+        industry: "Healthcare",
+        status: "Verified"
+      },
+      {
+        id: 14,
+        company: "BuildRight Contractors",
+        contact: "James Thompson",
+        email: "james@buildright.com",
+        industry: "Construction",
+        status: "Verified"
+      },
+      {
+        id: 15,
+        company: "QuickShip Logistics",
+        contact: "Olivia Garcia",
+        email: "olivia@quickship.com",
+        industry: "Logistics",
+        status: "Verified"
+      },
+      {
+        id: 16,
+        company: "LearnSmart Academy",
+        contact: "William Clark",
+        email: "william@learnsmart.com",
+        industry: "Education",
+        status: "Verified"
+      },
+      {
+        id: 17,
+        company: "PowerGrid Utilities",
+        contact: "Isabella Lewis",
+        email: "isabella@powergrid.com",
+        industry: "Energy",
+        status: "Verified"
+      },
+      {
+        id: 18,
+        company: "WealthManage Bank",
+        contact: "Ethan Robinson",
+        email: "ethan@wealthmanage.com",
+        industry: "Banking",
+        status: "Verified"
+      },
+      {
+        id: 19,
+        company: "StyleTrend Boutique",
+        contact: "Mia Walker",
+        email: "mia@styletrend.com",
+        industry: "Fashion",
+        status: "Verified"
+      },
+      {
+        id: 20,
+        company: "CarCare Center",
+        contact: "Noah Hall",
+        email: "noah@carcare.com",
+        industry: "Automotive",
+        status: "Verified"
+      },
+      {
+        id: 26,
+        company: "SmartHome Technologies",
+        contact: "Rachel Green",
+        email: "rachel@smarthome.com",
+        industry: "IoT",
+        status: "Verified"
+      },
+      {
+        id: 27,
+        company: "EcoEnergy Solutions",
+        contact: "Thomas Reed",
+        email: "thomas@ecoenergy.com",
+        industry: "Renewable Energy",
+        status: "Verified"
+      },
+      {
+        id: 28,
+        company: "FinTech Innovations",
+        contact: "Laura King",
+        email: "laura@fintech.com",
+        industry: "Financial Technology",
+        status: "Verified"
+      },
+      {
+        id: 29,
+        company: "MedTech Solutions",
+        contact: "Ryan Scott",
+        email: "ryan@medtech.com",
+        industry: "Medical Technology",
+        status: "Verified"
+      },
+      {
+        id: 30,
+        company: "AgriGrowth Farms",
+        contact: "Emma Watson",
+        email: "emma@agrigrowth.com",
+        industry: "Agriculture",
+        status: "Verified"
+      }
+    ];
+
+    // Initialize DataTables
+    let pendingTable, verifiedTable;
+
+    // Populate tables with data
+    function populateTables() {
+      const pendingTableBody = document.querySelector('#pendingTable tbody');
+      const verifiedTableBody = document.querySelector('#verifiedTable tbody');
+
+      // Clear existing rows
+      pendingTableBody.innerHTML = '';
+      verifiedTableBody.innerHTML = '';
+
+      // Add pending employers
+      pendingEmployers.forEach(employer => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+                    <td>${employer.company}</td>
+                    <td>${employer.contact}</td>
+                    <td>${employer.email}</td>
+                    <td>${employer.industry}</td>
+                    <td><span class="status status-pending"><span class="material-symbols-outlined">pending</span> ${employer.status}</span></td>
+                    <td><button class="btn btn-view" data-id="${employer.id}" data-status="pending"><span class="material-symbols-outlined">visibility</span> View</button></td>
+                `;
+        pendingTableBody.appendChild(row);
+      });
+      // Add verified employers
+      verifiedEmployers.forEach(employer => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+                    <td>${employer.company}</td>
+                    <td>${employer.contact}</td>
+                    <td>${employer.email}</td>
+                    <td>${employer.industry}</td>
+                    <td><span class="status status-verified"><span class="material-symbols-outlined">check_circle</span> ${employer.status}</span></td>
+                    <td><button class="btn btn-view" data-id="${employer.id}" data-status="verified"><span class="material-symbols-outlined">visibility</span> View</button></td>
+                `;
+        verifiedTableBody.appendChild(row);
+      });
+
+      // Initialize DataTables
+      if ($.fn.DataTable.isDataTable('#pendingTable')) {
+        pendingTable.destroy();
+      }
+
+      if ($.fn.DataTable.isDataTable('#verifiedTable')) {
+        verifiedTable.destroy();
+      }
 
 
+      // Add event listeners to View buttons
+      document.querySelectorAll('.btn-view').forEach(button => {
+        button.addEventListener('click', function() {
+          const id = this.getAttribute('data-id');
+          const status = this.getAttribute('data-status');
+          showModal(id, status);
+        });
+      });
+    }
+
+    // Show modal with employer details
+    function showModal(id, status) {
+      const employer = status === 'pending' ?
+        pendingEmployers.find(e => e.id === parseInt(id)) :
+        verifiedEmployers.find(e => e.id === parseInt(id));
+
+      if (status === 'pending') {
+        // Set modal content for pending employer
+        document.getElementById('modal-company-name').textContent = employer.company;
+        document.getElementById('modal-address').textContent = "123 Business Ave, New York, NY";
+        document.getElementById('modal-industry').textContent = employer.industry;
+        document.getElementById('modal-contact-person').textContent = employer.contact;
+        document.getElementById('modal-email').textContent = employer.email;
+        document.getElementById('modal-phone').textContent = "+1 (555) 123-4567";
+
+        // Show the pending modal
+        const modal = document.getElementById('pendingModal');
+        modal.style.display = 'flex';
+        setTimeout(() => {
+          modal.querySelector('.modal-content').classList.add('modal-show');
+        }, 10);
+      } else {
+        // Set modal content for verified employer
+        document.getElementById('v-modal-company-name').textContent = employer.company;
+        document.getElementById('v-modal-address').textContent = "456 Corporate Blvd, London, UK";
+        document.getElementById('v-modal-industry').textContent = employer.industry;
+        document.getElementById('v-modal-contact-person').textContent = employer.contact;
+        document.getElementById('v-modal-email').textContent = employer.email;
+        document.getElementById('v-modal-phone').textContent = "+44 20 1234 5678";
+
+        // Show the verified modal
+        const modal = document.getElementById('verifiedModal');
+        modal.style.display = 'flex';
+        setTimeout(() => {
+          modal.querySelector('.modal-content').classList.add('modal-show');
+        }, 10);
+      }
+    }
+
+    // Close modals
+    function setupModalClose() {
+      document.querySelectorAll('.close, .btn-close').forEach(button => {
+        button.addEventListener('click', function() {
+          document.querySelectorAll('.modal').forEach(modal => {
+            modal.querySelector('.modal-content').classList.remove('modal-show');
+            setTimeout(() => {
+              modal.style.display = 'none';
+            }, 300);
+          });
+        });
+      });
+
+      // Close modal when clicking outside
+      window.addEventListener('click', function(event) {
+        if (event.target.classList.contains('modal')) {
+          document.querySelectorAll('.modal').forEach(modal => {
+            modal.querySelector('.modal-content').classList.remove('modal-show');
+            setTimeout(() => {
+              modal.style.display = 'none';
+            }, 300);
+          });
+        }
+      });
+    }
+
+    // Document actions
+    function setupDocumentActions() {
+      document.querySelectorAll('.btn-view-doc').forEach(button => {
+        button.addEventListener('click', function() {
+          alert('Viewing document in new tab...');
+        });
+      });
+
+      document.querySelectorAll('.btn-download').forEach(button => {
+        button.addEventListener('click', function() {
+          alert('Downloading document...');
+        });
+      });
+    }
   </script>
-  <script src="../js/modals.js">
+  <script src="../assets/JS_JQUERY/jquery-3.7.1.min.js"></script>
+  <script src="../assets/library/datatable/dataTables.js"></script>
+  <script src="../js/table-init.js"></script>
+
+  <script>
+    // Run initialization when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      populateTables();
+      setupModalClose();
+      setupDocumentActions();
+
+      // Add event listeners to modal action buttons
+      document.querySelector('.btn-verify').addEventListener('click', function() {
+        alert('Employer verified successfully!');
+        document.querySelector('#pendingModal .modal-content').classList.remove('modal-show');
+        setTimeout(() => {
+          document.getElementById('pendingModal').style.display = 'none';
+        }, 300);
+      });
+
+      document.querySelector('.btn-reject').addEventListener('click', function() {
+        alert('Employer rejected.');
+        document.querySelector('#pendingModal .modal-content').classList.remove('modal-show');
+        setTimeout(() => {
+          document.getElementById('pendingModal').style.display = 'none';
+        }, 300);
+      });
+
+      document.querySelector('.btn-revoke').addEventListener('click', function() {
+        alert('Verification revoked.');
+        document.querySelector('#verifiedModal .modal-content').classList.remove('modal-show');
+        setTimeout(() => {
+          document.getElementById('verifiedModal').style.display = 'none';
+        }, 300);
+      });
+
+    });
   </script>
+
 </body>
 
 </html>

@@ -61,7 +61,6 @@ $result = $conn->query($sql);
           <img src="../assets/images/peso-logo.png" alt="" />
         </div>
       </div>
-      <button onclick="toggleTheme()" style="padding: 0.5rem; font-size: 1rem;">DARK MODE PRACTICE LANG MUNA</button>
       <div class="right-pos">
         <div class="profile">
           <img
@@ -78,7 +77,7 @@ $result = $conn->query($sql);
     <ul class="sidebar-menu">
       <li>
         <a href="./applicant-dashboard.php">
-          <span class="material-symbols-outlined icon">grid_view</span>
+          <span class="material-symbols-outlined icon">dashboard</span>
           <span class="label">Dashboard</span>
         </a>
       </li>
@@ -126,7 +125,7 @@ $result = $conn->query($sql);
 
       <div class="search-filter">
         <div class="search-box">
-          <i class="fas fa-search search-icon"></i>
+          <span></span>
           <input type="text" placeholder="Search for jobs..." />
         </div>
         <select class="filter" id="jobFieldFilter">
@@ -197,18 +196,6 @@ $result = $conn->query($sql);
               <h3 style="color: var(--primary-blue-color); margin-bottom: 20px;">
                 Personal Information
               </h3>
-              <!-- <div class="form-group">
-                  <label class="required">Full Name</label>
-                  <input type="text" required />
-                </div>
-                <div class="form-group">
-                  <label class="required">Email Address</label>
-                  <input type="email" required />
-                </div>
-                <div class="form-group">
-                  <label class="required">Contact Number</label>
-                  <input type="tel" required />
-                </div> -->
             </div>
 
             <div class="section">
