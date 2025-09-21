@@ -210,8 +210,6 @@ if (isset($_GET['action'])) {
           <label for="description">Job Description and Requirements</label>
           <textarea id="description" name="description" rows="5" required placeholder="Detailed description of the job responsibilities..."></textarea>
         </div>
-
-
         <div class="form-actions">
           <button type="reset" class="btn btn-secondary">Clear Form</button>
           <button type="submit" class="btn btn-primary">Post Job Opening</button>

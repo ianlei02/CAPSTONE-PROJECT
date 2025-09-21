@@ -198,7 +198,7 @@ select.filter {
 }
 
 .apply-btn:hover {
-  background-color: var(--secondary-blue-color);
+  background-color: var(--blue-light);
 }
 
 .modal {
@@ -243,7 +243,7 @@ select.filter {
 
 .modal-title {
   margin: 0;
-  color: var(--primary-blue-color);
+  color: var(--blue);
 }
 
 .close-btn {
@@ -251,7 +251,7 @@ select.filter {
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: var(--dark-clr-600);
+  color: var(--gray-text);
 }
 
 .modal-body {
@@ -267,12 +267,12 @@ select.filter {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
-  color: var(--dark-clr-600);
+  color: var(--gray-text);
 }
 
 .application-form .required:after {
   content: " *";
-  color: var(--primary-red-color);
+  color: var(--red);
 }
 
 .application-form input,
@@ -283,7 +283,7 @@ select.filter {
   border: 1px solid var(--border);
   border-radius: 4px;
   font-size: 16px;
-  background-color: var(--light-clr-500);
+  background-color: var(--bg-light);
 }
 
 .application-form textarea {
@@ -308,23 +308,23 @@ select.filter {
 }
 
 .btn-primary {
-  background-color: var(--primary-blue-color);
-  color: var(--light-clr-700);
+  background-color: var(--blue);
+  color: white;
   border: none;
 }
 
 .btn-primary:hover {
-  background-color: var(--secondary-blue-color);
+  background-color: var(--blue-light);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--primary-blue-color);
-  border: 1px solid var(--primary-blue-color);
+  color: var(--blue);
+  border: 1px solid var(--blue);
 }
 
 .btn-outline:hover {
-  background-color: var(--light-clr-500);
+  background-color: white;
 }
 
 @media (max-width: 992px) {
@@ -345,7 +345,7 @@ select.filter {
 }
 
 .read-more {
-  color: var(--primary-blue-color);
+  color: var(--blue);
   cursor: pointer;
   font-size: 14px;
   display: inline-block;

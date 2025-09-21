@@ -58,7 +58,6 @@ if (isset($_SESSION['user_id'])) {
           <img src="../assets/images/peso-logo.png" alt="" />
         </div>
       </div>
-      <button onclick="toggleTheme()" style="padding: 0.5rem; font-size: 1rem;">DARK MODE PRACTICE LANG MUNA</button>
       <div class="right-pos">
         <div class="profile">
           <img
@@ -75,7 +74,7 @@ if (isset($_SESSION['user_id'])) {
     <ul class="sidebar-menu">
       <li>
         <a href="./applicant-dashboard.php">
-          <span class="material-symbols-outlined icon">grid_view</span>
+          <span class="material-symbols-outlined icon">dashboard</span>
           <span class="label">Dashboard</span>
         </a>
       </li>
