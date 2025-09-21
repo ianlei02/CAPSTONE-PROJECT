@@ -45,7 +45,7 @@ require_once '../Functions/getinfo.php';
     <ul class="sidebar-menu">
       <li>
         <a href="./applicant-dashboard.php">
-          <span class="material-symbols-outlined icon">grid_view</span>
+          <span class="material-symbols-outlined icon">dashboard</span>
           <span class="label">Dashboard</span>
         </a>
       </li>
