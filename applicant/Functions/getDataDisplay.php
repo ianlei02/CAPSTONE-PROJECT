@@ -46,10 +46,22 @@ $docsStmt->execute();
 $docsResult = $docsStmt->get_result();
 $docsData = $docsResult->fetch_all(MYSQLI_ASSOC);
 
+$docsLStmt = $conn->prepare("SELECT port_link, drive_link, other_link FROM applicant_documents WHERE applicant_id = ?");
+$docsLStmt->bind_param("i", $userId);
+$docsLStmt->execute();
+$docsResultt = $docsLStmt->get_result();
+$docsLink = $docsResultt->fetch_all(MYSQLI_ASSOC);
+
+$filteredLinks = array_filter($docsLink, function($item) {
+    return !empty($item['other_link']);
+});
+
+$docsLinkJson = json_encode(array_values($filteredLinks));
 $accountJson   = json_encode($accountData ?: []);
 $profileJson   = json_encode($profileData ?: []);
 $contactJson   = json_encode($contactData ?: []);
 $docsJson      = json_encode($docsData ?: []);
+
 
 $profile_picture_url = '../assets/images/profile.png';
 

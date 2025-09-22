@@ -1100,6 +1100,7 @@ require_once '../Functions/getDataDisplay.php';
     const contactData = <?php echo $contactJson; ?>;
     const docsData = <?php echo $docsJson; ?>;
     const trainingData = <?php echo $trainingJson; ?>;
+    const linkData = <?php echo $docsLinkJson; ?>;
 
     document.addEventListener('DOMContentLoaded', function() {
 
@@ -1120,6 +1121,13 @@ require_once '../Functions/getDataDisplay.php';
         document.getElementById('tin').value = profileData.tin || '';
         document.getElementById('religion').value = profileData.religion || '';
         
+      }
+
+      if (linkData && linkData.length > 0) {
+       const links = linkData[0];
+        document.getElementById('portfolioLink').value = links.port_link || '';
+        document.getElementById('gdriveLink').value = links.drive_link || '';
+        document.getElementById('otherLinks').value = links.other_link || '';
       }
 
       if (profileData.disability) {
