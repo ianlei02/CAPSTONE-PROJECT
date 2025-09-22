@@ -529,7 +529,7 @@ require_once '../Functions/getDataDisplay.php';
                   </tr>
                   <tr>
                     <td>
-                      <input type="text" placeholder="Others:" name="otherLanguage">
+                      <input type="text" placeholder="Others:" id="otherLanguage" name="otherLanguage">
                     </td>
                     <td><input type="checkbox" id="otherRead" name="otherRead"></td>
                     <td><input type="checkbox" id="otherWrite" name="otherWrite"></td>
@@ -1250,22 +1250,22 @@ require_once '../Functions/getDataDisplay.php';
         assignArrayValues("prefLocal", joblngData.pref_local_work_locations);
         assignArrayValues("prefOverseas", joblngData.pref_overseas_work_locations);
 
-        if (!joblngData || !joblngData.language_proficiency) return;
+      if (!joblngData || !joblngData.language_proficiency) return;
 
-    let langs = joblngData.language_proficiency;
-    if (typeof langs === "string") langs = JSON.parse(langs);
+      let langs = joblngData.language_proficiency;
+      if (typeof langs === "string") langs = JSON.parse(langs);
 
-    for (const [lang, prof] of Object.entries(langs)) {
-        ['read','write','speak','understand'].forEach(skill => {
-            const checkbox = document.getElementById(`${lang}${skill.charAt(0).toUpperCase() + skill.slice(1)}`);
-            if (checkbox) checkbox.checked = prof[skill] === 1;
-        });
+      for (const [lang, prof] of Object.entries(langs)) {
+          ['read','write','speak','understand'].forEach(skill => {
+              const checkbox = document.getElementById(`${lang}${skill.charAt(0).toUpperCase() + skill.slice(1)}`);
+              if (checkbox) checkbox.checked = prof[skill] === 1;
+          });
 
-        if (lang === 'other' && prof.name) {
-            const otherInput = document.getElementById('otherLanguage');
-            if (otherInput) otherInput.value = prof.name.trim();
-        }
-    }
+          if (lang === 'other' && prof.name) {
+              const otherInput = document.getElementById('otherLanguage');
+              if (otherInput) otherInput.value = prof.name.trim();
+          }
+      }
     }
 
       if (linkData && linkData.length > 0) {
@@ -1276,22 +1276,20 @@ require_once '../Functions/getDataDisplay.php';
       }
 
       if (profileData.disability) {
-      let disabilities = profileData.disability.split(',');
+      let disabilities = profileData.disability.split(',').map(d => d.trim());
 
-      disabilities.forEach(function(dis) {
-      dis = dis.trim();
+        disabilities.forEach(function(dis, index) {
+          if (["Visual", "Speech", "Mental", "Hearing", "Physical"].includes(dis)) {
+              const checkbox = document.querySelector('input[name="disability[]"][value="' + dis + '"]');
+              if (checkbox) checkbox.checked = true;
+          } else if (dis === "Others") {
+              const othersCheckbox = document.querySelector('input[name="disability[]"][value="Others"]');
+              const othersInput = document.getElementById("others");
 
-      if (["Visual", "Speech", "Mental", "Hearing", "Physical"].includes(dis)) {
-        const checkbox = document.querySelector('input[name="disability[]"][value="' + dis + '"]');
-        if (checkbox) checkbox.checked = true;
-      } else if (dis.startsWith("Others")) {
-        const othersCheckbox = document.querySelector('input[name="disability[]"][value="Others"]');
-        const othersInput = document.getElementById("others");
-
-        if (othersCheckbox) othersCheckbox.checked = true;
-        const othersText = dis.split(":")[1] || "";
-        if (othersInput) othersInput.value = othersText.trim();
-      }
+              if (othersCheckbox) othersCheckbox.checked = true;
+              const othersText = disabilities[index + 1] || "";
+              if (othersInput) othersInput.value = othersText.trim();
+          }
       });
       }
 
