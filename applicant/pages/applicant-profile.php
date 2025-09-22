@@ -683,12 +683,12 @@ require_once '../Functions/getDataDisplay.php';
                 </thead>
                 <tbody>
                   <tr>
-                    <td><input type="text" name="eligibility1"></td>
-                    <td><input type="date" name="eligibilityDate1"></td>
+                    <td><input type="text" name="eligibility1" value="<?= htmlspecialchars($eligibilities[0]['eligibility'] ?? '') ?>"></td>
+                    <td><input type="date" name="eligibilityDate1" value="<?= htmlspecialchars($eligibilities[0]['eligibility_date'] ?? '') ?>"></td>
                   </tr>
                   <tr>
-                    <td><input type="text" name="eligibility2"></td>
-                    <td><input type="date" name="eligibilityDate2"></td>
+                    <td><input type="text" name="eligibility2" value="<?= htmlspecialchars($eligibilities[1]['eligibility'] ?? '') ?>"></td>
+                    <td><input type="date" name="eligibilityDate2" value="<?= htmlspecialchars($eligibilities[1]['eligibility_date'] ?? '') ?>"></td>
                   </tr>
                 </tbody>
               </table>
@@ -704,12 +704,12 @@ require_once '../Functions/getDataDisplay.php';
                 </thead>
                 <tbody>
                   <tr>
-                    <td><input type="text" name="license1"></td>
-                    <td><input type="date" name="licenseValid1"></td>
+                    <td><input type="text" name="license1" value="<?= htmlspecialchars($licenses[0]['license'] ?? '') ?>"></td>
+                    <td><input type="date" name="licenseValid1" value="<?= htmlspecialchars($licenses[0]['license_valid'] ?? '') ?>"></td>
                   </tr>
                   <tr>
-                    <td><input type="text" name="license2"></td>
-                    <td><input type="date" name="licenseValid2"></td>
+                    <td><input type="text" name="license2" value="<?= htmlspecialchars($licenses[1]['license'] ?? '') ?>"></td>
+                    <td><input type="date" name="licenseValid2" value="<?= htmlspecialchars($licenses[1]['license_valid'] ?? '') ?>"></td>
                   </tr>
                 </tbody>
               </table>
@@ -725,6 +725,7 @@ require_once '../Functions/getDataDisplay.php';
           </p>
           <div class="form-grid">
             <div class="form-group">
+              
               <table>
                 <thead>
                   <tr>
@@ -736,53 +737,27 @@ require_once '../Functions/getDataDisplay.php';
                   </tr>
                 </thead>
                 <tbody>
+                  <?php for($i = 0; $i < 3; $i++): ?>
                   <tr>
-                    <td><input type="text" name="company1"></td>
-                    <td><input type="text" name="companyAddress1"></td>
-                    <td><input type="text" name="position1"></td>
-                    <td><input type="number" name="months1"></td>
+                    <td><input type="text" name="company<?= $i+1 ?>" value="<?= htmlspecialchars($work_experience[$i]['company_name'] ?? '') ?>"></td>
+                    <td><input type="text" name="companyAddress<?= $i+1 ?>" value="<?= htmlspecialchars($work_experience[$i]['company_address'] ?? '') ?>"></td>
+                    <td><input type="text" name="position<?= $i+1 ?>" value="<?= htmlspecialchars($work_experience[$i]['position'] ?? '') ?>"></td>
+                    <td><input type="number" name="months<?= $i+1 ?>" value="<?= htmlspecialchars($work_experience[$i]['months_worked'] ?? '') ?>"></td>
                     <td>
-                      <select name="status1">
+                      <select name="status<?= $i+1 ?>">
                         <option value="">Select Status</option>
-                        <option value="permanent">Permanent</option>
-                        <option value="contractual">Contractual</option>
-                        <option value="part-time">Part-time</option>
-                        <option value="probationary">Probationary</option>
+                        <option value="permanent" <?= (($work_experience[$i]['status'] ?? '') == 'permanent') ? 'selected' : '' ?>>Permanent</option>
+                        <option value="contractual" <?= (($work_experience[$i]['status'] ?? '') == 'contractual') ? 'selected' : '' ?>>Contractual</option>
+                        <option value="part-time" <?= (($work_experience[$i]['status'] ?? '') == 'part-time') ? 'selected' : '' ?>>Part-time</option>
+                        <option value="probationary" <?= (($work_experience[$i]['status'] ?? '') == 'probationary') ? 'selected' : '' ?>>Probationary</option>
                       </select>
                     </td>
                   </tr>
-                  <tr>
-                    <td><input type="text" name="company2"></td>
-                    <td><input type="text" name="companyAddress2"></td>
-                    <td><input type="text" name="position2"></td>
-                    <td><input type="number" name="months2"></td>
-                    <td>
-                      <select name="status2">
-                        <option value="">Select Status</option>
-                        <option value="permanent">Permanent</option>
-                        <option value="contractual">Contractual</option>
-                        <option value="part-time">Part-time</option>
-                        <option value="probationary">Probationary</option>
-                      </select>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><input type="text" name="company3"></td>
-                    <td><input type="text" name="companyAddress3"></td>
-                    <td><input type="text" name="position3"></td>
-                    <td><input type="number" name="months3"></td>
-                    <td>
-                      <select name="status3">
-                        <option value="">Select Status</option>
-                        <option value="permanent">Permanent</option>
-                        <option value="contractual">Contractual</option>
-                        <option value="part-time">Part-time</option>
-                        <option value="probationary">Probationary</option>
-                      </select>
-                    </td>
-                  </tr>
+                  
+                  <?php endfor; ?>
                 </tbody>
               </table>
+              
             </div>
           </div>
         </div>
@@ -1103,7 +1078,7 @@ require_once '../Functions/getDataDisplay.php';
     const linkData = <?php echo $docsLinkJson; ?>;
     const employmentData = <?php echo $employmentJson; ?>;
     const joblngData = <?php echo $joblngJson; ?>;
-
+    
     document.addEventListener('DOMContentLoaded', function() {
 
       if (accountData) {
@@ -1134,24 +1109,23 @@ require_once '../Functions/getDataDisplay.php';
         secondary: ['secondaryType','secondaryCourse','secondaryYear','secondaryLevel','secondaryLastYear'],
         tertiary: ['tertiaryCourse','tertiaryYear','tertiaryLevel','tertiaryLastYear'],
         grad_studies: ['gradStudiesCourse','gradStudiesYear','gradStudiesLevel','gradStudiesLastYear']
-    };
+      }
 
-    for (const [level, fields] of Object.entries(levels)) {
-        fields.forEach(name => {
-            const input = document.querySelector(`[name="${name}"]`);
-            if (!input) return;
-            let profileKey = name.replace(/([A-Z])/g, '_$1').toLowerCase(); 
-            if (profileData[profileKey]) input.value = profileData[profileKey];
-        });
-    }
-    if (profileData.secondary_type === "k12") {
-        const seniorRow = document.getElementById("seniorHighStrandRow");
-        if (seniorRow) seniorRow.style.display = "table-row";
+      for (const [level, fields] of Object.entries(levels)) {
+          fields.forEach(name => {
+              const input = document.querySelector(`[name="${name}"]`);
+              if (!input) return;
+              let profileKey = name.replace(/([A-Z])/g, '_$1').toLowerCase(); 
+              if (profileData[profileKey]) input.value = profileData[profileKey];
+          });
+      }
+      if (profileData.secondary_type === "k12") {
+          const seniorRow = document.getElementById("seniorHighStrandRow");
+          if (seniorRow) seniorRow.style.display = "table-row";
 
-        const seniorInput = document.getElementById("seniorHighStrand");
-        if (seniorInput && profileData.senior_high_strand) seniorInput.value = profileData.senior_high_strand;
-    }
-  
+          const seniorInput = document.getElementById("seniorHighStrand");
+          if (seniorInput && profileData.senior_high_strand) seniorInput.value = profileData.senior_high_strand;
+      } 
 
       if (employmentData) {
         document.querySelector(".employed-checkboxes").style.display = "none";

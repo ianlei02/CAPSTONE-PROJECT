@@ -196,3 +196,38 @@ $jobResult = $jobStmt->get_result();
 $jobData = $jobResult->fetch_assoc();
 
 $joblngJson = json_encode($jobData);
+
+$eligsql = "SELECT * FROM applicant_eligibility_exp WHERE applicant_id = ?";
+$eligstmt = $conn->prepare($eligsql);
+$eligstmt->bind_param("i", $userId);
+$eligstmt->execute();
+$eligresult = $eligstmt->get_result();
+
+$eligibilities = [];
+$licenses = [];
+$work_experience = [];
+
+while ($row = $eligresult->fetch_assoc()) {
+    if (!empty($row['eligibility'])) {
+        $eligibilities[] = [
+            'eligibility' => $row['eligibility'],
+            'eligibility_date' => $row['eligibility_date']
+        ];
+    }
+    if (!empty($row['license'])) {
+        $licenses[] = [
+            'license' => $row['license'],
+            'license_valid' => $row['license_valid']
+        ];
+    }
+    if (!empty($row['company_name'])) {
+        $work_experience[] = [
+            'company_name' => $row['company_name'],
+            'company_address' => $row['company_address'],
+            'position' => $row['position'],
+            'months_worked' => $row['months_worked'],
+            'status' => $row['status']
+        ];
+    }
+}
+$stmt->close();
