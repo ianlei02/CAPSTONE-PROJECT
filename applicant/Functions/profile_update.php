@@ -252,7 +252,23 @@ require "../connection/dbcon.php";
     $selfEmployedOther = $_POST['selfEmployedOther'] ?? null;
 
     $jobSearchDuration = !empty($_POST['jobSearchDuration']) ? (int)$_POST['jobSearchDuration'] : null;
-    $unempReasons = !empty($_POST['unempReason']) ? implode(', ', (array)$_POST['unempReason']) : null;
+    
+    $unempReasons = null;
+
+    if (!empty($_POST['unempReason']) || !empty($_POST['unempReasonOthers']) || !empty($_POST['otherTerm'])) {
+        $reasons = array_map('trim', (array)($_POST['unempReason'] ?? []));
+
+        foreach ($reasons as &$reason) {
+            if ($reason === 'other' && !empty($_POST['unempReasonOthers'])) {
+                $reason = 'other:' . trim($_POST['unempReasonOthers']);
+            }
+            if ($reason === 'terminated-abroad' && !empty($_POST['otherTerm'])) {
+                $reason = 'terminated-abroad:' . trim($_POST['otherTerm']);
+            }
+        }
+        unset($reason);
+        $unempReasons = implode(', ', $reasons);
+    }
 
     $ofw = $_POST['ofw'] ?? 'no';
     $ofwCountry = $_POST['ofwCountry'] ?? null;
@@ -293,7 +309,7 @@ require "../connection/dbcon.php";
     ");
 
     $stmt->bind_param(
-        "isiiissssssss",
+        "isiississssss",
         $applicant_id,       
         $employmentStatus,   
         $wageEmployed,       

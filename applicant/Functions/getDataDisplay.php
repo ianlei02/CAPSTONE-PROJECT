@@ -180,3 +180,19 @@ while ($row = $trainingResult->fetch_assoc()) {
     $trainingInfo[] = $row;
 }
 $trainingJson = json_encode($trainingInfo ?: []);
+
+$empStmt = $conn->prepare("SELECT * FROM applicant_employment_stat WHERE applicant_id = ?");
+$empStmt->bind_param("i", $userId);
+$empStmt->execute();
+$empResult = $empStmt->get_result();
+$employmentData = $empResult->fetch_assoc();
+
+$employmentJson = json_encode($employmentData);
+
+$jobStmt = $conn->prepare("SELECT * FROM applicant_job_language_data WHERE applicant_id = ?");
+$jobStmt->bind_param("i", $userId);
+$jobStmt->execute();
+$jobResult = $jobStmt->get_result();
+$jobData = $jobResult->fetch_assoc();
+
+$joblngJson = json_encode($jobData);

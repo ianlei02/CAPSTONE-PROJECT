@@ -355,36 +355,36 @@ require_once '../Functions/getDataDisplay.php';
                 <label>Unemployment Reason (Select all that apply)</label>
                 <div class="checkbox-unemployed-reasons">
                   <div class="checkbox-flex">
-                    <input type="checkbox" id="unemp-new" name="unempReason" value="new">
+                    <input type="checkbox" id="unemp-new" name="unempReason[]" value="new">
                     <label for="unemp-new">New Entrant/Fresh Graduate</label>
                   </div>
                   <div class="checkbox-flex">
-                    <input type="checkbox" id="unemp-finished-contract" name="unempReason" value="finished-contract">
+                    <input type="checkbox" id="unemp-finished-contract" name="unempReason[]" value="finished-contract">
                     <label for="unemp-finished-contract">Finished Contract</label>
                   </div>
                   <div class="checkbox-flex">
-                    <input type="checkbox" id="unemp-resigned" name="unempReason" value="resigned">
+                    <input type="checkbox" id="unemp-resigned" name="unempReason[]" value="resigned">
                     <label for="unemp-resigned">Resigned</label>
                   </div>
                   <div class="checkbox-flex">
-                    <input type="checkbox" id="unemp-retired" name="unempReason" value="retired">
+                    <input type="checkbox" id="unemp-retired" name="unempReason[]" value="retired">
                     <label for="unemp-retired">Retired</label>
                   </div>
                   <div class="checkbox-flex">
-                    <input type="checkbox" id="unemp-calamity" name="unempReason" value="calamity">
+                    <input type="checkbox" id="unemp-calamity" name="unempReason[]" value="calamity">
                     <label for="unemp-calamity">Terminated/Laid off due to calamity</label>
                   </div>
                   <div class="checkbox-flex">
-                    <input type="checkbox" id="unemp-terminated-local" name="unempReason" value="terminated-local">
+                    <input type="checkbox" id="unemp-terminated-local" name="unempReason[]" value="terminated-local">
                     <label for="unemp-terminated-local">Terminated/Laid off (local)</label>
                   </div>
                   <div class="checkbox-flex" style="grid-column:span 2">
-                    <input type="checkbox" id="unemp-terminated-abroad" name="unempReason" value="terminated-abroad">
-                    <label for="unemp-terminated-abroad">Terminated/Laid off (abroad)specify:country</label><input type="" text" style="max-width:180px;margin-right: 20px;">
+                    <input type="checkbox" id="unemp-terminated-abroad" name="unempReason[]" value="terminated-abroad">
+                    <label for="unemp-terminated-abroad">Terminated/Laid off (abroad)specify:country</label><input type="" text" style="max-width:180px;margin-right: 20px;" name="otherTerm">
                   </div>
                   <div class="checkbox-flex">
-                    <input type="checkbox" id="unemp-other" name="unempReason" value="other">
-                    <label for="unemp-other">Others:</label><input type="text">
+                    <input type="checkbox" id="unemp-other" name="unempReason[]" value="other">
+                    <label for="unemp-other">Others:</label><input type="text" name="unempReasonOthers">
                   </div>
 
                 </div>
@@ -442,11 +442,11 @@ require_once '../Functions/getDataDisplay.php';
               <label class="required">EMPLOYMENT TYPE</label>
               <div class="employment-checkboxes">
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="pref-parttime" name="prefEmploymentType" value="parttime">
+                  <input type="radio" id="pref-parttime" name="prefEmploymentType" value="parttime">
                   <label for="pref-parttime">Part-time</label>
                 </div>
                 <div class="checkbox-flex">
-                  <input type="checkbox" id="pref-fulltime" name="prefEmploymentType" value="fulltime">
+                  <input type="radio" id="pref-fulltime" name="prefEmploymentType" value="fulltime">
                   <label for="pref-fulltime">Full-time</label>
                 </div>
               </div>
@@ -508,33 +508,33 @@ require_once '../Functions/getDataDisplay.php';
                 <tbody>
                   <tr>
                     <td>English</td>
-                    <td><input type="checkbox" name="englishRead"></td>
-                    <td><input type="checkbox" name="englishWrite"></td>
-                    <td><input type="checkbox" name="englishSpeak"></td>
-                    <td><input type="checkbox" name="englishUnderstand"></td>
+                    <td><input type="checkbox" id="englishRead" name="englishRead"></td>
+                    <td><input type="checkbox" id="englishWrite" name="englishWrite"></td>
+                    <td><input type="checkbox" id="englishSpeak" name="englishSpeak"></td>
+                    <td><input type="checkbox" id="englishUnderstand" name="englishUnderstand"></td>
                   </tr>
                   <tr>
                     <td>Filipino</td>
-                    <td><input type="checkbox" name="filipinoRead"></td>
-                    <td><input type="checkbox" name="filipinoWrite"></td>
-                    <td><input type="checkbox" name="filipinoSpeak"></td>
-                    <td><input type="checkbox" name="filipinoUnderstand"></td>
+                    <td><input type="checkbox" id="filipinoRead" name="filipinoRead"></td>
+                    <td><input type="checkbox" id="filipinoWrite" name="filipinoWrite"></td>
+                    <td><input type="checkbox" id="filipinoSpeak" name="filipinoSpeak"></td>
+                    <td><input type="checkbox" id="filipinoUnderstand" name="filipinoUnderstand"></td>
                   </tr>
                   <tr>
                     <td>Mandarin</td>
-                    <td><input type="checkbox" name="mandarinRead"></td>
-                    <td><input type="checkbox" name="mandarinWrite"></td>
-                    <td><input type="checkbox" name="mandarinSpeak"></td>
-                    <td><input type="checkbox" name="mandarinUnderstand"></td>
+                    <td><input type="checkbox" id="mandarinRead" name="mandarinRead"></td>
+                    <td><input type="checkbox" id="mandarinWrite" name="mandarinWrite"></td>
+                    <td><input type="checkbox" id="mandarinSpeak" name="mandarinSpeak"></td>
+                    <td><input type="checkbox" id="mandarinUnderstand" name="mandarinUnderstand"></td>
                   </tr>
                   <tr>
                     <td>
                       <input type="text" placeholder="Others:" name="otherLanguage">
                     </td>
-                    <td><input type="checkbox" name="otherRead"></td>
-                    <td><input type="checkbox" name="otherWrite"></td>
-                    <td><input type="checkbox" name="otherSpeak"></td>
-                    <td><input type="checkbox" name="otherUnderstand"></td>
+                    <td><input type="checkbox" id="otherRead" name="otherRead"></td>
+                    <td><input type="checkbox" id="otherWrite" name="otherWrite"></td>
+                    <td><input type="checkbox" id="otherSpeak" name="otherSpeak"></td>
+                    <td><input type="checkbox" id="otherUnderstand" name="otherUnderstand"></td>
                   </tr>
                 </tbody>
               </table>
@@ -1101,6 +1101,8 @@ require_once '../Functions/getDataDisplay.php';
     const docsData = <?php echo $docsJson; ?>;
     const trainingData = <?php echo $trainingJson; ?>;
     const linkData = <?php echo $docsLinkJson; ?>;
+    const employmentData = <?php echo $employmentJson; ?>;
+    const joblngData = <?php echo $joblngJson; ?>;
 
     document.addEventListener('DOMContentLoaded', function() {
 
@@ -1122,6 +1124,149 @@ require_once '../Functions/getDataDisplay.php';
         document.getElementById('religion').value = profileData.religion || '';
         
       }
+
+      if (employmentData) {
+        document.querySelector(".employed-checkboxes").style.display = "none";
+        document.querySelector(".self-employed-checkboxes").style.display = "none";
+        document.querySelector(".unemployed-checkboxes").style.display = "none";
+        
+        if (employmentData.employment_status === "Employed") {
+          document.getElementById("employed").checked = true;
+          document.querySelector(".employed-checkboxes").style.display = "grid";
+
+        } else if (employmentData.employment_status === "Unemployed") {
+          document.getElementById("unemployed").checked = true;
+          document.querySelector(".unemployed-checkboxes").style.display = "grid";
+
+        } else if (employmentData.employment_status === "Self-Employed") {
+          document.getElementById("self-employed").checked = true;
+          document.getElementById("employed").checked = true;
+          document.querySelector(".employed-checkboxes").style.display = "grid";
+          document.querySelector(".self-employed-checkboxes").style.display = "grid";
+        }
+
+        if (employmentData.wage_employed == 1) {
+          document.getElementById("wage-employed").checked = true;
+        }
+        if (employmentData.self_employed_type) {
+          let types = employmentData.self_employed_type.split(",");
+          types.forEach(type => {
+            let cleanType = type.trim();
+            let el = document.querySelector(`input[name="selfEmployedType[]"][value="${cleanType}"]`);
+            if (el) el.checked = true;
+          });
+        }
+        if (employmentData.self_employed_other) {
+          document.querySelector("input[name='selfEmployedOther']").value = employmentData.self_employed_other;
+        }
+        if (employmentData.job_search_duration) {
+          document.getElementById("jobSearchDuration").value = employmentData.job_search_duration;
+        }
+        if (employmentData.unemp_reasons && employmentData.unemp_reasons.trim() !== "") {
+          let reasons = employmentData.unemp_reasons.split(",");
+
+          reasons.forEach(reason => {
+            reason = reason.trim();
+
+            if (reason.toLowerCase().startsWith("other:")) {
+              const othersCheckbox = document.querySelector(`input[name="unempReason[]"][value="other"]`);
+              const othersInput = document.querySelector("input[name='unempReasonOthers']");
+              const otherValue = reason.split(":")[1]?.trim() || "";
+
+              if (othersCheckbox) othersCheckbox.checked = true;
+              if (othersInput) {
+                othersInput.style.display = "block";
+                othersInput.value = otherValue;
+              }
+              } else if (reason.toLowerCase().startsWith("terminated-abroad:")) {
+                const abroadCheckbox = document.querySelector(`input[name="unempReason[]"][value="terminated-abroad"]`);
+              const abroadInput = document.querySelector("input[name='otherTerm']");
+              const abroadValue = reason.split(":")[1]?.trim() || "";
+
+              if (abroadCheckbox) abroadCheckbox.checked = true;
+              if (abroadInput) {
+                abroadInput.style.display = "block";
+                abroadInput.value = abroadValue;
+              }
+
+            } else {
+              let el = document.querySelector(`input[name="unempReason[]"][value="${reason}"]`);
+              if (el) el.checked = true;
+            }
+          });
+        }
+
+      if (employmentData.ofw) {
+        if (employmentData.ofw === "yes") {
+          document.getElementById("ofw-yes").checked = true;
+          document.getElementById("ofw-country-group").style.display = "flex";
+
+          if (employmentData.ofw_country) {
+            document.getElementById("ofwCountry").value = employmentData.ofw_country;
+          }
+        } else if (employmentData.ofw === "no") {
+          document.getElementById("ofw-no").checked = true;
+        }
+      }
+      if (employmentData.former_ofw) {
+        if (employmentData.former_ofw === "yes") {
+          document.getElementById("former-ofw-yes").checked = true;
+          document.getElementById("former-ofw-country-group").style.display = "flex";
+          document.getElementById("return-date-group").style.display = "flex";
+
+          if (employmentData.former_ofw_country) {
+            document.getElementById("formerOfwCountry").value = employmentData.former_ofw_country;
+          }
+          if (employmentData.return_date) {
+            const returnDate = employmentData.return_date.substring(0, 7);
+            document.getElementById("returnDate").value = returnDate;
+          }
+        } else if (employmentData.former_ofw === "no") {
+          document.getElementById("former-ofw-no").checked = true;
+        }
+      }
+      }
+      
+      if (joblngData) {
+       if (joblngData.pref_employment_types) {
+        let employmentTypes = joblngData.pref_employment_types;
+        if (typeof employmentTypes === "string") {
+            employmentTypes = JSON.parse(employmentTypes);
+        }
+        const employmentTypeRadio = document.querySelector(`input[name="prefEmploymentType"][value="${employmentTypes[0] || ''}"]`);
+        if (employmentTypeRadio) employmentTypeRadio.checked = true;
+        }
+        function assignArrayValues(inputPrefix, valuesStr) {
+            if (!valuesStr) return;
+            let values = valuesStr;
+            if (typeof valuesStr === "string") values = JSON.parse(valuesStr);
+            values.forEach((val, index) => {
+                const input = document.getElementById(`${inputPrefix}${index + 1}`);
+                if (input) input.value = val;
+            });
+        }
+
+        assignArrayValues("prefOccupation", joblngData.pref_occupations);
+        assignArrayValues("prefLocal", joblngData.pref_local_work_locations);
+        assignArrayValues("prefOverseas", joblngData.pref_overseas_work_locations);
+
+        if (!joblngData || !joblngData.language_proficiency) return;
+
+    let langs = joblngData.language_proficiency;
+    if (typeof langs === "string") langs = JSON.parse(langs);
+
+    for (const [lang, prof] of Object.entries(langs)) {
+        ['read','write','speak','understand'].forEach(skill => {
+            const checkbox = document.getElementById(`${lang}${skill.charAt(0).toUpperCase() + skill.slice(1)}`);
+            if (checkbox) checkbox.checked = prof[skill] === 1;
+        });
+
+        if (lang === 'other' && prof.name) {
+            const otherInput = document.getElementById('otherLanguage');
+            if (otherInput) otherInput.value = prof.name.trim();
+        }
+    }
+    }
 
       if (linkData && linkData.length > 0) {
        const links = linkData[0];
