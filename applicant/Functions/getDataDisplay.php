@@ -91,7 +91,7 @@ if (isset($_SESSION['user_id'])) {
 }
 
 $applicant_id = $userId;
-$stmt = $conn->prepare("SELECT street_address, region_id, province_id, city_id, barangay_id FROM applicant_contact_info WHERE applicant_ID = ?");
+$stmt = $conn->prepare("SELECT street_address, region_id, province_id, city_id, barangay FROM applicant_contact_info WHERE applicant_ID = ?");
 $stmt->bind_param("i", $applicant_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -101,7 +101,7 @@ $saved_street = $userAddress['street_address'] ?? '';
 $saved_region = $userAddress['region_id'] ?? '';
 $saved_province = $userAddress['province_id'] ?? '';
 $saved_city = $userAddress['city_id'] ?? '';
-$saved_barangay = $userAddress['barangay_id'] ?? '';
+$saved_barangay = $userAddress['barangay'] ?? '';
 
 function fetchMultipleUrls($urls)
 {

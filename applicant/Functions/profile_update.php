@@ -72,7 +72,7 @@ require "../connection/dbcon.php";
         'gradStudiesCourse'     => $_POST['gradStudiesCourse'] ?? null,
         'gradStudiesYear'       => $_POST['gradStudiesYear'] ?? null,
         'gradStudiesLevel'      => $_POST['gradStudiesLevel'] ?? null,
-        'gradStudiesLastYea'    => $_POST['gradStudiesLastYear'] ?? null
+        'gradStudiesLastYear'    => $_POST['gradStudiesLastYear'] ?? null
     ];
    
     $allowedTypes = [

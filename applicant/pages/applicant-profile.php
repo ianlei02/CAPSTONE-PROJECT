@@ -231,12 +231,12 @@ require_once '../Functions/getDataDisplay.php';
                   <?php endforeach; ?>
                 </select>
 
-                <input type="text" id="barangay" name="barangay" placeholder="Barangay" required>
+                <input type="text" id="barangay" name="barangay_name" placeholder="Barangay" required>
               </div>
               <input type="hidden" name="region_name" id="region_name">
               <input type="hidden" name="province_name" id="province_name">
               <input type="hidden" name="city_name" id="city_name">
-              <input type="hidden" name="barangay_name" id="barangay_name">
+              <input type="hidden" name="barangay_name" id="barangay">
             </div>
             <div class="form-group" style="grid-column: span 2">
               <label class="required">Height(FT.)</label>
@@ -1125,6 +1125,34 @@ require_once '../Functions/getDataDisplay.php';
         
       }
 
+      if (profileData.in_school) {
+        const checkbox = document.getElementById(`inSchool-${profileData.in_school}`);
+        if (checkbox) checkbox.checked = true;
+      }
+        const levels = {
+        elementary: ['elementaryCourse','elementaryYear','elementaryLevel','elementaryLastYear'],
+        secondary: ['secondaryType','secondaryCourse','secondaryYear','secondaryLevel','secondaryLastYear'],
+        tertiary: ['tertiaryCourse','tertiaryYear','tertiaryLevel','tertiaryLastYear'],
+        grad_studies: ['gradStudiesCourse','gradStudiesYear','gradStudiesLevel','gradStudiesLastYear']
+    };
+
+    for (const [level, fields] of Object.entries(levels)) {
+        fields.forEach(name => {
+            const input = document.querySelector(`[name="${name}"]`);
+            if (!input) return;
+            let profileKey = name.replace(/([A-Z])/g, '_$1').toLowerCase(); 
+            if (profileData[profileKey]) input.value = profileData[profileKey];
+        });
+    }
+    if (profileData.secondary_type === "k12") {
+        const seniorRow = document.getElementById("seniorHighStrandRow");
+        if (seniorRow) seniorRow.style.display = "table-row";
+
+        const seniorInput = document.getElementById("seniorHighStrand");
+        if (seniorInput && profileData.senior_high_strand) seniorInput.value = profileData.senior_high_strand;
+    }
+  
+
       if (employmentData) {
         document.querySelector(".employed-checkboxes").style.display = "none";
         document.querySelector(".self-employed-checkboxes").style.display = "none";
@@ -1325,7 +1353,8 @@ require_once '../Functions/getDataDisplay.php';
     });
   }
   });
-  
+  </script>
+  <script>
     const savedSkills = <?php echo json_encode($skills); ?>;
     const savedOtherSkill = <?php echo json_encode($otherSkill); ?>;
 
@@ -1406,7 +1435,6 @@ require_once '../Functions/getDataDisplay.php';
     const regions = <?= json_encode($regions) ?>;
     const provinces = <?= json_encode($provinces) ?>;
     const cities = <?= json_encode($cities) ?>;
-    const barangays = <?= json_encode($barangays) ?>;
 
     /* --- Region Change --- */
     regionSel.addEventListener('change', () => {
@@ -1458,15 +1486,6 @@ require_once '../Functions/getDataDisplay.php';
       reset(barangaySel, 'Select Barangay');
 
       if (!citySel.value) return;
-
-      barangays
-        .filter(b => b.city_municipality === cityName)
-        .forEach(b => {
-          const opt = document.createElement('option');
-          opt.value = b.code;
-          opt.textContent = b.name;
-          barangaySel.appendChild(opt);
-        });
 
       barangaySel.disabled = false;
     });
