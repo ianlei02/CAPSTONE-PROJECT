@@ -46,10 +46,22 @@ $docsStmt->execute();
 $docsResult = $docsStmt->get_result();
 $docsData = $docsResult->fetch_all(MYSQLI_ASSOC);
 
+$docsLStmt = $conn->prepare("SELECT port_link, drive_link, other_link FROM applicant_documents WHERE applicant_id = ?");
+$docsLStmt->bind_param("i", $userId);
+$docsLStmt->execute();
+$docsResultt = $docsLStmt->get_result();
+$docsLink = $docsResultt->fetch_all(MYSQLI_ASSOC);
+
+$filteredLinks = array_filter($docsLink, function($item) {
+    return !empty($item['other_link']);
+});
+
+$docsLinkJson = json_encode(array_values($filteredLinks));
 $accountJson   = json_encode($accountData ?: []);
 $profileJson   = json_encode($profileData ?: []);
 $contactJson   = json_encode($contactData ?: []);
 $docsJson      = json_encode($docsData ?: []);
+
 
 $profile_picture_url = '../assets/images/profile.png';
 
@@ -79,7 +91,7 @@ if (isset($_SESSION['user_id'])) {
 }
 
 $applicant_id = $userId;
-$stmt = $conn->prepare("SELECT street_address, region_id, province_id, city_id, barangay_id FROM applicant_contact_info WHERE applicant_ID = ?");
+$stmt = $conn->prepare("SELECT street_address, region_id, province_id, city_id, barangay FROM applicant_contact_info WHERE applicant_ID = ?");
 $stmt->bind_param("i", $applicant_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -89,7 +101,7 @@ $saved_street = $userAddress['street_address'] ?? '';
 $saved_region = $userAddress['region_id'] ?? '';
 $saved_province = $userAddress['province_id'] ?? '';
 $saved_city = $userAddress['city_id'] ?? '';
-$saved_barangay = $userAddress['barangay_id'] ?? '';
+$saved_barangay = $userAddress['barangay'] ?? '';
 
 function fetchMultipleUrls($urls)
 {
@@ -168,3 +180,54 @@ while ($row = $trainingResult->fetch_assoc()) {
     $trainingInfo[] = $row;
 }
 $trainingJson = json_encode($trainingInfo ?: []);
+
+$empStmt = $conn->prepare("SELECT * FROM applicant_employment_stat WHERE applicant_id = ?");
+$empStmt->bind_param("i", $userId);
+$empStmt->execute();
+$empResult = $empStmt->get_result();
+$employmentData = $empResult->fetch_assoc();
+
+$employmentJson = json_encode($employmentData);
+
+$jobStmt = $conn->prepare("SELECT * FROM applicant_job_language_data WHERE applicant_id = ?");
+$jobStmt->bind_param("i", $userId);
+$jobStmt->execute();
+$jobResult = $jobStmt->get_result();
+$jobData = $jobResult->fetch_assoc();
+
+$joblngJson = json_encode($jobData);
+
+$eligsql = "SELECT * FROM applicant_eligibility_exp WHERE applicant_id = ?";
+$eligstmt = $conn->prepare($eligsql);
+$eligstmt->bind_param("i", $userId);
+$eligstmt->execute();
+$eligresult = $eligstmt->get_result();
+
+$eligibilities = [];
+$licenses = [];
+$work_experience = [];
+
+while ($row = $eligresult->fetch_assoc()) {
+    if (!empty($row['eligibility'])) {
+        $eligibilities[] = [
+            'eligibility' => $row['eligibility'],
+            'eligibility_date' => $row['eligibility_date']
+        ];
+    }
+    if (!empty($row['license'])) {
+        $licenses[] = [
+            'license' => $row['license'],
+            'license_valid' => $row['license_valid']
+        ];
+    }
+    if (!empty($row['company_name'])) {
+        $work_experience[] = [
+            'company_name' => $row['company_name'],
+            'company_address' => $row['company_address'],
+            'position' => $row['position'],
+            'months_worked' => $row['months_worked'],
+            'status' => $row['status']
+        ];
+    }
+}
+$stmt->close();

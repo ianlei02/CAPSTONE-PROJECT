@@ -72,7 +72,7 @@ require "../connection/dbcon.php";
         'gradStudiesCourse'     => $_POST['gradStudiesCourse'] ?? null,
         'gradStudiesYear'       => $_POST['gradStudiesYear'] ?? null,
         'gradStudiesLevel'      => $_POST['gradStudiesLevel'] ?? null,
-        'gradStudiesLastYea'    => $_POST['gradStudiesLastYear'] ?? null
+        'gradStudiesLastYear'    => $_POST['gradStudiesLastYear'] ?? null
     ];
    
     $allowedTypes = [
@@ -252,7 +252,23 @@ require "../connection/dbcon.php";
     $selfEmployedOther = $_POST['selfEmployedOther'] ?? null;
 
     $jobSearchDuration = !empty($_POST['jobSearchDuration']) ? (int)$_POST['jobSearchDuration'] : null;
-    $unempReasons = !empty($_POST['unempReason']) ? implode(', ', (array)$_POST['unempReason']) : null;
+    
+    $unempReasons = null;
+
+    if (!empty($_POST['unempReason']) || !empty($_POST['unempReasonOthers']) || !empty($_POST['otherTerm'])) {
+        $reasons = array_map('trim', (array)($_POST['unempReason'] ?? []));
+
+        foreach ($reasons as &$reason) {
+            if ($reason === 'other' && !empty($_POST['unempReasonOthers'])) {
+                $reason = 'other:' . trim($_POST['unempReasonOthers']);
+            }
+            if ($reason === 'terminated-abroad' && !empty($_POST['otherTerm'])) {
+                $reason = 'terminated-abroad:' . trim($_POST['otherTerm']);
+            }
+        }
+        unset($reason);
+        $unempReasons = implode(', ', $reasons);
+    }
 
     $ofw = $_POST['ofw'] ?? 'no';
     $ofwCountry = $_POST['ofwCountry'] ?? null;
@@ -293,7 +309,7 @@ require "../connection/dbcon.php";
     ");
 
     $stmt->bind_param(
-        "isiiissssssss",
+        "isiississssss",
         $applicant_id,       
         $employmentStatus,   
         $wageEmployed,       
@@ -493,57 +509,7 @@ require "../connection/dbcon.php";
 
     function saveEligibilityExp($conn, $applicant_id) {
 
-    $maxRows = max(2, 2, 3);
-
-     for ($i = 1; $i <= $maxRows; $i++) {
-        $eligibility = $_POST["eligibility$i"] ?? null;
-        $eligibilityDate = !empty($_POST["eligibilityDate$i"]) ? $_POST["eligibilityDate$i"] : null;
-
-        $license = $_POST["license$i"] ?? null;
-        $licenseValid = !empty($_POST["licenseValid$i"]) ? $_POST["licenseValid$i"] : null;
-
-        $company = $_POST["company$i"] ?? null;
-        $address = $_POST["companyAddress$i"] ?? null;
-        $position = $_POST["position$i"] ?? null;
-        $months = !empty($_POST["months$i"]) ? intval($_POST["months$i"]) : null;
-        $status = $_POST["status$i"] ?? null;
-
-        if (!empty($eligibility) || !empty($license) || !empty($company)) {
-            $stmt = $conn->prepare("
-                INSERT INTO applicant_eligibility_exp 
-                    (applicant_id, eligibility, eligibility_date, license, license_valid, 
-                     company_name, company_address, position, months_worked, status)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                ON DUPLICATE KEY UPDATE 
-                    eligibility = VALUES(eligibility),
-                    eligibility_date = VALUES(eligibility_date),
-                    license = VALUES(license),
-                    license_valid = VALUES(license_valid),
-                    company_name = VALUES(company_name),
-                    company_address = VALUES(company_address),
-                    position = VALUES(position),
-                    months_worked = VALUES(months_worked),
-                    status = VALUES(status)
-            ");
-
-             $stmt->bind_param(
-                "isssssssis",
-                $applicant_id,
-                $eligibility,
-                $eligibilityDate,
-                $license,
-                $licenseValid,
-                $company,
-                $address,
-                $position,
-                $months,
-                $status
-            );
-
-            $stmt->execute();
-            $stmt->close();
-        }
-    }
+   
     }
 
     function saveApplicantSkills($conn, $applicant_id) {
