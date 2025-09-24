@@ -25,8 +25,9 @@ if (isset($_SESSION['user_id'])) {
   $stmt->close();
 }
 
+
 if (!isset($_SESSION['user_id'])) {
-  header("Location: ../login-signup.php");
+  header("Location: ../../auth/login-signup.php");
   exit();
 }
 $applicantId = $_SESSION['user_id'] ?? 0;

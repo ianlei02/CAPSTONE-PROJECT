@@ -1,8 +1,8 @@
 <?php
-require_once '../../landing/functions/check_login.php';
+require_once '../../auth/functions/check_login.php';
 
 if (!isset($_SESSION['user_id'])) {
-  header("Location: ../login-signup.php");
+  header("Location: ../../auth/login-signup.php");
   exit();
 }
 $profile_picture_url = '../assets/images/profile.png';

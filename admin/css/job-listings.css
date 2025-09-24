@@ -117,7 +117,7 @@
   }
   
   .job-field {
-    background-color: var(--secondary-blue-color);
+    background-color: var(--blue-light);
     color: white;
     padding: 3px 10px;
     border-radius: 20px;
