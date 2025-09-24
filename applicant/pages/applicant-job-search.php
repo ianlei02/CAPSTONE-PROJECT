@@ -30,10 +30,23 @@ if (isset($_SESSION['user_id'])) {
   }
   $stmt->close();
 }
-$sql = "SELECT job_id, job_title, job_type, category, salary_range, location, vacancies, description, created_at 
-        FROM job_postings 
-        WHERE status = 'active' 
-        ORDER BY created_at DESC";
+$sql = "SELECT 
+            jp.job_id, 
+            jp.job_title, 
+            jp.job_type, 
+            jp.category, 
+            jp.salary_range, 
+            jp.location, 
+            jp.vacancies, 
+            jp.description, 
+            jp.created_at,
+            ec.employer_id,
+            ec.company_name
+        FROM job_postings jp
+        INNER JOIN employer_company_info ec 
+            ON jp.employer_id = ec.employer_id
+        WHERE jp.status = 'active'
+        ORDER BY jp.created_at DESC";
 
 $result = $conn->query($sql);
 ?>
@@ -151,7 +164,7 @@ $result = $conn->query($sql);
               <div class="job-header">
                 <div>
                   <h3 class="job-title"><?php echo htmlspecialchars($row['job_title']); ?></h3>
-                  <div class="job-company"><?php echo htmlspecialchars($row['job_title']); ?></div>
+                  <div class="job-company"><?php echo htmlspecialchars($row['company_name']); ?></div>
                 </div>
                 <div>
                   <span class="job-salary"><?php echo htmlspecialchars($row['salary_range']); ?><br> Salary/Month</span>
