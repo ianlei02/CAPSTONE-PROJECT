@@ -1,0 +1,121 @@
+
+:root {
+  /* ---------- Brand ---------- */
+  --primary: hsl(220 85% 56%); /* modern blue */
+  --primary-hover: hsl(220 85% 46%); /* darker for hover */
+  --primary-muted: hsl(220 85% 92%); /* pale blue for subtle surfaces */
+
+  /* ---------- Backgrounds ---------- */
+  --bg: hsl(0 0% 100%); /* app background */
+  --bg-muted: hsl(210 16% 98%); /* secondary background */
+  --bg-subtle: hsl(210 14% 96%); /* tertiary background, inputs/cards */
+
+  /* ---------- Text ---------- */
+  --text: hsl(220 12% 12%); /* strong text */
+  --text-muted: hsl(215 10% 48%); /* secondary */
+  --text-subtle: hsl(215 8% 65%); /* placeholder */
+
+  /* ---------- Border ---------- */
+  --border: hsl(210 16% 88%);
+
+  /* ---------- Semantic ---------- */
+  --success: hsl(142 60% 38%);
+  --warning: hsl(42 95% 52%);
+  --danger: hsl(352 72% 44%);
+  --info: hsl(205 90% 40%);
+
+  /* ---------- Typography ---------- */
+  --font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem; /* 36px */
+  --font-size-5xl: 3rem; /* 48px */
+
+  --leading-tight: 1.1;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* ---------- Spacing (4–64px) ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-11: 44px;
+  --space-12: 48px;
+  --space-13: 52px;
+  --space-14: 56px;
+  --space-15: 60px;
+  --space-16: 64px;
+
+  /* ---------- Borders & Radius ---------- */
+  --border-width-thin: 1px;
+  --border-width-thick: 2px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* ---------- Shadows ---------- */
+  --shadow-sm: 0 1px 2px hsla(220 14% 12% / 0.06);
+  --shadow-md: 0 6px 18px hsla(220 14% 12% / 0.08);
+  --shadow-lg: 0 12px 30px hsla(220 14% 12% / 0.1);
+  --shadow-xl: 0 24px 48px hsla(220 14% 12% / 0.12);
+}
+
+/* -------------------------
+   DARK MODE
+   ------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Brand */
+    --primary: hsl(220 85% 65%);
+    --primary-hover: hsl(220 85% 55%);
+    --primary-muted: hsl(220 40% 18%);
+
+    /* Backgrounds */
+    --bg: hsl(220 14% 6%);
+    --bg-muted: hsl(220 10% 8%);
+    --bg-subtle: hsl(220 12% 12%);
+
+    /* Text */
+    --text: hsl(210 20% 96%);
+    --text-muted: hsl(210 12% 72%);
+    --text-subtle: hsl(210 8% 55%);
+
+    /* Border */
+    --border: hsl(220 12% 20%);
+
+    /* Semantic */
+    --success: hsl(142 55% 52%);
+    --warning: hsl(42 95% 60%);
+    --danger: hsl(352 68% 56%);
+    --info: hsl(205 85% 60%);
+
+    /* Shadows (subtle glows on dark) */
+    --shadow-sm: 0 1px 2px hsla(220 20% 96% / 0.04);
+    --shadow-md: 0 6px 18px hsla(220 20% 96% / 0.06);
+    --shadow-lg: 0 12px 30px hsla(220 20% 96% / 0.07);
+    --shadow-xl: 0 24px 48px hsla(220 20% 96% / 0.09);
+  }
+}

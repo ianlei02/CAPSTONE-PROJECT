@@ -1,5 +1,5 @@
 <?php
-require_once '../../landing/functions/check_login.php';
+require_once '../../auth/functions/check_login.php';
 require_once '../Functions/getDataDisplay.php';
 
 
@@ -80,7 +80,7 @@ require_once '../Functions/getDataDisplay.php';
     </ul>
     <ul>
       <li>
-        <a href="../../landing/functions/logout.php" class="log-out-btn">
+        <a href="../../auth/functions/logout.php" class="log-out-btn">
           <span class="material-symbols-outlined icon">logout</span>
           <span class="label">Log Out</span>
         </a>

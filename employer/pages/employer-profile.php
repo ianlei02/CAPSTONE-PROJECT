@@ -1,8 +1,8 @@
 <?php
-require_once '../../landing/functions/check_login.php';
+require_once '../../auth/functions/check_login.php';
 
 if (!isset($_SESSION['user_id'])) {
-  header("Location: ../../landing/login-signup.php");
+  header("Location: ../../auth/login-signup.php");
   exit();
 }
 
@@ -117,7 +117,7 @@ $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
         </a>
       </li>
       <li>
-        <a href="../../landing/functions/logout.php">
+        <a href="../../pages/functions/logout.php">
           <span class="emoji"><img src="../../public-assets/icons/download.svg" style="transform:rotate(90deg);"></span>
           <span class="label">Log Out</span>
         </a>
