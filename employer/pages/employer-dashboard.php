@@ -1,8 +1,8 @@
 <?php
-require_once '../../landing/functions/check_login.php';
+require_once '../../auth/functions/check_login.php';
 
 if (!isset($_SESSION['user_id'])) {
-  header("Location: ../login-signup.php");
+  header("Location: ../../auth/login-signup.php");
   exit();
 }
 $employer_id = $_SESSION['user_id'];
@@ -113,7 +113,7 @@ $data = $result->fetch_assoc();
         </a>
       </li>
       <li>
-        <a href="../../landing/functions/logout.php">
+        <a href="../../auth/functions/logout.php">
           <span class="emoji"><img src="../../public-assets/icons/download.svg" style="transform:rotate(90deg);"></span>
           <span class="label">Log Out</span>
         </a>
