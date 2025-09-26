@@ -44,7 +44,9 @@ function calculateApplicantScore($applicant_id, $job_id, $conn) {
             $score += 5;
         }
     }
+    $maxScore = 200;
+    $percentage = ($score / $maxScore) * 100;
 
-    return $score;
+    return round($percentage, 2);
 }
 ?>

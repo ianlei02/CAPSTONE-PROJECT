@@ -19,7 +19,7 @@ if (isset($_GET['action'])) {
   if ($action === 'viewApplicants') {
 ?>
     <h2>HADUKEN</h2>
-    <a href="dss_results.php?job_id=<?= $job['job_id']; ?>">Run DSS</a>
+
 
   <?php
     exit;
@@ -319,13 +319,15 @@ if (isset($_GET['action'])) {
     });
   </script>
   <script>
-    //? TO PREVENT RELOADING WHEN CLICKING THE ACTION BUTTONS
+   
     const actionButtons = document.querySelectorAll('.action-btn');
     actionButtons.forEach(button => {
-      button.addEventListener("click", (e) =>{
-        e.preventDefault();
-      });
+      if (button.tagName.toLowerCase() === "button") {
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
     });
+  }
+});
     function viewApplicants(jobId) {
       fetch(`employer-post.php?action=viewApplicants&id=${jobId}`)
         .then(res => res.text())

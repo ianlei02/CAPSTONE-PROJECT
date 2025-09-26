@@ -144,7 +144,7 @@ $data = $result->fetch_assoc();
           <div class="stat-value">
             <?php echo $data['employer_total_jobs']; ?>
           </div>
-          <div class="stat-label">5 pending applications</div>
+          <div class="stat-label"><?php echo $data['total_active']; ?> pending applications</div>
         </div>
 
         <div class="stat-card">
