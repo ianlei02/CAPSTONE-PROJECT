@@ -30,10 +30,23 @@ if (isset($_SESSION['user_id'])) {
   }
   $stmt->close();
 }
-$sql = "SELECT job_id, job_title, job_type, category, salary_range, location, vacancies, description, created_at 
-        FROM job_postings 
-        WHERE status = 'active' 
-        ORDER BY created_at DESC";
+$sql = "SELECT 
+            jp.job_id, 
+            jp.job_title, 
+            jp.job_type, 
+            jp.category, 
+            jp.salary_range, 
+            jp.location, 
+            jp.vacancies, 
+            jp.description, 
+            jp.created_at,
+            ec.employer_id,
+            ec.company_name
+        FROM job_postings jp
+        INNER JOIN employer_company_info ec 
+            ON jp.employer_id = ec.employer_id
+        WHERE jp.status = 'active'
+        ORDER BY jp.created_at DESC";
 
 $result = $conn->query($sql);
 ?>
@@ -108,7 +121,7 @@ $result = $conn->query($sql);
     </ul>
     <ul>
       <li>
-        <a href="../../landing/functions/logout.php" class="log-out-btn">
+        <a href="../../auth/functions/logout.php" class="log-out-btn">
           <span class="material-symbols-outlined icon">logout</span>
           <span class="label">Log Out</span>
         </a>
@@ -151,7 +164,7 @@ $result = $conn->query($sql);
               <div class="job-header">
                 <div>
                   <h3 class="job-title"><?php echo htmlspecialchars($row['job_title']); ?></h3>
-                  <div class="job-company"><?php echo htmlspecialchars($row['job_title']); ?></div>
+                  <div class="job-company"><?php echo htmlspecialchars($row['company_name']); ?></div>
                 </div>
                 <div>
                   <span class="job-salary"><?php echo htmlspecialchars($row['salary_range']); ?><br> Salary/Month</span>
@@ -186,18 +199,20 @@ $result = $conn->query($sql);
       <div class="modal-content">
         <div class="modal-header">
           <h2 class="modal-title">
-            Apply for <span id="modalJobTitle">Frontend Developer</span>
+            Apply for <span id="modalJobTitle">Haduken</span>
           </h2>
           <button class="close-btn">&times;</button>
         </div>
         <div class="modal-body">
-          <form class="application-form">
+          <form class="application-form" action="../Functions/job_update.php" method="POST" id="app-form">
+
+            <input type="hidden" name="job_id" id="modalJobId">
             <div class="section">
               <h3 style="color: var(--primary-blue-color); margin-bottom: 20px;">
                 Personal Information
               </h3>
             </div>
-
+            
             <div class="section">
               <h3
                 style="
@@ -206,15 +221,16 @@ $result = $conn->query($sql);
                     ">
                 Application Details
               </h3>
+              
               <div class="form-group">
                 <label>Cover Letter</label>
-                <textarea
+                <textarea name="cover_letter"
                   placeholder="Tell the employer why you're a good fit for this position..."></textarea>
               </div>
               <div class="form-group">
                 <label>How did you hear about this position?</label>
-                <select>
-                  <option value="">Select</option>
+                <select name="referral_source">
+                  <option value="" >Select</option>
                   <option>Job Portal</option>
                   <option>Company Website</option>
                   <option>Referral</option>
@@ -224,7 +240,7 @@ $result = $conn->query($sql);
               </div>
               <div class="form-group">
                 <label>Availability to Start</label>
-                <input type="date" />
+                <input type="date" name="availability_date" />
               </div>
             </div>
 
@@ -264,6 +280,8 @@ $result = $conn->query($sql);
 
   <script src="../js/responsive.js"></script>
   <script src="../js/dark-mode.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
   <script>
     // Job Field Filter
     const jobFieldFilter = document.getElementById('jobFieldFilter');
@@ -310,12 +328,6 @@ $result = $conn->query($sql);
     });
 
     // Form Submission
-    const applicationForm = document.querySelector('.application-form');
-    applicationForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('Application submitted successfully! Our office will review your application and contact you if you are shortlisted.');
-      closeModal();
-    });
 
     // Job Card Expansion
     // const jobDescription = document.querySelectorAll('.job-description');
@@ -366,8 +378,67 @@ $result = $conn->query($sql);
       });
     });
   </script>
+  <script> 
+    document.querySelectorAll('.apply-btn').forEach(button => {
+    button.addEventListener('click', function () {
+      const jobId = this.getAttribute('data-job-id');
+      document.getElementById('modalJobId').value = jobId;
+      document.getElementById('applicationModal').style.display = 'block';
+    });
+  });
+  </script>
+  <script> 
+     document.getElementById('app-form').addEventListener('submit', async function(e) {
+      e.preventDefault(); 
 
+      const form = this;
+      const formData = new FormData(form);
+      
+        const confirm = await Swal.fire({
+        title: 'Are you sure?',
+        text: "Do you want to apply for this job?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, apply',
+        cancelButtonText: 'Cancel'
+      });
+      if (!confirm.isConfirmed) return;
 
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          credentials: 'same-origin'
+        });
+        const text = await res.text();
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (parseErr) {
+          console.error('Server returned non-JSON response:', text);
+          await Swal.fire('Server error', 'Invalid JSON response from server. Open console or Network tab to inspect server response.', 'error');
+          return;
+        }
+        if (data.success) {
+          await Swal.fire({
+            icon: 'success',
+            title: 'Application submitted successfully!',
+            text: data.message || 'Your application was saved.',
+            confirmButtonColor: '#3085d6'
+          });
+          form.reset();
+          if (typeof closeModal === 'function') closeModal();
+        } else {
+          await Swal.fire('Error', data.message || 'Server returned an error.', 'error');
+        }
+      } catch (err) {
+        console.error('Fetch error:', err);
+        await Swal.fire('Error', err.message || 'Something went wrong, please try again.', 'error');
+      }
+    });
+  </script>
 </body>
 
 </html>
