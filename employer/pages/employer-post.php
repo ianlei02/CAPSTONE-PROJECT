@@ -20,6 +20,7 @@ if (isset($_GET['action'])) {
 ?>
     <h2>HADUKEN</h2>
 
+
   <?php
     exit;
   }
@@ -228,7 +229,7 @@ if (isset($_GET['action'])) {
     <section class="job-monitoring-section card">
       <div class="section-header">
         <form action="employer-post.php" method="GET">
-          <h2>Your Job Postings</h2>
+          <h2>Your Job Postings</h2> 
           <div class="search-filter">
             <select class="status-filter">
               <option value="all">All Statuses</option>
@@ -264,9 +265,12 @@ if (isset($_GET['action'])) {
                 <td class="expiry-date"><?= htmlspecialchars($row['expiry_date']) ?></td>
                 <td><span class="status-badge <?= htmlspecialchars($row['status']) ?>"><?= ucfirst($row['status']) ?></span></td>
                 <td>
-                  <button class="action-btn view" onclick="viewApplicants(<?= $row['job_id'] ?>)">View</button>
-                  <button class="action-btn edit" onclick="editJob(<?= $row['job_id'] ?>)">Edit</button>
-                  <button class="action-btn delete" onclick="deleteJob(<?= $row['job_id'] ?>)">Delete</button>
+                  <td>
+                    <button type="button" class="action-btn view" onclick="viewApplicants(<?= $row['job_id'] ?>)">View</button>
+                    <button type="button" class="action-btn edit" onclick="editJob(<?= $row['job_id'] ?>)">Edit</button>
+                    <button type="button" class="action-btn delete" onclick="deleteJob(<?= $row['job_id'] ?>)">Delete</button>
+                    <a href="dss_results.php?job_id=<?= $row['job_id'] ?>" class="action-btn run-dss">Run DSS</a>
+                  </td>
                 </td>
               </tr>
             <?php endwhile; ?>
@@ -315,13 +319,15 @@ if (isset($_GET['action'])) {
     });
   </script>
   <script>
-    //? TO PREVENT RELOADING WHEN CLICKING THE ACTION BUTTONS
+   
     const actionButtons = document.querySelectorAll('.action-btn');
     actionButtons.forEach(button => {
-      button.addEventListener("click", (e) =>{
-        e.preventDefault();
-      });
+      if (button.tagName.toLowerCase() === "button") {
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
     });
+  }
+});
     function viewApplicants(jobId) {
       fetch(`employer-post.php?action=viewApplicants&id=${jobId}`)
         .then(res => res.text())
