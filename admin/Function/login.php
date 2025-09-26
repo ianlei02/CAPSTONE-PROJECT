@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../connection/dbcon.php';
+require '../../connection/dbcon.php';
 
 $username = $_POST['username'] ?? '';
 $password = $_POST['password'] ?? '';

@@ -1,5 +1,5 @@
 <?php
-require_once '../../auth/functions/check_login.php';
+require  '../../auth/functions/check_login.php';
 
 if (!isset($_SESSION['user_id'])) {
   header("Location: ../../auth/login-signup.php");
@@ -83,19 +83,17 @@ if (isset($_GET['action'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light" data-state="expanded">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Employer Dashboard</title>
-
+  <script src="../js/load-saved.js"></script>
   <link rel="stylesheet" href="../css/navs.css">
   <link rel="stylesheet" href="../css/employer-post.css">
   <link rel="stylesheet" href="../../public-assets/library/datatable/dataTables.css">
-  <script src="../../public-assets/JS_JQUERY/jquery-3.7.1.min.js" defer></script>
-  <script src="../../public-assets/library/datatable/dataTables.js" defer></script>
-  <script src="../../public-assets/js/table-init.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -114,34 +112,43 @@ if (isset($_GET['action'])) {
     </div>
   </nav>
 
-  <aside class="sidebar">
+   <aside class="sidebar">
     <ul class="sidebar-menu">
       <li>
         <a href="./employer-dashboard.php">
-          <span class="emoji"><img src="../../public-assets/icons/chart-histogram.svg" alt=""></span>
+          <span class="material-symbols-outlined icon">dashboard</span>
           <span class="label">Dashboard</span>
         </a>
       </li>
       <li>
         <a href="./employer-post.php">
-          <span class="emoji"><img src="../../public-assets/icons/download.svg" style="transform:rotate(180deg);"></span>
+          <span class="material-symbols-outlined icon">work</span>
           <span class="label">Post Job</span>
         </a>
+      </li>
       <li>
         <a href="./employer-applications.php">
-          <span class="emoji"><img src="../../public-assets/icons/briefcase.svg" alt=""></span>
+          <span class="material-symbols-outlined icon">people</span>
           <span class="label">Job Applications</span>
         </a>
       </li>
       <li>
         <a href="employer-profile.php">
-          <span class="emoji"><img src="../../public-assets/icons/user.svg" alt=""></span>
+          <span class="material-symbols-outlined icon">id_card</span>
           <span class="label">My Profile</span>
         </a>
       </li>
       <li>
-        <a href="../../auth/functions/logout.php">
-          <span class="emoji"><img src="../../public-assets/icons/download.svg" style="transform:rotate(90deg);"></span>
+        <button onclick="toggleTheme()" class="dark-mode-toggle">
+          <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+          <span id="themeLabel">Dark Mode</span>
+        </button>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <a href="../../auth/functions/logout.php" class='log-out-btn'>
+          <span class="material-symbols-outlined icon">logout</span>
           <span class="label">Log Out</span>
         </a>
       </li>
@@ -274,6 +281,8 @@ if (isset($_GET['action'])) {
   </main>
 
   <script src="../js/responsive.js"></script>
+  <script src="../js/dark-mode.js"></script>
+
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const jobForm = document.getElementById("jobPostForm");
@@ -310,6 +319,13 @@ if (isset($_GET['action'])) {
     });
   </script>
   <script>
+    //? TO PREVENT RELOADING WHEN CLICKING THE ACTION BUTTONS
+    const actionButtons = document.querySelectorAll('.action-btn');
+    actionButtons.forEach(button => {
+      button.addEventListener("click", (e) =>{
+        e.preventDefault();
+      });
+    });
     function viewApplicants(jobId) {
       fetch(`employer-post.php?action=viewApplicants&id=${jobId}`)
         .then(res => res.text())

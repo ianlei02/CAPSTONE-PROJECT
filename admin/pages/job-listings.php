@@ -1,5 +1,5 @@
 <?php
-require "../connection/dbcon.php";
+require "../../connection/dbcon.php";
 $sql = "SELECT job_id, job_title, job_type, category, salary_range, location, vacancies, description, created_at 
         FROM job_postings 
         WHERE status = 'active' 

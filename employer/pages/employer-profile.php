@@ -55,14 +55,16 @@ $docs = $result->fetch_assoc();
 $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light" data-state="expanded">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Company Profile</title>
+  <script src="../js/load-saved.js"></script>
   <link rel="stylesheet" href="../css/navs.css">
   <link rel="stylesheet" href="../css/employer-profile.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -88,37 +90,39 @@ $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
     <ul class="sidebar-menu">
       <li>
         <a href="./employer-dashboard.php">
-          <span class="emoji"><img src="../../public-assets/icons/chart-histogram.svg" alt=""></span>
+          <span class="material-symbols-outlined icon">dashboard</span>
           <span class="label">Dashboard</span>
         </a>
       </li>
       <li>
         <a href="./employer-post.php">
-          <span class="emoji"><img src="../../public-assets/icons/download.svg" style="transform:rotate(180deg);"></span>
+          <span class="material-symbols-outlined icon">work</span>
           <span class="label">Post Job</span>
         </a>
+      </li>
       <li>
         <a href="./employer-applications.php">
-          <span class="emoji"><img src="../../public-assets/icons/briefcase.svg" alt=""></span>
+          <span class="material-symbols-outlined icon">people</span>
           <span class="label">Job Applications</span>
         </a>
       </li>
       <li>
-
-        <a href="./applicant-job-search.php">
-          <span class="emoji"><img src="../../public-assets/icons/search.svg" alt=""></span>
-          <span class="label">Applicant Search</span>
-        </a>
-      </li>
-      <li>
         <a href="employer-profile.php">
-          <span class="emoji"><img src="../../public-assets/icons/user.svg" alt=""></span>
+          <span class="material-symbols-outlined icon">id_card</span>
           <span class="label">My Profile</span>
         </a>
       </li>
       <li>
-        <a href="../../pages/functions/logout.php">
-          <span class="emoji"><img src="../../public-assets/icons/download.svg" style="transform:rotate(90deg);"></span>
+        <button onclick="toggleTheme()" class="dark-mode-toggle">
+          <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+          <span id="themeLabel">Dark Mode</span>
+        </button>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <a href="../../auth/functions/logout.php" class='log-out-btn'>
+          <span class="material-symbols-outlined icon">logout</span>
           <span class="label">Log Out</span>
         </a>
       </li>
@@ -234,6 +238,18 @@ $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
         <div class="section">
           <h2 class="section-title">Company Documents</h2>
           <ul class="document-list">
+            <li class="document-item">
+              <div class="document-icon">📄</div>
+              <div class="document-info">
+                <div class="document-name">Company Profile</div>
+                <div class="document-date">Uploaded:</div>
+              </div>
+              <div class="document-actions">
+                <button class="view-doc" data-doc="">View</button>
+                <label for="upload-bir" class="update-doc">Upload</label>
+                <input type="file" id="upload-bir" name="upload-bir" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+              </div>
+            </li>
             <li class="document-item">
               <div class="document-icon">📄</div>
               <div class="document-info">
@@ -385,6 +401,8 @@ $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
     });
   </script>
   <script src="../js/responsive.js"></script>
+  <script src="../js/dark-mode.js"></script>
+
   <script>
     const editBtn = document.getElementById('editProfileBtn');
     const saveBtn = document.getElementById('saveProfileBtn');

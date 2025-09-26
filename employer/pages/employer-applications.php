@@ -10,18 +10,20 @@ $sql = "SELECT applicant_ID, f_name, l_name, email, status, date_created
 $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light" data-state="expanded">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Applications</title>
+  <script src="../js/load-saved.js"></script>
   <link rel="stylesheet" href="../css/employer-dashboard.css" />
   <link rel="stylesheet" href="../css/navs.css" />
-  <link rel="stylesheet" href="../../public-assets/library/datatable/dataTables.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <!-- <link rel="stylesheet" href="../../public-assets/library/datatable/dataTables.css">
   <script src="../../public-assets/JS_JQUERY/jquery-3.7.1.min.js" defer></script>
   <script src="../../public-assets/library/datatable/dataTables.js" defer></script>
-  <script src="../../public-assets/js/table-init.js" defer></script>
+  <script src="../../public-assets/js/table-init.js" defer></script> -->
 </head>
 
 <body>
@@ -43,31 +45,39 @@ $result = $conn->query($sql);
     <ul class="sidebar-menu">
       <li>
         <a href="./employer-dashboard.php">
-          <span class="emoji"><img src="../../public-assets/icons/chart-histogram.svg" alt=""></span>
+          <span class="material-symbols-outlined icon">dashboard</span>
           <span class="label">Dashboard</span>
         </a>
       </li>
       <li>
         <a href="./employer-post.php">
-          <span class="emoji"><img src="../../public-assets/icons/download.svg" style="transform:rotate(180deg);"></span>
+          <span class="material-symbols-outlined icon">work</span>
           <span class="label">Post Job</span>
         </a>
       </li>
       <li>
         <a href="./employer-applications.php">
-          <span class="emoji"><img src="../../public-assets/icons/briefcase.svg" alt=""></span>
+          <span class="material-symbols-outlined icon">people</span>
           <span class="label">Job Applications</span>
         </a>
       </li>
       <li>
         <a href="employer-profile.php">
-          <span class="emoji"><img src="../../public-assets/icons/user.svg" alt=""></span>
+          <span class="material-symbols-outlined icon">id_card</span>
           <span class="label">My Profile</span>
         </a>
       </li>
       <li>
-        <a href="../../auth/functions/logout.php">
-          <span class="emoji"><img src="../../public-assets/icons/download.svg" style="transform:rotate(90deg);"></span>
+        <button onclick="toggleTheme()" class="dark-mode-toggle">
+          <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+          <span id="themeLabel">Dark Mode</span>
+        </button>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <a href="../../auth/functions/logout.php" class='log-out-btn'>
+          <span class="material-symbols-outlined icon">logout</span>
           <span class="label">Log Out</span>
         </a>
       </li>
@@ -116,6 +126,8 @@ $result = $conn->query($sql);
   </main>
 
   <script src="../js/responsive.js"></script>
+  <script src="../js/dark-mode.js"></script>
+
 </body>
 
 </html>
