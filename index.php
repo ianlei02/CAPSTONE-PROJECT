@@ -54,7 +54,7 @@ $data = $result->fetch_assoc();
     <main>
         <section class="hero" id="hero">
             <div class="hero-left">
-                <div class="hero-title">
+                <div class="hero-text">
                     <h1>PUBLIC EMPLOYMENT SERVICE OFFICE OF SAN MIGUEL, BULACAN</h1>
                     <p>Your gateway to amazing job opportunities.</p>
                     <div class="hero-btn">
@@ -372,7 +372,7 @@ $data = $result->fetch_assoc();
     <script>
         const swiper = new Swiper('.newsSwiper', {
             slidesPerView: 1,
-            spaceBetween: 20,
+            spaceBetween: 10,
             loop: true,
             navigation: {
                 nextEl: '.swiper-button-next',
@@ -383,16 +383,22 @@ $data = $result->fetch_assoc();
                 clickable: true,
             },
             breakpoints: {
-                640: {
-                    slidesPerView: 1
+                640: { // >= 640px
+                    slidesPerView: 1,
+                    spaceBetween: 20,
                 },
-                768: {
-                    slidesPerView: 2
+                768: { // >= 768px
+                    slidesPerView: 2,
+                    spaceBetween: 30,
                 },
-                1024: {
-                    slidesPerView: 3
-                }
-            }
+                1024: { // >= 1024px
+                    slidesPerView: 3,
+                    spaceBetween: 40,
+                },
+            },
+        });
+        window.addEventListener("resize", () => {
+            swiper.update();
         });
     </script>
 
