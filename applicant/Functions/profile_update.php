@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "../connection/dbcon.php";  
+require "../../connection/dbcon.php";  
 
     header('Content-Type: application/json');
     $response = ['success' => false, 'message' => ''];
@@ -22,8 +22,6 @@ require "../connection/dbcon.php";
 
     $disability = $_POST['disability'] ?? [];
     $other = $_POST['others'] ?? '';
-    
-    
 
     if (!empty($other)) {
     $disability[] = $other;
@@ -508,7 +506,57 @@ require "../connection/dbcon.php";
     }
 
     function saveEligibilityExp($conn, $applicant_id) {
+        $maxRows = max(2, 2, 3);
 
+     for ($i = 1; $i <= $maxRows; $i++) {
+        $eligibility = $_POST["eligibility$i"] ?? null;
+        $eligibilityDate = !empty($_POST["eligibilityDate$i"]) ? $_POST["eligibilityDate$i"] : null;
+
+        $license = $_POST["license$i"] ?? null;
+        $licenseValid = !empty($_POST["licenseValid$i"]) ? $_POST["licenseValid$i"] : null;
+
+        $company = $_POST["company$i"] ?? null;
+        $address = $_POST["companyAddress$i"] ?? null;
+        $position = $_POST["position$i"] ?? null;
+        $months = !empty($_POST["months$i"]) ? intval($_POST["months$i"]) : null;
+        $status = $_POST["status$i"] ?? null;
+
+        if (!empty($eligibility) || !empty($license) || !empty($company)) {
+            $stmt = $conn->prepare("
+                INSERT INTO applicant_eligibility_exp 
+                    (applicant_id, eligibility, eligibility_date, license, license_valid, 
+                     company_name, company_address, position, months_worked, status)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE 
+                    eligibility = VALUES(eligibility),
+                    eligibility_date = VALUES(eligibility_date),
+                    license = VALUES(license),
+                    license_valid = VALUES(license_valid),
+                    company_name = VALUES(company_name),
+                    company_address = VALUES(company_address),
+                    position = VALUES(position),
+                    months_worked = VALUES(months_worked),
+                    status = VALUES(status)
+            ");
+
+             $stmt->bind_param(
+                "isssssssis",
+                $applicant_id,
+                $eligibility,
+                $eligibilityDate,
+                $license,
+                $licenseValid,
+                $company,
+                $address,
+                $position,
+                $months,
+                $status
+            );
+
+            $stmt->execute();
+            $stmt->close();
+        }
+    }
    
     }
 
@@ -558,6 +606,7 @@ require "../connection/dbcon.php";
 
     $stmt->close();
     }
+
 
     $conn->begin_transaction();
 
