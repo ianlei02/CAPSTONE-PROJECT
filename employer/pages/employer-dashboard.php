@@ -45,11 +45,11 @@ $sql = "
         (SELECT COUNT(*) FROM job_postings) AS total_jobs,
         (SELECT COUNT(*) FROM employer_account) AS total_employers,
         (SELECT COUNT(*) FROM applicant_account WHERE status = 'verified') AS total_applicants,
-        (SELECT COUNT(*) FROM job_postings WHERE status = 'active') AS total_active
+        (SELECT COUNT(*) FROM job_postings WHERE employer_id = ? AND status = 'active') AS total_active
 ";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $employer_id);
+$stmt->bind_param("ii", $employer_id, $employer_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $data = $result->fetch_assoc();
@@ -144,7 +144,7 @@ $data = $result->fetch_assoc();
           <div class="stat-value">
             <?php echo $data['employer_total_jobs']; ?>
           </div>
-          <div class="stat-label">5 pending applications</div>
+          <div class="stat-label"><?php echo $data['total_active']; ?> pending applications</div>
         </div>
 
         <div class="stat-card">
