@@ -1,6 +1,7 @@
 <?php
 session_start();
-require "../connection/dbcon.php";
+require "../../connection/dbcon.php";
+
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -107,7 +108,7 @@ try {
     $stmt_info->bind_param("isssssssssss", 
         $employer_id, 
         $company_type, 
-        $company_name,
+        $company_name,  
         $industry, 
         $company_size, 
         $address,

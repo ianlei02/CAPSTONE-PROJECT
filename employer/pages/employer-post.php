@@ -186,11 +186,20 @@ if (isset($_GET['action'])) {
             <label for="category">Category*</label>
             <select id="category" name="category" required>
               <option value="">Select Category</option>
-              <option value="IT">Information Technology</option>
-              <option value="Business">Business</option>
-              <option value="Engineering">Engineering</option>
-              <option value="Healthcare">Healthcare</option>
               <option value="Education">Education</option>
+              <option value="Finance">Financial Service</option>
+              <option value="Transpo">Transportation</option>
+              <option value="D-economy">Digital Economy</option>
+              <option value="B-economy">Blue Economy</option>
+              <option value="C-economy">Creative Economy</option>
+              <option value="G-economy">Green Economy</option>
+              <option value="Housing">Housing</option>
+              <option value="Food">Food & Advanced Manufacturing</option>
+              <option value="Health">Health</option>
+              <option value="Agri">Agribusiness, Agriculture, Forestry, and Fisheries</option>
+              <option value="Tourism">Tourism</option>
+              <option value="Construction">Construction</option>
+              
             </select>
           </div>
         </div>

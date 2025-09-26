@@ -40,11 +40,14 @@ function calculateApplicantScore($applicant_id, $job_id, $conn) {
     while ($doc = $docs_res->fetch_assoc()) {
         if (strtolower($doc['document_type']) === "resume" || strtolower($doc['document_type']) === "cv") {
             $score += 15;
-        } else {
+        }
+        if(strtolower($doc['document_type']) === "valid_id"){
+            $score += 5;
+        }else {
             $score += 5;
         }
     }
-    $maxScore = 200;
+    $maxScore = 205;
     $percentage = ($score / $maxScore) * 100;
 
     return round($percentage, 2);
