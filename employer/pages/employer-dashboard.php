@@ -55,19 +55,18 @@ $result = $stmt->get_result();
 $data = $result->fetch_assoc();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light" data-state="expanded">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Employer Dashboard</title>
-  <link rel="stylesheet" href="../css/employer-dashboard.css" />
+  <script src="../js/load-saved.js"></script>
   <link rel="stylesheet" href="../css/navs.css">
+  <link rel="stylesheet" href="../css/employer-dashboard.css" />
   <link rel="stylesheet" href="../css/profile-completion.css">
-  <link rel="stylesheet" href="../../public-assets/library/datatable/dataTables.css">
-  <script src="../../public-assets/JS_JQUERY/jquery-3.7.1.min.js" defer></script>
-  <script src="../../public-assets/library/datatable/dataTables.js" defer></script>
-  <script src="../../public-assets/js/table-init.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
 
 </head>
 
@@ -90,31 +89,39 @@ $data = $result->fetch_assoc();
     <ul class="sidebar-menu">
       <li>
         <a href="./employer-dashboard.php">
-          <span class="emoji"><img src="../../public-assets/icons/chart-histogram.svg" alt=""></span>
+          <span class="material-symbols-outlined icon">dashboard</span>
           <span class="label">Dashboard</span>
         </a>
       </li>
       <li>
         <a href="./employer-post.php">
-          <span class="emoji"><img src="../../public-assets/icons/download.svg" style="transform:rotate(180deg);"></span>
+          <span class="material-symbols-outlined icon">work</span>
           <span class="label">Post Job</span>
         </a>
       </li>
       <li>
         <a href="./employer-applications.php">
-          <span class="emoji"><img src="../../public-assets/icons/briefcase.svg" alt=""></span>
+          <span class="material-symbols-outlined icon">people</span>
           <span class="label">Job Applications</span>
         </a>
       </li>
       <li>
         <a href="employer-profile.php">
-          <span class="emoji"><img src="../../public-assets/icons/user.svg" alt=""></span>
+          <span class="material-symbols-outlined icon">id_card</span>
           <span class="label">My Profile</span>
         </a>
       </li>
       <li>
-        <a href="../../auth/functions/logout.php">
-          <span class="emoji"><img src="../../public-assets/icons/download.svg" style="transform:rotate(90deg);"></span>
+        <button onclick="toggleTheme()" class="dark-mode-toggle">
+          <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+          <span id="themeLabel">Dark Mode</span>
+        </button>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <a href="../../auth/functions/logout.php" class='log-out-btn'>
+          <span class="material-symbols-outlined icon">logout</span>
           <span class="label">Log Out</span>
         </a>
       </li>
@@ -125,106 +132,76 @@ $data = $result->fetch_assoc();
     <div class="main-header">
       <h1>Welcome, Employer!</h1>
     </div>
-    <div class="status-card">
-      <div class="progress-circle-container" style="position: relative; width:120px; height:120px;">
-        <svg class="progress-circle-svg" viewBox="0 0 100 100">
-          <circle class="progress-circle-bg" cx="50" cy="50" r="45"></circle>
-          <circle class="progress-circle-fill"
-            cx="50" cy="50" r="45"
-            stroke-dasharray="<?php echo $circumference; ?>"
-            stroke-dashoffset="<?php echo $offset; ?>"></circle>
-        </svg>
-        <div class="progress-text"><?php echo $completion; ?>%</div>
-      </div>
-
-      <div class="progress-details">
-        <div class="progress-header">
-          <div class="progress-title">Company Profile Completion</div>
-          <div>13/20 fields</div>
-        </div>
-
-        <div class="progress-message">
-          Complete your profile to attract top talent and get verified
-        </div>
-
-        <div class="missing-items">
-          <strong>Missing information:</strong>
-          <ul>
-            <li>Company Documents</li>
-            <li>Company Logo</li>
-
-          </ul>
-        </div>
-      </div>
-
-      <div class="verification-section">
-        <div class="verification-badge pending">
-          <i class="fas fa-clock badge-icon"></i>
-          Pending
-        </div>
-        <!-- Other options:
-            <div class="verification-badge verified">
-                <i class="fas fa-check-circle badge-icon"></i>
-                Verified
+    <div class="statistics-container ">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-header">
+            <h3 class="stat-title">Jobs Posted</h3>
+            <div class="stat-icon bg-primary-light">
+              <i class="fas fa-building"></i>
             </div>
-            <div class="verification-badge unverified">
-                <i class="fas fa-times-circle badge-icon"></i>
-                Unverified
-            </div> -->
-
-        <div class="verification-text">
-          Account verification status
+          </div>
+          <div class="stat-value">
+            <?php echo $data['employer_total_jobs']; ?>
+          </div>
+          <div class="stat-label">5 pending applications</div>
         </div>
 
-        <button class="action-button">Complete Profile</button>
+        <div class="stat-card">
+          <div class="stat-header">
+            <h3 class="stat-title">Active Jobs</h3>
+            <div class="stat-icon bg-success-light">
+              <i class="fas fa-user-graduate"></i>
+            </div>
+          </div>
+          <div class="stat-value">
+            <?php echo $data['total_active']; ?>
+          </div>
+          <div class="stat-label">This month</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <h3 class="stat-title">Referred</h3>
+            <div class="stat-icon bg-warning-light">
+              <i class="fas fa-briefcase"></i>
+            </div>
+          </div>
+          <div class="stat-value">4</div>
+          <div class="stat-label">2 new referrals</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <h3 class="stat-title">Hired</h3>
+            <div class="stat-icon bg-danger-light">
+              <i class="fas fa-tasks"></i>
+            </div>
+          </div>
+          <div class="stat-value">1</div>
+          <div class="stat-label">7 high priority</div>
+        </div>
+      </div>
+      <div class="status-card">
+        <div class="progress-circle-container">
+          <svg class="progress-circle-svg" viewBox="0 0 100 100">
+            <circle class="progress-circle-bg" cx="50" cy="50" r="45"></circle>
+            <circle class="progress-circle-fill"
+              cx="50" cy="50" r="45"
+              stroke-dasharray="<?php echo $circumference; ?>"
+              stroke-dashoffset="<?php echo $offset; ?>"></circle>
+          </svg>
+          <div class="progress-text"><?php echo $completion; ?>%</div>
+        </div>
+        <div class="verification-section">
+          <div class="verification-badge pending">
+            Pending
+          </div>
+          <button class="action-button">Complete Profile</button>
+        </div>
       </div>
     </div>
-    <div class="statistics-container gradient">
-      <div class="statistic-card">
-        <h2>Jobs Posted</h2>
-        <p>
-          <?php
-          echo $data['employer_total_jobs'];
-          ?>
-        </p>
-      </div>
-      <div class="statistic-card">
-        <h2>Pending Job Vacancies</h2>
-        <p>
-          <?php
-          echo $data['total_active'];
-          ?>
-        </p>
-      </div>
-      <div class="statistic-card">
-        <h2>Referred Applicants</h2>
-        <p>2</p>
-      </div>
-      <div class="statistic-card">
-        <h2>Job Listings</h2>
-        <p>
-          <?php
-          echo $data['total_jobs'];
-          ?>
-        </p>
-      </div>
-      <div class="statistic-card">
-        <h2>Registered Employers</h2>
-        <p>
-          <?php
-          echo $data['total_employers'];
-          ?>
-        </p>
-      </div>
-      <div class="statistic-card">
-        <h2>Registered Applicants</h2>
-        <p>
-          <?php
-          echo $data['total_applicants'];
-          ?>
-        </p>
-      </div>
-    </div>
+
     <div class="job-application-status">
       <h2>Applicant List</h2>
       <div class="table-responsive">
@@ -288,72 +265,12 @@ $data = $result->fetch_assoc();
         </table>
       </div>
     </div>
-    <div class="job-application-status">
-      <h2>Applicant List</h2>
-      <div class="table-responsive">
-        <table class="job-application-table" id="employerDashboardTable">
-          <thead>
-            <tr>
-              <th>Applicant Name</th>
-              <th>Email</th>
-              <th>Status</th>
-              <th>Date Applied</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>John Doe</td>
-              <td>john.doe@example.com</td>
-              <td><span class="status interview">Interview</span></td>
-              <td class="table-date">2025-10-01</td>
-              <td class="action-btns">
-                <button>View</button><button>Interview</button> <button>Hire</button><button>Decline</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jane Smith</td>
-              <td>jane.smith@example.com</td>
-              <td><span class="status applied">Applied</span></td>
-              <td class="table-date">2025-09-15</td>
-              <td class="action-btns">
-                <button>View</button><button>Interview</button> <button>Hire</button><button>Decline</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Alice Johnson</td>
-              <td>alice.johnson@example.com</td>
-              <td><span class="status declined">Declined</span></td>
-              <td class="table-date">2025-09-15</td>
-              <td class="action-btns">
-                <button>View</button><button>Interview</button> <button>Hire</button><button>Decline</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Bob Brown</td>
-              <td>bob.brown@example.com</td>
-              <td><span class="status hired">Hired</span></td>
-              <td class="table-date">2025-09-15</td>
-              <td class="action-btns">
-                <button>View</button><button>Interview</button> <button>Hire</button><button>Decline</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Charlie Davis</td>
-              <td>charlie.davis@example.com</td>
-              <td><span class="status pending">Pending</span></td>
-              <td class="table-date">2025-09-15</td>
-              <td class="action-btns">
-                <button>View</button><button>Interview</button> <button>Hire</button><button>Decline</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+
   </main>
 
   <script src="../js/responsive.js"></script>
+  <script src="../js/dark-mode.js"></script>
+
   <script>
     function setVerificationStatus(status) {
       const badge = document.querySelector('.verification-badge');

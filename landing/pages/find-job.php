@@ -4,7 +4,7 @@ require '../../connection/dbcon.php';
 $sql_job = "
     SELECT 
         jp.job_id, 
-        jp.job_title, 
+        jp.job_title, w
         jp.job_type, 
         jp.category, 
         jp.salary_range, 
