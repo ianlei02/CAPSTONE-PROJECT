@@ -1,6 +1,7 @@
 <?php
 require_once '../../auth/functions/check_login.php';
 require_once '../Functions/getDataDisplay.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en" data-theme="light" data-state="expanded">
