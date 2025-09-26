@@ -1,5 +1,5 @@
-<?php
-require_once '../../auth/functions/check_login.php';
+<?
+require '../../auth/functions/check_login.php';
 
 if (!isset($_SESSION['user_id'])) {
   header("Location: ../../auth/login-signup.php");
@@ -52,7 +52,8 @@ $stmt->execute();
 $result = $stmt->get_result();
 $docs = $result->fetch_assoc();
 
-$baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
+// $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
+$baseURL = "http://localhost/CAPSTONE-PROJECT/";
 ?>
 <!DOCTYPE html>
 <html lang="en" data-theme="light" data-state="expanded">

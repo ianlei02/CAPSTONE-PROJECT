@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "../connection/dbcon.php";
+require "../../connection/dbcon.php";
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
