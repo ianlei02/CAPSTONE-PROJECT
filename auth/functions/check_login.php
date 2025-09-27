@@ -42,7 +42,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 
     </div>
     <script>
         function redirectLogin() {
-            window.location.href = "../../landing/login-signup.php";
+            window.location.href = "../../auth/login-signup.php";
         }
     </script>
 <?php
@@ -89,7 +89,7 @@ if (isset($_COOKIE['remember_login'])) {
         if (isset($row) && password_verify($token, $row['remember_token'])) {
             if ($row['status'] !== 'verified') {
                 setcookie('remember_login', '', time() - 3600, '/');
-                header("Location: ../login-signup.php?error=not_verified");
+                header("Location: ../../auth/login-signup.php?error=not_verified");
                 exit();
             }
             $_SESSION['user_id'] = $row[$id_field];
