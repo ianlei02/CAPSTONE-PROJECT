@@ -29,11 +29,9 @@ $result = $conn->query($sql);
 <body>
   <nav class="navbar">
     <div class="navbar-left">
-      <div class="left-pos" style="display: flex; width: auto; height: auto">
-        <button class="hamburger">☰</button>
-        <div class="logo">
-          <img src="../assets/images/peso-logo.png" alt="" />
-        </div>
+      <div class="left-pos">
+        <h2>Dashboard</h2>
+        <p>Welcome, Employer!</p>
       </div>
       <div class="right-pos">
         <div class="profile">IAN</div>
@@ -42,46 +40,55 @@ $result = $conn->query($sql);
   </nav>
 
   <aside class="sidebar">
-    <ul class="sidebar-menu">
-      <li>
-        <a href="./employer-dashboard.php">
-          <span class="material-symbols-outlined icon">dashboard</span>
-          <span class="label">Dashboard</span>
-        </a>
-      </li>
-      <li>
-        <a href="./employer-post.php">
-          <span class="material-symbols-outlined icon">work</span>
-          <span class="label">Post Job</span>
-        </a>
-      </li>
-      <li>
-        <a href="./employer-applications.php">
-          <span class="material-symbols-outlined icon">people</span>
-          <span class="label">Job Applications</span>
-        </a>
-      </li>
-      <li>
-        <a href="employer-profile.php">
-          <span class="material-symbols-outlined icon">id_card</span>
-          <span class="label">My Profile</span>
-        </a>
-      </li>
-      <li>
-        <button onclick="toggleTheme()" class="dark-mode-toggle">
-          <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-          <span id="themeLabel">Dark Mode</span>
-        </button>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href="../../auth/functions/logout.php" class='log-out-btn'>
-          <span class="material-symbols-outlined icon">logout</span>
-          <span class="label">Log Out</span>
-        </a>
-      </li>
-    </ul>
+    <div class="sidebar-logo">
+      <div class="logo">
+        <img src="../../public/images/pesosmb.png" alt="" />
+        <h3>PESO</h3>
+      </div>
+      <button class="hamburger"><span class="material-symbols-outlined">dock_to_right</span></button>
+    </div>
+    <div class="sidebar-options">
+      <ul class="sidebar-menu">
+        <li>
+          <a href="./employer-dashboard.php" class="active">
+            <span class="material-symbols-outlined icon">dashboard</span>
+            <span class="label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="./employer-post.php">
+            <span class="material-symbols-outlined icon">work</span>
+            <span class="label">Post Job</span>
+          </a>
+        </li>
+        <li>
+          <a href="./employer-applications.php">
+            <span class="material-symbols-outlined icon">people</span>
+            <span class="label">Job Applications</span>
+          </a>
+        </li>
+        <li>
+          <a href="employer-profile.php">
+            <span class="material-symbols-outlined icon">id_card</span>
+            <span class="label">My Profile</span>
+          </a>
+        </li>
+        <li>
+          <button onclick="toggleTheme()" class="dark-mode-toggle">
+            <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+            <span id="themeLabel">Dark Mode</span>
+          </button>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <a href="../../auth/functions/logout.php" class='log-out-btn'>
+            <span class="material-symbols-outlined icon">logout</span>
+            <span class="label">Log Out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
   </aside>
 
   <main class="main-content">
