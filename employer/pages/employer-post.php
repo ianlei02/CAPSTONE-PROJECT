@@ -100,11 +100,9 @@ if (isset($_GET['action'])) {
 <body>
   <nav class="navbar">
     <div class="navbar-left">
-      <div class="left-pos" style="display: flex; width: auto; height: auto">
-        <button class="hamburger">☰</button>
-        <div class="logo">
-          <img src="../assets/images/peso-logo.png" alt="" />
-        </div>
+      <div class="left-pos">
+        <h2>Dashboard</h2>
+        <p>Welcome, Employer!</p>
       </div>
       <div class="right-pos">
         <div class="profile">IAN</div>
@@ -112,47 +110,56 @@ if (isset($_GET['action'])) {
     </div>
   </nav>
 
-   <aside class="sidebar">
-    <ul class="sidebar-menu">
-      <li>
-        <a href="./employer-dashboard.php">
-          <span class="material-symbols-outlined icon">dashboard</span>
-          <span class="label">Dashboard</span>
-        </a>
-      </li>
-      <li>
-        <a href="./employer-post.php">
-          <span class="material-symbols-outlined icon">work</span>
-          <span class="label">Post Job</span>
-        </a>
-      </li>
-      <li>
-        <a href="./employer-applications.php">
-          <span class="material-symbols-outlined icon">people</span>
-          <span class="label">Job Applications</span>
-        </a>
-      </li>
-      <li>
-        <a href="employer-profile.php">
-          <span class="material-symbols-outlined icon">id_card</span>
-          <span class="label">My Profile</span>
-        </a>
-      </li>
-      <li>
-        <button onclick="toggleTheme()" class="dark-mode-toggle">
-          <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-          <span id="themeLabel">Dark Mode</span>
-        </button>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href="../../auth/functions/logout.php" class='log-out-btn'>
-          <span class="material-symbols-outlined icon">logout</span>
-          <span class="label">Log Out</span>
-        </a>
-      </li>
-    </ul>
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo">
+        <img src="../../public/images/pesosmb.png" alt="" />
+        <h3>PESO</h3>
+      </div>
+      <button class="hamburger"><span class="material-symbols-outlined">dock_to_right</span></button>
+    </div>
+    <div class="sidebar-options">
+      <ul class="sidebar-menu">
+        <li>
+          <a href="./employer-dashboard.php" class="active">
+            <span class="material-symbols-outlined icon">dashboard</span>
+            <span class="label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="./employer-post.php">
+            <span class="material-symbols-outlined icon">work</span>
+            <span class="label">Post Job</span>
+          </a>
+        </li>
+        <li>
+          <a href="./employer-applications.php">
+            <span class="material-symbols-outlined icon">people</span>
+            <span class="label">Job Applications</span>
+          </a>
+        </li>
+        <li>
+          <a href="employer-profile.php">
+            <span class="material-symbols-outlined icon">id_card</span>
+            <span class="label">My Profile</span>
+          </a>
+        </li>
+        <li>
+          <button onclick="toggleTheme()" class="dark-mode-toggle">
+            <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+            <span id="themeLabel">Dark Mode</span>
+          </button>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <a href="../../auth/functions/logout.php" class='log-out-btn'>
+            <span class="material-symbols-outlined icon">logout</span>
+            <span class="label">Log Out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
   </aside>
 
   <main class="main-content">
@@ -199,7 +206,7 @@ if (isset($_GET['action'])) {
               <option value="Agri">Agribusiness, Agriculture, Forestry, and Fisheries</option>
               <option value="Tourism">Tourism</option>
               <option value="Construction">Construction</option>
-              
+
             </select>
           </div>
         </div>
@@ -238,7 +245,7 @@ if (isset($_GET['action'])) {
     <section class="job-monitoring-section card">
       <div class="section-header">
         <form action="employer-post.php" method="GET">
-          <h2>Your Job Postings</h2> 
+          <h2>Your Job Postings</h2>
           <div class="search-filter">
             <select class="status-filter">
               <option value="all">All Statuses</option>
@@ -274,12 +281,12 @@ if (isset($_GET['action'])) {
                 <td class="expiry-date"><?= htmlspecialchars($row['expiry_date']) ?></td>
                 <td><span class="status-badge <?= htmlspecialchars($row['status']) ?>"><?= ucfirst($row['status']) ?></span></td>
                 <td>
-                  <td>
-                    <button type="button" class="action-btn view" onclick="viewApplicants(<?= $row['job_id'] ?>)">View</button>
-                    <button type="button" class="action-btn edit" onclick="editJob(<?= $row['job_id'] ?>)">Edit</button>
-                    <button type="button" class="action-btn delete" onclick="deleteJob(<?= $row['job_id'] ?>)">Delete</button>
-                    <a href="dss_results.php?job_id=<?= $row['job_id'] ?>" class="action-btn run-dss">Run DSS</a>
-                  </td>
+                <td>
+                  <button type="button" class="action-btn view" onclick="viewApplicants(<?= $row['job_id'] ?>)">View</button>
+                  <button type="button" class="action-btn edit" onclick="editJob(<?= $row['job_id'] ?>)">Edit</button>
+                  <button type="button" class="action-btn delete" onclick="deleteJob(<?= $row['job_id'] ?>)">Delete</button>
+                  <a href="dss_results.php?job_id=<?= $row['job_id'] ?>" class="action-btn run-dss">Run DSS</a>
+                </td>
                 </td>
               </tr>
             <?php endwhile; ?>
@@ -328,15 +335,16 @@ if (isset($_GET['action'])) {
     });
   </script>
   <script>
-   
     const actionButtons = document.querySelectorAll('.action-btn');
     actionButtons.forEach(button => {
       if (button.tagName.toLowerCase() === "button") {
-    button.addEventListener("click", (e) => {
-      e.preventDefault();
+        button.addEventListener("click", (e) => {
+          e.preventDefault();
+        });
+      }
     });
-  }
-});
+
+
     function viewApplicants(jobId) {
       fetch(`employer-post.php?action=viewApplicants&id=${jobId}`)
         .then(res => res.text())

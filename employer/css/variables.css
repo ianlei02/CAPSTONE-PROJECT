@@ -1,4 +1,3 @@
-
 :root {
   /* ---------- Brand ---------- */
   --primary: hsl(220 85% 56%); /* modern blue */
@@ -6,9 +5,9 @@
   --primary-muted: hsl(220 85% 92%); /* pale blue for subtle surfaces */
 
   /* ---------- Backgrounds ---------- */
-  --bg: hsl(0 0% 100%); /* app background */
-  --bg-muted: hsl(210 16% 98%); /* secondary background */
-  --bg-subtle: hsl(210 14% 96%); /* tertiary background, inputs/cards */
+  --bg: #ffffff; /* app background */
+  --bg-muted: #fafafa; /* secondary background */
+  --bg-subtle: #f6f6f6; /* tertiary background, inputs/cards */
 
   /* ---------- Text ---------- */
   --text: hsl(220 12% 12%); /* strong text */
@@ -25,7 +24,6 @@
   --info: hsl(205 90% 40%);
 
   /* ---------- Typography ---------- */
-
 
   --font-size-xs: 0.75rem; /* 12px */
   --font-size-sm: 0.875rem; /* 14px */
@@ -80,40 +78,34 @@
   --shadow-lg: 0 12px 30px hsla(220 14% 12% / 0.1);
   --shadow-xl: 0 24px 48px hsla(220 14% 12% / 0.12);
 }
+[data-theme="dark"] {
+  /* Brand */
+  --primary: hsl(220 85% 65%);
+  --primary-hover: hsl(220 85% 55%);
+  --primary-muted: hsl(220 40% 18%);
 
-/* -------------------------
-   DARK MODE
-   ------------------------- */
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Brand */
-    --primary: hsl(220 85% 65%);
-    --primary-hover: hsl(220 85% 55%);
-    --primary-muted: hsl(220 40% 18%);
+  /* Backgrounds */
+  --bg: hsl(220 14% 6%);
+  --bg-muted: hsl(220 10% 8%);
+  --bg-subtle: hsl(220 12% 12%);
 
-    /* Backgrounds */
-    --bg: hsl(220 14% 6%);
-    --bg-muted: hsl(220 10% 8%);
-    --bg-subtle: hsl(220 12% 12%);
+  /* Text */
+  --text: #f3f5f7;
+  --text-muted: #afb8c0;
+  --text-subtle: #838c95
 
-    /* Text */
-    --text: hsl(210 20% 96%);
-    --text-muted: hsl(210 12% 72%);
-    --text-subtle: hsl(210 8% 55%);
+  /* Border */
+  --border: hsl(220 12% 20%);
 
-    /* Border */
-    --border: hsl(220 12% 20%);
+  /* Semantic */
+  --success: hsl(142 55% 52%);
+  --warning: hsl(42 95% 60%);
+  --danger: hsl(352 68% 56%);
+  --info: hsl(205 85% 60%);
 
-    /* Semantic */
-    --success: hsl(142 55% 52%);
-    --warning: hsl(42 95% 60%);
-    --danger: hsl(352 68% 56%);
-    --info: hsl(205 85% 60%);
-
-    /* Shadows (subtle glows on dark) */
-    --shadow-sm: 0 1px 2px hsla(220 20% 96% / 0.04);
-    --shadow-md: 0 6px 18px hsla(220 20% 96% / 0.06);
-    --shadow-lg: 0 12px 30px hsla(220 20% 96% / 0.07);
-    --shadow-xl: 0 24px 48px hsla(220 20% 96% / 0.09);
-  }
+  /* Shadows (subtle glows on dark) */
+  --shadow-sm: 0 1px 2px hsla(220 20% 96% / 0.04);
+  --shadow-md: 0 6px 18px hsla(220 20% 96% / 0.06);
+  --shadow-lg: 0 12px 30px hsla(220 20% 96% / 0.07);
+  --shadow-xl: 0 24px 48px hsla(220 20% 96% / 0.09);
 }

@@ -1,5 +1,5 @@
-<?php
-require_once '../../auth/functions/check_login.php';
+<?
+require '../../auth/functions/check_login.php';
 
 if (!isset($_SESSION['user_id'])) {
   header("Location: ../../auth/login-signup.php");
@@ -52,7 +52,8 @@ $stmt->execute();
 $result = $stmt->get_result();
 $docs = $result->fetch_assoc();
 
-$baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
+// $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
+$baseURL = "http://localhost/CAPSTONE-PROJECT/";
 ?>
 <!DOCTYPE html>
 <html lang="en" data-theme="light" data-state="expanded">
@@ -71,62 +72,66 @@ $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
 <body>
   <nav class="navbar">
     <div class="navbar-left">
-      <div class="left-pos" style="display: flex; width: auto; height: auto">
-        <button class="hamburger">☰</button>
-        <div class="logo">
-          <img src="../assets/images/peso-logo.png" alt="" />
-        </div>
+      <div class="left-pos">
+        <h2>Dashboard</h2>
+        <p>Welcome, Employer!</p>
       </div>
       <div class="right-pos">
-        <div class="profile" style="width: 40px; aspect-ratio: 1; padding: 0;"><img
-            src="<?php echo htmlspecialchars($profile_picture_url); ?>"
-            alt="Company Logo"
-            class="company-logo"
-            id="companyLogoo" style="width: 100%; height: 100%; border-radius: 50%" /></div>
+        <div class="profile">IAN</div>
       </div>
     </div>
   </nav>
+
   <aside class="sidebar">
-    <ul class="sidebar-menu">
-      <li>
-        <a href="./employer-dashboard.php">
-          <span class="material-symbols-outlined icon">dashboard</span>
-          <span class="label">Dashboard</span>
-        </a>
-      </li>
-      <li>
-        <a href="./employer-post.php">
-          <span class="material-symbols-outlined icon">work</span>
-          <span class="label">Post Job</span>
-        </a>
-      </li>
-      <li>
-        <a href="./employer-applications.php">
-          <span class="material-symbols-outlined icon">people</span>
-          <span class="label">Job Applications</span>
-        </a>
-      </li>
-      <li>
-        <a href="employer-profile.php">
-          <span class="material-symbols-outlined icon">id_card</span>
-          <span class="label">My Profile</span>
-        </a>
-      </li>
-      <li>
-        <button onclick="toggleTheme()" class="dark-mode-toggle">
-          <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-          <span id="themeLabel">Dark Mode</span>
-        </button>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href="../../auth/functions/logout.php" class='log-out-btn'>
-          <span class="material-symbols-outlined icon">logout</span>
-          <span class="label">Log Out</span>
-        </a>
-      </li>
-    </ul>
+    <div class="sidebar-logo">
+      <div class="logo">
+        <img src="../../public/images/pesosmb.png" alt="" />
+        <h3>PESO</h3>
+      </div>
+      <button class="hamburger"><span class="material-symbols-outlined">dock_to_right</span></button>
+    </div>
+    <div class="sidebar-options">
+      <ul class="sidebar-menu">
+        <li>
+          <a href="./employer-dashboard.php" class="active">
+            <span class="material-symbols-outlined icon">dashboard</span>
+            <span class="label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="./employer-post.php">
+            <span class="material-symbols-outlined icon">work</span>
+            <span class="label">Post Job</span>
+          </a>
+        </li>
+        <li>
+          <a href="./employer-applications.php">
+            <span class="material-symbols-outlined icon">people</span>
+            <span class="label">Job Applications</span>
+          </a>
+        </li>
+        <li>
+          <a href="employer-profile.php">
+            <span class="material-symbols-outlined icon">id_card</span>
+            <span class="label">My Profile</span>
+          </a>
+        </li>
+        <li>
+          <button onclick="toggleTheme()" class="dark-mode-toggle">
+            <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+            <span id="themeLabel">Dark Mode</span>
+          </button>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <a href="../../auth/functions/logout.php" class='log-out-btn'>
+            <span class="material-symbols-outlined icon">logout</span>
+            <span class="label">Log Out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
   </aside>
 
   <main class="main-content">

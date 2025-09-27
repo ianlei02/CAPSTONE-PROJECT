@@ -39,14 +39,10 @@ if (isset($_SESSION['user_id'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Applications</title>
   <script src="../js/load-saved.js"></script>
-  <!-- <link rel="stylesheet" href="../css/applicant-dashboard.css" /> -->
   <link rel="stylesheet" href="../css/navs.css" />
   <link rel="stylesheet" href="../css/applicant-applications.css" />
   <link rel="stylesheet" href="../../public-assets/library/datatable/dataTables.css">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-  <!-- <script src="../../public-assets/JS_JQUERY/jquery-3.7.1.min.js" defer></script>
-  <script src="../../public-assets/library/datatable/dataTables.js" defer></script>
-  <script src="../../public-assets/js/table-init.js" defer></script> -->
 </head>
 
 <body>
@@ -135,7 +131,7 @@ if (isset($_SESSION['user_id'])) {
           </div>
           <div class="status-action">
             <span class="application-status status-scheduled">Interview Scheduled</span>
-            <button>View</button>
+            <button class="view-btn">View</button>
           </div>
         </div>
         <div class="application-item">
@@ -154,7 +150,7 @@ if (isset($_SESSION['user_id'])) {
           </div>
           <div class="status-action">
             <span class="application-status status-scheduled">Interview Scheduled</span>
-            <button>View</button>
+            <button class="view-btn">View</button>
           </div>
         </div>
         <div class="application-item">
@@ -173,16 +169,107 @@ if (isset($_SESSION['user_id'])) {
           </div>
           <div class="status-action">
             <span class="application-status status-scheduled">Interview Scheduled</span>
-            <button>View</button>
+            <button class="view-btn">View</button>
           </div>
         </div>
       </div>
     </div>
   </main>
+  <!-- Application Modal -->
+  <div class="modal" id="applicationModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          Apply for <span id="modalJobTitle">Frontend Developer</span>
+        </h2>
+        <button type="button" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form class="application-form">
+          <div class="section">
+            <div class="job-card" data-field="Engineering">
+              <div class="job-field">Engineering</div>
+              <div class="job-header">
+                <div>
+                  <h3 class="job-title">Sukat Lupa</h3>
+                  <div class="job-company">Away kapit-bahay</div>
+                </div>
+                <div>
+                  <span class="job-salary">Sumbat<br> Salary/Month</span>
+                </div>
+              </div>
+              <div class="job-meta">
+                <span><i class="fas fa-briefcase"></i> 1</span>
+                <span><i class="fas fa-map-marker-alt"></i> 2</span>
+                <span><i class="fas fa-users"></i> Vacancies: 3</span>
+              </div>
+              <div class="job-description">
+                Awayin ang kapit-bahay at pamilya dahil mas malaki ang sakop na lupa nila. Pandilatan ng mata ang anak ng pinsan na pamangkin dahil malikot para makaganti sa tito at tita. Lagyan ng asin ang kape na ipinapatimpla ng mudrasta.
+              </div>
+              <div class="job-footer">
+                <div class="job-posted">Posted: Kahapon</div>
+                <!-- <button class="apply-btn" data-job-id="">
+                  Cancel
+                </button> -->
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button
+              type="button"
+              class="btn btn-outline"
+              id="cancelApplication">
+              Cancel Application
+            </button>
+            <button class="btn btn-primary close" type="button" onclick="closeModal()">
+              Close
+            </button>
+            <!-- <button type="submit" class="btn btn-primary">
+              Submit Application
+            </button> -->
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <script src="../js/responsive.js"></script>
   <script src="../js/dark-mode.js"></script>
+  <script>
+    // Application Modal
+    const modal = document.getElementById('applicationModal');
+    const viewButtons = document.querySelectorAll('.view-btn');
+    const closeBtn = document.querySelector('.close-btn');
+    const cancelBtn = document.getElementById('cancelApplication');
+    const modalJobTitle = document.getElementById('modalJobTitle');
 
+    // Open modal when Apply button is clicked
+    viewButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        modalJobTitle.textContent = document.querySelector('.job-card .job-title').textContent;
+        modal.style.display = 'block';
+        // document.body.style.overflow = 'hidden';
+      });
+    });
+    // Close modal
+    function closeModal() {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+    closeBtn.addEventListener('click', () => {
+      // e.preventDefault();
+      closeModal();
+    });
+    cancelBtn.addEventListener('click', () => {
+      confirm('Are you sure you want to cancel this application?')
+    });
+    // Close when clicking outside modal
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  </script>
 </body>
 
 </html>
