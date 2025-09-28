@@ -5,6 +5,35 @@ if (!isset($_SESSION['user_id'])) {
   header("Location: ../../auth/login-signup.php");
   exit();
 }
+$accountStmt = $conn->prepare("SELECT * FROM employer_company_info WHERE employer_ID = ?");
+$accountStmt->bind_param("s", $userId);
+$accountStmt->execute();
+$accountResult = $accountStmt->get_result();
+$accountData = $accountResult->fetch_assoc();
+
+$accountJson = json_encode($accountData ?: []);
+
+$profile_picture_url = '../assets/images/profile.png';
+
+if (isset($_SESSION['user_id'])) {
+  $employer_id = $_SESSION['user_id'];
+  $query = "SELECT profile_picture FROM employer_company_info WHERE employer_id = ?";
+  $stmt = $conn->prepare($query);
+  $stmt->bind_param("i", $employer_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    if (!empty($row['profile_picture'])) {
+
+      if (file_exists('../' . $row['profile_picture'])) {
+        $profile_picture_url = '../' . $row['profile_picture'];
+      }
+    }
+  }
+  $stmt->close();
+}
 $sql = "SELECT applicant_ID, f_name, l_name, email, status, date_created  
         FROM applicant_account";
 $result = $conn->query($sql);
@@ -20,18 +49,14 @@ $result = $conn->query($sql);
   <link rel="stylesheet" href="../css/employer-dashboard.css" />
   <link rel="stylesheet" href="../css/navs.css" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-  <!-- <link rel="stylesheet" href="../../public-assets/library/datatable/dataTables.css">
-  <script src="../../public-assets/JS_JQUERY/jquery-3.7.1.min.js" defer></script>
-  <script src="../../public-assets/library/datatable/dataTables.js" defer></script>
-  <script src="../../public-assets/js/table-init.js" defer></script> -->
+
 </head>
 
 <body>
   <nav class="navbar">
     <div class="navbar-left">
       <div class="left-pos">
-        <h2>Dashboard</h2>
-        <p>Welcome, Employer!</p>
+        <h1>Applications</h1>
       </div>
       <div class="right-pos">
         <div class="profile">IAN</div>
@@ -50,7 +75,7 @@ $result = $conn->query($sql);
     <div class="sidebar-options">
       <ul class="sidebar-menu">
         <li>
-          <a href="./employer-dashboard.php" class="active">
+          <a href="./employer-dashboard.php" >
             <span class="material-symbols-outlined icon">dashboard</span>
             <span class="label">Dashboard</span>
           </a>
@@ -62,7 +87,7 @@ $result = $conn->query($sql);
           </a>
         </li>
         <li>
-          <a href="./employer-applications.php">
+          <a href="./employer-applications.php" class="active">
             <span class="material-symbols-outlined icon">people</span>
             <span class="label">Job Applications</span>
           </a>
