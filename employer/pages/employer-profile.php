@@ -73,11 +73,16 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
   <nav class="navbar">
     <div class="navbar-left">
       <div class="left-pos">
-        <h2>Dashboard</h2>
-        <p>Welcome, Employer!</p>
+        <h1>My Profile</h1>
       </div>
       <div class="right-pos">
-        <div class="profile">IAN</div>
+        <div class="profile">
+          <img
+            src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+            alt="Profile Picture"
+            class="profile-pic"
+            id="profilePicc" style="width: 50px !important;" />
+        </div>
       </div>
     </div>
   </nav>
@@ -93,7 +98,7 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
     <div class="sidebar-options">
       <ul class="sidebar-menu">
         <li>
-          <a href="./employer-dashboard.php" class="active">
+          <a href="./employer-dashboard.php">
             <span class="material-symbols-outlined icon">dashboard</span>
             <span class="label">Dashboard</span>
           </a>
@@ -111,7 +116,7 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
           </a>
         </li>
         <li>
-          <a href="employer-profile.php">
+          <a href="employer-profile.php" class="active">
             <span class="material-symbols-outlined icon">id_card</span>
             <span class="label">My Profile</span>
           </a>
@@ -196,14 +201,14 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
             </div>
 
           </div>
-          <div class="save-cancel-btns" id="companyInfoBtns">
+          <!-- <div class="save-cancel-btns" id="companyInfoBtns">
             <button type="submit" class="btn btn-primary" id="saveCompanyInfo">
               Save
             </button>
             <button class="btn btn-outline" id="cancelCompanyInfo">
               Cancel
             </button>
-          </div>
+          </div> -->
         </div>
 
         <div class="section">
@@ -230,14 +235,14 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
               </input>
             </div>
           </div>
-          <div class="save-cancel-btns" id="contactBtns">
+          <!-- <div class="save-cancel-btns" id="contactBtns">
             <button class="btn btn-primary" id="saveContactInfo">
               Save
             </button>
             <button class="btn btn-outline" id="cancelContactInfo">
               Cancel
             </button>
-          </div>
+          </div> -->
         </div>
 
         <div class="section">
@@ -250,7 +255,9 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                 <div class="document-date">Uploaded:</div>
               </div>
               <div class="document-actions">
-                <button class="view-doc" data-doc="">View</button>
+                <button class="view-doc" data-doc="">
+                  <span class="material-symbols-outlined">visibility</span>
+                </button>
                 <label for="upload-bir" class="update-doc">Upload</label>
                 <input type="file" id="upload-bir" name="upload-bir" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
               </div>
@@ -262,7 +269,9 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                 <div class="document-date">Uploaded:<span id="bir-upload-date"><?php echo !empty($docs['bir_certification']) ? "Uploaded" : "Not Uploaded"; ?></span></div>
               </div>
               <div class="document-actions">
-                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['bir_certification']; ?>">View</button>
+                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['bir_certification']; ?>">
+                  <span class="material-symbols-outlined">visibility</span>
+                </button>
                 <label for="upload-bir" class="update-doc">Upload</label>
                 <input type="file" id="upload-bir" name="upload-bir" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
               </div>
@@ -274,7 +283,9 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                 <div class="document-date">Uploaded:<span id="bir-upload-date"><?php echo !empty($docs['business_permit']) ? "Uploaded" : "Not Uploaded"; ?></span></div>
               </div>
               <div class="document-actions">
-                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['business_permit']; ?>">View</button>
+                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['business_permit']; ?>">
+                  <span class="material-symbols-outlined">visibility</span>
+                </button>
                 <label for="upload-business-permit" class="update-doc">Upload</label>
                 <input type="file" id="upload-business-permit" name="upload-business-permit" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
               </div>
@@ -286,7 +297,9 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                 <div class="document-date">Uploaded:<span id="bir-upload-date"><?php echo !empty($docs['dole_certification']) ? "Uploaded" : "Not Uploaded"; ?></span></div>
               </div>
               <div class="document-actions">
-                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['dole_certification']; ?>">View</button>
+                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['dole_certification']; ?>">
+                  <span class="material-symbols-outlined">visibility</span>
+                </button>
                 <label for="upload-dole" class="update-doc">Upload</label>
                 <input type="file" id="upload-dole" name="upload-dole" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
               </div>
@@ -298,7 +311,9 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                 <div class="document-date">Uploaded:<span id="bir-upload-date"><?php echo !empty($docs['migrant_certification']) ? "Uploaded" : "Not Uploaded"; ?></span></div>
               </div>
               <div class="document-actions">
-                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['migrant_certification']; ?>">View</button>
+                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['migrant_certification']; ?>">
+                  <span class="material-symbols-outlined">visibility</span>
+                </button>
                 <label for="upload-migrant" class="update-doc">Upload</label>
                 <input type="file" id="upload-migrant" name="upload-migrant" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
               </div>
@@ -310,14 +325,16 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                 <div class="document-date">Uploaded:<span id="bir-upload-date"><?php echo !empty($docs['philjob_certification']) ? "Uploaded" : "Not Uploaded"; ?></span></div>
               </div>
               <div class="document-actions">
-                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['philjob_certification']; ?>">View</button>
+                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['philjob_certification']; ?>">
+                  <span class="material-symbols-outlined">visibility</span>
+                </button>
                 <label for="upload-philjob" class="update-doc">Upload</label>
                 <input type="file" id="upload-philjob" name="upload-philjob" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
               </div>
             </li>
           </ul>
         </div>
-        <button type="submit" class="btn btn-primary" style="background-color: #0055a5; color:white; padding: .825rem 3rem; font-size: 1rem; margin-left: 83.5%;">Submit</button>
+        <button type="submit" class="btn btn-primary submit">Submit</button>
       </div>
     </form>
   </main>
