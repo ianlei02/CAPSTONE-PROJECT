@@ -6,7 +6,35 @@ if (!isset($_SESSION['user_id'])) {
   exit();
 }
 $employer_id = $_SESSION['user_id'];
+$accountStmt = $conn->prepare("SELECT * FROM employer_company_info WHERE employer_ID = ?");
+$accountStmt->bind_param("s", $userId);
+$accountStmt->execute();
+$accountResult = $accountStmt->get_result();
+$accountData = $accountResult->fetch_assoc();
 
+$accountJson = json_encode($accountData ?: []);
+
+$profile_picture_url = '../assets/images/profile.png';
+
+if (isset($_SESSION['user_id'])) {
+  $employer_id = $_SESSION['user_id'];
+  $query = "SELECT profile_picture FROM employer_company_info WHERE employer_id = ?";
+  $stmt = $conn->prepare($query);
+  $stmt->bind_param("i", $employer_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    if (!empty($row['profile_picture'])) {
+
+      if (file_exists('../' . $row['profile_picture'])) {
+        $profile_picture_url = '../' . $row['profile_picture'];
+      }
+    }
+  }
+  $stmt->close();
+}
 $sql = "
 SELECT 
     ea.email, ea.email, ea.password,
@@ -66,19 +94,26 @@ $data = $result->fetch_assoc();
   <link rel="stylesheet" href="../css/employer-dashboard.css" />
   <link rel="stylesheet" href="../css/profile-completion.css">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-
-
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
 </head>
 
 <body>
   <nav class="navbar">
     <div class="navbar-left">
       <div class="left-pos">
-        <h2>Dashboard</h2>
-        <p>Welcome, Employer!</p>
+        <h1>
+          <span class="material-symbols-outlined">dashboard</span>
+          <span>Dashboard</span>
+        </h1>
       </div>
       <div class="right-pos">
-        <div class="profile">IAN</div>
+        <div class="profile">
+          <img
+            src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+            alt="Profile Picture"
+            class="profile-pic"
+            id="profilePicc" style="width: 50px !important;" />
+        </div>
       </div>
     </div>
   </nav>
@@ -148,9 +183,8 @@ $data = $result->fetch_assoc();
           <div class="stat-value">
             <?php echo $data['employer_total_jobs']; ?>
           </div>
-          <div class="stat-label"><?php echo $data['total_active']; ?> pending applications</div>
+          <div class="stat-label"><?php echo $data['total_active']; ?> inactive</div>
         </div>
-
         <div class="stat-card">
           <div class="stat-header">
             <h3 class="stat-title">Active Jobs</h3>
@@ -163,7 +197,6 @@ $data = $result->fetch_assoc();
           </div>
           <div class="stat-label">This month</div>
         </div>
-
         <div class="stat-card">
           <div class="stat-header">
             <h3 class="stat-title">Referred</h3>
@@ -174,7 +207,6 @@ $data = $result->fetch_assoc();
           <div class="stat-value">4</div>
           <div class="stat-label">2 new referrals</div>
         </div>
-
         <div class="stat-card">
           <div class="stat-header">
             <h3 class="stat-title">Hired</h3>
@@ -183,7 +215,7 @@ $data = $result->fetch_assoc();
             </div>
           </div>
           <div class="stat-value">1</div>
-          <div class="stat-label">7 high priority</div>
+          <div class="stat-label">This month</div>
         </div>
       </div>
       <div class="status-card">
@@ -196,84 +228,61 @@ $data = $result->fetch_assoc();
               stroke-dashoffset="<?php echo $offset; ?>"></circle>
           </svg>
           <div class="progress-text"><?php echo $completion; ?>%</div>
-        </div>
-        <div class="verification-section">
           <div class="verification-badge pending">
             Pending
           </div>
+        </div>
+        <div class="verification-section">
           <button class="action-button">Complete Profile</button>
         </div>
       </div>
     </div>
 
-    <div class="job-application-status">
-      <h2>Applicant List</h2>
-      <div class="table-responsive">
-        <table class="job-application-table" id="employerDashboardTable">
-          <thead>
-            <tr>
-              <th>Applicant Name</th>
-              <th>Email</th>
-              <th>Status</th>
-              <th>Date Applied</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>John Doe</td>
-              <td>john.doe@example.com</td>
-              <td><span class="status interview">Interview</span></td>
-              <td class="table-date">2025-10-01</td>
-              <td class="action-btns">
-                <button>View</button><button>Interview</button> <button>Hire</button><button>Decline</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jane Smith</td>
-              <td>jane.smith@example.com</td>
-              <td><span class="status applied">Applied</span></td>
-              <td class="table-date">2025-09-15</td>
-              <td class="action-btns">
-                <button>View</button><button>Interview</button> <button>Hire</button><button>Decline</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Alice Johnson</td>
-              <td>alice.johnson@example.com</td>
-              <td><span class="status declined">Declined</span></td>
-              <td class="table-date">2025-09-15</td>
-              <td class="action-btns">
-                <button>View</button><button>Interview</button> <button>Hire</button><button>Decline</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Bob Brown</td>
-              <td>bob.brown@example.com</td>
-              <td><span class="status hired">Hired</span></td>
-              <td class="table-date">2025-09-15</td>
-              <td class="action-btns">
-                <button>View</button><button>Interview</button> <button>Hire</button><button>Decline</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Charlie Davis</td>
-              <td>charlie.davis@example.com</td>
-              <td><span class="status pending">Pending</span></td>
-              <td class="table-date">2025-09-15</td>
-              <td class="action-btns">
-                <button>View</button><button>Interview</button> <button>Hire</button><button>Decline</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="content-grid">
+      <div class="quick-actions">
+        <h2 class="section-title">
+          <span class="material-symbols-outlined">bolt</span>
+          <span>Quick Actions</span>
+        </h2>
+        <div class="actions-grid">
+          <div class="action-card">
+            <div class="action-icon">
+              <span class="material-symbols-outlined">add</span>
+            </div>
+            <div class="action-title">Post a Job</div>
+            <div class="action-desc">Create a new job posting</div>
+          </div>
+          <div class="action-card">
+            <div class="action-icon">
+              <span class="material-symbols-outlined">people</span>
+            </div>
+            <div class="action-title">Review Applicants</div>
+            <div class="action-desc">Screen and filter candidates</div>
+          </div>
+          <div class="action-card">
+            <div class="action-icon">
+              <span class="material-symbols-outlined">apartment</span>
+            </div>
+            <div class="action-title">Edit Company Profile</div>
+            <div class="action-desc">Update company information</div>
+          </div>
+        </div>
       </div>
+      <div class="calendar-container">
+        <h2 class="section-title">
+          <span class="material-symbols-outlined">calendar_month</span>
+          <span>Calendar</span>
+        </h2>
+        <div id="calendar"></div>
+      </div>
+
     </div>
 
   </main>
 
   <script src="../js/responsive.js"></script>
   <script src="../js/dark-mode.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 
   <script>
     function setVerificationStatus(status) {
@@ -304,6 +313,34 @@ $data = $result->fetch_assoc();
       }
     });
   </script>
+  <!-- //? CALENDAR -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth', // default view
+        headerToolbar: {
+          left: 'prev,next',
+          center: 'title',
+          // right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        },
+        events: [{
+            title: 'Sample Event',
+            start: '2025-09-29'
+          },
+          {
+            title: 'Meeting',
+            start: '2025-09-30T10:00:00',
+            end: '2025-09-30T12:00:00'
+          }
+        ]
+      });
+      calendar.render();
+    });
+  </script>
+
 </body>
 
 </html>

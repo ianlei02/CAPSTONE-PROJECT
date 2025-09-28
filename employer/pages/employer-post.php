@@ -39,12 +39,51 @@ if (isset($_GET['action'])) {
     $job = $stmt->get_result()->fetch_assoc();
   ?>
     <form id="editJobForm">
-      <input type="text" name="title" value="<?= htmlspecialchars($job['job_title']) ?>" />
-      <input type="text" name="category" value="<?= htmlspecialchars($job['category']) ?>" />
-      <input type="text" name="type" value="<?= htmlspecialchars($job['job_type']) ?>" />
-      <input type="number" name="vacancies" value="<?= $job['vacancies'] ?>" />
-      <input type="date" name="expiry_date" value="<?= $job['expiry_date'] ?>" />
-      <textarea name="description" rows="5"><?= htmlspecialchars($job['description']) ?></textarea>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="">Job Title</label>
+          <input type="text" name="title" value="<?= htmlspecialchars($job['job_title']) ?>" />
+        </div>
+        <div class="form-group">
+          <label for="">Job Category</label>
+          <select id=" category" name="category" value="<?= htmlspecialchars($job['category']) ?>" required>
+            <option value="">Select Category</option>
+            <option value="Education">Education</option>
+            <option value="Finance">Financial Service</option>
+            <option value="Transpo">Transportation</option>
+            <option value="D-economy">Digital Economy</option>
+            <option value="B-economy">Blue Economy</option>
+            <option value="C-economy">Creative Economy</option>
+            <option value="G-economy">Green Economy</option>
+            <option value="Housing">Housing</option>
+            <option value="Food">Food & Advanced Manufacturing</option>
+            <option value="Health">Health</option>
+            <option value="Agri">Agribusiness, Agriculture, Forestry, and Fisheries</option>
+            <option value="Tourism">Tourism</option>
+            <option value="Construction">Construction</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="">Job Type</label>
+          <input type="text" name="type" value="<?= htmlspecialchars($job['job_type']) ?>" />
+        </div>
+        <div class="form-group">
+          <label for="">Vacancies</label>
+          <input type="number" name="vacancies" value="<?= $job['vacancies'] ?>" />
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="">Deadline</label>
+        <input type="date" name="expiry_date" value="<?= $job['expiry_date'] ?>" />
+      </div>
+      <div class="form-group">
+        <label for="">Job Description</label>
+        <textarea name="description" rows="5"><?= htmlspecialchars($job['description']) ?></textarea>
+      </div>
     </form>
 <?php
     exit;
@@ -92,7 +131,6 @@ if (isset($_GET['action'])) {
   <script src="../js/load-saved.js"></script>
   <link rel="stylesheet" href="../css/navs.css">
   <link rel="stylesheet" href="../css/employer-post.css">
-  <link rel="stylesheet" href="../../public-assets/library/datatable/dataTables.css">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -101,15 +139,13 @@ if (isset($_GET['action'])) {
   <nav class="navbar">
     <div class="navbar-left">
       <div class="left-pos">
-        <h2>Dashboard</h2>
-        <p>Welcome, Employer!</p>
+        <h1>Job Posting</h1>
       </div>
       <div class="right-pos">
         <div class="profile">IAN</div>
       </div>
     </div>
   </nav>
-
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="logo">
@@ -121,13 +157,13 @@ if (isset($_GET['action'])) {
     <div class="sidebar-options">
       <ul class="sidebar-menu">
         <li>
-          <a href="./employer-dashboard.php" class="active">
+          <a href="./employer-dashboard.php">
             <span class="material-symbols-outlined icon">dashboard</span>
             <span class="label">Dashboard</span>
           </a>
         </li>
         <li>
-          <a href="./employer-post.php">
+          <a href="./employer-post.php" class="active">
             <span class="material-symbols-outlined icon">work</span>
             <span class="label">Post Job</span>
           </a>
@@ -168,11 +204,11 @@ if (isset($_GET['action'])) {
       <form id="jobPostForm" class="job-form" method="POST" action="../Functions/job_post.php">
         <div class="form-row">
           <div class="form-group">
-            <label for="jobTitle">Job Title*</label>
+            <label for="jobTitle" class="required">Job Title</label>
             <input type="text" id="jobTitle" name="jobTitle" required placeholder="e.g., Senior Frontend Developer">
           </div>
           <div class="form-group">
-            <label for="jobType">Job Type*</label>
+            <label for="jobType" class="required">Job Type</label>
             <select id="jobType" name="jobType" required>
               <option value="">Select Job Type</option>
               <option value="Full-time">Full-time</option>
@@ -186,11 +222,11 @@ if (isset($_GET['action'])) {
 
         <div class="form-row">
           <div class="form-group">
-            <label for="location">Location*</label>
+            <label for="location" class="required">Location</label>
             <input type="text" id="location" name="location" required placeholder="e.g., New York, NY or Remote">
           </div>
           <div class="form-group">
-            <label for="category">Category*</label>
+            <label for="category" class="required">Category</label>
             <select id="category" name="category" required>
               <option value="">Select Category</option>
               <option value="Education">Education</option>
@@ -213,25 +249,25 @@ if (isset($_GET['action'])) {
 
         <div class="form-row">
           <div class="form-group">
-            <label for="vacancies">Number of Vacancies*</label>
+            <label for="vacancies" class="required">Number of Vacancies</label>
             <input type="number" id="vacancies" name="vacancies" required min="1" placeholder="e.g., 2">
           </div>
           <div class="form-group">
-            <label for="expiryDate">Application Deadline</label>
+            <label for="expiryDate" class="required">Application Deadline</label>
             <input type="date" id="expiryDate" name="expiryDate">
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="salary">Salary Range</label>
-            <input type="text" id="salary" name="salary" placeholder="e.g., $80,000 - $100,000 per year" style="width: 49%;">
+            <label for="salary" class="required">Salary Range</label>
+            <input type="number" id="salary" name="salary" placeholder="e.g., ₱80,000" style="width: 49%;">
+            <input type="number" id="salary" name="salary" placeholder="e.g., ₱100,000" style="width: 49%;">
           </div>
-
         </div>
 
         <div class="form-group">
-          <label for="description">Job Description and Requirements</label>
+          <label for="description" class="required">Job Description and Requirements</label>
           <textarea id="description" name="description" rows="5" required placeholder="Detailed description of the job responsibilities..."></textarea>
         </div>
         <div class="form-actions">
@@ -245,7 +281,7 @@ if (isset($_GET['action'])) {
     <section class="job-monitoring-section card">
       <div class="section-header">
         <form action="employer-post.php" method="GET">
-          <h2>Your Job Postings</h2>
+          <h2>Jobs Posted</h2>
           <div class="search-filter">
             <select class="status-filter">
               <option value="all">All Statuses</option>
@@ -280,13 +316,11 @@ if (isset($_GET['action'])) {
                 <td class="vacancies"><?= htmlspecialchars($row['vacancies']) ?></td>
                 <td class="expiry-date"><?= htmlspecialchars($row['expiry_date']) ?></td>
                 <td><span class="status-badge <?= htmlspecialchars($row['status']) ?>"><?= ucfirst($row['status']) ?></span></td>
-                <td>
-                <td>
-                  <button type="button" class="action-btn view" onclick="viewApplicants(<?= $row['job_id'] ?>)">View</button>
-                  <button type="button" class="action-btn edit" onclick="editJob(<?= $row['job_id'] ?>)">Edit</button>
+
+                <td class="action-buttons">
+                  <button type="button" class="action-btn view" onclick="editJob(<?= $row['job_id'] ?>)">View</button>
                   <button type="button" class="action-btn delete" onclick="deleteJob(<?= $row['job_id'] ?>)">Delete</button>
                   <a href="dss_results.php?job_id=<?= $row['job_id'] ?>" class="action-btn run-dss">Run DSS</a>
-                </td>
                 </td>
               </tr>
             <?php endwhile; ?>
