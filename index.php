@@ -40,7 +40,7 @@ $data = $result->fetch_assoc();
                 alt="PESO logo"
                 class="logo" />
         </a>
-        <ul class="navbar-links">
+        <ul class="navbar-links topbar">
             <li><a class="nav-link" href="index.php">Home</a></li>
             <li><a class="nav-link" href="./pages/find-job.php">Job Listings</a></li>
             <li><a class="nav-link" href="./pages/aboutus.php">About Us</a></li>
@@ -49,7 +49,19 @@ $data = $result->fetch_assoc();
                 <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a>
             </li>
         </ul>
+        <button onclick="sidebarToggle()" class="hamburger">Hamburger</button>
     </nav>
+    <aside>
+        <ul class="navbar-links sidebar">
+            <li><a class="nav-link" href="index.php">Home</a></li>
+            <li><a class="nav-link" href="./pages/find-job.php">Job Listings</a></li>
+            <li><a class="nav-link" href="./pages/aboutus.php">About Us</a></li>
+            <li class="auth-buttons">
+                <a href="auth/login-signup.php?form=login"><button class="btn-login">Login</button></a>
+                <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a>
+            </li>
+        </ul>
+    </aside>
 
     <main>
         <section class="hero" id="hero">
@@ -400,6 +412,12 @@ $data = $result->fetch_assoc();
         window.addEventListener("resize", () => {
             swiper.update();
         });
+    </script>
+    <script>
+        function sidebarToggle(){
+            const aside = document.querySelector('aside');
+            aside.classList.toggle('show')
+        }
     </script>
 
 </body>
