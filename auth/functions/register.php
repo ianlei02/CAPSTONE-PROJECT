@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\Exception;
 
 require '../../vendor/phpmailer/phpmailer/src/Exception.php';
 require '../../vendor/phpmailer/phpmailer/src/SMTP.php';
-require '../../vendor/phpmailer/phpmailer/src/PhpMailer.php';
+require '../../vendor/phpmailer/phpmailer/src/PHPMailer.php';
 
 if (isset($_POST['signupBtn'])) {
     $user_type = mysqli_real_escape_string($conn, $_POST['user-type']);

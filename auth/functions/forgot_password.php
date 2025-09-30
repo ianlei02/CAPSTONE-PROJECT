@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\Exception;
 
 require '../../phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
 require '../../phpmailer/vendor/phpmailer/phpmailer/src/SMTP.php';
-require '../../phpmailer/vendor/phpmailer/phpmailer/src/PhpMailer.php';
+require '../../phpmailer/vendor/phpmailer/phpmailer/src/PHPMailer.php';
 
 if (isset($_POST['email-reset'])) {
     $email = trim($_POST['email-reset']);
