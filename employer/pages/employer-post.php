@@ -37,6 +37,10 @@ if (isset($_GET['action'])) {
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $job = $stmt->get_result()->fetch_assoc();
+
+    $salaryParts = explode('-', $job['salary_range']);
+    $salaryMin = isset($salaryParts[0]) ? str_replace('₱', '', $salaryParts[0]) : '';
+    $salaryMax = isset($salaryParts[1]) ? str_replace('₱', '', $salaryParts[1]) : '';
   ?>
     <form id="editJobForm">
       <div class="form-row">
@@ -75,7 +79,11 @@ if (isset($_GET['action'])) {
           <input type="number" name="vacancies" value="<?= $job['vacancies'] ?>" />
         </div>
       </div>
-      
+      <div class="form-group">
+        <label for="">Salary Range</label>
+        <input type="number" name="salary[]" value="<?= htmlspecialchars($salaryMin) ?>" placeholder="₱ Min Salary" />
+        <input type="number" name="salary[]" value="<?= htmlspecialchars($salaryMax) ?>" placeholder="₱ Max Salary" />
+      </div>
       <div class="form-group">
         <label for="">Deadline</label>
         <input type="date" name="expiry_date" value="<?= $job['expiry_date'] ?>" />
@@ -99,8 +107,11 @@ if (isset($_GET['action'])) {
     $expiry_date = $_POST['expiry_date'];
     $description = $_POST['description'];
 
-    $stmt = $conn->prepare("UPDATE job_postings SET job_title=?, category=?, job_type=?, vacancies=?, expiry_date=?, description=? WHERE job_id=?");
-    $stmt->bind_param("ssssssi", $title, $category, $type, $vacancies, $expiry_date, $description, $id);
+    $salary      = $_POST['salary'] ?? [];
+    $salaryRange = implode('-', array_filter(array_map('trim', $salary)));
+
+    $stmt = $conn->prepare("UPDATE job_postings SET job_title=?, category=?, job_type=?, vacancies=?, expiry_date=?, description=?, salary_range = ? WHERE job_id=?");
+    $stmt->bind_param("ssssssis", $title, $category, $type, $vacancies, $expiry_date, $description, $id, $salaryRange);
     $stmt->execute();
 
     echo "Job updated successfully";
@@ -261,8 +272,8 @@ if (isset($_GET['action'])) {
         <div class="form-row">
           <div class="form-group">
             <label for="salary" class="required">Salary Range</label>
-            <input type="number" id="salary" name="salary" placeholder="e.g., ₱80,000" style="width: 49%;">
-            <input type="number" id="salary" name="salary" placeholder="e.g., ₱100,000" style="width: 49%;">
+            <input type="number" id="salary" name="salary[]" placeholder="e.g., ₱80,000" style="width: 49%;">
+            <input type="number" id="salary" name="salary[]" placeholder="e.g., ₱100,000" style="width: 49%;">
           </div>
         </div>
 

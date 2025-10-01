@@ -72,18 +72,18 @@ usort($applicants, function($a, $b) {
         </tr>
     <?php endforeach; ?>
 </table>
-<div id="profileModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-     background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
-    <div style="background:#fff; padding:20px; width:600px; border-radius:10px; position:relative;">
-        <span id="closeModal" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:18px;">&times;</span>
-        <h2>Applicant Profile</h2>
-        <div id="profileContent">Loading...</div>
-        <div style="margin-top:20px; text-align:right;">
-            <button id="exitBtn" 
-                style="padding:8px 15px; background:#dc3545; color:#fff; border:none; border-radius:5px; cursor:pointer;">
-                Exit
-            </button>
-        </div>
+    <div id="profileModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+        background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+        <div style="background:#fff; padding:20px; width:600px; border-radius:10px; position:relative;">
+            <span id="closeModal" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:18px;">&times;</span>
+            <h2>Applicant Profile</h2>
+            <div id="profileContent">Loading...</div>
+            <div style="margin-top:20px; text-align:right;">
+                <button id="exitBtn" 
+                    style="padding:8px 15px; background:#dc3545; color:#fff; border:none; border-radius:5px; cursor:pointer;">
+                    Exit
+                </button>
+            </div>
     </div>
 </div>
 <script>

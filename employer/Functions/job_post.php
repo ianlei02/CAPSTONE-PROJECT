@@ -18,8 +18,15 @@ if (!isset($_SESSION['user_id'])) {
     $category    = trim($_POST['category'] ?? '');
     $vacancies   = intval($_POST['vacancies'] ?? 0);
     $expiryDate  = !empty($_POST['expiryDate']) ? $_POST['expiryDate'] : null;
-    $salary      = trim($_POST['salary'] ?? '');
+    $salary      = $_POST['salary'] ?? [];
     $description = trim($_POST['description'] ?? '');
+    $salaryRange = '';
+
+    if (count($salary) === 2) {
+        $min = intval($salary[0]);
+        $max = intval($salary[1]);
+        $salaryRange = "₱{$min}-₱{$max}";
+    }
 
     if (empty($jobTitle) || empty($jobType) || empty($location) || empty($category) || $vacancies <= 0) {
         die("Error: Missing required fields.");
@@ -33,7 +40,7 @@ if (!isset($_SESSION['user_id'])) {
         $stmt->bind_param(
             "issssisss", 
             $employer_id, $jobTitle, $jobType, $location, $category,
-            $vacancies, $expiryDate, $salary, $description
+            $vacancies, $expiryDate, $salaryRange, $description
         );
         
         if ($stmt->execute()) {
