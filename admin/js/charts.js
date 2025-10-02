@@ -41,7 +41,7 @@ const monthlyVacancies = [
 ];
 
 // Sex distribution data
-const sexData = [65, 35]; // Male, Female
+ // Male, Female
 
 // Age range data
 const ageRanges = ["18-24", "25-59", "60+"];
@@ -312,7 +312,11 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Sex Distribution Chart
-  const sexChart = new Chart(document.getElementById("sexChart"), {
+    fetch("../Function/fetch-sex.php")
+        .then(response => response.json())
+        .then(data => {
+          const sexData = [data.Male, data.Female];
+    new Chart(document.getElementById("sexChart"), {
     type: "doughnut",
     data: {
       labels: ["Male", "Female"],
@@ -356,6 +360,7 @@ document.addEventListener("DOMContentLoaded", function () {
       cutout: "70%",
     },
   });
+})
 
   // Age Range Chart
   const ageChart = new Chart(document.getElementById("ageChart"), {
