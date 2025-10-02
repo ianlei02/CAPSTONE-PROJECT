@@ -1,11 +1,46 @@
 <?php
 require "../../connection/dbcon.php";
+require_once "../../employer/Functions/dss.php";
+
 $sql = "SELECT job_id, job_title, job_type, category, salary_range, location, vacancies, description, created_at 
         FROM job_postings 
         WHERE status = 'active' 
         ORDER BY created_at DESC";
 
 $result = $conn->query($sql);
+
+$job_id = $_POST['job_id'] ?? $_GET['job_id'] ?? 0;
+$job_id = intval($job_id);
+
+$applicants = [];
+if ($job_id > 0) {
+    $sql_app = "
+        SELECT 
+            a.applicant_id,
+            CONCAT(a.f_name, ' ', a.l_name) AS applicant_name,
+            j.job_title,
+            ja.created_at AS date_applied
+        FROM job_application ja
+        INNER JOIN applicant_account a ON ja.applicant_id = a.applicant_id
+        INNER JOIN job_postings j ON ja.job_id = j.job_id
+        WHERE ja.job_id = ?
+    ";
+    $stmt = $conn->prepare($sql_app);
+    $stmt->bind_param("i", $job_id);
+    $stmt->execute();
+    $res_app = $stmt->get_result();
+
+    while ($row = $res_app->fetch_assoc()) {
+        $row['score'] = calculateApplicantScore($row['applicant_id'], $job_id, $conn);
+        $applicants[] = $row;
+    }
+     usort($applicants, function($a, $b) {
+        return $b['score'] <=> $a['score'];
+    });
+}
+
+$showApplicants = ($job_id > 0);
+
 ?>
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
@@ -115,6 +150,7 @@ $result = $conn->query($sql);
                         <option value="Other">Other Fields</option>
                     </select>
                 </div>
+                <div class="job-listing-section" style="display: <?= $showApplicants ? 'none' : 'grid'; ?>;">
                 <div class="job-listings">
                     <?php if ($result->num_rows > 0): ?>
                         <?php while ($row = $result->fetch_assoc()): ?>
@@ -142,7 +178,7 @@ $result = $conn->query($sql);
 
                                 <div class="job-footer">
                                     <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
-                                    <button class="view-btn view-applications">View Applicants</button>
+                                    <a href="job-listings.php?job_id=<?= urlencode($row['job_id']); ?>" class="view-btn">View Applicants</a>
                                 </div>
                             </div>
                         <?php endwhile; ?>
@@ -151,17 +187,19 @@ $result = $conn->query($sql);
                     <?php endif; ?>
 
                 </div>
+                </div>
             </div>
 
             <!-- Applicants Section -->
-            <section class="applications-section" id="applications-section">
+            <section class="applications-section" id="applications-section" style="display: <?= $showApplicants ? 'flex' : 'none'; ?>;">
                 <div class="section-header">
                     <button class="back-button" id="back-to-jobs">
                         <span class="material-icons">arrow_back</span>
                         Back to Jobs
                     </button>
-                    <h2 id="applicants-title">Applicants for </h2>
+                    <h2 id="applicants-title">Applicants for <?= htmlspecialchars($job_id); ?></h2>
                 </div>
+
                 <div class="table-container">
                     <table id="applicants-table" class="display">
                         <thead>
@@ -169,65 +207,31 @@ $result = $conn->query($sql);
                                 <th>Applicant Name</th>
                                 <th>Position Applied</th>
                                 <th>Date Applied</th>
+                                <th>Score</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Sarah Johnson</td>
-                                <td>Senior Frontend Developer</td>
-                                <td>2023-10-15</td>
-                                <td>
-                                    <button class="view-btn view-applicant-profile">
-                                        <span class="material-symbols-outlined">visibility</span>
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Michael Chen</td>
-                                <td>Senior Frontend Developer</td>
-                                <td>2023-10-14</td>
-                                <td>
-                                    <button class="view-btn view-applicant-profile">
-                                        <span class="material-symbols-outlined">visibility</span>
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Emily Rodriguez</td>
-                                <td>Senior Frontend Developer</td>
-                                <td>2023-10-13</td>
-                                <td>
-                                    <button class="view-btn view-applicant-profile">
-                                        <span class="material-symbols-outlined">visibility</span>
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>David Kim</td>
-                                <td>Senior Frontend Developer</td>
-                                <td>2023-10-12</td>
-                                <td>
-                                    <button class="view-btn view-applicant-profile">
-                                        <span class="material-symbols-outlined">visibility</span>
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Jessica Williams</td>
-                                <td>Senior Frontend Developer</td>
-                                <td>2023-10-11</td>
-                                <td>
-                                    <button class="view-btn view-applicant-profile">
-                                        <span class="material-symbols-outlined">visibility</span>
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
+                            <?php if (!empty($applicants)): ?>
+                                <?php foreach ($applicants as $row): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($row['applicant_name']); ?></td>
+                                        <td><?= htmlspecialchars($row['job_title']); ?></td>
+                                        <td><?= htmlspecialchars($row['date_applied']); ?></td>
+                                        <td><span class="badge"><?= htmlspecialchars($row['score']); ?>%</span></td>
+                                        <td>
+                                            <button class="view-btn view-applicant-profile" data-applicant="<?= $row['applicant_id']; ?>">
+                                                <span class="material-symbols-outlined">visibility</span> View
+                                            </button>
+
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="5">No applicants yet.</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -245,10 +249,13 @@ $result = $conn->query($sql);
                 <button class="close-btn">&times;</button>
             </div>
             <div class="modal-body">
-                <form class="application-form">
-                    //TODO APPLICANT PROFILE HERE OR NEW PAGE?
-                    <!-- //TODO APPLICANT PROFILE HERE OR NEW PAGE? -->
+
                 
+                <form class="application-form">
+                    <!-- //TODO APPLICANT PROFILE HERE OR NEW PAGE? -->
+                    <h2>Applicant Profile</h2>
+                    <div id="profileContent">Loading...</div>
+
                     <div class="form-actions">
                         <button
                             type="button"
@@ -366,6 +373,38 @@ $result = $conn->query($sql);
                 });
             });
         });
+        document.getElementById("back-to-jobs").addEventListener("click", function() {
+        window.location.href = window.location.pathname;
+    }); 
+
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("applicationModal");
+        const profileContent = document.getElementById("profileContent");
+        const closeBtn = document.querySelector(".close-btn");
+        const cancelBtn = document.getElementById("cancelApplication");
+
+        document.querySelectorAll(".view-applicant-profile").forEach(btn => {
+            btn.addEventListener("click", function () {
+                const applicantId = this.getAttribute("data-applicant");
+                
+                profileContent.innerHTML = "Loading...";
+                modal.style.display = "flex";
+                document.body.style.overflow = "hidden";
+
+                fetch("../../employer/Functions/get_profile.php?applicant_id=" + applicantId)
+                    .then(res => res.text())
+                    .then(data => {
+                        profileContent.innerHTML = data;
+                    })
+                    .catch(err => {
+                        profileContent.innerHTML = "Error loading profile.";
+                    });
+            });
+        });
+    });
+
     </script>
 </body>
 
