@@ -23,7 +23,7 @@ $data = $result->fetch_assoc();
     <link rel="stylesheet" href="public/css/css-reset.css" />
     <link rel="stylesheet" href="public/css/index.css" />
     <link rel="stylesheet" href="public/css/footer.css">
-    <!-- <link rel="stylesheet" href="./css/breakpoints.css" /> -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
 </head>
@@ -49,7 +49,9 @@ $data = $result->fetch_assoc();
                 <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a>
             </li>
         </ul>
-        <button onclick="sidebarToggle()" class="hamburger">Hamburger</button>
+        <button onclick="sidebarToggle()" class="hamburger">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
     </nav>
     <aside>
         <ul class="navbar-links sidebar">
@@ -414,7 +416,7 @@ $data = $result->fetch_assoc();
         });
     </script>
     <script>
-        function sidebarToggle(){
+        function sidebarToggle() {
             const aside = document.querySelector('aside');
             aside.classList.toggle('show')
         }

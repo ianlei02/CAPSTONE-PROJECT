@@ -538,6 +538,18 @@ section.news {
     gap: 10px;
     display: none !important;
   }
+  .navbar button{
+    background-color: white;
+    outline: none;
+    border: none;
+    align-content: center;
+  }
+  .navbar .hamburger span{
+    background-color: white;
+    cursor: pointer;
+    font-size: 2rem;
+    margin-right: 0.5rem;
+  }
   aside{
     width: 300px;
     position: fixed;
