@@ -211,7 +211,7 @@ if (isset($_GET['edit'])) {
             <td><?= htmlspecialchars($row['publish_date']); ?></td>
             <td>
               <?php if ($row['image']): ?>
-                <img src="../../<?= $row['image']; ?>" alt="News Image" width="100">
+                <img src="../<?= $row['image']; ?>" alt="News Image" width="100">
               <?php else: ?>
                 No Image
               <?php endif; ?>
@@ -223,7 +223,7 @@ if (isset($_GET['edit'])) {
                       data-id="<?= $row['id']; ?>"
                       data-title="<?= htmlspecialchars($row['title']); ?>"
                       data-date="<?= $row['publish_date']; ?>"
-                      data-image="../../<?= $row['image']; ?>"
+                      data-image="../<?= $row['image']; ?>"
                       data-excerpt="<?= htmlspecialchars($row['excerpt']); ?>"
                       data-content="<?= htmlspecialchars($row['content']); ?>">
                   <i class="fas fa-edit"></i> Edit
