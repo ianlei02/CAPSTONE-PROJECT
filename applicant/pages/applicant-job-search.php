@@ -70,9 +70,7 @@ $result = $conn->query($sql);
     <div class="navbar-left">
       <div class="left-pos" style="display: flex; width: auto; height: auto">
         <button class="hamburger">☰</button>
-        <div class="logo">
-          <img src="../assets/images/peso-logo.png" alt="" />
-        </div>
+        <h1>Job Listings</h1>
       </div>
       <div class="right-pos">
         <div class="profile">
@@ -87,54 +85,63 @@ $result = $conn->query($sql);
   </nav>
 
   <aside class="sidebar">
-    <ul class="sidebar-menu">
-      <li>
-        <a href="./applicant-dashboard.php">
-          <span class="material-symbols-outlined icon">dashboard</span>
-          <span class="label">Dashboard</span>
-        </a>
-      </li>
-      <li>
-        <a href="./applicant-applications.php">
-          <span class="material-symbols-outlined icon">work</span>
-          <span class="label">My Applications</span>
-        </a>
-      </li>
-      <li>
-        <a href="./applicant-job-search.php">
-          <span class="material-symbols-outlined icon">search</span>
-          <span class="label">Job Search</span>
-        </a>
-      </li>
-      <li>
-        <a href="./applicant-profile.php">
-          <span class="material-symbols-outlined icon">id_card</span>
-          <span class="label">My Profile</span>
-        </a>
-      </li>
-      <li>
-        <button onclick="toggleTheme()" class="dark-mode-toggle">
-          <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-          <span id="themeLabel">Dark Mode</span>
-        </button>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href="../../auth/functions/logout.php" class="log-out-btn">
-          <span class="material-symbols-outlined icon">logout</span>
-          <span class="label">Log Out</span>
-        </a>
-      </li>
-    </ul>
+    <div class="sidebar-logo">
+      <div class="logo">
+        <img src="../../public/images/pesosmb.png" alt="" />
+        <h3>PESO</h3>
+      </div>
+      <button class="hamburger"><span class="material-symbols-outlined">dock_to_right</span></button>
+    </div>
+    <div class="sidebar-options">
+      <ul class="sidebar-menu">
+        <li>
+          <a href="./applicant-dashboard.php">
+            <span class="material-symbols-outlined icon">dashboard</span>
+            <span class="label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="./applicant-applications.php">
+            <span class="material-symbols-outlined icon">work</span>
+            <span class="label">My Applications</span>
+          </a>
+        </li>
+        <li>
+          <a href="./applicant-job-search.php">
+            <span class="material-symbols-outlined icon">search</span>
+            <span class="label">Job Search</span>
+          </a>
+        </li>
+        <li>
+          <a href="./applicant-profile.php">
+            <span class="material-symbols-outlined icon">id_card</span>
+            <span class="label">My Profile</span>
+          </a>
+        </li>
+        <li>
+          <button onclick="toggleTheme()" class="dark-mode-toggle">
+            <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+            <span id="themeLabel">Dark Mode</span>
+          </button>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <a href="../../auth/functions/logout.php" class="log-out-btn">
+            <span class="material-symbols-outlined icon">logout</span>
+            <span class="label">Log Out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
   </aside>
 
   <main class="main-content">
     <div class="container-job-search">
-      <div class="header">
+      <!-- <div class="header">
         <h1>Job Listings</h1>
         <div>Showing 10 jobs</div>
-      </div>
+      </div> -->
 
       <div class="search-filter">
         <div class="search-box">
@@ -212,7 +219,7 @@ $result = $conn->query($sql);
                 Personal Information
               </h3>
             </div>
-            
+
             <div class="section">
               <h3
                 style="
@@ -221,7 +228,7 @@ $result = $conn->query($sql);
                     ">
                 Application Details
               </h3>
-              
+
               <div class="form-group">
                 <label>Cover Letter</label>
                 <textarea name="cover_letter"
@@ -230,7 +237,7 @@ $result = $conn->query($sql);
               <div class="form-group">
                 <label>How did you hear about this position?</label>
                 <select name="referral_source">
-                  <option value="" >Select</option>
+                  <option value="">Select</option>
                   <option>Job Portal</option>
                   <option>Company Website</option>
                   <option>Referral</option>
@@ -281,7 +288,7 @@ $result = $conn->query($sql);
   <script src="../js/responsive.js"></script>
   <script src="../js/dark-mode.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
+
   <script>
     // Job Field Filter
     const jobFieldFilter = document.getElementById('jobFieldFilter');
@@ -329,18 +336,6 @@ $result = $conn->query($sql);
 
     // Form Submission
 
-    // Job Card Expansion
-    // const jobDescription = document.querySelectorAll('.job-description');
-    // jobDescription.forEach(desc => {
-    //   desc.addEventListener('click', function() {
-    //     this.classList.toggle('expand');
-    //     if (this.classList.contains('expand')) {
-    //       this.style.maxHeight = 'none';
-    //     } else {
-    //       this.style.maxHeight = '100px'; 
-    //     }
-    //   });
-    // });
 
     // Read More functionality
     const readMoreLinks = document.querySelectorAll('.read-more');
@@ -378,23 +373,23 @@ $result = $conn->query($sql);
       });
     });
   </script>
-  <script> 
+  <script>
     document.querySelectorAll('.apply-btn').forEach(button => {
-    button.addEventListener('click', function () {
-      const jobId = this.getAttribute('data-job-id');
-      document.getElementById('modalJobId').value = jobId;
-      document.getElementById('applicationModal').style.display = 'block';
+      button.addEventListener('click', function() {
+        const jobId = this.getAttribute('data-job-id');
+        document.getElementById('modalJobId').value = jobId;
+        document.getElementById('applicationModal').style.display = 'block';
+      });
     });
-  });
   </script>
-  <script> 
-     document.getElementById('app-form').addEventListener('submit', async function(e) {
-      e.preventDefault(); 
+  <script>
+    document.getElementById('app-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
 
       const form = this;
       const formData = new FormData(form);
-      
-        const confirm = await Swal.fire({
+
+      const confirm = await Swal.fire({
         title: 'Are you sure?',
         text: "Do you want to apply for this job?",
         icon: 'question',

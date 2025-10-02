@@ -24,6 +24,7 @@ require_once '../Functions/getinfo.php';
   <nav class="navbar">
     <div class="navbar-left">
       <div class="left-pos" style="display: flex; width: auto; height: auto">
+        <button class="hamburger">☰</button>
         <h1>Dashboard</h1>
       </div>
     </div>
@@ -91,9 +92,9 @@ require_once '../Functions/getinfo.php';
     </div>
   </aside>
   <main class="main-content">
-    <div class="main-header">
+    <!-- <div class="main-header">
       <h1>Welcome, Applicant!</h1>
-    </div>
+    </div> -->
     <div class="statistics-container ">
       <div class="stats-grid">
         <div class="stat-card">
@@ -156,9 +157,9 @@ require_once '../Functions/getinfo.php';
           </div>
         </div>
         <div class="message-button">
-          <div class="completion-message">
+          <!-- <div class="completion-message">
             Complete your profile before you apply.
-          </div>
+          </div> -->
           <button class="complete-profile-btn" onclick=" windows.location.href = 'application-profile.php'">Complete My Profile</button>
         </div>
         <!-- <div class="missing-items">
@@ -180,7 +181,7 @@ require_once '../Functions/getinfo.php';
         <div class="application-item">
           <div class="application-info">
             <div class="application-logo">
-              <img src="../../landing/assets/images/company-logos/Jollibee.png" alt="company-logo">
+              <img src="../../public/images/company-logos/Jollibee.png" alt="company-logo">
             </div>
             <div class="application-details">
               <h3 class="application-title">Waiter</h3>
@@ -192,14 +193,14 @@ require_once '../Functions/getinfo.php';
             </div>
           </div>
           <div class="status-action">
-            <span class="application-status status-scheduled">Interview Scheduled</span>
+            <span class="application-status hired">Hired </span>
             <button>View</button>
           </div>
         </div>
         <div class="application-item">
           <div class="application-info">
             <div class="application-logo">
-              <img src="../../landing/assets/images/company-logos/7-eleven_logo.svg.png" alt="company-logo">
+              <img src="../../public/images/company-logos/7-eleven_logo.svg.png" alt="company-logo">
             </div>
             <div class="application-details">
               <h3 class="application-title">Cashier</h3>
@@ -211,18 +212,18 @@ require_once '../Functions/getinfo.php';
             </div>
           </div>
           <div class="status-action">
-            <span class="application-status status-scheduled">Interview Scheduled</span>
+            <span class="application-status pending">Pending</span>
             <button>View</button>
           </div>
         </div>
         <div class="application-item">
           <div class="application-info">
             <div class="application-logo">
-              <img src="../../landing/assets/images/company-logos/mang-inasal-logo-png_seeklogo-543182.png" alt="company-logo">
+              <img src="../../public/images/company-logos/Chowking_logo.svg.png" alt="company-logo">
             </div>
             <div class="application-details">
-              <h3 class="application-title">Janitor</h3>
-              <div class="application-company">Mang Inasal</div>
+              <h3 class="application-title">Cashier</h3>
+              <div class="application-company">Chowking</div>
               <div class="application-location-date">
                 <span>San Ildefonso, Bulacan</span>
                 <span>9/20/2025</span>
@@ -230,7 +231,26 @@ require_once '../Functions/getinfo.php';
             </div>
           </div>
           <div class="status-action">
-            <span class="application-status status-scheduled">Interview Scheduled</span>
+            <span class="application-status interview">Interview</span>
+            <button>View</button>
+          </div>
+        </div>
+        <div class="application-item">
+          <div class="application-info">
+            <div class="application-logo">
+              <img src="../../public/images/company-logos/kfc.png" alt="company-logo">
+            </div>
+            <div class="application-details">
+              <h3 class="application-title">Janitor</h3>
+              <div class="application-company">KFC</div>
+              <div class="application-location-date">
+                <span>San Ildefonso, Bulacan</span>
+                <span>9/20/2025</span>
+              </div>
+            </div>
+          </div>
+          <div class="status-action">
+            <span class="application-status rejected ">Rejected</span>
             <button>View</button>
           </div>
         </div>

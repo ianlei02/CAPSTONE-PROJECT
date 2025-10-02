@@ -17,16 +17,16 @@
   <nav class="navbar">
     <a class="navbar-brand" href="#">
       <img
-        src="../../public-assets/smb-images/pesosmb.png"
+        src="../../public/smb-images/pesosmb.png"
         alt="PESO logo"
         class="logo" />
       <img
-        src="../../public-assets/smb-images/smb-logo.png"
+        src="../../public/smb-images/smb-logo.png"
         alt="PESO logo"
         class="logo" />
     </a>
     <ul class="navbar-links">
-      <li><a class="nav-link" href="../index.php">Home</a></li>
+      <li><a class="nav-link" href="../../index.php">Home</a></li>
       <li><a class="nav-link" href="./find-job.php">Job Listings</a></li>
       <li><a class="nav-link" href="./aboutus.php">About Us</a></li>
       <li class="auth-buttons">
@@ -77,7 +77,7 @@
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-section">
-        <img src="../../landing/assets/images/pesosmb.png" style="width: 150px;" alt="PESO Logo">
+        <img src="../../public/smb-images/pesosmb.png" style="width: 150px;" alt="PESO Logo">
       </div>
       <div class="footer-section">
         <h3>About Us</h3>

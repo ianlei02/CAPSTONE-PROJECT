@@ -28,9 +28,7 @@ require_once '../Functions/getDataDisplay.php';
     <div class="navbar-left">
       <div class="left-pos" style="display: flex; width: auto; height: auto">
         <button class="hamburger">☰</button>
-        <div class="logo">
-          <img src="../assets/images/peso-logo.png" alt="" />
-        </div>
+        <h1>Applicant Profile</h1>
       </div>
       <div class="right-pos">
         <div class="profile">
@@ -45,46 +43,55 @@ require_once '../Functions/getDataDisplay.php';
   </nav>
 
   <aside class="sidebar">
-    <ul class="sidebar-menu">
-      <li>
-        <a href="./applicant-dashboard.php">
-          <span class="material-symbols-outlined icon">dashboard</span>
-          <span class="label">Dashboard</span>
-        </a>
-      </li>
-      <li>
-        <a href="./applicant-applications.php">
-          <span class="material-symbols-outlined icon">work</span>
-          <span class="label">My Applications</span>
-        </a>
-      </li>
-      <li>
-        <a href="./applicant-job-search.php">
-          <span class="material-symbols-outlined icon">search</span>
-          <span class="label">Job Search</span>
-        </a>
-      </li>
-      <li>
-        <a href="./applicant-profile.php">
-          <span class="material-symbols-outlined icon">id_card</span>
-          <span class="label">My Profile</span>
-        </a>
-      </li>
-      <li>
-        <button onclick="toggleTheme()" class="dark-mode-toggle">
-          <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-          <span id="themeLabel">Dark Mode</span>
-        </button>
-      </li>
-    </ul>
-    <ul>
-      <li>
-        <a href="../../auth/functions/logout.php" class="log-out-btn">
-          <span class="material-symbols-outlined icon">logout</span>
-          <span class="label">Log Out</span>
-        </a>
-      </li>
-    </ul>
+    <div class="sidebar-logo">
+      <div class="logo">
+        <img src="../../public/images/pesosmb.png" alt="" />
+        <h3>PESO</h3>
+      </div>
+      <button class="hamburger"><span class="material-symbols-outlined">dock_to_right</span></button>
+    </div>
+    <div class="sidebar-options">
+      <ul class="sidebar-menu">
+        <li>
+          <a href="./applicant-dashboard.php">
+            <span class="material-symbols-outlined icon">dashboard</span>
+            <span class="label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="./applicant-applications.php">
+            <span class="material-symbols-outlined icon">work</span>
+            <span class="label">My Applications</span>
+          </a>
+        </li>
+        <li>
+          <a href="./applicant-job-search.php">
+            <span class="material-symbols-outlined icon">search</span>
+            <span class="label">Job Search</span>
+          </a>
+        </li>
+        <li>
+          <a href="./applicant-profile.php">
+            <span class="material-symbols-outlined icon">id_card</span>
+            <span class="label">My Profile</span>
+          </a>
+        </li>
+        <li>
+          <button onclick="toggleTheme()" class="dark-mode-toggle">
+            <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+            <span id="themeLabel">Dark Mode</span>
+          </button>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <a href="../../auth/functions/logout.php" class="log-out-btn">
+            <span class="material-symbols-outlined icon">logout</span>
+            <span class="label">Log Out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
   </aside>
 
   <main class="main-content">
@@ -724,7 +731,7 @@ require_once '../Functions/getDataDisplay.php';
           </p>
           <div class="form-grid">
             <div class="form-group">
-              
+
               <table>
                 <thead>
                   <tr>
@@ -736,27 +743,27 @@ require_once '../Functions/getDataDisplay.php';
                   </tr>
                 </thead>
                 <tbody>
-                  <?php for($i = 0; $i < 3; $i++): ?>
-                  <tr>
-                    <td><input type="text" name="company<?= $i+1 ?>" value="<?= htmlspecialchars($work_experience[$i]['company_name'] ?? '') ?>"></td>
-                    <td><input type="text" name="companyAddress<?= $i+1 ?>" value="<?= htmlspecialchars($work_experience[$i]['company_address'] ?? '') ?>"></td>
-                    <td><input type="text" name="position<?= $i+1 ?>" value="<?= htmlspecialchars($work_experience[$i]['position'] ?? '') ?>"></td>
-                    <td><input type="number" name="months<?= $i+1 ?>" value="<?= htmlspecialchars($work_experience[$i]['months_worked'] ?? '') ?>"></td>
-                    <td>
-                      <select name="status<?= $i+1 ?>">
-                        <option value="">Select Status</option>
-                        <option value="permanent" <?= (($work_experience[$i]['status'] ?? '') == 'permanent') ? 'selected' : '' ?>>Permanent</option>
-                        <option value="contractual" <?= (($work_experience[$i]['status'] ?? '') == 'contractual') ? 'selected' : '' ?>>Contractual</option>
-                        <option value="part-time" <?= (($work_experience[$i]['status'] ?? '') == 'part-time') ? 'selected' : '' ?>>Part-time</option>
-                        <option value="probationary" <?= (($work_experience[$i]['status'] ?? '') == 'probationary') ? 'selected' : '' ?>>Probationary</option>
-                      </select>
-                    </td>
-                  </tr>
-                  
+                  <?php for ($i = 0; $i < 3; $i++): ?>
+                    <tr>
+                      <td><input type="text" name="company<?= $i + 1 ?>" value="<?= htmlspecialchars($work_experience[$i]['company_name'] ?? '') ?>"></td>
+                      <td><input type="text" name="companyAddress<?= $i + 1 ?>" value="<?= htmlspecialchars($work_experience[$i]['company_address'] ?? '') ?>"></td>
+                      <td><input type="text" name="position<?= $i + 1 ?>" value="<?= htmlspecialchars($work_experience[$i]['position'] ?? '') ?>"></td>
+                      <td><input type="number" name="months<?= $i + 1 ?>" value="<?= htmlspecialchars($work_experience[$i]['months_worked'] ?? '') ?>"></td>
+                      <td>
+                        <select name="status<?= $i + 1 ?>">
+                          <option value="">Select Status</option>
+                          <option value="permanent" <?= (($work_experience[$i]['status'] ?? '') == 'permanent') ? 'selected' : '' ?>>Permanent</option>
+                          <option value="contractual" <?= (($work_experience[$i]['status'] ?? '') == 'contractual') ? 'selected' : '' ?>>Contractual</option>
+                          <option value="part-time" <?= (($work_experience[$i]['status'] ?? '') == 'part-time') ? 'selected' : '' ?>>Part-time</option>
+                          <option value="probationary" <?= (($work_experience[$i]['status'] ?? '') == 'probationary') ? 'selected' : '' ?>>Probationary</option>
+                        </select>
+                      </td>
+                    </tr>
+
                   <?php endfor; ?>
                 </tbody>
               </table>
-              
+
             </div>
           </div>
         </div>
@@ -1077,7 +1084,7 @@ require_once '../Functions/getDataDisplay.php';
     const linkData = <?php echo $docsLinkJson; ?>;
     const employmentData = <?php echo $employmentJson; ?>;
     const joblngData = <?php echo $joblngJson; ?>;
-    
+
     document.addEventListener('DOMContentLoaded', function() {
 
       if (accountData) {
@@ -1096,41 +1103,41 @@ require_once '../Functions/getDataDisplay.php';
         document.getElementById('height').value = profileData.height || '';
         document.getElementById('tin').value = profileData.tin || '';
         document.getElementById('religion').value = profileData.religion || '';
-        
+
       }
 
       if (profileData.in_school) {
         const checkbox = document.getElementById(`inSchool-${profileData.in_school}`);
         if (checkbox) checkbox.checked = true;
       }
-        const levels = {
-        elementary: ['elementaryCourse','elementaryYear','elementaryLevel','elementaryLastYear'],
-        secondary: ['secondaryType','secondaryCourse','secondaryYear','secondaryLevel','secondaryLastYear'],
-        tertiary: ['tertiaryCourse','tertiaryYear','tertiaryLevel','tertiaryLastYear'],
-        grad_studies: ['gradStudiesCourse','gradStudiesYear','gradStudiesLevel','gradStudiesLastYear']
+      const levels = {
+        elementary: ['elementaryCourse', 'elementaryYear', 'elementaryLevel', 'elementaryLastYear'],
+        secondary: ['secondaryType', 'secondaryCourse', 'secondaryYear', 'secondaryLevel', 'secondaryLastYear'],
+        tertiary: ['tertiaryCourse', 'tertiaryYear', 'tertiaryLevel', 'tertiaryLastYear'],
+        grad_studies: ['gradStudiesCourse', 'gradStudiesYear', 'gradStudiesLevel', 'gradStudiesLastYear']
       }
 
       for (const [level, fields] of Object.entries(levels)) {
-          fields.forEach(name => {
-              const input = document.querySelector(`[name="${name}"]`);
-              if (!input) return;
-              let profileKey = name.replace(/([A-Z])/g, '_$1').toLowerCase(); 
-              if (profileData[profileKey]) input.value = profileData[profileKey];
-          });
+        fields.forEach(name => {
+          const input = document.querySelector(`[name="${name}"]`);
+          if (!input) return;
+          let profileKey = name.replace(/([A-Z])/g, '_$1').toLowerCase();
+          if (profileData[profileKey]) input.value = profileData[profileKey];
+        });
       }
       if (profileData.secondary_type === "k12") {
-          const seniorRow = document.getElementById("seniorHighStrandRow");
-          if (seniorRow) seniorRow.style.display = "table-row";
+        const seniorRow = document.getElementById("seniorHighStrandRow");
+        if (seniorRow) seniorRow.style.display = "table-row";
 
-          const seniorInput = document.getElementById("seniorHighStrand");
-          if (seniorInput && profileData.senior_high_strand) seniorInput.value = profileData.senior_high_strand;
-      } 
+        const seniorInput = document.getElementById("seniorHighStrand");
+        if (seniorInput && profileData.senior_high_strand) seniorInput.value = profileData.senior_high_strand;
+      }
 
       if (employmentData) {
         document.querySelector(".employed-checkboxes").style.display = "none";
         document.querySelector(".self-employed-checkboxes").style.display = "none";
         document.querySelector(".unemployed-checkboxes").style.display = "none";
-        
+
         if (employmentData.employment_status === "Employed") {
           document.getElementById("employed").checked = true;
           document.querySelector(".employed-checkboxes").style.display = "grid";
@@ -1179,8 +1186,8 @@ require_once '../Functions/getDataDisplay.php';
                 othersInput.style.display = "block";
                 othersInput.value = otherValue;
               }
-              } else if (reason.toLowerCase().startsWith("terminated-abroad:")) {
-                const abroadCheckbox = document.querySelector(`input[name="unempReason[]"][value="terminated-abroad"]`);
+            } else if (reason.toLowerCase().startsWith("terminated-abroad:")) {
+              const abroadCheckbox = document.querySelector(`input[name="unempReason[]"][value="terminated-abroad"]`);
               const abroadInput = document.querySelector("input[name='otherTerm']");
               const abroadValue = reason.split(":")[1]?.trim() || "";
 
@@ -1197,101 +1204,102 @@ require_once '../Functions/getDataDisplay.php';
           });
         }
 
-      if (employmentData.ofw) {
-        if (employmentData.ofw === "yes") {
-          document.getElementById("ofw-yes").checked = true;
-          document.getElementById("ofw-country-group").style.display = "flex";
+        if (employmentData.ofw) {
+          if (employmentData.ofw === "yes") {
+            document.getElementById("ofw-yes").checked = true;
+            document.getElementById("ofw-country-group").style.display = "flex";
 
-          if (employmentData.ofw_country) {
-            document.getElementById("ofwCountry").value = employmentData.ofw_country;
+            if (employmentData.ofw_country) {
+              document.getElementById("ofwCountry").value = employmentData.ofw_country;
+            }
+          } else if (employmentData.ofw === "no") {
+            document.getElementById("ofw-no").checked = true;
           }
-        } else if (employmentData.ofw === "no") {
-          document.getElementById("ofw-no").checked = true;
+        }
+        if (employmentData.former_ofw) {
+          if (employmentData.former_ofw === "yes") {
+            document.getElementById("former-ofw-yes").checked = true;
+            document.getElementById("former-ofw-country-group").style.display = "flex";
+            document.getElementById("return-date-group").style.display = "flex";
+
+            if (employmentData.former_ofw_country) {
+              document.getElementById("formerOfwCountry").value = employmentData.former_ofw_country;
+            }
+            if (employmentData.return_date) {
+              const returnDate = employmentData.return_date.substring(0, 7);
+              document.getElementById("returnDate").value = returnDate;
+            }
+          } else if (employmentData.former_ofw === "no") {
+            document.getElementById("former-ofw-no").checked = true;
+          }
         }
       }
-      if (employmentData.former_ofw) {
-        if (employmentData.former_ofw === "yes") {
-          document.getElementById("former-ofw-yes").checked = true;
-          document.getElementById("former-ofw-country-group").style.display = "flex";
-          document.getElementById("return-date-group").style.display = "flex";
 
-          if (employmentData.former_ofw_country) {
-            document.getElementById("formerOfwCountry").value = employmentData.former_ofw_country;
-          }
-          if (employmentData.return_date) {
-            const returnDate = employmentData.return_date.substring(0, 7);
-            document.getElementById("returnDate").value = returnDate;
-          }
-        } else if (employmentData.former_ofw === "no") {
-          document.getElementById("former-ofw-no").checked = true;
-        }
-      }
-      }
-      
       if (joblngData) {
-       if (joblngData.pref_employment_types) {
-        let employmentTypes = joblngData.pref_employment_types;
-        if (typeof employmentTypes === "string") {
+        if (joblngData.pref_employment_types) {
+          let employmentTypes = joblngData.pref_employment_types;
+          if (typeof employmentTypes === "string") {
             employmentTypes = JSON.parse(employmentTypes);
+          }
+          const employmentTypeRadio = document.querySelector(`input[name="prefEmploymentType"][value="${employmentTypes[0] || ''}"]`);
+          if (employmentTypeRadio) employmentTypeRadio.checked = true;
         }
-        const employmentTypeRadio = document.querySelector(`input[name="prefEmploymentType"][value="${employmentTypes[0] || ''}"]`);
-        if (employmentTypeRadio) employmentTypeRadio.checked = true;
-        }
+
         function assignArrayValues(inputPrefix, valuesStr) {
-            if (!valuesStr) return;
-            let values = valuesStr;
-            if (typeof valuesStr === "string") values = JSON.parse(valuesStr);
-            values.forEach((val, index) => {
-                const input = document.getElementById(`${inputPrefix}${index + 1}`);
-                if (input) input.value = val;
-            });
+          if (!valuesStr) return;
+          let values = valuesStr;
+          if (typeof valuesStr === "string") values = JSON.parse(valuesStr);
+          values.forEach((val, index) => {
+            const input = document.getElementById(`${inputPrefix}${index + 1}`);
+            if (input) input.value = val;
+          });
         }
 
         assignArrayValues("prefOccupation", joblngData.pref_occupations);
         assignArrayValues("prefLocal", joblngData.pref_local_work_locations);
         assignArrayValues("prefOverseas", joblngData.pref_overseas_work_locations);
 
-      if (!joblngData || !joblngData.language_proficiency) return;
+        if (!joblngData || !joblngData.language_proficiency) return;
 
-      let langs = joblngData.language_proficiency;
-      if (typeof langs === "string") langs = JSON.parse(langs);
+        let langs = joblngData.language_proficiency;
+        if (typeof langs === "string") langs = JSON.parse(langs);
 
-      for (const [lang, prof] of Object.entries(langs)) {
-          ['read','write','speak','understand'].forEach(skill => {
-              const checkbox = document.getElementById(`${lang}${skill.charAt(0).toUpperCase() + skill.slice(1)}`);
-              if (checkbox) checkbox.checked = prof[skill] === 1;
+        for (const [lang, prof] of Object.entries(langs)) {
+          ['read', 'write', 'speak', 'understand'].forEach(skill => {
+            const checkbox = document.getElementById(`${lang}${skill.charAt(0).toUpperCase() + skill.slice(1)}`);
+            if (checkbox) checkbox.checked = prof[skill] === 1;
           });
 
           if (lang === 'other' && prof.name) {
-              const otherInput = document.getElementById('otherLanguage');
-              if (otherInput) otherInput.value = prof.name.trim();
+            const otherInput = document.getElementById('otherLanguage');
+            if (otherInput) otherInput.value = prof.name.trim();
           }
+        }
       }
-    }
 
       if (linkData && linkData.length > 0) {
-       const links = linkData[0];
+        const links = linkData[0];
         document.getElementById('portfolioLink').value = links.port_link || '';
         document.getElementById('gdriveLink').value = links.drive_link || '';
         document.getElementById('otherLinks').value = links.other_link || '';
       }
 
       if (profileData.disability) {
-      let disabilities = profileData.disability.split(',').map(d => d.trim());
+        let disabilities = profileData.disability.split(',').map(d => d.trim());
 
         disabilities.forEach(function(dis, index) {
           if (["Visual", "Speech", "Mental", "Hearing", "Physical"].includes(dis)) {
-              const checkbox = document.querySelector('input[name="disability[]"][value="' + dis + '"]');
-              if (checkbox) checkbox.checked = true;
+            const checkbox = document.querySelector('input[name="disability[]"][value="' + dis + '"]');
+            if (checkbox) checkbox.checked = true;
           } else if (dis === "Others") {
-              const othersCheckbox = document.querySelector('input[name="disability[]"][value="Others"]');
-              const othersInput = document.getElementById("others");
+            const othersCheckbox = document.querySelector('input[name="disability[]"][value="Others"]');
+            const othersInput = document.getElementById("others");
 
-              if (othersCheckbox) othersCheckbox.checked = true;
-              const othersText = disabilities[index + 1] || "";
-              if (othersInput) othersInput.value = othersText.trim();
+            if (othersCheckbox) othersCheckbox.checked = true;
+            const othersText = disabilities[index + 1] || "";
+            if (othersInput) othersInput.value = othersText.trim();
           }
-      });
+        });
       }
 
       if (contactData) {
@@ -1314,18 +1322,18 @@ require_once '../Functions/getDataDisplay.php';
         });
       }
       if (trainingData && trainingData.length > 0) {
-      trainingData.forEach((training, index) => {
-      const i = index + 1;
-      if (document.querySelector(`[name="trainingCourse${i}"]`)) {
-        document.querySelector(`[name="trainingCourse${i}"]`).value = training.training_course || '';
-        document.querySelector(`[name="trainingHours${i}"]`).value = training.training_hours || '';
-        document.querySelector(`[name="trainingInstitution${i}"]`).value = training.training_institution || '';
-        document.querySelector(`[name="trainingSkills${i}"]`).value = training.training_skills || '';
-        document.querySelector(`[name="trainingCertificates${i}"]`).value = training.training_certificates || '';
+        trainingData.forEach((training, index) => {
+          const i = index + 1;
+          if (document.querySelector(`[name="trainingCourse${i}"]`)) {
+            document.querySelector(`[name="trainingCourse${i}"]`).value = training.training_course || '';
+            document.querySelector(`[name="trainingHours${i}"]`).value = training.training_hours || '';
+            document.querySelector(`[name="trainingInstitution${i}"]`).value = training.training_institution || '';
+            document.querySelector(`[name="trainingSkills${i}"]`).value = training.training_skills || '';
+            document.querySelector(`[name="trainingCertificates${i}"]`).value = training.training_certificates || '';
+          }
+        });
       }
     });
-  }
-  });
   </script>
   <script>
     const savedSkills = <?php echo json_encode($skills); ?>;
@@ -1333,20 +1341,20 @@ require_once '../Functions/getDataDisplay.php';
 
     document.addEventListener("DOMContentLoaded", () => {
       savedSkills.forEach(skill => {
-    const checkbox = document.querySelector('input[name="skills[]"][value="' + skill + '"]');
-    if (checkbox) checkbox.checked = true;
-    });
+        const checkbox = document.querySelector('input[name="skills[]"][value="' + skill + '"]');
+        if (checkbox) checkbox.checked = true;
+      });
       if (savedOtherSkill && savedOtherSkill.trim() !== "") {
-      const othersCheckbox = document.querySelector('input[name="skills[]"][value="others"]');
-      const othersInput = document.getElementById("skill-other-specify");
+        const othersCheckbox = document.querySelector('input[name="skills[]"][value="others"]');
+        const othersInput = document.getElementById("skill-other-specify");
 
-      if (othersCheckbox) othersCheckbox.checked = true;
-      if (othersInput) {
-        othersInput.style.display = "block";
-        othersInput.value = savedOtherSkill;
+        if (othersCheckbox) othersCheckbox.checked = true;
+        if (othersInput) {
+          othersInput.style.display = "block";
+          othersInput.value = savedOtherSkill;
+        }
       }
-    }
-  });
+    });
   </script>
   <script>
     document.getElementById('profileForm').addEventListener('submit', async function(e) {
@@ -1386,9 +1394,9 @@ require_once '../Functions/getDataDisplay.php';
     });
 
     document.getElementById("skill-others").addEventListener("change", function() {
-  const otherInput = document.getElementById("skill-other-specify");
-  otherInput.style.display = this.checked ? "inline-block" : "none";
-  });
+      const otherInput = document.getElementById("skill-other-specify");
+      otherInput.style.display = this.checked ? "inline-block" : "none";
+    });
   </script>
   <script src="../js/responsive.js"></script>
   <script src="../js/dark-mode.js"></script>
