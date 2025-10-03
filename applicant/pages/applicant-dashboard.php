@@ -101,7 +101,7 @@ require_once '../Functions/getinfo.php';
           <div class="stat-header">
             <h3 class="stat-title">Applications</h3>
             <div class="stat-icon bg-primary-light">
-              <i class="fas fa-building"></i>
+              <span class="material-symbols-outlined">demography</span>
             </div>
           </div>
           <div class="stat-value">10</div>
@@ -111,8 +111,10 @@ require_once '../Functions/getinfo.php';
         <div class="stat-card">
           <div class="stat-header">
             <h3 class="stat-title">Interviews</h3>
-            <div class="stat-icon bg-success-light">
-              <i class="fas fa-user-graduate"></i>
+            <div class="stat-icon bg-purple-light">
+              <span class="material-symbols-outlined">
+                frame_person_mic
+              </span>
             </div>
           </div>
           <div class="stat-value">2</div>
@@ -123,7 +125,9 @@ require_once '../Functions/getinfo.php';
           <div class="stat-header">
             <h3 class="stat-title">Referred</h3>
             <div class="stat-icon bg-warning-light">
-              <i class="fas fa-briefcase"></i>
+              <span class="material-symbols-outlined">
+                pending_actions
+              </span>
             </div>
           </div>
           <div class="stat-value">4</div>
@@ -133,8 +137,10 @@ require_once '../Functions/getinfo.php';
         <div class="stat-card">
           <div class="stat-header">
             <h3 class="stat-title">Hired</h3>
-            <div class="stat-icon bg-danger-light">
-              <i class="fas fa-tasks"></i>
+            <div class="stat-icon bg-success-light">
+              <span class="material-symbols-outlined">
+                check_circle
+              </span>
             </div>
           </div>
           <div class="stat-value">1</div>
@@ -175,7 +181,12 @@ require_once '../Functions/getinfo.php';
 
     <div class="job-application-status">
       <div class="job-application-header">
-        <h2>Recent Job Applications</h2> <a href="./applicant-applications.php" class="view-all">View All &RightArrow;</a>
+        <h2>Recent Job Applications</h2>
+        <a href="./applicant-applications.php" class="view-all">
+          <span class="material-symbols-outlined">
+            open_in_new
+          </span>
+        </a>
       </div>
       <div class="application-cards">
         <div class="application-item">

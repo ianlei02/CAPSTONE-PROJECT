@@ -504,7 +504,7 @@ section.news {
 }
 
 /* Responsive Styles */
-@media (min-width: 801px){
+@media (min-width: 768px){
  aside{
   display:none;
  }
@@ -512,7 +512,7 @@ section.news {
   display: none;
  }
 }
-@media (max-width: 800px) {
+@media (max-width: 767px) {
   body {
     overflow-y: auto;
     overflow-x: hidden;
@@ -551,37 +551,42 @@ section.news {
     margin-right: 0.5rem;
   }
   aside{
-    width: 300px;
+    width: 100%;
     position: fixed;
     top: 70px;
     right: 0;
-    height: 100vh;
-    height: 100dvh;
-    /* width: auto; */
-    padding: 1rem;
+    height: max-content;
     transition: transform 0.3s ease-in;
     z-index: 100;
-    background-color: rgba(255, 255, 255, 0.185);
-    backdrop-filter: blur(50px);
-    transform: translateX(300px);
+    background-color: #fafafa;
+    /* background-color: rgba(255, 255, 255, 0.185); */
+    /* backdrop-filter: blur(50px); */
+    transform: translateY(-400px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   aside .navbar-links {
     list-style: none;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
+
+    width:100%;
     li{
-      width:100%;
+      text-align: center;
+      border-bottom: 1px solid #5c5c5c !important;
+      padding: 0.75rem 0;
     }
     .nav-link {
       text-decoration: none;
       color: #000;
       font-size: 1rem;
-      border-bottom: 1px solid #333;
       width: 100% !important;
-      border-radius: 1rem;
-      padding: 0.5rem;
-      background-color: red;
+      /* padding: 1.5rem; */
+      /* border: 0; */
+      text-align: center;
+      /* background-color: red; */
     }
     .nav-link:hover {
       color: #007bff;
@@ -589,6 +594,7 @@ section.news {
     .auth-buttons {
       display: flex;
       gap: 10px;
+      border: 0;
     }
     .btn-login,
     .btn-signup {
@@ -741,4 +747,11 @@ section.news {
   height: auto;
   margin-bottom: 15px;
   border-radius: 8px;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  color: #000 !important;   /* force black arrow */
+  font-size: 24px !important; /* make it larger if needed */
+  opacity: 1 !important;     /* make sure visible */
 }
