@@ -92,6 +92,11 @@
       background: rgba(239, 68, 68, 0.1);
       color: var(--danger);
     }
+
+    .bg-purple-light {
+      background: rgba(239, 68, 239, 0.1);
+      color: rgb(185, 0, 185);
+    }
   }
 }
 .job-application-status {
