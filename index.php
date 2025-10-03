@@ -111,48 +111,48 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
         </section>
 
         <section class="news">
-        <div class="section-header">
-            <h2><i class="fas fa-bullhorn"></i> Announcements & Updates</h2>
-        </div>
-
-        <div class="swiper newsSwiper">
-            <div class="swiper-wrapper">
-                <?php while ($news = $announcements->fetch_assoc()): ?>
-                    <div class="swiper-slide">
-                        <article class="news-card">
-                            <img src="admin/<?= $news['image'] ?>" 
-                            alt="<?= htmlspecialchars($news['title']); ?>" 
-                            class="news-image">
-                            <div class="news-content">
-                                <h3 class="news-title"><?= htmlspecialchars($news['title']); ?></h3>
-                                <div class="news-date">
-                                    <i class="far fa-calendar-alt"></i> <?= htmlspecialchars($news['publish_date']); ?>
-                                </div>
-                                <p class="news-excerpt">
-                                    <?= htmlspecialchars($news['excerpt']); ?>
-                                </p>
-                                <a href="#" 
-                                class="news-link readMoreBtn"
-                                data-title="<?= htmlspecialchars($news['title']); ?>"
-                                data-date="<?= htmlspecialchars($news['publish_date']); ?>"
-                                data-image="<?= $news['image'] ? '/admin/'. $news['image'] : 'https://via.placeholder.com/600x400'; ?>"
-                                data-content="<?= htmlspecialchars($news['content']); ?>">
-                                Read More <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </article>
-                    </div>
-                <?php endwhile; ?>
+            <div class="section-header">
+                <h2><i class="fas fa-bullhorn"></i> Announcements & Updates</h2>
             </div>
 
-            <!-- Navigation buttons -->
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
+            <div class="swiper newsSwiper">
+                <div class="swiper-wrapper">
+                    <?php while ($news = $announcements->fetch_assoc()): ?>
+                        <div class="swiper-slide">
+                            <article class="news-card">
+                                <img src="admin/<?= $news['image'] ?>"
+                                    alt="<?= htmlspecialchars($news['title']); ?>"
+                                    class="news-image">
+                                <div class="news-content">
+                                    <h3 class="news-title"><?= htmlspecialchars($news['title']); ?></h3>
+                                    <div class="news-date">
+                                        <i class="far fa-calendar-alt"></i> <?= htmlspecialchars($news['publish_date']); ?>
+                                    </div>
+                                    <p class="news-excerpt">
+                                        <?= htmlspecialchars($news['excerpt']); ?>
+                                    </p>
+                                    <a href="#"
+                                        class="news-link readMoreBtn"
+                                        data-title="<?= htmlspecialchars($news['title']); ?>"
+                                        data-date="<?= htmlspecialchars($news['publish_date']); ?>"
+                                        data-image="<?= $news['image'] ? '/admin/' . $news['image'] : 'https://via.placeholder.com/600x400'; ?>"
+                                        data-content="<?= htmlspecialchars($news['content']); ?>">
+                                        Read More <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </article>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
 
-            <!-- Pagination -->
-            <div class="swiper-pagination"></div>
-        </div>
-    </section>
+                <!-- Navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
 
         <section class="features">
             <div class="container">
@@ -224,28 +224,27 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
             </div>
         </section>
 
-        <section class="cta" ">
+        <section class="cta">
             <div class=" container" style="width: auto;">
-            <h2>Ready to Take the Next Step?</h2>
-            <p>Join thousands of professionals and companies who found their perfect match through PESO</p>
-            <div style="display: flex; justify-content: center; gap: 20px;">
-                <button class="btn btn-outline" style="background-color: transparent; border-color: var(--light-clr-700); color: var(--light-clr-700);" onclick="window.location.href='login-signup.php'">I'm Hiring</button>
-                <button class="btn btn-primary" style="background-color: var(--light-clr-700); color: var(--primary-blue-color);" onclick="window.location.href='login-signup.php'">Find Jobs</button>
-            </div>
+                <h2>Ready to Take the Next Step?</h2>
+                <p>Join thousands of professionals and companies who found their perfect match through PESO</p>
+                <div style="display: flex; justify-content: center; gap: 20px;">
+                    <button class="btn btn-outline" style="background-color: transparent; border-color: var(--light-clr-700); color: var(--light-clr-700);" onclick="window.location.href='login-signup.php'">I'm Hiring</button>
+                    <button class="btn btn-primary" style="background-color: var(--light-clr-700); color: var(--primary-blue-color);" onclick="window.location.href='login-signup.php'">Find Jobs</button>
+                </div>
 
             </div>
         </section>
-                    <!-- News Details Modal -->
-<div id="customNewsModal" class="custom-modal">
-  <div class="custom-modal-content">
-    <span class="custom-modal-close">&times;</span>
-    <h2 id="newsModalTitle"></h2>
-    <p id="newsModalDate" class="text-muted"></p>
-    <img id="newsModalImage" src="" alt="" class="modal-img">
-    <div id="newsModalContent"></div>
-  </div>
-</div>
-
+        <!-- News Details Modal -->
+        <div id="customNewsModal" class="custom-modal">
+            <div class="custom-modal-content">
+                <span class="custom-modal-close">&times;</span>
+                <h2 id="newsModalTitle"></h2>
+                <p id="newsModalDate" class="text-muted"></p>
+                <img id="newsModalImage" src="" alt="" class="modal-img">
+                <div id="newsModalContent"></div>
+            </div>
+        </div>
 
     </main>
     <footer class="footer">
@@ -304,12 +303,13 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
     </script> -->
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    
+
     <script>
         const swiper = new Swiper('.newsSwiper', {
             slidesPerView: 1,
             spaceBetween: 10,
             loop: true,
+            loopedSlides: 4,
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
@@ -338,26 +338,28 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
         });
     </script>
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const modal = document.getElementById("customNewsModal");
+            const closeBtn = document.querySelector(".custom-modal-close");
 
-    document.addEventListener("DOMContentLoaded", function () {
-    const modal = document.getElementById("customNewsModal");
-    const closeBtn = document.querySelector(".custom-modal-close");
+            document.querySelectorAll(".readMoreBtn").forEach(btn => {
+                btn.addEventListener("click", function(e) {
+                    e.preventDefault();
 
-    document.querySelectorAll(".readMoreBtn").forEach(btn => {
-        btn.addEventListener("click", function (e) {
-        e.preventDefault();
-
-        document.getElementById("newsModalTitle").textContent = this.dataset.title;
-        document.getElementById("newsModalDate").textContent = "📅 " + this.dataset.date;
-        document.getElementById("newsModalImage").src = this.dataset.image;
-        document.getElementById("newsModalContent").innerHTML = this.dataset.content;
-        modal.style.display = "block";
+                    document.getElementById("newsModalTitle").textContent = this.dataset.title;
+                    document.getElementById("newsModalDate").textContent = "📅 " + this.dataset.date;
+                    document.getElementById("newsModalImage").src = this.dataset.image;
+                    document.getElementById("newsModalContent").innerHTML = this.dataset.content;
+                    modal.style.display = "block";
+                });
+            });
+            closeBtn.onclick = () => modal.style.display = "none";
+            window.onclick = (e) => {
+                if (e.target == modal) modal.style.display = "none";
+            };
         });
-    });
-    closeBtn.onclick = () => modal.style.display = "none";
-    window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; };
-    });
-                                                            function sidebarToggle() {
+
+        function sidebarToggle() {
             const aside = document.querySelector('aside');
             aside.classList.toggle('show')
         }

@@ -117,15 +117,15 @@ if (isset($_SESSION['user_id'])) {
   </aside>
 
   <main class="main-content">
-    <div class="job-application-header">
+    <!-- <div class="job-application-header">
       <h2>Job Applications</h2>
-    </div>
+    </div> -->
     <div class="job-application-status">
-      <div class="application-cards">
+       <div class="application-cards">
         <div class="application-item">
           <div class="application-info">
             <div class="application-logo">
-              <img src="../../landing/assets/images/company-logos/Jollibee.png" alt="company-logo">
+              <img src="../../public/images/company-logos/Jollibee.png" alt="company-logo">
             </div>
             <div class="application-details">
               <h3 class="application-title">Waiter</h3>
@@ -137,14 +137,14 @@ if (isset($_SESSION['user_id'])) {
             </div>
           </div>
           <div class="status-action">
-            <span class="application-status status-scheduled">Interview Scheduled</span>
-            <button class="view-btn">View</button>
+            <span class="application-status hired">Hired </span>
+            <button>View</button>
           </div>
         </div>
         <div class="application-item">
           <div class="application-info">
             <div class="application-logo">
-              <img src="../../landing/assets/images/company-logos/7-eleven_logo.svg.png" alt="company-logo">
+              <img src="../../public/images/company-logos/7-eleven_logo.svg.png" alt="company-logo">
             </div>
             <div class="application-details">
               <h3 class="application-title">Cashier</h3>
@@ -156,18 +156,18 @@ if (isset($_SESSION['user_id'])) {
             </div>
           </div>
           <div class="status-action">
-            <span class="application-status status-scheduled">Interview Scheduled</span>
-            <button class="view-btn">View</button>
+            <span class="application-status pending">Pending</span>
+            <button>View</button>
           </div>
         </div>
         <div class="application-item">
           <div class="application-info">
             <div class="application-logo">
-              <img src="../../landing/assets/images/company-logos/mang-inasal-logo-png_seeklogo-543182.png" alt="company-logo">
+              <img src="../../public/images/company-logos/Chowking_logo.svg.png" alt="company-logo">
             </div>
             <div class="application-details">
-              <h3 class="application-title">Janitor</h3>
-              <div class="application-company">Mang Inasal</div>
+              <h3 class="application-title">Cashier</h3>
+              <div class="application-company">Chowking</div>
               <div class="application-location-date">
                 <span>San Ildefonso, Bulacan</span>
                 <span>9/20/2025</span>
@@ -175,8 +175,27 @@ if (isset($_SESSION['user_id'])) {
             </div>
           </div>
           <div class="status-action">
-            <span class="application-status status-scheduled">Interview Scheduled</span>
-            <button class="view-btn">View</button>
+            <span class="application-status interview">Interview</span>
+            <button>View</button>
+          </div>
+        </div>
+        <div class="application-item">
+          <div class="application-info">
+            <div class="application-logo">
+              <img src="../../public/images/company-logos/kfc.png" alt="company-logo">
+            </div>
+            <div class="application-details">
+              <h3 class="application-title">Janitor</h3>
+              <div class="application-company">KFC</div>
+              <div class="application-location-date">
+                <span>San Ildefonso, Bulacan</span>
+                <span>9/20/2025</span>
+              </div>
+            </div>
+          </div>
+          <div class="status-action">
+            <span class="application-status rejected ">Rejected</span>
+            <button>View</button>
           </div>
         </div>
       </div>

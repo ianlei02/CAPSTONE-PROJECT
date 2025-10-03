@@ -45,7 +45,7 @@ $sql = "SELECT
         FROM job_postings jp
         INNER JOIN employer_company_info ec 
             ON jp.employer_id = ec.employer_id
-        WHERE jp.status = 'active'
+        WHERE jp.status = 'Active'
         ORDER BY jp.created_at DESC";
 
 $result = $conn->query($sql);
@@ -216,24 +216,27 @@ $result = $conn->query($sql);
             <input type="hidden" name="job_id" id="modalJobId">
             <div class="section">
               <h3 style="color: var(--primary-blue-color); margin-bottom: 20px;">
-                Personal Information
+                Job requirements
               </h3>
+              <div class="job-description">
+                HADUKEN SKILLS
+              </div>
             </div>
 
             <div class="section">
-              <h3
+              <!-- <h3
                 style="
                       color: var(--primary-blue-color);
                       margin-bottom: 20px;
                     ">
                 Application Details
-              </h3>
+              </h3> -->
 
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label>Cover Letter</label>
                 <textarea name="cover_letter"
                   placeholder="Tell the employer why you're a good fit for this position..."></textarea>
-              </div>
+              </div> -->
               <div class="form-group">
                 <label>How did you hear about this position?</label>
                 <select name="referral_source">
@@ -245,10 +248,7 @@ $result = $conn->query($sql);
                   <option>Other</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label>Availability to Start</label>
-                <input type="date" name="availability_date" />
-              </div>
+             
             </div>
 
             <div class="section">

@@ -97,8 +97,8 @@ require_once '../Functions/getDataDisplay.php';
   <main class="main-content">
     <div class="profile-container">
       <form action="../Functions/profile_update.php" method="POST" id="profileForm" enctype="multipart/form-data">
-        <div class="section"">
-          <button class=" btn btn-outline" id="editBtn">Edit</button>
+        <div class="section">
+          <button class="btn btn-outline" id="editBtn">Edit</button>
           <div class="profile-header">
             <label
               class="profile-pic-container"
@@ -934,9 +934,9 @@ require_once '../Functions/getDataDisplay.php';
 
         <div class="form-actions">
           <button type="reset" class="btn btn-danger">Reset</button>
-          <button type="submit" class="btn btn-outline" id="updateBtn">
+          <!-- <button type="submit" class="btn btn-outline" id="updateBtn">
             Update Profile
-          </button>
+          </button> -->
           <button type="submit" class="btn btn-primary" id="saveBtnn">
             Save Profile
           </button>

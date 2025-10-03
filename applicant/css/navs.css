@@ -408,12 +408,12 @@ body {
   bottom: 20px;
   right: 20px;
 }
-@media (min-width: 801px){
+@media (min-width: 768px){
   nav .hamburger{
     display: none;
   }
 }
-@media (max-width: 800px) {
+@media (max-width: 767px) {
   body {
     grid-template-columns: 1fr;
   }
@@ -443,11 +443,19 @@ body {
     overflow: hidden;
   }
   .job-application-status {
-    padding: 0 2rem;
+    padding: 0.5rem;
     display: flex;
     justify-content: center;
     width: auto;
+
+    h2, a{
+      font-size: 1.25rem;
+    }
+    .status-action{
+      flex-direction: column;
+    }
   }
+
   .statistics-container{
     flex-direction: column;
     height: auto;
