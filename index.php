@@ -10,6 +10,9 @@ $sql = "
 ";
 $result = $conn->query($sql);
 $data = $result->fetch_assoc();
+
+$announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date DESC LIMIT 10");
+
 ?>
 
 <!DOCTYPE html>
@@ -108,141 +111,48 @@ $data = $result->fetch_assoc();
         </section>
 
         <section class="news">
-            <div class="section-header">
-                <h2><i class="fas fa-bullhorn"></i> Announcements & Updates</h2>
-            </div>
-            <!-- Slider container -->
-            <div class="swiper newsSwiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <article class="news-card">
-                            <img src="" alt="Job Fair" class="news-image">
-                            <div class="news-content">
-                                <h3 class="news-title">Annual Job Fair 2023</h3>
-                                <div class="news-date">
-                                    <i class="far fa-calendar-alt"></i> October 15, 2023
-                                </div>
-                                <p class="news-excerpt">
-                                    Join us for the biggest job fair of the year with over 100 employers looking to hire local talent.
-                                </p>
-                                <a href="#" class="news-link">
-                                    Read More <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="swiper-slide">
-                        <article class="news-card">
-                            <img src="" alt="Workshop" class="news-image">
-                            <div class="news-content">
-                                <h3 class="news-title">Resume Writing Workshop</h3>
-                                <div class="news-date">
-                                    <i class="far fa-calendar-alt"></i> November 2, 2023
-                                </div>
-                                <p class="news-excerpt">
-                                    Learn professional resume writing techniques from industry experts in this free workshop.
-                                </p>
-                                <a href="#" class="news-link">
-                                    Read More <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="swiper-slide">
-                        <article class="news-card">
-                            <img src="https://source.unsplash.com/random/600x400/?interview" alt="Interview" class="news-image">
-                            <div class="news-content">
-                                <h3 class="news-title">New Hiring Initiatives</h3>
-                                <div class="news-date">
-                                    <i class="far fa-calendar-alt"></i> September 28, 2023
-                                </div>
-                                <p class="news-excerpt">
-                                    Municipal government announces new programs to connect job seekers with local businesses.
-                                </p>
-                                <a href="#" class="news-link">
-                                    Read More <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="swiper-slide">
-                        <article class="news-card">
-                            <img src="" alt="Training" class="news-image">
-                            <div class="news-content">
-                                <h3 class="news-title">Skills Development Program</h3>
-                                <div class="news-date">
-                                    <i class="far fa-calendar-alt"></i> October 5, 2023
-                                </div>
-                                <p class="news-excerpt">
-                                    Free technical training programs now available for unemployed youth and career changers.
-                                </p>
-                                <a href="#" class="news-link">
-                                    Read More <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="swiper-slide">
-                        <article class="news-card">
-                            <img src="" alt="Business" class="news-image">
-                            <div class="news-content">
-                                <h3 class="news-title">Employer Networking Event</h3>
-                                <div class="news-date">
-                                    <i class="far fa-calendar-alt"></i> November 15, 2023
-                                </div>
-                                <p class="news-excerpt">
-                                    Connect with local employers and learn about current job openings in our monthly networking event.
-                                </p>
-                                <a href="#" class="news-link">
-                                    Read More <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="swiper-slide">
-                        <article class="news-card">
-                            <img src="" alt="Training" class="news-image">
-                            <div class="news-content">
-                                <h3 class="news-title">Skills Development Program</h3>
-                                <div class="news-date">
-                                    <i class="far fa-calendar-alt"></i> October 5, 2023
-                                </div>
-                                <p class="news-excerpt">
-                                    Free technical training programs now available for unemployed youth and career changers.
-                                </p>
-                                <a href="#" class="news-link">
-                                    Read More <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="swiper-slide">
-                        <article class="news-card">
-                            <img src="" alt="Business" class="news-image">
-                            <div class="news-content">
-                                <h3 class="news-title">Employer Networking Event</h3>
-                                <div class="news-date">
-                                    <i class="far fa-calendar-alt"></i> November 15, 2023
-                                </div>
-                                <p class="news-excerpt">
-                                    Connect with local employers and learn about current job openings in our monthly networking event.
-                                </p>
-                                <a href="#" class="news-link">
-                                    Read More <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </article>
-                    </div>
-                </div>
+        <div class="section-header">
+            <h2><i class="fas fa-bullhorn"></i> Announcements & Updates</h2>
+        </div>
 
-                <!-- Navigation buttons -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-
-                <!-- Pagination bullets -->
-                <div class="swiper-pagination"></div>
+        <div class="swiper newsSwiper">
+            <div class="swiper-wrapper">
+                <?php while ($news = $announcements->fetch_assoc()): ?>
+                    <div class="swiper-slide">
+                        <article class="news-card">
+                            <img src="admin/<?= $news['image'] ?>" 
+                            alt="<?= htmlspecialchars($news['title']); ?>" 
+                            class="news-image">
+                            <div class="news-content">
+                                <h3 class="news-title"><?= htmlspecialchars($news['title']); ?></h3>
+                                <div class="news-date">
+                                    <i class="far fa-calendar-alt"></i> <?= htmlspecialchars($news['publish_date']); ?>
+                                </div>
+                                <p class="news-excerpt">
+                                    <?= htmlspecialchars($news['excerpt']); ?>
+                                </p>
+                                <a href="#" 
+                                class="news-link readMoreBtn"
+                                data-title="<?= htmlspecialchars($news['title']); ?>"
+                                data-date="<?= htmlspecialchars($news['publish_date']); ?>"
+                                data-image="<?= $news['image'] ? '/admin/'. $news['image'] : 'https://via.placeholder.com/600x400'; ?>"
+                                data-content="<?= htmlspecialchars($news['content']); ?>">
+                                Read More <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                <?php endwhile; ?>
             </div>
-        </section>
+
+            <!-- Navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+
+            <!-- Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
 
         <section class="features">
             <div class="container">
@@ -325,6 +235,17 @@ $data = $result->fetch_assoc();
 
             </div>
         </section>
+                    <!-- News Details Modal -->
+<div id="customNewsModal" class="custom-modal">
+  <div class="custom-modal-content">
+    <span class="custom-modal-close">&times;</span>
+    <h2 id="newsModalTitle"></h2>
+    <p id="newsModalDate" class="text-muted"></p>
+    <img id="newsModalImage" src="" alt="" class="modal-img">
+    <div id="newsModalContent"></div>
+  </div>
+</div>
+
 
     </main>
     <footer class="footer">
@@ -383,6 +304,7 @@ $data = $result->fetch_assoc();
     </script> -->
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    
     <script>
         const swiper = new Swiper('.newsSwiper', {
             slidesPerView: 1,
@@ -416,12 +338,30 @@ $data = $result->fetch_assoc();
         });
     </script>
     <script>
-        function sidebarToggle() {
+
+    document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("customNewsModal");
+    const closeBtn = document.querySelector(".custom-modal-close");
+
+    document.querySelectorAll(".readMoreBtn").forEach(btn => {
+        btn.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        document.getElementById("newsModalTitle").textContent = this.dataset.title;
+        document.getElementById("newsModalDate").textContent = "📅 " + this.dataset.date;
+        document.getElementById("newsModalImage").src = this.dataset.image;
+        document.getElementById("newsModalContent").innerHTML = this.dataset.content;
+        modal.style.display = "block";
+        });
+    });
+    closeBtn.onclick = () => modal.style.display = "none";
+    window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; };
+    });
+                                                            function sidebarToggle() {
             const aside = document.querySelector('aside');
             aside.classList.toggle('show')
         }
     </script>
-
 </body>
 
 </html>
