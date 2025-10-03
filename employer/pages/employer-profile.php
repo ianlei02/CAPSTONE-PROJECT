@@ -1,4 +1,4 @@
-<?
+<?php
 require '../../auth/functions/check_login.php';
 
 if (!isset($_SESSION['user_id'])) {

@@ -59,58 +59,58 @@ $showApplicants = ($job_id > 0);
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
-    <div class="logo">
-      <div class="logo-icon">
-        <img
-          src="../../landing/assets/images/pesosmb.png"
-          alt="PESO Logo" />
-      </div>
-      <h2 style="font-size: 2.25rem">PESO</h2>
-    </div>
-    <ul class="nav-menu">
-      <li>
-        <a class="nav-item" href="./dashboard.php">
-          <span class="material-symbols-outlined">dashboard</span>
-          <span>Dashboard</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="./employer-table.php">
-          <span class="material-symbols-outlined">apartment</span>
-          <span>Employers</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item active" href="./job-listings.php">
-          <span class="material-symbols-outlined">list_alt</span>
-          <span>Job Listings</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="./new-admin.php">
-          <span class="material-symbols-outlined">groups</span>
-          <span>New Admin</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="./news-upload.php">
-          <span class="material-symbols-outlined">newspaper</span>
-          <span>News</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="../Function/logout.php">
-          <span class="material-symbols-outlined">settings</span>
-          <span>Logout</span>
-        </a>
-      </li>
-      <li></li>
-      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
-        <span class="material-symbols-outlined">dark_mode</span>
-      </button>
-    </ul>
+        <div class="logo">
+            <div class="logo-icon">
+                <img
+                    src="../../landing/assets/images/pesosmb.png"
+                    alt="PESO Logo" />
+            </div>
+            <h2 style="font-size: 2.25rem">PESO</h2>
+        </div>
+        <ul class="nav-menu">
+            <li>
+                <a class="nav-item" href="./dashboard.php">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a class="nav-item" href="./employer-table.php">
+                    <span class="material-symbols-outlined">apartment</span>
+                    <span>Employers</span>
+                </a>
+            </li>
+            <li>
+                <a class="nav-item active" href="./job-listings.php">
+                    <span class="material-symbols-outlined">list_alt</span>
+                    <span>Job Listings</span>
+                </a>
+            </li>
+            <li>
+                <a class="nav-item" href="./new-admin.php">
+                    <span class="material-symbols-outlined">groups</span>
+                    <span>New Admin</span>
+                </a>
+            </li>
+            <li>
+                <a class="nav-item" href="./news-upload.php">
+                    <span class="material-symbols-outlined">newspaper</span>
+                    <span>News</span>
+                </a>
+            </li>
+            <li>
+                <a class="nav-item" href="../Function/logout.php">
+                    <span class="material-symbols-outlined">settings</span>
+                    <span>Logout</span>
+                </a>
+            </li>
+            <li></li>
+            <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+                <span class="material-symbols-outlined">dark_mode</span>
+            </button>
+        </ul>
 
-  </div>
+    </div>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -253,8 +253,10 @@ $showApplicants = ($job_id > 0);
                 
                 <form class="application-form">
                     <!-- //TODO APPLICANT PROFILE HERE OR NEW PAGE? -->
+
                     <h2>Applicant Profile</h2>
                     <div id="profileContent">Loading...</div>
+
 
                     <div class="form-actions">
                         <button

@@ -11,8 +11,9 @@
   --light-clr-500: #f3f3f3;
 }
 .container-job-search {
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
+  align-self: center;
+  /* margin: 0 auto; */
 }
 .header {
   display: flex;
@@ -22,7 +23,6 @@
   padding: 1rem 0;
   color: var(--black);
 }
-
 .search-filter {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -334,9 +334,9 @@ select.filter {
 }
 
 @media (max-width: 768px) {
-  .job-listings {
+  /* .job-listings {
     grid-template-columns: 1fr;
-  }
+  } */
 
   .modal-content {
     margin: 20px;

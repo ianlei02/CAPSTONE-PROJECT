@@ -26,7 +26,7 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
     <link rel="stylesheet" href="public/css/css-reset.css" />
     <link rel="stylesheet" href="public/css/index.css" />
     <link rel="stylesheet" href="public/css/footer.css">
-    <!-- <link rel="stylesheet" href="./css/breakpoints.css" /> -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
 </head>
@@ -43,7 +43,21 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
                 alt="PESO logo"
                 class="logo" />
         </a>
-        <ul class="navbar-links">
+        <ul class="navbar-links topbar">
+            <li><a class="nav-link" href="index.php">Home</a></li>
+            <li><a class="nav-link" href="landing/pages/find-job.php">Job Listings</a></li>
+            <li><a class="nav-link" href="landing/pages/aboutus.php">About Us</a></li>
+            <li class="auth-buttons">
+                <a href="auth/login-signup.php?form=login"><button class="btn-login">Login</button></a>
+                <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a>
+            </li>
+        </ul>
+        <button onclick="sidebarToggle()" class="hamburger">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+    </nav>
+    <aside>
+        <ul class="navbar-links sidebar">
             <li><a class="nav-link" href="index.php">Home</a></li>
             <li><a class="nav-link" href="./pages/find-job.php">Job Listings</a></li>
             <li><a class="nav-link" href="./pages/aboutus.php">About Us</a></li>
@@ -52,7 +66,7 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
                 <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a>
             </li>
         </ul>
-    </nav>
+    </aside>
 
     <main>
         <section class="hero" id="hero">
@@ -324,6 +338,7 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
         });
     </script>
     <script>
+
     document.addEventListener("DOMContentLoaded", function () {
     const modal = document.getElementById("customNewsModal");
     const closeBtn = document.querySelector(".custom-modal-close");
@@ -337,12 +352,15 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
         document.getElementById("newsModalImage").src = this.dataset.image;
         document.getElementById("newsModalContent").innerHTML = this.dataset.content;
         modal.style.display = "block";
-
         });
     });
     closeBtn.onclick = () => modal.style.display = "none";
     window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; };
     });
+                                                            function sidebarToggle() {
+            const aside = document.querySelector('aside');
+            aside.classList.toggle('show')
+        }
     </script>
 </body>
 

@@ -4,7 +4,7 @@ require '../../connection/dbcon.php';
 $sql_job = "
     SELECT 
         jp.job_id, 
-        jp.job_title, w
+        jp.job_title,
         jp.job_type, 
         jp.category, 
         jp.salary_range, 
@@ -50,7 +50,7 @@ $result_job = $conn->query($sql_job);
                 class="logo" />
         </a>
         <ul class="navbar-links">
-            <li><a class="nav-link" href="../index.php">Home</a></li>
+            <li><a class="nav-link" href="../../index.php">Home</a></li>
             <li><a class="nav-link" href="./find-job.php">Job Listings</a></li>
             <li><a class="nav-link" href="./aboutus.php">About Us</a></li>
             <li class="auth-buttons">
