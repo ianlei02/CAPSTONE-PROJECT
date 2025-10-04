@@ -5,32 +5,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Employers</title>
+  <script src="../js/load-saved.js"></script>
   <script src="../js/dark-mode.js"></script>
   <link rel="stylesheet" href="../css/navs.css">
   <link rel="stylesheet" href="../css/employer-table.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="../assets/library/datatable/dataTables.css">
 </head>
+
 <body>
   <!-- Sidebar -->
- <div class="sidebar">
+  <div class="sidebar">
     <div class="logo">
       <div class="logo-icon">
         <img
-          src="../../landing/assets/images/pesosmb.png"
+          src="../../public/smb-images/pesosmb.png"
           alt="PESO Logo" />
       </div>
-      <h2 style="font-size: 2.25rem">PESO</h2>
+      <h2>PESO</h2>
     </div>
     <ul class="nav-menu">
       <li>
-        <a class="nav-item" href="./dashboard.php">
+        <a class="nav-item active" href="./dashboard.php">
           <span class="material-symbols-outlined">dashboard</span>
           <span>Dashboard</span>
         </a>
       </li>
       <li>
-        <a class="nav-item active" href="./employer-table.php">
+        <a class="nav-item" href="./employer-table.php">
           <span class="material-symbols-outlined">apartment</span>
           <span>Employers</span>
         </a>
@@ -54,15 +56,19 @@
         </a>
       </li>
       <li>
+        <button class="nav-item" id="themeToggle" onclick="toggleTheme()">
+          <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+          <span id="themeLabel">Theme toggle</span>
+        </button>
+      </li>
+    </ul>
+    <ul class="nav-menu logout">
+      <li>
         <a class="nav-item" href="../Function/logout.php">
           <span class="material-symbols-outlined">settings</span>
           <span>Logout</span>
         </a>
       </li>
-      <li></li>
-      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
-        <span class="material-symbols-outlined">dark_mode</span>
-      </button>
     </ul>
 
   </div>
@@ -78,13 +84,13 @@
             alt="Admin User" />
           <div>
             <p>Ian Lei Castillo</p>
-            <span>SUPER IDOL</span>
+            <span>SUPER ADMIN</span>
           </div>
           <!-- <i class="fas fa-chevron-down"></i> -->
         </div>
       </div>
     </div>
-    
+
     <div class="content-wrapper">
       <div class="table-section">
         <div class="table-header">
@@ -93,12 +99,12 @@
         </div>
         <table id="pendingTable" class="display">
           <thead>
-              <th>Company Name</th>
-              <th>Contact Person</th>
-              <th>Email</th>
-              <th>Industry</th>
-              <th>Status</th>
-              <th>Actions</th>
+            <th>Company Name</th>
+            <th>Contact Person</th>
+            <th>Email</th>
+            <th>Industry</th>
+            <th>Status</th>
+            <th>Actions</th>
           </thead>
           <tbody>
             <!-- Data will be populated by JavaScript -->
@@ -113,12 +119,12 @@
         </div>
         <table id="verifiedTable" class="display">
           <thead>
-              <th>Company Name</th>
-              <th>Contact Person</th>
-              <th>Email</th>
-              <th>Industry</th>
-              <th>Status</th>
-              <th>Actions</th>
+            <th>Company Name</th>
+            <th>Contact Person</th>
+            <th>Email</th>
+            <th>Industry</th>
+            <th>Status</th>
+            <th>Actions</th>
           </thead>
           <tbody>
             <!-- Data will be populated by JavaScript -->
