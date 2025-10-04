@@ -500,6 +500,7 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
     });
   </script>
 
+
 </body>
 
 </html>
