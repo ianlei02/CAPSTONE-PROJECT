@@ -95,6 +95,15 @@ require_once '../Functions/getinfo.php';
     <!-- <div class="main-header">
       <h1>Welcome, Applicant!</h1>
     </div> -->
+    <div class="main-header">
+      <h3>Welcome, <?= $fullName ?>!</h1>
+        <a class="complete-profile-warning" href="./applicant-profile.php">
+          <span>Before you can apply for a job, you should set up your profile first.</span>
+          <span class="material-symbols-outlined">
+            double_arrow
+          </span>
+        </a>
+    </div>
     <div class="statistics-container ">
       <div class="stats-grid">
         <div class="stat-card">
