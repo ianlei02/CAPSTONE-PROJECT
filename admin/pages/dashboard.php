@@ -21,7 +21,7 @@
     <div class="logo">
       <div class="logo-icon">
         <img
-          src="../../landing/assets/images/pesosmb.png"
+          src="../../public/smb-images/pesosmb.png"
           alt="PESO Logo" />
       </div>
       <h2 style="font-size: 2.25rem">PESO</h2>
