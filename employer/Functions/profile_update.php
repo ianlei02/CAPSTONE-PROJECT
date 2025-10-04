@@ -241,9 +241,7 @@ try {
     } catch (Exception $e) {
         $conn->rollback();
         error_log("Employer profile update error: " . $e->getMessage());
-
-        // Show the actual error for debugging (you can remove later)
-        echo "<pre>Error: " . htmlspecialchars($e->getMessage()) . "</pre>";
+        header("Location: ../pages/employer-profile.php?error=" . urlencode($e->getMessage()));
         exit();
     } finally {
         if (isset($stmt_info)) $stmt_info->close();
