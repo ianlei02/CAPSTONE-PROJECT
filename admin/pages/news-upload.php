@@ -223,7 +223,8 @@ if (isset($_GET['edit'])) {
                     data-date="<?= $row['publish_date']; ?>"
                     data-image="../<?= $row['image']; ?>"
                     data-excerpt="<?= htmlspecialchars($row['excerpt']); ?>"
-                    data-content="<?= htmlspecialchars($row['content']); ?>">
+                    data-content="<?= htmlspecialchars($row['content']); ?>"
+                    >
                     <i class="fas fa-edit"></i> Edit
                   </button>
                   <!-- Delete Button -->
@@ -265,7 +266,8 @@ if (isset($_GET['edit'])) {
 
             <div class="form-group mb-3">
               <label for="editNewsImage">Featured Image</label>
-              <input type="file" name="newsImage" id="editNewsImage" class="form-control" accept="image/*">
+              <input type="file" name="newsImage" id="editNewsImage" class="form-control" accept="image/*" >
+
               <div id="currentImagePreview" style="margin-top:10px;">
                 <img id="editPreviewImage" src="" alt="Current Image" width="120">
               </div>
@@ -303,11 +305,13 @@ if (isset($_GET['edit'])) {
           document.getElementById("editNewsId").value = this.dataset.id;
           document.getElementById("editNewsTitle").value = this.dataset.title;
           document.getElementById("editNewsDate").value = this.dataset.date;
+          
           document.getElementById("editNewsContent").value = this.dataset.content;
           document.getElementById("editNewsExcerpt").value = this.dataset.excerpt;
           if (this.dataset.image) {
             document.getElementById("editPreviewImage").src = this.dataset.image;
             document.getElementById("currentImagePreview").style.display = "block";
+            
           } else {
             document.getElementById("currentImagePreview").style.display = "none";
           }

@@ -85,7 +85,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete') {
     $stmt->close();
 
     if ($row && !empty($row['image'])) {
-        $oldPath = "../../" . $row['image'];
+        $oldPath = "../" . $row['image'];
         if (file_exists($oldPath)) {
             unlink($oldPath);
         }

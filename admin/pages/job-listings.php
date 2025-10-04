@@ -202,7 +202,7 @@ $showApplicants = ($job_id > 0);
                         <span class="material-symbols-outlined">arrow_back</span>
                         <span>Back to Job Lists</span>
                     </button>
-                    <h2 id="applicants-title">Applicants for <?= htmlspecialchars($job_id); ?></h2>
+                    <h2 id="applicants-title">Applicants for <?= htmlspecialchars($applicants[0]['job_title']); ?></h2>
                 </div>
 
                 <div class="table-container">
@@ -256,7 +256,7 @@ $showApplicants = ($job_id > 0);
             <div class="modal-body">
 
 
-                <form class="application-form">
+                <form  class="application-form">
                     <!-- //TODO APPLICANT PROFILE HERE OR NEW PAGE? -->
 
                     <h2>Applicant Profile</h2>
@@ -267,10 +267,11 @@ $showApplicants = ($job_id > 0);
                         <button
                             type="button"
                             class="btn btn-outline"
-                            id="cancelApplication">
+                            id="cancelApplication"
+                            data-status="rejected">
                             Reject
                         </button>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" style="color: black;" id="referApplication" data-status="referred">
                             Refer
                         </button>
                     </div>
@@ -410,6 +411,54 @@ $showApplicants = ($job_id > 0);
                 });
             });
         });
+    </script>
+    <script>
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        const referBtn = document.getElementById("referApplication");
+        const rejectBtn = document.getElementById("cancelApplication");
+        const modal = document.getElementById("applicationModal");
+        let currentApplicantId = null;
+                document.querySelectorAll(".view-applicant-profile").forEach(btn => {
+            btn.addEventListener("click", function() {
+                currentApplicantId = this.getAttribute("data-applicant");
+            });
+        });
+        function updateApplicationStatus(status) {
+            if (!currentApplicantId) return alert("No applicant selected");
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const jobId = urlParams.get('job_id');
+
+            fetch("../Function/update-status.php", {
+                method: "POST",
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: `applicant_id=${currentApplicantId}&job_id=${jobId}&status=${status}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert(`Application ${status === 'referred' ? 'referred' : 'rejected'} successfully.`);
+                    modal.style.display = "none";
+                    document.body.style.overflow = "auto";
+                    location.reload();
+                    } else {
+                    alert("Error: " + data.error);
+                }
+            })
+            .catch(err => console.error("Error updating status:", err));
+        }
+
+        referBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            updateApplicationStatus("referred");
+        });
+
+        rejectBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            updateApplicationStatus("rejected");
+        });
+    });
     </script>
 </body>
 

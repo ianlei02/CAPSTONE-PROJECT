@@ -9,4 +9,4 @@ if ($row = $result->fetch_assoc()) {
 } else {
     echo "User not found.";
 }
-?>
+
