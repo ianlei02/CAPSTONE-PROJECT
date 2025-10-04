@@ -2,13 +2,27 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 1rem 0 0 0;
-  margin: 10px 0 20px 0;
+  /* padding: 1rem 0 0 0; */
+  margin-bottom: 1rem;
 
-  h1 {
-    font-size: 1.75rem;
+  h3{
+    font-size: 1.25rem;
     font-weight: 700;
-    color: var(--black-light);
+    color: var(--text);
+  }
+  .complete-profile-warning{
+    cursor: pointer;
+    background-color: var(--bg-muted);
+    border: 1px solid var(--border);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    align-content: center;
+    display: flex;
+    align-items: center;
+    color: var(--text);
+    font-size: 1rem;
+    background: linear-gradient(to right, var(--bg-muted), var(--bg));
+    text-decoration: none;
   }
 }
 .statistics-container {
@@ -143,7 +157,7 @@
   padding: 1rem;
 
   .application-item {
-    background-color: var(--white);
+    background: linear-gradient(135deg, var(--bg), var(--bg-muted));
     border: 1px solid var(--border);
     box-shadow: var(--shadow-sm);
     border-radius: 0.75rem;

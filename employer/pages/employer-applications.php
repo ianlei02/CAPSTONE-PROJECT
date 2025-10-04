@@ -86,12 +86,12 @@ $result = $conn->query($sql);
             <span class="label">Post Job</span>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="./employer-applications.php" class="active">
             <span class="material-symbols-outlined icon">people</span>
             <span class="label">Job Applications</span>
           </a>
-        </li>
+        </li> -->
         <li>
           <a href="employer-profile.php">
             <span class="material-symbols-outlined icon">id_card</span>

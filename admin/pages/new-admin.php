@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Management</title>
+    <script src="../js/load-saved.js"></script>
     <script src="../js/dark-mode.js"></script>
     <link rel="stylesheet" href="../css/navs.css">
     <link rel="stylesheet" href="../css/new-admin.css">
@@ -18,14 +19,14 @@
         <div class="logo">
             <div class="logo-icon">
                 <img
-                    src="../../landing/assets/images/pesosmb.png"
+                    src="../../public/smb-images/pesosmb.png"
                     alt="PESO Logo" />
             </div>
-            <h2 style="font-size: 2.25rem">PESO</h2>
+            <h2>PESO</h2>
         </div>
         <ul class="nav-menu">
             <li>
-                <a class="nav-item" href="./dashboard.php">
+                <a class="nav-item active" href="./dashboard.php">
                     <span class="material-symbols-outlined">dashboard</span>
                     <span>Dashboard</span>
                 </a>
@@ -43,27 +44,31 @@
                 </a>
             </li>
             <li>
-                <a class="nav-item active" href="./new-admin.php">
+                <a class="nav-item" href="./new-admin.php">
                     <span class="material-symbols-outlined">groups</span>
                     <span>New Admin</span>
                 </a>
             </li>
             <li>
-                <a class="nav-item " href="./news-upload.php">
+                <a class="nav-item" href="./news-upload.php">
                     <span class="material-symbols-outlined">newspaper</span>
                     <span>News</span>
                 </a>
             </li>
+            <li>
+                <button class="nav-item" id="themeToggle" onclick="toggleTheme()">
+                    <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+                    <span id="themeLabel">Theme toggle</span>
+                </button>
+            </li>
+        </ul>
+        <ul class="nav-menu logout">
             <li>
                 <a class="nav-item" href="../Function/logout.php">
                     <span class="material-symbols-outlined">settings</span>
                     <span>Logout</span>
                 </a>
             </li>
-            <li></li>
-            <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
-                <span class="material-symbols-outlined">dark_mode</span>
-            </button>
         </ul>
 
     </div>
@@ -77,7 +82,11 @@
                 <img
                     src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff"
                     alt="Admin User" />
-                <span>Admin User</span>
+                <div>
+                    <p>Ian Lei Castillo</p>
+                    <span>SUPER ADMIN</span>
+                </div>
+                <!-- <i class="fas fa-chevron-down"></i> -->
             </div>
         </div>
         <!-- Admin Accounts Table -->

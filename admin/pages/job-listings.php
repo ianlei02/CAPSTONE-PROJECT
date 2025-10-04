@@ -34,7 +34,7 @@ if ($job_id > 0) {
         $row['score'] = calculateApplicantScore($row['applicant_id'], $job_id, $conn);
         $applicants[] = $row;
     }
-     usort($applicants, function($a, $b) {
+    usort($applicants, function ($a, $b) {
         return $b['score'] <=> $a['score'];
     });
 }
@@ -49,6 +49,7 @@ $showApplicants = ($job_id > 0);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jobs and Applications</title>
+    <script src="../js/load-saved.js"></script>
     <script src="../js/dark-mode.js"></script>
     <link rel="stylesheet" href="../css/navs.css">
     <link rel="stylesheet" href="../css/job-listings.css">
@@ -62,14 +63,14 @@ $showApplicants = ($job_id > 0);
         <div class="logo">
             <div class="logo-icon">
                 <img
-                    src="../../landing/assets/images/pesosmb.png"
+                    src="../../public/smb-images/pesosmb.png"
                     alt="PESO Logo" />
             </div>
-            <h2 style="font-size: 2.25rem">PESO</h2>
+            <h2>PESO</h2>
         </div>
         <ul class="nav-menu">
             <li>
-                <a class="nav-item" href="./dashboard.php">
+                <a class="nav-item active" href="./dashboard.php">
                     <span class="material-symbols-outlined">dashboard</span>
                     <span>Dashboard</span>
                 </a>
@@ -81,7 +82,7 @@ $showApplicants = ($job_id > 0);
                 </a>
             </li>
             <li>
-                <a class="nav-item active" href="./job-listings.php">
+                <a class="nav-item" href="./job-listings.php">
                     <span class="material-symbols-outlined">list_alt</span>
                     <span>Job Listings</span>
                 </a>
@@ -99,15 +100,19 @@ $showApplicants = ($job_id > 0);
                 </a>
             </li>
             <li>
+                <button class="nav-item" id="themeToggle" onclick="toggleTheme()">
+                    <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+                    <span id="themeLabel">Theme toggle</span>
+                </button>
+            </li>
+        </ul>
+        <ul class="nav-menu logout">
+            <li>
                 <a class="nav-item" href="../Function/logout.php">
                     <span class="material-symbols-outlined">settings</span>
                     <span>Logout</span>
                 </a>
             </li>
-            <li></li>
-            <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
-                <span class="material-symbols-outlined">dark_mode</span>
-            </button>
         </ul>
 
     </div>
@@ -151,42 +156,42 @@ $showApplicants = ($job_id > 0);
                     </select>
                 </div>
                 <div class="job-listing-section" style="display: <?= $showApplicants ? 'none' : 'grid'; ?>;">
-                <div class="job-listings">
-                    <?php if ($result->num_rows > 0): ?>
-                        <?php while ($row = $result->fetch_assoc()): ?>
-                            <div class="job-card hidden" data-field="<?php echo htmlspecialchars($row['category']); ?>">
-                                <div class="job-field"><?php echo htmlspecialchars($row['category']); ?></div>
-                                <div class="job-header">
-                                    <div>
-                                        <h3 class="job-title"><?php echo htmlspecialchars($row['job_title']); ?></h3>
-                                        <div class="job-company"><?php echo htmlspecialchars($row['job_title']); ?></div>
+                    <div class="job-listings">
+                        <?php if ($result->num_rows > 0): ?>
+                            <?php while ($row = $result->fetch_assoc()): ?>
+                                <div class="job-card hidden" data-field="<?php echo htmlspecialchars($row['category']); ?>">
+                                    <div class="job-field"><?php echo htmlspecialchars($row['category']); ?></div>
+                                    <div class="job-header">
+                                        <div>
+                                            <h3 class="job-title"><?php echo htmlspecialchars($row['job_title']); ?></h3>
+                                            <div class="job-company"><?php echo htmlspecialchars($row['job_title']); ?></div>
+                                        </div>
+                                        <div>
+                                            <span class="job-salary"><?php echo htmlspecialchars($row['salary_range']); ?><br> Salary/Month</span>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span class="job-salary"><?php echo htmlspecialchars($row['salary_range']); ?><br> Salary/Month</span>
+
+                                    <div class="job-meta">
+                                        <span><i class="fas fa-briefcase"></i> <?php echo htmlspecialchars($row['job_type']); ?></span>
+                                        <span><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($row['location']); ?></span>
+                                        <span><i class="fas fa-users"></i> Vacancies: <?php echo (int)$row['vacancies']; ?></span>
+                                    </div>
+
+                                    <div class="job-description">
+                                        <?php echo nl2br(htmlspecialchars($row['description'])); ?>
+                                    </div>
+
+                                    <div class="job-footer">
+                                        <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
+                                        <a href="job-listings.php?job_id=<?= urlencode($row['job_id']); ?>" class="view-btn">View Applicants</a>
                                     </div>
                                 </div>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <p>No job postings available.</p>
+                        <?php endif; ?>
 
-                                <div class="job-meta">
-                                    <span><i class="fas fa-briefcase"></i> <?php echo htmlspecialchars($row['job_type']); ?></span>
-                                    <span><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($row['location']); ?></span>
-                                    <span><i class="fas fa-users"></i> Vacancies: <?php echo (int)$row['vacancies']; ?></span>
-                                </div>
-
-                                <div class="job-description">
-                                    <?php echo nl2br(htmlspecialchars($row['description'])); ?>
-                                </div>
-
-                                <div class="job-footer">
-                                    <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
-                                    <a href="job-listings.php?job_id=<?= urlencode($row['job_id']); ?>" class="view-btn">View Applicants</a>
-                                </div>
-                            </div>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <p>No job postings available.</p>
-                    <?php endif; ?>
-
-                </div>
+                    </div>
                 </div>
             </div>
 
@@ -194,8 +199,8 @@ $showApplicants = ($job_id > 0);
             <section class="applications-section" id="applications-section" style="display: <?= $showApplicants ? 'flex' : 'none'; ?>;">
                 <div class="section-header">
                     <button class="back-button" id="back-to-jobs">
-                        <span class="material-icons">arrow_back</span>
-                        Back to Jobs
+                        <span class="material-symbols-outlined">arrow_back</span>
+                        <span>Back to Job Lists</span>
                     </button>
                     <h2 id="applicants-title">Applicants for <?= htmlspecialchars($job_id); ?></h2>
                 </div>
@@ -250,7 +255,7 @@ $showApplicants = ($job_id > 0);
             </div>
             <div class="modal-body">
 
-                
+
                 <form class="application-form">
                     <!-- //TODO APPLICANT PROFILE HERE OR NEW PAGE? -->
 
@@ -376,37 +381,35 @@ $showApplicants = ($job_id > 0);
             });
         });
         document.getElementById("back-to-jobs").addEventListener("click", function() {
-        window.location.href = window.location.pathname;
-    }); 
-
+            window.location.href = window.location.pathname;
+        });
     </script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-        const modal = document.getElementById("applicationModal");
-        const profileContent = document.getElementById("profileContent");
-        const closeBtn = document.querySelector(".close-btn");
-        const cancelBtn = document.getElementById("cancelApplication");
+        document.addEventListener("DOMContentLoaded", function() {
+            const modal = document.getElementById("applicationModal");
+            const profileContent = document.getElementById("profileContent");
+            const closeBtn = document.querySelector(".close-btn");
+            const cancelBtn = document.getElementById("cancelApplication");
 
-        document.querySelectorAll(".view-applicant-profile").forEach(btn => {
-            btn.addEventListener("click", function () {
-                const applicantId = this.getAttribute("data-applicant");
-                
-                profileContent.innerHTML = "Loading...";
-                modal.style.display = "flex";
-                document.body.style.overflow = "hidden";
+            document.querySelectorAll(".view-applicant-profile").forEach(btn => {
+                btn.addEventListener("click", function() {
+                    const applicantId = this.getAttribute("data-applicant");
 
-                fetch("../../employer/Functions/get_profile.php?applicant_id=" + applicantId)
-                    .then(res => res.text())
-                    .then(data => {
-                        profileContent.innerHTML = data;
-                    })
-                    .catch(err => {
-                        profileContent.innerHTML = "Error loading profile.";
-                    });
+                    profileContent.innerHTML = "Loading...";
+                    modal.style.display = "flex";
+                    document.body.style.overflow = "hidden";
+
+                    fetch("../../employer/Functions/get_profile.php?applicant_id=" + applicantId)
+                        .then(res => res.text())
+                        .then(data => {
+                            profileContent.innerHTML = data;
+                        })
+                        .catch(err => {
+                            profileContent.innerHTML = "Error loading profile.";
+                        });
+                });
             });
         });
-    });
-
     </script>
 </body>
 

@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PESO Dashboard</title>
+  <script src="../js/load-saved.js"></script>
   <script src="../js/dark-mode.js"></script>
   <link rel="stylesheet" href="../css/navs.css">
   <link rel="stylesheet" href="../css/dashboard.css">
@@ -21,10 +22,10 @@
     <div class="logo">
       <div class="logo-icon">
         <img
-          src="../../landing/assets/images/pesosmb.png"
+          src="../../public/smb-images/pesosmb.png"
           alt="PESO Logo" />
       </div>
-      <h2 style="font-size: 2.25rem">PESO</h2>
+      <h2>PESO</h2>
     </div>
     <ul class="nav-menu">
       <li>
@@ -58,15 +59,25 @@
         </a>
       </li>
       <li>
+        <a class="nav-item" href="./job-fair.php">
+          <span class="material-symbols-outlined">calendar_month</span>
+          <span>Job Fair</span>
+        </a>
+      </li>
+      <li>
+        <button class="nav-item" id="themeToggle" onclick="toggleTheme()">
+          <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+          <span id="themeLabel">Theme toggle</span>
+        </button>
+      </li>
+    </ul>
+    <ul class="nav-menu logout">
+      <li>
         <a class="nav-item" href="../Function/logout.php">
           <span class="material-symbols-outlined">settings</span>
           <span>Logout</span>
         </a>
       </li>
-      <li></li>
-      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
-        <span class="material-symbols-outlined">dark_mode</span>
-      </button>
     </ul>
 
   </div>
@@ -91,27 +102,6 @@
     <div class="content-wrapper">
       <!-- Stats Cards -->
       <div class="stats-grid">
-        <!-- <div class="stat-card">
-          <div class="stat-header">
-            <h3 class="stat-title">Applicants</h3>
-            <div class="stat-icon bg-success-light">
-              <span class="material-symbols-outlined">school</span>
-            </div>
-          </div>
-          <div class="stat-value">542</div>
-          <div class="stat-label">89 new this week</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-header">
-            <h3 class="stat-title">Employers</h3>
-            <div class="stat-icon bg-primary-light">
-              <span class="material-symbols-outlined">apartment</span>
-            </div>
-          </div>
-          <div class="stat-value">128</div>
-          <div class="stat-label">24 pending verification</div>
-        </div> -->
         <div class="stat-card">
           <div class="stat-header">
             <h3 class="stat-title">Verification</h3>
@@ -137,7 +127,7 @@
         <div class="stat-card">
           <div class="stat-header">
             <h3 class="stat-title">Pending</h3>
-            <div class="stat-icon bg-danger-light">
+            <div class="stat-icon bg-warning-light">
               <span class="material-symbols-outlined">hourglass_top</span>
             </div>
           </div>
@@ -148,7 +138,7 @@
         <div class="stat-card">
           <div class="stat-header">
             <h3 class="stat-title">Hires</h3>
-            <div class="stat-icon bg-secondary-light">
+            <div class="stat-icon bg-success-light">
               <span class="material-symbols-outlined">badge</span>
             </div>
           </div>
@@ -227,12 +217,10 @@
       </div>
     </div>
   </main>
-
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/charts.js"></script>
   <script>
-  
+
   </script>
 
 </body>

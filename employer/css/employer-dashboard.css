@@ -93,6 +93,7 @@
 }
 .quick-actions {
   /* background-color: var(--bg); */
+  height: max-content;
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-md);
@@ -170,7 +171,7 @@
   grid-column: span 3;
 
   #calendar {
-    max-width: 700px;
+    max-width: 900px;
     margin: 40px auto;
     color: var(--text-muted);
   }

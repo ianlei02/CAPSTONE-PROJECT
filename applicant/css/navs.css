@@ -210,13 +210,11 @@ body {
   grid-area: nav;
   background-color: var(--bg-muted);
   color: var(--text);
-  /* border-bottom: 1px solid var(--border); */
-  padding: 1.75rem;
+  padding: 1.25rem 1.75rem;
   display: flex;
   align-items: center;
   z-index: 10;
   top: 0;
-  /* position: sticky; */
 
   .logo {
     width: auto;
@@ -226,7 +224,6 @@ body {
   }
   .logo img {
     width: 50px;
-    /* margin-top: 10px; */
   }
   .hamburger {
     cursor: pointer;
@@ -247,40 +244,49 @@ body {
     font-weight: var(--fw-semibold);
     font-size: var(--font-size-3xl);
   }
-  .navbar-left .right-pos {
-    color: var(--black);
-    border-radius: 50%;
-  }
-  .right-pos .profile-pic-container {
-    width: 40px !important;
-    height: 40px !important;
+  .right-pos {
     position: relative;
+  }
+  .right-pos .profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--white);
+    padding: 0.5rem 1rem;
+    width: max-content;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-md);
+    background: linear-gradient(to bottom, var(--bg), var(--bg-muted), var(--bg-subtle));
+  }
+  .profile:hover {
+    border-color: var(--border);
+  }
+  .profile-pic {
+    width: 40px;
+    aspect-ratio: 1;
+    object-fit: cover;
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
   }
-  .profile-pic {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  .upload-icon {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+  .user-name {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: all 0.3s;
+    flex-direction: column;
   }
-  .profile-pic-container:hover .upload-icon {
-    opacity: 1;
+  .user-name h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 0.1rem;
+  }
+  .user-name p {
+    font-size: 0.9rem;
+    color: var(--gray-text);
+    font-weight: 500;
   }
 }
 .sidebar {
@@ -363,14 +369,14 @@ body {
     color: var(--text-muted);
     border-radius: var(--radius-lg);
   }
-  li .active {
+  li a.active {
     background-color: var(--bg-active);
     color: var(--color-blue-500);
   }
   a:hover,
   button:hover {
     background-color: var(--bg-active);
-    color: var(--color-blue-500);
+    /* color: var(--color-blue-500); */
   }
   .dark-mode-toggle {
     width: 100%;
@@ -380,6 +386,9 @@ body {
   }
   .log-out-btn:hover {
     color: var(--danger);
+  }
+  .log-out-btn .icon {
+    rotate: 180deg;
   }
   .icon {
     font-size: 1.75rem;
@@ -396,6 +405,108 @@ body {
   transition: margin-left 0.3s ease;
   position: relative;
 }
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 300px;
+  background-color: var(--bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  z-index: 1001;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .dropdown-arrow {
+    position: absolute;
+    top: -6px;
+    right: 12px;
+    width: 12px;
+    height: 12px;
+    background-color: var(--bg);
+    transform: rotate(45deg);
+    box-shadow: -2px -2px 2px rgba(0, 0, 0, 0.05);
+  }
+  .dropdown-header {
+    padding: 16px;
+    border-bottom: 1px solid #e4e6eb;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+  }
+  .dropdown-header:hover {
+    background-color: var(--bg-active) !important;
+  }
+  .dropdown-header img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .user-info{
+    text-decoration: none ;
+  }
+  .user-info h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+  .user-info p {
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+  .dropdown-links {
+    padding: 8px 0;
+  }
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: var(--text-muted);
+    transition: background-color 0.2s;
+  }
+  
+  .dropdown-item:hover {
+    background-color: var(--bg-active);
+  }
+  
+  .dropdown-item i {
+    font-size: 20px;
+    width: 24px;
+    text-align: center;
+  }
+  
+  .dropdown-divider {
+    height: 1px;
+    background-color: #e4e6eb;
+    margin: 8px 0;
+  }
+  
+  .logout-item {
+    color: #e41e3f;
+  
+    .icon {
+      rotate: 180deg;
+    }
+  }
+  
+  .logout-item:hover {
+    background-color: #ffe6ea;
+  }
+}
+
 .floating-icon {
   position: absolute;
   justify-content: center;
@@ -408,14 +519,23 @@ body {
   bottom: 20px;
   right: 20px;
 }
-@media (min-width: 768px){
-  nav .hamburger{
+@media (min-width: 768px) {
+  nav .hamburger {
     display: none;
   }
 }
 @media (max-width: 767px) {
   body {
     grid-template-columns: 1fr;
+  }
+  .navbar {
+    padding: 1rem 0.5rem;
+  }
+  .navbar h1{
+    font-size: 1rem;
+  }
+  .navbar .profile {
+    scale: 0.8 !important;
   }
   .sidebar {
     width: 300px;
@@ -434,11 +554,11 @@ body {
       transform: translateX(0px);
     }
   }
+
   .sidebar .label {
     opacity: 1 !important;
     width: auto !important;
   }
-
   main {
     overflow: hidden;
   }
@@ -448,15 +568,16 @@ body {
     justify-content: center;
     width: auto;
 
-    h2, a{
+    h2,
+    a {
       font-size: 1.25rem;
     }
-    .status-action{
+    .status-action {
       flex-direction: column;
     }
   }
 
-  .statistics-container{
+  .statistics-container {
     flex-direction: column;
     height: auto;
   }
@@ -466,10 +587,16 @@ body {
     /* flex: 0; */
     margin: 0;
   }
-  .profile-completion-container{
+  .profile-completion-container {
     padding: 0;
     margin-top: 1rem;
-  }
+    display: flex;
+    flex-direction: row !important;
 
-  
+    .progress-circle {
+      width: 100px;
+      height: 100px;
+      margin: 0;
+    }
+  }
 }
