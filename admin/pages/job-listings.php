@@ -422,6 +422,8 @@ $showApplicants = ($job_id > 0);
                 document.querySelectorAll(".view-applicant-profile").forEach(btn => {
             btn.addEventListener("click", function() {
                 currentApplicantId = this.getAttribute("data-applicant");
+                modal.style.display = "block";
+                document.body.style.overflow = "hidden";
             });
         });
         function updateApplicationStatus(status) {
