@@ -37,7 +37,7 @@ if (isset($_SESSION['user_id'])) {
 }
 $sql = "
 SELECT 
-    ea.email, ea.email, ea.password,
+    ea.email, ea.password, ed.employer_profile, ed.company_profile,
     ed.business_permit, ed.dole_certification, ed.bir_certification, ed.migrant_certification, ed.philjob_certification,
     ei.company_type, ei.company_size, ei.industry, ei.contact_number, ei.address, ei.contact_person, ei.contact_position, ei.contact_mobile, ei.contact_email
 FROM employer_account ea
