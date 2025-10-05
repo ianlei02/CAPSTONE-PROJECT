@@ -7,21 +7,23 @@
   <title>Admin Portal | Login</title>
   <style>
     :root {
-      --primary: #4361ee;
-      --primary-dark: #3a56d4;
-      --accent: #7209b7;
-      --text: #2b2d42;
-      --light-text: #8d99ae;
-      --border: #edf2f4;
-      --white: #ffffff;
-      --bg-gradient: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
+      --primary: oklch(55% 0.15 250);
+      --primary-dark: oklch(45% 0.15 250);
+      --primary-light: oklch(95% 0.05 250);
+      --accent: oklch(60% 0.12 280);
+      --text: oklch(25% 0.05 250);
+      --light-text: oklch(55% 0.05 250);
+      --border: oklch(85% 0.02 250);
+      --white: oklch(100% 0 0);
+      --shadow: 0 8px 24px oklch(0% 0 0 / 0.08);
+      --radius: 12px;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Segoe UI", system-ui, sans-serif;
+      font-family: "Inter", "Segoe UI", system-ui, sans-serif;
     }
 
     body {
@@ -29,63 +31,68 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background: var(--bg-gradient);
+      background-color: oklch(98% 0.01 250);
       padding: 20px;
+      color: var(--text);
     }
 
-    .login-card {
+    .login-container {
       width: 100%;
       max-width: 420px;
       background: var(--white);
-      border-radius: 16px;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       overflow: hidden;
-      padding: 48px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .login-card::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: var(--bg-gradient);
-      opacity: 0.05;
-      z-index: -1;
-      transform: rotate(15deg);
+      border: 1px solid var(--border);
     }
 
     .login-header {
+      padding: 40px 40px 20px;
       text-align: center;
-      margin-bottom: 40px;
+      background-color: var(--primary-light);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand-logo {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      background-color: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px oklch(55% 0.15 250 / 0.2);
+    }
+
+    .brand-logo svg {
+      width: 32px;
+      height: 32px;
+      fill: var(--white);
     }
 
     .login-header h1 {
-      font-size: 28px;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
       color: var(--text);
-      margin-bottom: 12px;
-      font-weight: 700;
-      background: var(--bg-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: inline-block;
     }
 
     .login-header p {
-      font-size: 15px;
+      font-size: 14px;
       color: var(--light-text);
     }
 
+    .login-card {
+      padding: 40px;
+    }
+
     .login-form {
-      margin-top: 30px;
+      margin-top: 10px;
     }
 
     .form-group {
       margin-bottom: 24px;
-      position: relative;
     }
 
     .form-group label {
@@ -98,52 +105,69 @@
 
     .form-control {
       width: 100%;
-      padding: 16px 20px;
+      padding: 14px 16px;
       font-size: 15px;
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      transition: all 0.3s ease;
-      background-color: #f9fafb;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      background-color: var(--white);
+      color: var(--text);
     }
 
     .form-control:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15);
-      background-color: var(--white);
+      box-shadow: 0 0 0 3px oklch(55% 0.15 250 / 0.1);
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--light-text);
+      font-size: 16px;
+      padding: 0;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .toggle-password:hover {
+      color: var(--primary);
     }
 
     .btn {
       width: 100%;
-      padding: 16px;
+      padding: 14px;
       border: none;
-      border-radius: 10px;
-      background: var(--bg-gradient);
+      border-radius: 8px;
+      background: var(--primary);
       color: var(--white);
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
       margin-top: 10px;
-      position: relative;
-      overflow: hidden;
     }
 
-    .btn::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(rgba(255, 255, 255, 0.1),
-          rgba(255, 255, 255, 0.1));
-      opacity: 0;
-      transition: opacity 0.3s ease;
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px oklch(55% 0.15 250 / 0.2);
     }
 
-    .btn:hover::after {
-      opacity: 1;
+    .btn:active {
+      transform: translateY(0);
     }
 
     .form-footer {
@@ -157,126 +181,208 @@
       color: var(--primary);
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.3s ease;
+      transition: color 0.2s ease;
     }
 
     .form-footer a:hover {
-      color: var(--accent);
+      color: var(--primary-dark);
+      text-decoration: underline;
     }
 
-    /* Floating label animation */
-    .floating-label {
-      position: relative;
+    .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 14px;
     }
 
-    .floating-label label {
-      position: absolute;
-      top: 18px;
-      left: 20px;
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       color: var(--light-text);
-      transition: all 0.3s ease;
-      pointer-events: none;
     }
 
-    .floating-label input:focus+label,
-    .floating-label input:not(:placeholder-shown)+label {
-      top: -8px;
-      left: 12px;
-      font-size: 12px;
-      background: var(--white);
-      padding: 0 8px;
-      color: var(--primary);
+    .remember-me input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+    }
+
+    .security-notice {
+      background-color: var(--primary-light);
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .security-notice svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--primary);
+      flex-shrink: 0;
+      margin-top: 2px;
     }
 
     /* Responsive */
     @media (max-width: 480px) {
+      .login-container {
+        max-width: 100%;
+      }
+
+      .login-header {
+        padding: 30px 20px 15px;
+      }
+
       .login-card {
-        padding: 40px 30px;
-        border-radius: 12px;
+        padding: 30px 20px;
+      }
+
+      .remember-forgot {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="login-card">
+  <div class="login-container">
     <div class="login-header">
+      <div class="brand-logo">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V10.7C15.4,10.9 16,11.3 16.5,11.9C17.4,13.4 17.4,15.2 16.5,16.7C15.6,18.2 13.8,19 12,19C10.2,19 8.4,18.2 7.5,16.7C6.6,15.2 6.6,13.4 7.5,11.9C8,11.3 8.6,10.9 9.2,10.7V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.5,8.7 10.5,9.5C10.5,10.3 11.2,10.8 12,10.8C12.8,10.8 13.5,10.3 13.5,9.5C13.5,8.7 12.8,8.2 12,8.2Z" />
+        </svg>
+      </div>
       <h1>Admin Portal</h1>
-      <p>Sign in to access your dashboard</p>
+      <p>Secure access to management dashboard</p>
     </div>
 
-    <form class="login-form" method="POST" id="loginform">
-      <div class="form-group floating-label">
-        <input
-          type="text"
-          id="username"
-          name="username"
-          class="form-control"
-          placeholder=" "
-          required />
-        <label for="username">Username</label>
-      </div>
+    <div class="login-card">
+      <form class="login-form" method="POST" id="loginform">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="form-control"
+            placeholder="Enter your username"
+            required />
+        </div>
 
-      <div class="form-group floating-label" style="position:relative;">
-        <input
-          type="password"
-          id="password"
-          name="password"
-          class="form-control"
-          placeholder=" "
-          required />
-        <label for="password">Password</label>
-        <button type="button" id="togglePassword" style="position:absolute; right:18px; top:18px; background:none; border:none; cursor:pointer; padding:0;">
-          <span id="toggleIcon" style="font-size:18px;">👁</span>
-        </button>
-      </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-container">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              placeholder="Enter your password"
+              required />
+            <button type="button" id="togglePassword" class="toggle-password">
+              <span id="toggleIcon">👁️</span>
+            </button>
+          </div>
+        </div>
 
-      <button type="submit" class="btn">Sign In →</button>
+        <div class="remember-forgot">
+          <div class="remember-me">
+            <input type="checkbox" id="remember" name="remember">
+            <label for="remember">Remember me</label>
+          </div>
+          <a href="/forgot-password">Forgot password?</a>
+        </div>
 
-      <div class="form-footer">
-        <a href="/forgot-password">Forgot your password?</a>
-      </div>
-    </form>
+        <button type="submit" class="btn">Sign In</button>
+
+        <div class="security-notice">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M11,7H13V9H15V11H13V13H11V11H9V9H11V7M12,17.25C13.24,17.25 14.25,16.24 14.25,15C14.25,13.76 13.24,12.75 12,12.75C10.76,12.75 9.75,13.76 9.75,15C9.75,16.24 10.76,17.25 12,17.25Z" />
+          </svg>
+          <div>Ensure you're on a secure network before logging in to the admin portal.</div>
+        </div>
+
+        <div class="form-footer">
+          <p>Need help? <a href="/support">Contact Support</a></p>
+        </div>
+      </form>
+    </div>
   </div>
-</body>
-<script>
-  document.getElementById('togglePassword').addEventListener('click', function() {
-    const passwordInput = document.getElementById('password');
-    const icon = document.getElementById('toggleIcon');
-    if (passwordInput.type === 'password') {
-      passwordInput.type = 'text';
-      icon.textContent = '👁';
-    } else {
-      passwordInput.type = 'password';
-      icon.textContent = '👁';
-    }
-  });
 
-  document.getElementById('loginform').addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    const formData = new FormData(this);
-
-    try {
-      const response = await fetch('../Function/login.php', {
-        method: 'POST',
-        body: formData
-      });
-
-      if (!response.ok) throw new Error('Network response was not ok');
-
-      const result = await response.json();
-
-      if (result.status === 'success') {
-        alert(result.message);
-        window.location.href = result.redirect;
+  <script>
+    document.getElementById('togglePassword').addEventListener('click', function() {
+      const passwordInput = document.getElementById('password');
+      const icon = document.getElementById('toggleIcon');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.textContent = '🔒';
       } else {
-        alert(result.message);
+        passwordInput.type = 'password';
+        icon.textContent = '👁️';
       }
-    } catch (err) {
-      alert('Login failed. Please try again.');
-    }
-  });
-</script>
+    });
+
+    document.getElementById('loginform').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const submitBtn = this.querySelector('.btn');
+      const originalText = submitBtn.textContent;
+      
+      // Show loading state
+      submitBtn.textContent = 'Signing In...';
+      submitBtn.disabled = true;
+
+      const formData = new FormData(this);
+
+      try {
+        const response = await fetch('../Function/login.php', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) throw new Error('Network response was not ok');
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+          // Success state
+          submitBtn.textContent = 'Success!';
+          submitBtn.style.backgroundColor = 'oklch(50% 0.12 150)'; // Success green
+          setTimeout(() => {
+            window.location.href = result.redirect;
+          }, 1000);
+        } else {
+          // Error state
+          submitBtn.textContent = 'Login Failed';
+          submitBtn.style.backgroundColor = 'oklch(50% 0.12 30)'; // Error red
+          setTimeout(() => {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            submitBtn.style.backgroundColor = '';
+          }, 2000);
+          alert(result.message);
+        }
+      } catch (err) {
+        submitBtn.textContent = 'Connection Error';
+        submitBtn.style.backgroundColor = 'oklch(50% 0.12 30)'; // Error red
+        setTimeout(() => {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+          submitBtn.style.backgroundColor = '';
+        }, 2000);
+        alert('Login failed. Please try again.');
+      }
+    });
+  </script>
+</body>
 
 </html>
