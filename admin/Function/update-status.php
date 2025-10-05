@@ -21,6 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(["error" => "Database update failed"]);
     }
 
+    $notif = $conn->prepare("INSERT INTO notifications (applicant_id, message, seen, created_at) VALUES (?, ?, 0, NOW())");
+    $message = ($status === 'referred') ? "Your application has been referred." : "Your application has been rejected.";
+    $notif->bind_param("is", $applicant_id, $message);
+    $notif->execute();
+    $notif->close();
+    
     $stmt->close();
     $conn->close();
 }

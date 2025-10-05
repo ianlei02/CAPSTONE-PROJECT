@@ -37,6 +37,7 @@ require_once '../Functions/getName.php';
       </div>
 
       <div class="right-pos">
+        
         <div class="profile">
           <img
             src="<?php echo htmlspecialchars($profile_picture_url); ?>"
@@ -76,7 +77,11 @@ require_once '../Functions/getName.php';
             </a>
           </div>
         </div>
-
+        <div id="notifContainer">
+          <button id="notifBtn">🔔 <span id="notifCount">0</span></button>
+          <div id="notifList" style="display:none; background:#fff; border:1px solid #ddd; padding:10px; width:250px; position: absolute; right: 0; top: 120%; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-height: 300px; overflow-y: auto; z-index: 1000;">
+          </div>
+        </div>
       </div>
     </div>
 
@@ -424,6 +429,55 @@ require_once '../Functions/getName.php';
         }, 20);
       });
     });
+  </script>
+  <script>
+  const notifBtn = document.getElementById('notifBtn');
+  const notifList = document.getElementById('notifList');
+  const notifCount = document.getElementById('notifCount');
+
+  let hasOpened = false;
+
+  notifBtn.addEventListener('click', () => {
+  const isHidden = notifList.style.display === 'none';
+  notifList.style.display = isHidden ? 'block' : 'none';
+
+  if (isHidden && !hasOpened) {
+    hasOpened = true;
+
+    notifCount.textContent = 0;
+    notifCount.style.color = "gray";
+
+    fetch('../Functions/seen.php')
+      .then(() => {
+        fetchNotifications();
+      })
+      .catch(err => console.error('Error marking seen:', err));
+    }
+  });
+
+    function fetchNotifications() {
+    fetch('../Functions/notification.php')
+      .then(res => res.json())
+      .then(data => {
+        notifCount.textContent = data.count;
+        notifCount.style.color = data.count > 0 ? "red" : "gray";
+        if (data.notifications.length > 0) {
+          notifList.innerHTML = data.notifications
+            .map(n => `
+              <div style="border-bottom:1px solid #eee; padding:5px; ${n.seen == 0 ? 'background:#f9f9f9;' : ''}">
+                <p style="margin:0;">${n.message}</p>
+                <small style="color:gray;">${new Date(n.created_at).toLocaleString()}</small>
+              </div>
+            `)
+            .join('');
+        } else {
+          notifList.innerHTML = "<p>No notifications yet</p>";
+        }
+      })
+      .catch(err => console.error('Notification fetch error:', err));
+  }
+  setInterval(fetchNotifications, 10000);
+  fetchNotifications();
   </script>
 </body>
 

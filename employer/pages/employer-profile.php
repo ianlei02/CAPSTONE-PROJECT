@@ -41,7 +41,7 @@ if (isset($_SESSION['user_id'])) {
 $employer_id = $_SESSION['user_id'];
 
 $sql = "SELECT 
-            bir_certification, business_permit, dole_certification, 
+            employer_profile, company_profile, bir_certification, business_permit, dole_certification, 
             migrant_certification, philjob_certification
         FROM employer_company_docs
         WHERE employer_id = ?";
@@ -252,24 +252,26 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
               <div class="document-icon">📄</div>
               <div class="document-info">
                 <div class="document-name">Employer ID</div>
-                <div class="document-date">Uploaded:</div>
+                <div class="document-date">Uploaded: <span id="bir-upload-date"><?php echo !empty($docs['employer_profile']) ? "Uploaded" : "Not Uploaded"; ?></span></div>
               </div>
               <div class="document-actions">
-                <button class="view-doc" data-doc="">
+                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['employer_profile']; ?>">
                   <span class="material-symbols-outlined">visibility</span>
                 </button>
-                <label for="upload-employer-id" class="update-doc">Upload</label>
-                <input type="file" id="upload-employer-id" name="upload-employer-id" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+
+                <label for="upload-employer-profile" class="update-doc">Upload</label>
+                <input type="file" id="upload-employer-profile" name="upload-employer-profile" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+
               </div>
             </li>
             <li class="document-item">
               <div class="document-icon">📄</div>
               <div class="document-info">
                 <div class="document-name">Company Profile</div>
-                <div class="document-date">Uploaded:</div>
+                <div class="document-date">Uploaded: <span id="bir-upload-date"><?php echo !empty($docs['company_profile']) ? "Uploaded" : "Not Uploaded"; ?></span></div>
               </div>
               <div class="document-actions">
-                <button class="view-doc" data-doc="">
+                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['company_profile']; ?>">
                   <span class="material-symbols-outlined">visibility</span>
                 </button>
                 <label for="upload-company-profile" class="update-doc">Upload</label>

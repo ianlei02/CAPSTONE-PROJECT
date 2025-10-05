@@ -5,9 +5,9 @@ require "../../connection/dbcon.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../../phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
-require '../../phpmailer/vendor/phpmailer/phpmailer/src/SMTP.php';
-require '../../phpmailer/vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require '../../vendor/phpmailer/phpmailer/src/Exception.php';
+require '../../vendor/phpmailer/phpmailer/src/SMTP.php';
+require '../../vendor/phpmailer/phpmailer/src/PHPMailer.php';
 
 if (isset($_POST['email-reset'])) {
     $email = trim($_POST['email-reset']);
