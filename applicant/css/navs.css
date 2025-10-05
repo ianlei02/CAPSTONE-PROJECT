@@ -371,7 +371,7 @@ body {
   }
   li a.active {
     background-color: var(--bg-active);
-    color: var(--color-blue-500);
+    color: var(--text);
   }
   a:hover,
   button:hover {
@@ -561,6 +561,11 @@ body {
   }
   main {
     overflow: hidden;
+    padding: 0;
+    margin: 0;
+  }
+  .content-wrapper{
+    flex-direction: column;
   }
   .job-application-status {
     padding: 0.5rem;
@@ -572,8 +577,18 @@ body {
     a {
       font-size: 1.25rem;
     }
-    .status-action {
+
+    .application-item{
       flex-direction: column;
+      padding: 0.5rem;
+    }
+    .status-action {
+      margin-top: 1.5rem;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .status-action button, .status-action {
+      scale: 0.8;
     }
   }
 
