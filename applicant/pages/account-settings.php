@@ -292,6 +292,66 @@ require_once '../Functions/getName.php';
             return hasMinLength && hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChar;
         }
     </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const updateBtn = document.getElementById("update-password");
+        const currentInput = document.getElementById("current-password");
+        const newInput = document.getElementById("new-password");
+        const confirmInput = document.getElementById("confirm-password");
+        const successMsg = document.getElementById("password-success");
+        const currentError = document.getElementById("current-password-error");
+        const newError = document.getElementById("new-password-error");
+
+        updateBtn.addEventListener("click", async (e) => {
+            e.preventDefault();
+
+            currentError.textContent = "";
+            newError.textContent = "";
+            successMsg.style.display = "none";
+
+            const currentPassword = currentInput.value.trim();
+            const newPassword = newInput.value.trim();
+            const confirmPassword = confirmInput.value.trim();
+
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                newError.textContent = "All fields are required.";
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                newError.textContent = "New passwords do not match.";
+                return;
+            }
+
+            try {
+                const response = await fetch("../Functions/update-pass.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams({
+                        currentPassword: currentPassword,
+                        newPassword: newPassword
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    successMsg.style.display = "block";
+                    successMsg.textContent = "✓ " + result.message;
+                    currentInput.value = "";
+                    newInput.value = "";
+                    confirmInput.value = "";
+                } else {
+                    currentError.textContent = result.message;
+                }
+            } catch (err) {
+                newError.textContent = "An error occurred. Please try again.";
+                console.error(err);
+            }
+        });
+    });
+    </script>
+
 </body>
 
 </html>

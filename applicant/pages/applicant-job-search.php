@@ -50,6 +50,8 @@ $sql = "SELECT
         ORDER BY jp.created_at DESC";
 
 $result = $conn->query($sql);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -199,6 +201,19 @@ $result = $conn->query($sql);
       <div class="job-listings">
         <?php if ($result->num_rows > 0): ?>
           <?php while ($row = $result->fetch_assoc()): ?>
+            <?php
+            $jobId = $row['job_id'];
+            $status = 'Not Applied';
+            $statusSql = "SELECT status FROM job_application WHERE applicant_id = ? AND job_id = ?";
+            $stmt = $conn->prepare($statusSql);
+            $stmt->bind_param("ii", $applicant_id, $jobId);
+            $stmt->execute();
+            $statusResult = $stmt->get_result();
+                    if ($statusResult->num_rows > 0) {
+                        $status = ucfirst($statusResult->fetch_assoc()['status']);
+                    }
+            $stmt->close();
+            ?>
             <div class="job-card hidden" data-field="<?php echo htmlspecialchars($row['category']); ?>">
               <div class="job-field"><?php echo htmlspecialchars($row['category']); ?></div>
 
@@ -224,7 +239,14 @@ $result = $conn->query($sql);
 
               <div class="job-footer">
                 <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
-                <button class="apply-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">Apply Now</button>
+                <p>Status: <strong style="color: <?= $status === 'Referred' ? 'green' : ($status === 'Rejected' ? 'red' : ($status === 'Pending' ? 'orange' : '#555')); ?>"> <?= htmlspecialchars($status); ?></strong></p>
+                <?php if ($status === 'Pending' || $status === 'Referred' || $status === 'Rejected'): ?>
+                <button class="status-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">
+                    <?= ($status === 'Pending') ? 'Applied' : 'View Status'; ?>
+                </button>
+              <?php else: ?>
+                  <button class="apply-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">Apply Now</button>
+              <?php endif; ?>
               </div>
             </div>
           <?php endwhile; ?>
