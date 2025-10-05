@@ -233,91 +233,122 @@ require_once '../Functions/getName.php';
         </div> -->
       </div>
     </div>
-
-    <div class="job-application-status">
-      <div class="job-application-header">
-        <h2>Recent Job Applications</h2>
-        <a href="./applicant-applications.php" class="view-all">
-          <span class="material-symbols-outlined">
-            open_in_new
-          </span>
-        </a>
+    <div class="content-wrapper">
+      <div class="quick-actions">
+        <h2 class="section-title">
+          <span class="material-symbols-outlined">bolt</span>
+          <span>Quick Actions</span>
+        </h2>
+        <div class="actions-grid">
+          <a class="action-card" href="./applicant-job-search.php">
+            <div class="action-icon">
+              <span class="material-symbols-outlined">add</span>
+            </div>
+            <div class="action-title">Apply</div>
+            <div class="action-desc">Apply for a Job</div>
+          </a>
+          <a class="action-card" href="./applicant-applications.php">
+            <div class="action-icon">
+              <span class="material-symbols-outlined">people</span>
+            </div>
+            <div class="action-title">View Applications</div>
+            <div class="action-desc">See your full job applications</div>
+          </a>
+          <a class="action-card" href="./applicant-profile.php">
+            <div class="action-icon">
+              <span class="material-symbols-outlined">id_card</span>
+            </div>
+            <div class="action-title">Edit My Profile</div>
+            <div class="action-desc">Update your information</div>
+          </a>
+        </div>
       </div>
-      <div class="application-cards">
-        <div class="application-item">
-          <div class="application-info">
-            <div class="application-logo">
-              <img src="../../public/images/company-logos/Jollibee.png" alt="company-logo">
-            </div>
-            <div class="application-details">
-              <h3 class="application-title">Waiter</h3>
-              <div class="application-company">Jollibee Corp.</div>
-              <div class="application-location-date">
-                <span>San Ildefonso, Bulacan</span>
-                <span>9/20/2025</span>
-              </div>
-            </div>
-          </div>
-          <div class="status-action">
-            <span class="application-status hired">Hired </span>
-            <button>View</button>
-          </div>
+      <div class="job-application-status">
+        <div class="job-application-header">
+          <h2>Recent Job Applications</h2>
+          <a href="./applicant-applications.php" class="view-all">
+            <!-- <span>See all</span> -->
+            <span class="material-symbols-outlined">
+              open_in_new
+            </span>
+          </a>
         </div>
-        <div class="application-item">
-          <div class="application-info">
-            <div class="application-logo">
-              <img src="../../public/images/company-logos/7-eleven_logo.svg.png" alt="company-logo">
-            </div>
-            <div class="application-details">
-              <h3 class="application-title">Cashier</h3>
-              <div class="application-company">7-11</div>
-              <div class="application-location-date">
-                <span>San Ildefonso, Bulacan</span>
-                <span>9/20/2025</span>
+        <div class="application-cards">
+          <div class="application-item">
+            <div class="application-info">
+              <div class="application-logo">
+                <img src="../../public/images/company-logos/Jollibee.png" alt="company-logo">
+              </div>
+              <div class="application-details">
+                <h3 class="application-title">Waiter</h3>
+                <div class="application-company">Jollibee Corp.</div>
+                <div class="application-location-date">
+                  <span>San Ildefonso, Bulacan</span>
+                  <span>9/20/2025</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="status-action">
-            <span class="application-status pending">Pending</span>
-            <button>View</button>
-          </div>
-        </div>
-        <div class="application-item">
-          <div class="application-info">
-            <div class="application-logo">
-              <img src="../../public/images/company-logos/Chowking_logo.svg.png" alt="company-logo">
+            <div class="status-action">
+              <span class="application-status hired">Hired </span>
+              <button>View</button>
             </div>
-            <div class="application-details">
-              <h3 class="application-title">Cashier</h3>
-              <div class="application-company">Chowking</div>
-              <div class="application-location-date">
-                <span>San Ildefonso, Bulacan</span>
-                <span>9/20/2025</span>
+          </div>
+          <div class="application-item">
+            <div class="application-info">
+              <div class="application-logo">
+                <img src="../../public/images/company-logos/7-eleven_logo.svg.png" alt="company-logo">
+              </div>
+              <div class="application-details">
+                <h3 class="application-title">Cashier</h3>
+                <div class="application-company">7-11</div>
+                <div class="application-location-date">
+                  <span>San Ildefonso, Bulacan</span>
+                  <span>9/20/2025</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="status-action">
-            <span class="application-status interview">Interview</span>
-            <button>View</button>
-          </div>
-        </div>
-        <div class="application-item">
-          <div class="application-info">
-            <div class="application-logo">
-              <img src="../../public/images/company-logos/kfc.png" alt="company-logo">
+            <div class="status-action">
+              <span class="application-status pending">Pending</span>
+              <button>View</button>
             </div>
-            <div class="application-details">
-              <h3 class="application-title">Janitor</h3>
-              <div class="application-company">KFC</div>
-              <div class="application-location-date">
-                <span>San Ildefonso, Bulacan</span>
-                <span>9/20/2025</span>
+          </div>
+          <div class="application-item">
+            <div class="application-info">
+              <div class="application-logo">
+                <img src="../../public/images/company-logos/Chowking_logo.svg.png" alt="company-logo">
+              </div>
+              <div class="application-details">
+                <h3 class="application-title">Cashier</h3>
+                <div class="application-company">Chowking</div>
+                <div class="application-location-date">
+                  <span>San Ildefonso, Bulacan</span>
+                  <span>9/20/2025</span>
+                </div>
               </div>
             </div>
+            <div class="status-action">
+              <span class="application-status interview">Interview</span>
+              <button>View</button>
+            </div>
           </div>
-          <div class="status-action">
-            <span class="application-status rejected ">Rejected</span>
-            <button>View</button>
+          <div class="application-item">
+            <div class="application-info">
+              <div class="application-logo">
+                <img src="../../public/images/company-logos/kfc.png" alt="company-logo">
+              </div>
+              <div class="application-details">
+                <h3 class="application-title">Janitor</h3>
+                <div class="application-company">KFC</div>
+                <div class="application-location-date">
+                  <span>San Ildefonso, Bulacan</span>
+                  <span>9/20/2025</span>
+                </div>
+              </div>
+            </div>
+            <div class="status-action">
+              <span class="application-status rejected ">Rejected</span>
+              <button>View</button>
+            </div>
           </div>
         </div>
       </div>

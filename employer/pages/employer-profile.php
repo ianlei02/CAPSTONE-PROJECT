@@ -258,8 +258,10 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                 <button class="view-doc" data-doc="<?php echo $baseURL . $docs['employer_profile']; ?>">
                   <span class="material-symbols-outlined">visibility</span>
                 </button>
+
                 <label for="upload-employer-profile" class="update-doc">Upload</label>
                 <input type="file" id="upload-employer-profile" name="upload-employer-profile" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+
               </div>
             </li>
             <li class="document-item">
