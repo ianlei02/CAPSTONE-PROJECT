@@ -258,7 +258,7 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                 <button class="view-doc" data-doc="">
                   <span class="material-symbols-outlined">visibility</span>
                 </button>
-                <label for="upload-bir" class="update-doc">Upload</label>
+                <label for="upload-employer-id" class="update-doc">Upload</label>
                 <input type="file" id="upload-employer-id" name="upload-employer-id" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
               </div>
             </li>
@@ -272,7 +272,7 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                 <button class="view-doc" data-doc="">
                   <span class="material-symbols-outlined">visibility</span>
                 </button>
-                <label for="upload-bir" class="update-doc">Upload</label>
+                <label for="upload-company-profile" class="update-doc">Upload</label>
                 <input type="file" id="upload-company-profile" name="upload-company-profile" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
               </div>
             </li>
