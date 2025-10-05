@@ -136,6 +136,8 @@ try {
     }
 
     $docFields = [
+        "employer-profile" => "employer_profile",
+        "company-profile" => "company_profile",
         "bir" => "bir_certification",
         "business-permit" => "business_permit",
         "dole" => "dole_certification",
@@ -145,6 +147,16 @@ try {
 
     $uploadedFiles = [];
     $timestamps = [];
+
+    $existing = [];
+    $getOld = $conn->prepare("SELECT * FROM employer_company_docs WHERE employer_id = ?");
+    $getOld->bind_param("i", $employer_id);
+    $getOld->execute();
+    $existingResult = $getOld->get_result();
+    if ($existingResult->num_rows > 0) {
+        $existing = $existingResult->fetch_assoc();
+    }
+    $getOld->close();
 
     foreach ($docFields as $field => $column) {
         $fileKey = "upload-" . $field;
@@ -171,6 +183,13 @@ try {
             $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
             $filename = "doc_{$employer_id}_{$field}_" . time() . ".$ext";
             $targetPath = $uploadDir . $filename;
+
+            if (!empty($existing[$column])) {
+                $oldFile = "../../" . $existing[$column];
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            }
 
             if (move_uploaded_file($file['tmp_name'], $targetPath)) {
                 $uploadedFiles[$column] = "employer/Functions/uploads/company_docs/" . $filename;
@@ -216,7 +235,7 @@ try {
             }
         } else {
                 
-                $columns = array_merge(array_keys($uploadedFiles), array_keys($timestamps), ['employer_id']);
+            $columns = array_merge(array_keys($uploadedFiles), array_keys($timestamps), ['employer_id']);
             $placeholders = rtrim(str_repeat("?, ", count($columns)), ", ");
             $values = array_merge(array_values($uploadedFiles), array_values($timestamps), [$employer_id]);
             $types = str_repeat("s", count($values) - 1) . "i";
