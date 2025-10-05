@@ -186,15 +186,19 @@ $result = $conn->query($sql);
         </div>
         <select class="filter" id="jobFieldFilter">
           <option value="">All Fields</option>
-          <option value="IT">IT/Software</option>
-          <option value="Engineering">Engineering</option>
-          <option value="Healthcare">Medicine/Healthcare</option>
-          <option value="Business">Business/Finance</option>
           <option value="Education">Education</option>
-          <option value="Marketing">Marketing</option>
+          <option value="Finance">Financial Service</option>
+          <option value="Transpo">Transportation</option>
+          <option value="D-economy">Digital Economy</option>
+          <option value="B-economy">Blue Economy</option>
+          <option value="C-economy">Creative Economy</option>
+          <option value="G-economy">Green Economy</option>
+          <option value="Housing">Housing</option>
+          <option value="Food">Food & Advanced Manufacturing</option>
+          <option value="Health">Health</option>
+          <option value="Agri">Agribusiness, Agriculture, Forestry, and Fisheries</option>
+          <option value="Tourism">Tourism</option>
           <option value="Construction">Construction</option>
-          <option value="Manufacturing">Manufacturing</option>
-          <option value="Other">Other Fields</option>
         </select>
       </div>
 
@@ -209,12 +213,13 @@ $result = $conn->query($sql);
             $stmt->bind_param("ii", $applicant_id, $jobId);
             $stmt->execute();
             $statusResult = $stmt->get_result();
-                    if ($statusResult->num_rows > 0) {
-                        $status = ucfirst($statusResult->fetch_assoc()['status']);
-                    }
+            if ($statusResult->num_rows > 0) {
+              $status = ucfirst($statusResult->fetch_assoc()['status']);
+            }
             $stmt->close();
             ?>
-            <div class="job-card hidden" data-field="<?php echo htmlspecialchars($row['category']); ?>">
+            <div class="job-card hidden <?= $status ?>
+            " data-field="<?php echo htmlspecialchars($row['category']); ?>">
               <div class="job-field"><?php echo htmlspecialchars($row['category']); ?></div>
 
               <div class="job-header">
@@ -239,14 +244,14 @@ $result = $conn->query($sql);
 
               <div class="job-footer">
                 <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
-                <p>Status: <strong style="color: <?= $status === 'Referred' ? 'green' : ($status === 'Rejected' ? 'red' : ($status === 'Pending' ? 'orange' : '#555')); ?>"> <?= htmlspecialchars($status); ?></strong></p>
+                <!-- <p>Status: <strong style="color: <?= $status === 'Referred' ? 'green' : ($status === 'Rejected' ? 'red' : ($status === 'Pending' ? 'orange' : '#555')); ?>"> <?= htmlspecialchars($status); ?></strong></p> -->
                 <?php if ($status === 'Pending' || $status === 'Referred' || $status === 'Rejected'): ?>
-                <button class="status-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">
+                  <button class="status-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">
                     <?= ($status === 'Pending') ? 'Applied' : 'View Status'; ?>
-                </button>
-              <?php else: ?>
+                  </button>
+                <?php else: ?>
                   <button class="apply-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">Apply Now</button>
-              <?php endif; ?>
+                <?php endif; ?>
               </div>
             </div>
           <?php endwhile; ?>

@@ -65,7 +65,7 @@ select.filter {
 .job-listings {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 20px;
   margin-bottom: 40px;
 }
@@ -86,17 +86,71 @@ select.filter {
   cursor: pointer;
   justify-content: space-between;
 }
-.job-card.applied::after{
+/* .job-card.Applied::after{
   content: 'Applied';
-  color: var(--color-blue-400);
   position: absolute;
   top: 14px;
   right: 0;
   width: 10ch;
   border-radius: var(--radius-sm);
   height: auto;
+  color: var(--info);
   background-color: rgba(25, 0, 255, 0.144);
   z-index: 5;
+  padding: 0.5rem 1rem;
+}
+*/
+.job-card.Pending::after{ 
+  content: 'Pending';
+  color: var(--warning);
+  position: absolute;
+  top: 14px;
+  right: 0;
+  width: 10ch;
+  height: auto;
+  border-radius: var(--radius-sm);
+  background-color: rgba(255, 208, 0, 0.144);
+  z-index: 5;
+  padding: 0.5rem 1rem;
+}
+.job-card.Referred::after{
+  content: 'Referred';
+  color: var(--info);
+  position: absolute;
+  top: 10px;
+  right: 0;
+  width: 10ch;
+  border-radius: var(--radius-sm);
+  height: auto;
+  background-color: rgba(25, 0, 255, 0.144);
+  z-index: 5;
+  padding: 0.5rem 1rem;
+}
+.job-card.Interview::after{
+  content: 'Applied';
+  position: absolute;
+  top: 14px;
+  right: 0;
+  width: 10ch;
+  border-radius: var(--radius-sm);
+  height: auto;
+  color: var(--success);
+  background-color: var(--success-muted);
+  z-index: 5;
+  padding: 0.5rem 1rem;
+}
+.job-card.Rejected::after{
+  content: 'Rejected';
+  position: absolute;
+  top: 14px;
+  right: 0;
+  width: 10ch;
+  border-radius: var(--radius-sm);
+  height: auto;
+  color: var(--danger);
+  background-color: rgba(255, 0, 0, 0.137);
+  z-index: 5;
+  padding: 0.5rem 1rem;
 }
 .job-card.hidden {
   opacity: 0;
@@ -127,7 +181,7 @@ select.filter {
 }
 .job-title {
   font-size: 20px;
-  color: var(--color-blue-500);
+  color: var(--color-blue-400);
   margin: 0;
 }
 .job-salary{

@@ -106,7 +106,9 @@
     gap: 15px;
     padding: 1rem;
   }
-
+  a{
+    text-decoration: none;
+  }
   .action-card {
     background-color: var(--bg);
     background-image: linear-gradient(to bottom, var(--bg),var(--bg-muted));
