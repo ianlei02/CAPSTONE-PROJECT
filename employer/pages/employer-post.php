@@ -179,12 +179,12 @@ if (isset($_GET['action'])) {
             <span class="label">Post Job</span>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="./employer-applications.php">
             <span class="material-symbols-outlined icon">people</span>
             <span class="label">Job Applications</span>
           </a>
-        </li>
+        </li> -->
         <li>
           <a href="employer-profile.php">
             <span class="material-symbols-outlined icon">id_card</span>
@@ -289,7 +289,7 @@ if (isset($_GET['action'])) {
     </section>
 
     <!-- Job Monitoring Section -->
-    <section class="job-monitoring-section card">
+    <section class="job-monitoring-section card" id="jobsPosted">
       <div class="section-header">
         <form action="employer-post.php" method="GET">
           <h2>Jobs Posted</h2>

@@ -109,12 +109,12 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
             <span class="label">Post Job</span>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="./employer-applications.php">
             <span class="material-symbols-outlined icon">people</span>
             <span class="label">Job Applications</span>
           </a>
-        </li>
+        </li> -->
         <li>
           <a href="employer-profile.php" class="active">
             <span class="material-symbols-outlined icon">id_card</span>
@@ -195,7 +195,7 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
               <input type="number" class="info-value" id="contactNumber" name="contactNumber">
               </input>
             </div>
-            <div class="info-item">
+            <div class="info-item " >
               <span class="info-label">Email</span>
               <input type="email" class="info-value" id="companyEmail" name="email"></input>
             </div>
@@ -229,7 +229,7 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
               <span class="info-label">Mobile Number</span>
               <input type="number" class="info-value" id="contactMobile" name="mobileNumber"></input>
             </div>
-            <div class="info-item">
+            <div class="info-item email">
               <span class="info-label">Email</span>
               <input type="email" class="info-value" id="contactEmail" name="contactEmail">
               </input>
@@ -251,6 +251,20 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
             <li class="document-item">
               <div class="document-icon">📄</div>
               <div class="document-info">
+                <div class="document-name">Employer ID</div>
+                <div class="document-date">Uploaded:</div>
+              </div>
+              <div class="document-actions">
+                <button class="view-doc" data-doc="">
+                  <span class="material-symbols-outlined">visibility</span>
+                </button>
+                <label for="upload-bir" class="update-doc">Upload</label>
+                <input type="file" id="upload-employer-id" name="upload-employer-id" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+              </div>
+            </li>
+            <li class="document-item">
+              <div class="document-icon">📄</div>
+              <div class="document-info">
                 <div class="document-name">Company Profile</div>
                 <div class="document-date">Uploaded:</div>
               </div>
@@ -259,7 +273,7 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                   <span class="material-symbols-outlined">visibility</span>
                 </button>
                 <label for="upload-bir" class="update-doc">Upload</label>
-                <input type="file" id="upload-bir" name="upload-bir" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
+                <input type="file" id="upload-company-profile" name="upload-company-profile" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
               </div>
             </li>
             <li class="document-item">
@@ -485,6 +499,7 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
       document.getElementById("docImage").src = "";
     });
   </script>
+
 
 </body>
 

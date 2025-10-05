@@ -1,6 +1,7 @@
 <?php
 require_once '../../auth/functions/check_login.php';
 require_once '../Functions/getinfo.php';
+require_once '../Functions/getName.php';
 ?>
 
 <!DOCTYPE html>
@@ -15,9 +16,16 @@ require_once '../Functions/getinfo.php';
   <link rel="stylesheet" href="../css/navs.css">
   <link rel="stylesheet" href="../css/profile-completion.css">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-  <!-- <script src="../../public-assets/JS_JQUERY/jquery-3.7.1.min.js" defer></script>
-  <script src="../../public-assets/library/datatable/dataTables.js" defer></script>
-  <script src="../../public-assets/js/table-init.js" defer></script> -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script> -->
+
+  <style>
+    #calendar {
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: var(--bg);
+    }
+  </style>
 </head>
 
 <body>
@@ -27,18 +35,51 @@ require_once '../Functions/getinfo.php';
         <button class="hamburger">☰</button>
         <h1>Dashboard</h1>
       </div>
-    </div>
 
-    <div class="right-pos">
-      <div class="profile">
-        <img
-          src="<?php echo htmlspecialchars($profile_picture_url); ?>"
-          alt="Profile Picture"
-          class="profile-pic"
-          id="profilePicc" style="width: 50px !important;" />
+      <div class="right-pos">
+        <div class="profile">
+          <img
+            src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+            alt="Profile Picture"
+            class="profile-pic"
+            id="profilePicc" style="width: 50px !important;" />
+          <div class="user-name">
+            <h4><?= $fullName ?></h4>
+            <p>Applicant</p>
+          </div>
+        </div>
+
+        <div class="dropdown-menu" id="dropdownMenu">
+          <div class="dropdown-arrow"></div>
+          <div class="dropdown-header">
+            <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
+            <a class="user-info" href="./applicant-profile.php">
+              <h3><?= $fullName ?></h3>
+              <p>See your profile</p>
+            </a>
+          </div>
+
+          <div class="dropdown-links">
+            <a href="./account-settings.php" class="dropdown-item">
+              <span class="material-symbols-outlined">settings</span>
+              <span>Account Settings</span>
+            </a>
+            <a onclick="toggleTheme()" class="dropdown-item">
+              <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+              <span id="themeLabel">Dark Mode</span>
+            </a>
+
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item logout-item">
+              <span class="material-symbols-outlined icon">logout</span>
+              <span>Log Out</span>
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
-    </div>
+
   </nav>
   <aside class="sidebar">
     <div class="sidebar-logo">
@@ -51,7 +92,7 @@ require_once '../Functions/getinfo.php';
     <div class="sidebar-options">
       <ul class="sidebar-menu">
         <li>
-          <a href="./applicant-dashboard.php">
+          <a href="./applicant-dashboard.php" class="active">
             <span class="material-symbols-outlined icon">dashboard</span>
             <span class="label">Dashboard</span>
           </a>
@@ -74,12 +115,12 @@ require_once '../Functions/getinfo.php';
             <span class="label">My Profile</span>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <button onclick="toggleTheme()" class="dark-mode-toggle">
             <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
             <span id="themeLabel">Dark Mode</span>
           </button>
-        </li>
+        </li> -->
       </ul>
       <ul>
         <li>
@@ -168,7 +209,7 @@ require_once '../Functions/getinfo.php';
           </svg>
           <div class="progress-text">
             <?php echo $progress; ?>%
-            <span>COMPLETE</span>
+            <!-- <span>COMPLETE</span> -->
           </div>
         </div>
         <div class="message-button">
@@ -276,12 +317,62 @@ require_once '../Functions/getinfo.php';
         </div>
       </div>
     </div>
+    <!-- <div id="calendar"></div> -->
+
   </main>
   <!-- <button class="floating-icon">
     <span class="material-symbols-outlined">dark_mode</span>
   </button> -->
-
+  <!-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const calendarEl = document.getElementById('calendar');
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        selectable: true,
+        editable: true,
+        events: 'fetch_events.php', // Load events from the database
+        select: function(info) {
+          const title = prompt('Enter event title:');
+          if (title) {
+            const type = prompt('Enter event type (interview or job_fair):');
+            const eventData = {
+              title: title,
+              start: info.startStr,
+              end: info.endStr,
+              type: type
+            };
+            fetch('add_event.php', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(eventData)
+              })
+              .then(res => res.json())
+              .then(() => calendar.refetchEvents());
+          }
+        },
+        eventClick: function(info) {
+          if (confirm('Do you want to delete this event?')) {
+            fetch('delete_event.php', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  id: info.event.id
+                })
+              })
+              .then(res => res.json())
+              .then(() => calendar.refetchEvents());
+          }
+        }
+      });
+      calendar.render();
+    });
+  </script> -->
   <script src="../js/responsive.js"></script>
+  <script src="../js/drop-down.js"></script>
   <script src="../js/dark-mode.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {

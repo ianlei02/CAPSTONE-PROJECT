@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   justify-self: center;
-  background: var(--white);
+  background: radial-gradient(circle at 80% 100%, var(--bg), var(--bg-muted));
   border: 2px solid var(--border);
   width: auto;
   height: 100%;
@@ -13,21 +13,12 @@
   padding: 1rem;
   text-align: center;
 }
-
-.completion-title {
-  display: none;
-  color: #2c3e50;
-  margin-bottom: 25px;
-  font-size: 18px;
-}
-
 .progress-circle {
   position: relative;
-  width: 100px;
-  height: 100px;
-  /* margin: 0 auto 25px; */
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 4px;
 }
-
 .progress-circle-background {
   fill: none;
   stroke: #e0e0e0;
@@ -46,21 +37,20 @@
 
 .progress-text {
   position: absolute;
-  inset: 1rem;
+  inset: 1.5rem;
   margin: 0 auto;
   font-size: 20px;
   font-weight: bold;
-  color: var(--black-light);
+  font-family: monospace;
+  color: var(--text-muted);
 }
-
 .progress-text span {
   font-size: 14px;
   display: block;
   color: #7f8c8d;
   margin-top: 5px;
 }
-
-.completion-message {
+/* .completion-message {
   color: var(--black-light);
   margin-bottom: 10px;
   font-size: 12px;
@@ -69,20 +59,20 @@
   text-align: center;
   text-wrap: wrap;
   border-radius: 1rem;
-}
+} */
 
 .complete-profile-btn {
-  background: #3498db;
+  background: var(--color-blue-500);
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 4px 12px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
   transition: background 0.3s;
 }
 .complete-profile-btn:hover {
-  background: #2980b9;
+  background: var(--color-blue-700);
 }
 
 .missing-items {

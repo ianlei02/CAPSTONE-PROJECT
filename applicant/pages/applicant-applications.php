@@ -1,5 +1,6 @@
 <?php
 require_once '../../auth/functions/check_login.php';
+require_once '../Functions/getName.php';
 
 if (!isset($_SESSION['user_id'])) {
   header("Location: ../../auth/login-signup.php");
@@ -59,7 +60,40 @@ if (isset($_SESSION['user_id'])) {
             alt="Profile Picture"
             class="profile-pic"
             id="profilePicc" style="width: 50px !important;" />
+          <div class="user-name">
+            <h4><?= $fullName ?></h4>
+            <p>Applicant</p>
+          </div>
         </div>
+
+        <div class="dropdown-menu" id="dropdownMenu">
+          <div class="dropdown-arrow"></div>
+          <div class="dropdown-header">
+            <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
+            <a class="user-info" href="./applicant-profile.php">
+              <h3><?= $fullName ?></h3>
+              <p>See your profile</p>
+            </a>
+          </div>
+
+          <div class="dropdown-links">
+            <a href="./account-settings.php" class="dropdown-item">
+              <span class="material-symbols-outlined">settings</span>
+              <span>Account Settings</span>
+            </a>
+            <a onclick="toggleTheme()" class="dropdown-item">
+              <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+              <span id="themeLabel">Dark Mode</span>
+            </a>
+
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item logout-item">
+              <span class="material-symbols-outlined icon">logout</span>
+              <span>Log Out</span>
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
   </nav>
@@ -98,12 +132,12 @@ if (isset($_SESSION['user_id'])) {
             <span class="label">My Profile</span>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <button onclick="toggleTheme()" class="dark-mode-toggle">
             <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
             <span id="themeLabel">Dark Mode</span>
           </button>
-        </li>
+        </li> -->
       </ul>
       <ul>
         <li>
@@ -121,7 +155,7 @@ if (isset($_SESSION['user_id'])) {
       <h2>Job Applications</h2>
     </div> -->
     <div class="job-application-status">
-       <div class="application-cards">
+      <div class="application-cards">
         <div class="application-item">
           <div class="application-info">
             <div class="application-logo">
@@ -260,6 +294,7 @@ if (isset($_SESSION['user_id'])) {
   </div>
 
   <script src="../js/responsive.js"></script>
+  <script src="../js/drop-down.js"></script>
   <script src="../js/dark-mode.js"></script>
   <script>
     // Application Modal

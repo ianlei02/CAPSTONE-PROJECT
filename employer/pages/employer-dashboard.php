@@ -102,7 +102,7 @@ $data = $result->fetch_assoc();
     <div class="navbar-left">
       <div class="left-pos">
         <h1>
-          <span class="material-symbols-outlined">dashboard</span>
+          <!-- <span class="material-symbols-outlined">dashboard</span> -->
           <span>Dashboard</span>
         </h1>
       </div>
@@ -140,12 +140,12 @@ $data = $result->fetch_assoc();
             <span class="label">Post Job</span>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="./employer-applications.php">
             <span class="material-symbols-outlined icon">people</span>
             <span class="label">Job Applications</span>
           </a>
-        </li>
+        </li> -->
         <li>
           <a href="employer-profile.php">
             <span class="material-symbols-outlined icon">id_card</span>
@@ -245,27 +245,27 @@ $data = $result->fetch_assoc();
           <span>Quick Actions</span>
         </h2>
         <div class="actions-grid">
-          <div class="action-card">
+          <a class="action-card" href="./employer-post.php">
             <div class="action-icon">
               <span class="material-symbols-outlined">add</span>
             </div>
             <div class="action-title">Post a Job</div>
             <div class="action-desc">Create a new job posting</div>
-          </div>
-          <div class="action-card">
+          </a>
+          <a class="action-card" href="./employer-post.php#jobsPosted">
             <div class="action-icon">
               <span class="material-symbols-outlined">people</span>
             </div>
             <div class="action-title">Review Applicants</div>
             <div class="action-desc">Screen and filter candidates</div>
-          </div>
-          <div class="action-card">
+          </a>
+          <a class="action-card" href="./employer-profile.php">
             <div class="action-icon">
               <span class="material-symbols-outlined">apartment</span>
             </div>
             <div class="action-title">Edit Company Profile</div>
             <div class="action-desc">Update company information</div>
-          </div>
+          </a>
         </div>
       </div>
       <div class="calendar-container">

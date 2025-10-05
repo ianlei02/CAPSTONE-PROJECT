@@ -1,26 +1,17 @@
-// Theme toggle functionality
 function toggleTheme() {
-  const themeToggle = document.getElementById("themeToggle");
-  const icon = themeToggle.querySelector(".material-symbols-outlined");
   const html = document.documentElement;
+  const themeIcon = document.getElementById('themeIcon');
+  const themeLabel = document.getElementById('themeLabel');
   const currentTheme = html.getAttribute("data-theme");
   const newTheme = currentTheme === "dark" ? "light" : "dark";
   html.setAttribute("data-theme", newTheme);
-
+  console.log("Theme toggled to:", newTheme);
+  localStorage.setItem("theme", newTheme);
   if (newTheme === "dark") {
-    icon.textContent = "light_mode";
-    Chart.defaults.color = "#94a3b8";
-    Chart.defaults.borderColor = "#334155";
+    themeIcon.textContent = "light_mode";
+    themeLabel.textContent = "Light Mode";
   } else {
-    icon.textContent = "dark_mode";
-    Chart.defaults.color = "#64748b";
-    Chart.defaults.borderColor = "#e2e8f0";
+    themeIcon.textContent = "dark_mode";   
+    themeLabel.textContent = "Dark Mode";
   }
-
-  // Update all charts
-  applicantsChart.update();
-  employersChart.update();
-  hiresChart.update();
-  sexChart.update();
-  ageChart.update();
 }

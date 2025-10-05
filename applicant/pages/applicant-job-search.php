@@ -1,5 +1,6 @@
 <?php
 require_once '../../auth/functions/check_login.php';
+require_once '../Functions/getName.php';
 
 if (!isset($_SESSION['user_id'])) {
   header("Location: ../../auth/login-signup.php");
@@ -49,6 +50,8 @@ $sql = "SELECT
         ORDER BY jp.created_at DESC";
 
 $result = $conn->query($sql);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +82,40 @@ $result = $conn->query($sql);
             alt="Profile Picture"
             class="profile-pic"
             id="profilePicc" style="width: 50px !important;" />
+          <div class="user-name">
+            <h4><?= $fullName ?></h4>
+            <p>Applicant</p>
+          </div>
         </div>
+
+        <div class="dropdown-menu" id="dropdownMenu">
+          <div class="dropdown-arrow"></div>
+          <div class="dropdown-header">
+            <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
+            <a class="user-info" href="./applicant-profile.php">
+              <h3><?= $fullName ?></h3>
+              <p>See your profile</p>
+            </a>
+          </div>
+
+          <div class="dropdown-links">
+            <a href="./account-settings.php" class="dropdown-item">
+              <span class="material-symbols-outlined">settings</span>
+              <span>Account Settings</span>
+            </a>
+            <a onclick="toggleTheme()" class="dropdown-item">
+              <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+              <span id="themeLabel">Dark Mode</span>
+            </a>
+
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item logout-item">
+              <span class="material-symbols-outlined icon">logout</span>
+              <span>Log Out</span>
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
   </nav>
@@ -118,12 +154,12 @@ $result = $conn->query($sql);
             <span class="label">My Profile</span>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <button onclick="toggleTheme()" class="dark-mode-toggle">
             <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
             <span id="themeLabel">Dark Mode</span>
           </button>
-        </li>
+        </li> -->
       </ul>
       <ul>
         <li>
@@ -165,6 +201,19 @@ $result = $conn->query($sql);
       <div class="job-listings">
         <?php if ($result->num_rows > 0): ?>
           <?php while ($row = $result->fetch_assoc()): ?>
+            <?php
+            $jobId = $row['job_id'];
+            $status = 'Not Applied';
+            $statusSql = "SELECT status FROM job_application WHERE applicant_id = ? AND job_id = ?";
+            $stmt = $conn->prepare($statusSql);
+            $stmt->bind_param("ii", $applicant_id, $jobId);
+            $stmt->execute();
+            $statusResult = $stmt->get_result();
+                    if ($statusResult->num_rows > 0) {
+                        $status = ucfirst($statusResult->fetch_assoc()['status']);
+                    }
+            $stmt->close();
+            ?>
             <div class="job-card hidden" data-field="<?php echo htmlspecialchars($row['category']); ?>">
               <div class="job-field"><?php echo htmlspecialchars($row['category']); ?></div>
 
@@ -190,7 +239,14 @@ $result = $conn->query($sql);
 
               <div class="job-footer">
                 <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
-                <button class="apply-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">Apply Now</button>
+                <p>Status: <strong style="color: <?= $status === 'Referred' ? 'green' : ($status === 'Rejected' ? 'red' : ($status === 'Pending' ? 'orange' : '#555')); ?>"> <?= htmlspecialchars($status); ?></strong></p>
+                <?php if ($status === 'Pending' || $status === 'Referred' || $status === 'Rejected'): ?>
+                <button class="status-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">
+                    <?= ($status === 'Pending') ? 'Applied' : 'View Status'; ?>
+                </button>
+              <?php else: ?>
+                  <button class="apply-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">Apply Now</button>
+              <?php endif; ?>
               </div>
             </div>
           <?php endwhile; ?>
@@ -248,20 +304,15 @@ $result = $conn->query($sql);
                   <option>Other</option>
                 </select>
               </div>
-             
+
             </div>
 
             <div class="section">
-              <div
-                style="
-                      background-color: var(--light-clr-500);
-                      padding: 15px;
-                      border-radius: 4px;
-                    ">
-                <p style="margin: 0; color: var(--dark-clr-600)">
+              <div class="info-section">
+                <p>
                   <i
                     class="fas fa-info-circle"
-                    style="color: var(--primary-blue-color)"></i>
+                    style="color: var(--color-blue-500)"></i>
                   Your resume/CV and other documents from your profile will
                   be automatically included with this application.
                 </p>
@@ -286,6 +337,7 @@ $result = $conn->query($sql);
   </main>
 
   <script src="../js/responsive.js"></script>
+  <script src="../js/drop-down.js"></script>
   <script src="../js/dark-mode.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

@@ -1,0 +1,13 @@
+ .calendar-container{
+    background-color: var(--bg);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+ }
+ h2{
+    margin-bottom: 1rem;
+    color: var(--text);
+ }
+ #calendar {
+      max-width: 1000px;
+      margin: 0 auto;
+    }

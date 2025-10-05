@@ -115,6 +115,9 @@
 .info-item {
   margin-bottom: 15px;
 }
+.info-item.email{
+  display: none;
+}
 .info-label {
   display: block;
   color: var(--text);
