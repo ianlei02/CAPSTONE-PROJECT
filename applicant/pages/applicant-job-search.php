@@ -244,8 +244,8 @@ $result = $conn->query($sql);
 
               <div class="job-footer">
                 <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
-                <!-- <p>Status: <strong style="color: <?= $status === 'Referred' ? 'green' : ($status === 'Rejected' ? 'red' : ($status === 'Pending' ? 'orange' : '#555')); ?>"> <?= htmlspecialchars($status); ?></strong></p> -->
-                <?php if ($status === 'Pending' || $status === 'Referred' || $status === 'Rejected'): ?>
+                <!-- <p>Status: <strong style="color: <?= $status === 'Referred' ? 'green' : ($status === 'Rejected' ? 'red' : ($status === 'Pending' ? 'orange' : ($status === 'Interview' ? 'blue' : '#555'))); ?>"> <?= htmlspecialchars($status); ?></strong></p> -->
+                <?php if ($status === 'Pending' || $status === 'Referred' || $status === 'Rejected' || $status === 'Interview'): ?>
                   <button class="status-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">
                     <?= ($status === 'Pending') ? 'Applied' : 'View Status'; ?>
                   </button>

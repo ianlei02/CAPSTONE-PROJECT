@@ -127,15 +127,15 @@ select.filter {
   padding: 0.5rem 1rem;
 }
 .job-card.Interview::after{
-  content: 'Applied';
+  content: 'Interview';
   position: absolute;
   top: 14px;
   right: 0;
   width: 10ch;
   border-radius: var(--radius-sm);
   height: auto;
-  color: var(--success);
-  background-color: var(--success-muted);
+  color: black;
+  background-color: rgba(0, 123, 255, 0.15);
   z-index: 5;
   padding: 0.5rem 1rem;
 }

@@ -202,7 +202,9 @@ $showApplicants = ($job_id > 0);
                         <span class="material-symbols-outlined">arrow_back</span>
                         <span>Back to Job Lists</span>
                     </button>
-                    <h2 id="applicants-title">Applicants for <?= htmlspecialchars($applicants[0]['job_title']); ?></h2>
+                    <h2 id="applicants-title">
+                        Applicants for <?= !empty($applicants) ? htmlspecialchars($applicants[0]['job_title']) : 'this job'; ?>
+                    </h2>
                 </div>
 
                 <div class="table-container">

@@ -37,9 +37,9 @@ if (isset($_SESSION['user_id'])) {
 }
 $sql = "
 SELECT 
-    ea.email, ea.password, ed.employer_profile, ed.company_profile,
+    ea.email, ea.password, ed.employer_profile, ed.company_profile, 
     ed.business_permit, ed.dole_certification, ed.bir_certification, ed.migrant_certification, ed.philjob_certification,
-    ei.company_type, ei.company_size, ei.industry, ei.contact_number, ei.address, ei.contact_person, ei.contact_position, ei.contact_mobile, ei.contact_email
+    ei.company_type, ei.company_size, ei.industry, ei.contact_number, ei.address, ei.contact_person, ei.contact_position, ei.contact_mobile, ei.company_name
 FROM employer_account ea
 LEFT JOIN employer_company_docs ed ON ea.employer_id = ed.employer_id
 LEFT JOIN employer_company_info ei ON ea.employer_id = ei.employer_id
@@ -138,6 +138,12 @@ $data = $result->fetch_assoc();
           <a href="./employer-post.php">
             <span class="material-symbols-outlined icon">work</span>
             <span class="label">Post Job</span>
+          </a>
+        </li>
+        <li>
+          <a href="./referred_users.php">
+            <span class="material-symbols-outlined">how_to_reg</span>
+            <span>Referred Applicants</span>
           </a>
         </li>
         <!-- <li>

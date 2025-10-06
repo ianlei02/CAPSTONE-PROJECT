@@ -14,123 +14,143 @@ $result = $stmt->get_result();
 
 if (isset($_GET['action'])) {
   $action = $_GET['action'];
-  $id = intval($_GET['id']);
+  $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-  if ($action === 'viewApplicants') {
-?>
-    <h2>HADUKEN</h2>
-
-
-  <?php
-    exit;
-  }
-
-  if ($action === 'deleteJob') {
-    $stmt = $conn->prepare("DELETE FROM job_postings WHERE job_id=?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    exit;
-  }
-
-  if ($action === 'editJob') {
-    $stmt = $conn->prepare("SELECT * FROM job_postings WHERE job_id=?");
+   if ($action === 'editJob') {
+    $stmt = $conn->prepare("SELECT * FROM job_postings WHERE job_id = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $job = $stmt->get_result()->fetch_assoc();
 
-    $salaryParts = explode('-', $job['salary_range']);
-    $salaryMin = isset($salaryParts[0]) ? str_replace('₱', '', $salaryParts[0]) : '';
-    $salaryMax = isset($salaryParts[1]) ? str_replace('₱', '', $salaryParts[1]) : '';
-  ?>
+    if (!$job) {
+      echo "<p>Job not found.</p>";
+      exit;
+    }
+
+     $salaryParts = explode('-', $job['salary_range'] ?? '');
+    $salaryMin = isset($salaryParts[0]) ? trim(str_replace('₱', '', $salaryParts[0])) : '';
+    $salaryMax = isset($salaryParts[1]) ? trim(str_replace('₱', '', $salaryParts[1])) : '';
+
+    ?>
     <form id="editJobForm">
       <div class="form-row">
         <div class="form-group">
-          <label for="">Job Title</label>
-          <input type="text" name="title" value="<?= htmlspecialchars($job['job_title']) ?>" />
+          <label for="title">Job Title</label>
+          <input type="text" name="title" id="title" value="<?= htmlspecialchars($job['job_title']) ?>" required />
         </div>
+
         <div class="form-group">
-          <label for="">Job Category</label>
-          <select id=" category" name="category" value="<?= htmlspecialchars($job['category']) ?>" required>
+          <label for="category">Job Category</label>
+          <select id="category" name="category" required>
             <option value="">Select Category</option>
-            <option value="Education">Education</option>
-            <option value="Finance">Financial Service</option>
-            <option value="Transpo">Transportation</option>
-            <option value="D-economy">Digital Economy</option>
-            <option value="B-economy">Blue Economy</option>
-            <option value="C-economy">Creative Economy</option>
-            <option value="G-economy">Green Economy</option>
-            <option value="Housing">Housing</option>
-            <option value="Food">Food & Advanced Manufacturing</option>
-            <option value="Health">Health</option>
-            <option value="Agri">Agribusiness, Agriculture, Forestry, and Fisheries</option>
-            <option value="Tourism">Tourism</option>
-            <option value="Construction">Construction</option>
+            <?php
+            $categories = [
+              "Education" => "Education",
+              "Finance" => "Financial Service",
+              "Transpo" => "Transportation",
+              "D-economy" => "Digital Economy",
+              "B-economy" => "Blue Economy",
+              "C-economy" => "Creative Economy",
+              "G-economy" => "Green Economy",
+              "Housing" => "Housing",
+              "Food" => "Food & Advanced Manufacturing",
+              "Health" => "Health",
+              "Agri" => "Agribusiness, Agriculture, Forestry, and Fisheries",
+              "Tourism" => "Tourism",
+              "Construction" => "Construction"
+            ];
+            foreach ($categories as $value => $label) {
+              $selected = ($job['category'] === $value) ? 'selected' : '';
+              echo "<option value='$value' $selected>$label</option>";
+            }
+            ?>
           </select>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label for="">Job Type</label>
-          <input type="text" name="type" value="<?= htmlspecialchars($job['job_type']) ?>" />
+          <label for="type">Job Type</label>
+          <input type="text" name="type" id="type" value="<?= htmlspecialchars($job['job_type']) ?>" required />
         </div>
         <div class="form-group">
-          <label for="">Vacancies</label>
-          <input type="number" name="vacancies" value="<?= $job['vacancies'] ?>" />
+          <label for="vacancies">Vacancies</label>
+          <input type="number" name="vacancies" id="vacancies" value="<?= (int)$job['vacancies'] ?>" />
         </div>
       </div>
+
       <div class="form-group">
-        <label for="">Salary Range</label>
-        <input type="number" name="salary[]" value="<?= htmlspecialchars($salaryMin) ?>" placeholder="₱ Min Salary" />
-        <input type="number" name="salary[]" value="<?= htmlspecialchars($salaryMax) ?>" placeholder="₱ Max Salary" />
+        <label>Salary Range (₱)</label>
+        <input type="number" name="salary[]" value="<?= htmlspecialchars($salaryMin) ?>" placeholder="Min" />
+        <input type="number" name="salary[]" value="<?= htmlspecialchars($salaryMax) ?>" placeholder="Max" />
       </div>
+
       <div class="form-group">
-        <label for="">Deadline</label>
-        <input type="date" name="expiry_date" value="<?= $job['expiry_date'] ?>" />
+        <label for="expiry_date">Deadline</label>
+        <input type="date" name="expiry_date" id="expiry_date" value="<?= htmlspecialchars($job['expiry_date']) ?>" />
       </div>
+
       <div class="form-group">
-        <label for="">Job Description</label>
-        <textarea name="description" rows="5"><?= htmlspecialchars($job['description']) ?></textarea>
+        <label for="description">Job Description</label>
+        <textarea name="description" id="description" rows="5"><?= htmlspecialchars($job['description']) ?></textarea>
       </div>
     </form>
-<?php
-    exit;
-  }
-
-  if (isset($_GET['action']) && $_GET['action'] === 'saveJob') {
-    $id = $_GET['id'];
-
-    $title = $_POST['title'];
-    $category = $_POST['category'];
-    $type = $_POST['type'];
-    $vacancies = $_POST['vacancies'];
-    $expiry_date = $_POST['expiry_date'];
-    $description = $_POST['description'];
-
-    $salary      = $_POST['salary'] ?? [];
-    $salaryRange = implode('-', array_filter(array_map('trim', $salary)));
-
-    $stmt = $conn->prepare("UPDATE job_postings SET job_title=?, category=?, job_type=?, vacancies=?, expiry_date=?, description=?, salary_range = ? WHERE job_id=?");
-    $stmt->bind_param("ssssssis", $title, $category, $type, $vacancies, $expiry_date, $description, $id, $salaryRange);
-    $stmt->execute();
-
-    echo "Job updated successfully";
+    <?php
     exit;
   }
 
   if ($action === 'saveJob') {
-    $title = $_POST['title'];
-    $category = $_POST['category'];
-    $type = $_POST['type'];
-    $vacancies = $_POST['vacancies'];
-    $expiry = $_POST['expiry_date'];
+    $title = trim($_POST['title'] ?? '');
+    $category = trim($_POST['category'] ?? '');
+    $type = trim($_POST['type'] ?? '');
+    $vacancies = isset($_POST['vacancies']) ? (int)$_POST['vacancies'] : 0;
+    $expiry_date = trim($_POST['expiry_date'] ?? '');
+    $description = trim($_POST['description'] ?? '');
 
-    $stmt = $conn->prepare("UPDATE job_postings SET title=?, category=?, type=?, vacancies=?, expiry_date=? WHERE job_id=?");
-    $stmt->bind_param("sssisi", $title, $category, $type, $vacancies, $expiry, $id);
-    $stmt->execute();
+    $salary = $_POST['salary'] ?? [];
+    $salaryRange = implode('-', array_filter(array_map('trim', $salary)));
+
+    $stmt = $conn->prepare("
+      UPDATE job_postings 
+      SET job_title = ?, category = ?, job_type = ?, vacancies = ?, expiry_date = ?, description = ?, salary_range = ?
+      WHERE job_id = ?
+    ");
+
+    if (!$stmt) {
+      echo "Prepare failed: " . $conn->error;
+      exit;
+    }
+
+    $stmt->bind_param("sssisssi", $title, $category, $type, $vacancies, $expiry_date, $description, $salaryRange, $id);
+
+    if ($stmt->execute()) {
+      echo "Job updated successfully";
+    } else {
+      echo "Error updating job: " . $stmt->error;
+    }
+
     exit;
   }
-}
+  if ($action === 'deleteJob') {
+      $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+      if (!$id) {
+        echo "Invalid job ID";
+        exit;
+      }
+
+      $stmt = $conn->prepare("DELETE FROM job_postings WHERE job_id = ?");
+      $stmt->bind_param("i", $id);
+
+      if ($stmt->execute()) {
+        echo "Job deleted successfully";
+      } else {
+        echo "Error deleting job: " . $stmt->error;
+      }
+
+      exit;
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en" data-theme="light" data-state="expanded">
@@ -383,9 +403,7 @@ if (isset($_GET['action'])) {
     const actionButtons = document.querySelectorAll('.action-btn');
     actionButtons.forEach(button => {
       if (button.tagName.toLowerCase() === "button") {
-        button.addEventListener("click", (e) => {
-          e.preventDefault();
-        });
+        button.addEventListener("click", (e) => e.preventDefault());
       }
     });
 
@@ -403,55 +421,57 @@ if (isset($_GET['action'])) {
     }
 
     function editJob(jobId) {
-      fetch(`employer-post.php?action=editJob&id=${jobId}`)
-        .then(res => res.text())
-        .then(data => {
-          Swal.fire({
-            title: 'Edit Job',
-            html: data,
-            showCancelButton: true,
-            confirmButtonText: 'Save',
-            preConfirm: () => {
-              const form = document.getElementById('editJobForm');
-              const formData = new FormData(form);
-              return fetch(`employer-post.php?action=saveJob&id=${jobId}`, {
-                  method: 'POST',
-                  body: formData
-                })
-                .then(res => res.text());
-            }
-          }).then(() => location.reload());
+    fetch(`employer-post.php?action=editJob&id=${jobId}`)
+      .then(res => res.text())
+      .then(data => {
+        Swal.fire({
+          title: 'Edit Job',
+          html: data,
+          showCancelButton: true,
+          confirmButtonText: 'Save',
+          focusConfirm: false,
+          preConfirm: () => {
+            const form = document.getElementById('editJobForm');
+            const formData = new FormData(form);
+            return fetch(`employer-post.php?action=saveJob&id=${jobId}`, {
+                method: 'POST',
+                body: formData
+              })
+              .then(res => res.text())
+              .then(result => {
+                if (result.includes('successfully')) {
+                  Swal.fire('Updated!', 'Job updated successfully.', 'success');
+                  setTimeout(() => location.reload(), 1000);
+                } else {
+                  Swal.showValidationMessage(`Update failed: ${result}`);
+                }
+              })
+              .catch(err => {
+                Swal.showValidationMessage(`Request failed: ${err}`);
+              });
+          }
         });
-    }
-
-    preConfirm: () => {
-      const form = document.getElementById('editJobForm');
-      const formData = new FormData(form);
-      return fetch(`employer-post.php?action=saveJob&id=${jobId}`, {
-          method: 'POST',
-          body: formData
-        })
-        .then(res => res.text());
+      });
     }
 
     function deleteJob(jobId) {
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "This will permanently delete the job posting.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!'
-      }).then(result => {
-        if (result.isConfirmed) {
-          fetch(`employer-post.php?action=deleteJob&id=${jobId}`)
-            .then(res => res.text())
-            .then(() => {
-              Swal.fire('Deleted!', 'Job deleted.', 'success');
-              document.getElementById(`jobRow${jobId}`).remove();
-            });
-        }
-      });
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "This will permanently delete the job posting.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!'
+    }).then(result => {
+      if (result.isConfirmed) {
+        fetch(`employer-post.php?action=deleteJob&id=${jobId}`)
+          .then(res => res.text())
+          .then(() => {
+            Swal.fire('Deleted!', 'Job deleted.', 'success');
+            document.getElementById(`jobRow${jobId}`).remove();
+          });
+      }
+    });
+  }
   </script>
 </body>
 
