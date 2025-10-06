@@ -140,6 +140,12 @@ $data = $result->fetch_assoc();
             <span class="label">Post Job</span>
           </a>
         </li>
+        <li>
+          <a href="./referred_users.php">
+            <span class="material-symbols-outlined">how_to_reg</span>
+            <span>Referred Applicants</span>
+          </a>
+        </li>
         <!-- <li>
           <a href="./employer-applications.php">
             <span class="material-symbols-outlined icon">people</span>
