@@ -280,7 +280,7 @@ $result = $conn->query($sql);
                 Job requirements
               </h3>
               <div class="job-description">
-                HADUKEN SKILLS
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ducimus natus dolore autem est, nobis obcaecati voluptate labore qui animi commodi, cumque numquam. Repellat nulla enim delectus cum impedit praesentium natus?
               </div>
             </div>
 

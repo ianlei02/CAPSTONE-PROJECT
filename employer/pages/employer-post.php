@@ -1,12 +1,33 @@
 <?php
 require  '../../auth/functions/check_login.php';
+require '../Functions/getName.php';
 
 if (!isset($_SESSION['user_id'])) {
   header("Location: ../../auth/login-signup.php");
   exit();
 }
 $employer_id = $_SESSION['user_id'];
+$profile_picture_url = '../assets/images/profile.png';
 
+if (isset($_SESSION['user_id'])) {
+  $employer_id = $_SESSION['user_id'];
+  $query = "SELECT profile_picture FROM employer_company_info WHERE employer_id = ?";
+  $stmt = $conn->prepare($query);
+  $stmt->bind_param("i", $employer_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    if (!empty($row['profile_picture'])) {
+
+      if (file_exists('../' . $row['profile_picture'])) {
+        $profile_picture_url = '../' . $row['profile_picture'];
+      }
+    }
+  }
+  $stmt->close();
+}
 $stmt = $conn->prepare("SELECT * FROM job_postings WHERE employer_id = ? ORDER BY created_at DESC");
 $stmt->bind_param("i", $employer_id);
 $stmt->execute();
@@ -170,10 +191,48 @@ if (isset($_GET['action'])) {
   <nav class="navbar">
     <div class="navbar-left">
       <div class="left-pos">
+        <button class="hamburger">☰</button>
         <h1>Job Posting</h1>
       </div>
       <div class="right-pos">
-        <div class="profile">IAN</div>
+        <div class="profile">
+          <img
+            src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+            alt="Profile Picture"
+            class="profile-pic"
+            id="profilePicc" style="width: 50px !important;" />
+          <div class="user-name">
+            <h4><?= $fullName ?></h4>
+            <p>Employer</p>
+          </div>
+        </div>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <div class="dropdown-arrow"></div>
+          <div class="dropdown-header">
+            <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
+            <a class="user-info" href="./employer-profile.php">
+              <h3><?= $fullName ?></h3>
+              <p>See your profile</p>
+            </a>
+          </div>
+
+          <div class="dropdown-links">
+            <a href="#" class="dropdown-item">
+              <span class="material-symbols-outlined">settings</span>
+              <span>Account Settings</span>
+            </a>
+            <a onclick="toggleTheme()" class="dropdown-item">
+              <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+              <span id="themeLabel">Dark Mode</span>
+            </a>
+
+            <div class="dropdown-divider"></div>
+            <a href="../../auth/functions/logout.php" class="dropdown-item logout-item">
+              <span class="material-symbols-outlined icon">logout</span>
+              <span>Log Out</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
@@ -363,6 +422,8 @@ if (isset($_GET['action'])) {
 
   <script src="../js/responsive.js"></script>
   <script src="../js/dark-mode.js"></script>
+  <script src="../js/drop-down.js"></script>
+
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {

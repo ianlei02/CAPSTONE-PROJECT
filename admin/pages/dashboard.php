@@ -27,58 +27,60 @@
       </div>
       <h2>PESO</h2>
     </div>
-    <ul class="nav-menu">
-      <li>
-        <a class="nav-item active" href="./dashboard.php">
-          <span class="material-symbols-outlined">dashboard</span>
-          <span>Dashboard</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="./employer-table.php">
-          <span class="material-symbols-outlined">apartment</span>
-          <span>Employers</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="./job-listings.php">
-          <span class="material-symbols-outlined">list_alt</span>
-          <span>Job Listings</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="./new-admin.php">
-          <span class="material-symbols-outlined">groups</span>
-          <span>New Admin</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="./news-upload.php">
-          <span class="material-symbols-outlined">newspaper</span>
-          <span>News</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="./job-fair.php">
-          <span class="material-symbols-outlined">calendar_month</span>
-          <span>Job Fair</span>
-        </a>
-      </li>
-      <li>
-        <button class="nav-item" id="themeToggle" onclick="toggleTheme()">
-          <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
-          <span id="themeLabel">Theme toggle</span>
-        </button>
-      </li>
-    </ul>
-    <ul class="nav-menu logout">
-      <li>
-        <a class="nav-item" href="../Function/logout.php">
-          <span class="material-symbols-outlined">settings</span>
-          <span>Logout</span>
-        </a>
-      </li>
-    </ul>
+    <div class="sidebar-options">
+      <ul class="nav-menu">
+        <li>
+          <a class="nav-item active" href="./dashboard.php">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" href="./employer-table.php">
+            <span class="material-symbols-outlined">apartment</span>
+            <span>Employers</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" href="./job-listings.php">
+            <span class="material-symbols-outlined">list_alt</span>
+            <span>Job Listings</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" href="./new-admin.php">
+            <span class="material-symbols-outlined">groups</span>
+            <span>New Admin</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" href="./news-upload.php">
+            <span class="material-symbols-outlined">newspaper</span>
+            <span>News</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" href="./job-fair.php">
+            <span class="material-symbols-outlined">calendar_month</span>
+            <span>Job Fair</span>
+          </a>
+        </li>
+        <li>
+          <button class="nav-item" id="themeToggle" onclick="toggleTheme()">
+            <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+            <span id="themeLabel">Theme toggle</span>
+          </button>
+        </li>
+      </ul>
+      <ul class="nav-menu logout">
+        <li>
+          <a class="nav-item" href="../Function/logout.php">
+            <span class="material-symbols-outlined">settings</span>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
 
   </div>
 

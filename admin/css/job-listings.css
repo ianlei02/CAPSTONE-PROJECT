@@ -233,7 +233,7 @@ select.filter {
   border-radius: 1rem;
   display: none;
   table {
-    min-width: 1400px;
+    min-width: 1200px;
   }
 }
 .modal {
@@ -248,12 +248,13 @@ select.filter {
   overflow-y: auto;
   
   .modal-content {
-    background: white;
+    background: var(--bg);
     margin: 50px auto;
     max-width: 600px;
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
     animation: modalFadeIn 0.3s;
+    color: var(--text);
   }
   
   @keyframes modalFadeIn {
@@ -342,19 +343,19 @@ select.filter {
   }
   
   .btn-primary {
-    background-color: var(--blue);
+    background-color: var(--success);
     color: white;
     border: none;
   }
   
   .btn-primary:hover {
-    background-color: var(--blue-light);
+    background-color: var(--success-hover);
   }
   
   .btn-outline {
     background: transparent;
-    color: var(--blue);
-    border: 1px solid var(--blue);
+    color: var(--danger);
+    border: 1px solid var(--danger);
   }
   
   .btn-outline:hover {

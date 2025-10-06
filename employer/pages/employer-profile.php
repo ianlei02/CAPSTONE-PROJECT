@@ -1,5 +1,6 @@
 <?php
 require '../../auth/functions/check_login.php';
+require '../Functions/getName.php';
 
 if (!isset($_SESSION['user_id'])) {
   header("Location: ../../auth/login-signup.php");
@@ -73,6 +74,7 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
   <nav class="navbar">
     <div class="navbar-left">
       <div class="left-pos">
+        <button class="hamburger">☰</button>
         <h1>My Profile</h1>
       </div>
       <div class="right-pos">
@@ -82,6 +84,37 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
             alt="Profile Picture"
             class="profile-pic"
             id="profilePicc" style="width: 50px !important;" />
+          <div class="user-name">
+            <h4><?= $fullName ?></h4>
+            <p>Employer</p>
+          </div>
+        </div>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <div class="dropdown-arrow"></div>
+          <div class="dropdown-header">
+            <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
+            <a class="user-info" href="./employer-profile.php">
+              <h3><?= $fullName ?></h3>
+              <p>See your profile</p>
+            </a>
+          </div>
+
+          <div class="dropdown-links">
+            <a href="#" class="dropdown-item">
+              <span class="material-symbols-outlined">settings</span>
+              <span>Account Settings</span>
+            </a>
+            <a onclick="toggleTheme()" class="dropdown-item">
+              <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+              <span id="themeLabel">Dark Mode</span>
+            </a>
+
+            <div class="dropdown-divider"></div>
+            <a href="../../auth/functions/logout.php" class="dropdown-item logout-item">
+              <span class="material-symbols-outlined icon">logout</span>
+              <span>Log Out</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -143,12 +176,7 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
     <form action="../Functions/profile_update.php" method="POST" enctype="multipart/form-data" class="profile-container" id="myForm">
       <div class="profile-header">
         <input type="text" id="companyName" name="companyName" placeholder="Put Your Company Name Here">
-        <div class="profile-actions">
-          <button class="btn btn-outline" id="editProfileBtn">
-            Edit Profile
-          </button>
-          <button type="submit" class="btn btn-primary" id="saveProfileBtn"> Save Profile</button>
-        </div>
+
 
         <div class="profile-picture-container">
           <label class="company-logo-container" id="logoContainer" form="uploadLogo">
@@ -195,7 +223,7 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
               <input type="number" class="info-value" id="contactNumber" name="contactNumber">
               </input>
             </div>
-            <div class="info-item " >
+            <div class="info-item ">
               <span class="info-label">Email</span>
               <input type="email" class="info-value" id="companyEmail" name="email"></input>
             </div>
@@ -350,7 +378,13 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
             </li>
           </ul>
         </div>
-        <button type="submit" class="btn btn-primary submit">Submit</button>
+        <div class="profile-actions">
+          <button class="btn btn-outline" id="editProfileBtn" type="button">
+            Edit Profile
+          </button>
+          <!-- <button type="button" class="btn btn-primary" id="saveProfileBtn"> Save Profile</button> -->
+          <button type="submit" class="btn btn-primary submit">Submit Profile</button>
+        </div>
       </div>
     </form>
   </main>
@@ -440,6 +474,8 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
   </script>
   <script src="../js/responsive.js"></script>
   <script src="../js/dark-mode.js"></script>
+  <script src="../js/drop-down.js"></script>
+
 
   <script>
     const editBtn = document.getElementById('editProfileBtn');
@@ -452,17 +488,23 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
     });
 
     editBtn.addEventListener('click', () => {
-      inputs.forEach(input => input.disabled = false);
-      saveBtn.disabled = false;
-      editBtn.disabled = true;
+      const isDisabled = inputs[0].disabled; 
+      if (isDisabled) {
+        inputs.forEach(input => input.disabled = false);
+        editBtn.textContent = "Disable";
+      } else {
+        inputs.forEach(input => input.disabled = true);
+        editBtn.textContent = "Edit Profile";
+      }
     });
 
-    saveBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      inputs.forEach(input => input.disabled = true);
-      saveBtn.disabled = true;
-      editBtn.disabled = false;
-    });
+
+    // saveBtn.addEventListener('click', (e) => {
+    //   e.preventDefault();
+    //   inputs.forEach(input => input.disabled = true);
+    //   saveBtn.disabled = true;
+    //   editBtn.disabled = false;
+    // });
   </script>
   <script>
     document.querySelectorAll(".view-doc").forEach(btn => {
