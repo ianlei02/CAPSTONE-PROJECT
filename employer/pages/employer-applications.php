@@ -56,6 +56,7 @@ $result = $conn->query($sql);
   <nav class="navbar">
     <div class="navbar-left">
       <div class="left-pos">
+        <button class="hamburger">☰</button>
         <h1>Applications</h1>
       </div>
       <div class="right-pos">

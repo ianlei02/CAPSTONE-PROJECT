@@ -271,7 +271,7 @@ $showApplicants = ($job_id > 0);
                             data-status="rejected">
                             Reject
                         </button>
-                        <button type="submit" class="btn btn-primary" style="color: black;" id="referApplication" data-status="referred">
+                        <button type="submit" class="btn btn-primary"  id="referApplication" data-status="referred">
                             Refer
                         </button>
                     </div>

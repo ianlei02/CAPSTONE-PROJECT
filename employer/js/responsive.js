@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const hamburger = document.querySelector(".hamburger");
+  const hamburger = document.querySelector("aside .hamburger");
+  const hamburger1 = document.querySelector("nav .hamburger");
   const body = document.body;
   const html = document.documentElement;
   const sidebar = document.querySelector(".sidebar");
@@ -18,10 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("sidebar-collapsed", newState);
     }
   });
-  if (isMobile()) {
-    body.classList.remove("collapsed");
-    sidebar.classList.remove("visible");
-  } else {
-    sidebar.classList.remove("visible");
-  }
+  hamburger1.addEventListener("click", () => {
+    sidebar.classList.toggle("visible");
+  });
 });

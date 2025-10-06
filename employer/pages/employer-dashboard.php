@@ -1,5 +1,6 @@
 <?php
 require_once '../../auth/functions/check_login.php';
+require_once '../Functions/getName.php';
 
 if (!isset($_SESSION['user_id'])) {
   header("Location: ../../auth/login-signup.php");
@@ -100,11 +101,9 @@ $data = $result->fetch_assoc();
 <body>
   <nav class="navbar">
     <div class="navbar-left">
-      <div class="left-pos">
-        <h1>
-          <!-- <span class="material-symbols-outlined">dashboard</span> -->
-          <span>Dashboard</span>
-        </h1>
+      <div class="left-pos" style="display: flex; width: auto; height: auto">
+        <button class="hamburger">☰</button>
+        <h1>Dashboard</h1>
       </div>
       <div class="right-pos">
         <div class="profile">
@@ -113,6 +112,37 @@ $data = $result->fetch_assoc();
             alt="Profile Picture"
             class="profile-pic"
             id="profilePicc" style="width: 50px !important;" />
+          <div class="user-name">
+            <h4><?= $fullName ?></h4>
+            <p>Employer</p>
+          </div>
+        </div>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <div class="dropdown-arrow"></div>
+          <div class="dropdown-header">
+            <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
+            <a class="user-info" href="./employer-profile.php">
+              <h3><?= $fullName ?></h3>
+              <p>See your profile</p>
+            </a>
+          </div>
+
+          <div class="dropdown-links">
+            <a href="#" class="dropdown-item">
+              <span class="material-symbols-outlined">settings</span>
+              <span>Account Settings</span>
+            </a>
+            <a onclick="toggleTheme()" class="dropdown-item">
+              <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+              <span id="themeLabel">Dark Mode</span>
+            </a>
+
+            <div class="dropdown-divider"></div>
+            <a href="../../auth/functions/logout.php" class="dropdown-item logout-item">
+              <span class="material-symbols-outlined icon">logout</span>
+              <span>Log Out</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -121,7 +151,7 @@ $data = $result->fetch_assoc();
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="logo">
-        <img src="../../public/images/pesosmb.png" alt="" />
+        <img src="../../public/smb-images/pesosmb.png" alt="" />
         <h3>PESO</h3>
       </div>
       <button class="hamburger"><span class="material-symbols-outlined">dock_to_right</span></button>
@@ -238,7 +268,7 @@ $data = $result->fetch_assoc();
       </div>
     </div>
 
-    <div class="content-grid">
+    <div class="content-wrapper">
       <div class="quick-actions">
         <h2 class="section-title">
           <span class="material-symbols-outlined">bolt</span>
@@ -275,13 +305,13 @@ $data = $result->fetch_assoc();
         </h2>
         <div id="calendar"></div>
       </div>
-
     </div>
 
   </main>
 
   <script src="../js/responsive.js"></script>
   <script src="../js/dark-mode.js"></script>
+  <script src="../js/drop-down.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 
   <script>
@@ -313,13 +343,12 @@ $data = $result->fetch_assoc();
       }
     });
   </script>
-  <!-- //? CALENDAR -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       var calendarEl = document.getElementById('calendar');
 
       var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth', // default view
+        initialView: 'dayGridMonth',
         headerToolbar: {
           left: 'prev,next',
           center: 'title',
