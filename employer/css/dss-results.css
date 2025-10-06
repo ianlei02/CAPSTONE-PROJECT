@@ -76,10 +76,16 @@ main h2{
   cursor: pointer;
   transition: background 0.2s ease;
 }
-
-.action-btn:hover {
-  background-color: #1d4ed8;
+.action-btn.reject{
+  background-color: var(--danger);
 }
+.action-btn.interview{
+  background-color: rgb(182, 0, 182)
+}
+
+/* .action-btn:hover {
+  background-color: var(--color-blue-700);
+} */
 
 @media (max-width: 600px) {
   .styled-table th, .styled-table td {
