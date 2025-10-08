@@ -19,13 +19,7 @@ require_once '../Functions/getName.php';
   <!-- <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script> -->
 
-  <style>
-    #calendar {
-      max-width: 1000px;
-      margin: 0 auto;
-      background-color: var(--bg);
-    }
-  </style>
+
 </head>
 
 <body>
@@ -77,9 +71,10 @@ require_once '../Functions/getName.php';
             </a>
           </div>
         </div>
-        <div id="notifContainer">
-          <button id="notifBtn">🔔 <span id="notifCount">0</span></button>
-          <div id="notifList" style="display:none; background:#fff; border:1px solid #ddd; padding:10px; width:250px; position: absolute; right: 0; top: 120%; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-height: 300px; overflow-y: auto; z-index: 1000;">
+        <div id="notifBtn">
+          <span id="notifIcon" class="material-symbols-outlined">notifications </span>
+          <span id="notifCount">0</span>
+          <div id="notifList">
           </div>
         </div>
       </div>
@@ -223,14 +218,6 @@ require_once '../Functions/getName.php';
           </div> -->
           <button class="complete-profile-btn" onclick=" windows.location.href = 'application-profile.php'">Complete My Profile</button>
         </div>
-        <!-- <div class="missing-items">
-          <strong>Missing information:</strong>
-          <ul>
-            <li>Work history</li>
-            <li>Skills</li>
-            <li>Profile photo</li>
-          </ul>
-        </div> -->
       </div>
     </div>
     <div class="content-wrapper">
@@ -356,57 +343,6 @@ require_once '../Functions/getName.php';
     <!-- <div id="calendar"></div> -->
 
   </main>
-  <!-- <button class="floating-icon">
-    <span class="material-symbols-outlined">dark_mode</span>
-  </button> -->
-  <!-- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const calendarEl = document.getElementById('calendar');
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        selectable: true,
-        editable: true,
-        events: 'fetch_events.php', // Load events from the database
-        select: function(info) {
-          const title = prompt('Enter event title:');
-          if (title) {
-            const type = prompt('Enter event type (interview or job_fair):');
-            const eventData = {
-              title: title,
-              start: info.startStr,
-              end: info.endStr,
-              type: type
-            };
-            fetch('add_event.php', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(eventData)
-              })
-              .then(res => res.json())
-              .then(() => calendar.refetchEvents());
-          }
-        },
-        eventClick: function(info) {
-          if (confirm('Do you want to delete this event?')) {
-            fetch('delete_event.php', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                  id: info.event.id
-                })
-              })
-              .then(res => res.json())
-              .then(() => calendar.refetchEvents());
-          }
-        }
-      });
-      calendar.render();
-    });
-  </script> -->
   <script src="../js/responsive.js"></script>
   <script src="../js/drop-down.js"></script>
   <script src="../js/dark-mode.js"></script>
@@ -464,7 +400,7 @@ require_once '../Functions/getName.php';
         if (data.notifications.length > 0) {
           notifList.innerHTML = data.notifications
             .map(n => `
-              <div style="border-bottom:1px solid #eee; padding:5px; ${n.seen == 0 ? 'background:#f9f9f9;' : ''}">
+              <div style="border-bottom:1px solid var(--border); padding:5px; ${n.seen == 0 ? 'background: var(--bg);' : ''}">
                 <p style="margin:0;">${n.message}</p>
                 <small style="color:gray;">${new Date(n.created_at).toLocaleString()}</small>
               </div>

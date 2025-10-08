@@ -8,7 +8,7 @@
   font-size: var(--)
 }
 .profile-header {
-  background-color: var(--color-blue-700);
+  background-color: var(--color-blue-500);
   padding: 30px;
   position: relative;
   min-height: 180px;
@@ -47,9 +47,12 @@
   display: none;
 }
 .profile-actions {
-  position: absolute;
-  right: 30px;
-  top: 30px;
+  display: flex;
+  gap: 1rem;
+  /* justify-content: center; */
+  /* align-items: center; */
+  margin-left: 71%;
+  width: 100%;
 }
 
 .btn {
@@ -205,9 +208,10 @@
 .btn.submit {
   background-color: var(--color-blue-500);
   color: white;
-  padding: 0.825rem 3rem;
+  border: 1px solid var(--color-blue-500);
+  /* padding: 0.825rem 3rem; */
   font-size: 1rem;
-  margin-left: 83.5%;
+  /* margin-left: 83.5%; */
 }
 
 @media (max-width: 768px) {
