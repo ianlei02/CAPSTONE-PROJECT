@@ -179,7 +179,7 @@
   <div id="pendingModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2><span class="material-symbols-outlined">pending_actions</span> Company Details</h2>
+        <h2><span class="material-symbols-outlined">pending_actions</span>Pending Company Details</h2>
         <button class="close">&times;</button>
       </div>
       <div class="modal-body">
@@ -216,54 +216,50 @@
         <div class="documents-section">
           <h3 class="section-title"><span class="material-symbols-outlined">description</span> Documents</h3>
           <div class="documents-list">
-            <div class="document-item">
-              <div class="document-name">
-                <span class="material-symbols-outlined">description</span>
-                Business License
-              </div>
-              <div class="document-actions">
-                <button class="btn-doc btn-view-doc">
-                  <span class="material-symbols-outlined">visibility</span>
-                  View
-                </button>
-                <button class="btn-doc btn-download">
-                  <span class="material-symbols-outlined">download</span>
-                  Download
-                </button>
-              </div>
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Business License
             </div>
-            <div class="document-item">
-              <div class="document-name">
-                <span class="material-symbols-outlined">description</span>
-                Tax Certificate
-              </div>
-              <div class="document-actions">
-                <button class="btn-doc btn-view-doc">
-                  <span class="material-symbols-outlined">visibility</span>
-                  View
-                </button>
-                <button class="btn-doc btn-download">
-                  <span class="material-symbols-outlined">download</span>
-                  Download
-                </button>
-              </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="p-business-license-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="p-business-license-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
             </div>
-            <div class="document-item">
-              <div class="document-name">
-                <span class="material-symbols-outlined">description</span>
-                ID Proof
-              </div>
-              <div class="document-actions">
-                <button class="btn-doc btn-view-doc">
-                  <span class="material-symbols-outlined">visibility</span>
-                  View
-                </button>
-                <button class="btn-doc btn-download">
-                  <span class="material-symbols-outlined">download</span>
-                  Download
-                </button>
-              </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Tax Certificate
             </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="p-tax-certificate-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="p-tax-certificate-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              ID Proof
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="p-id-proof-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="p-id-proof-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
           </div>
         </div>
       </div>
@@ -288,7 +284,7 @@
   <div id="verifiedModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2><span class="material-symbols-outlined">verified</span> Company Details</h2>
+        <h2><span class="material-symbols-outlined">verified</span>Verified Company Details</h2>
         <button class="close">&times;</button>
       </div>
       <div class="modal-body">
@@ -325,54 +321,50 @@
         <div class="documents-section">
           <h3 class="section-title"><span class="material-symbols-outlined">description</span> Documents</h3>
           <div class="documents-list">
-            <div class="document-item">
-              <div class="document-name">
-                <span class="material-symbols-outlined">description</span>
-                Business License
-              </div>
-              <div class="document-actions">
-                <button class="btn-doc btn-view-doc">
-                  <span class="material-symbols-outlined">visibility</span>
-                  View
-                </button>
-                <button class="btn-doc btn-download">
-                  <span class="material-symbols-outlined">download</span>
-                  Download
-                </button>
-              </div>
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Business License
             </div>
-            <div class="document-item">
-              <div class="document-name">
-                <span class="material-symbols-outlined">description</span>
-                Tax Certificate
-              </div>
-              <div class="document-actions">
-                <button class="btn-doc btn-view-doc">
-                  <span class="material-symbols-outlined">visibility</span>
-                  View
-                </button>
-                <button class="btn-doc btn-download">
-                  <span class="material-symbols-outlined">download</span>
-                  Download
-                </button>
-              </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="v-business-license-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="v-business-license-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
             </div>
-            <div class="document-item">
-              <div class="document-name">
-                <span class="material-symbols-outlined">description</span>
-                ID Proof
-              </div>
-              <div class="document-actions">
-                <button class="btn-doc btn-view-doc">
-                  <span class="material-symbols-outlined">visibility</span>
-                  View
-                </button>
-                <button class="btn-doc btn-download">
-                  <span class="material-symbols-outlined">download</span>
-                  Download
-                </button>
-              </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Tax Certificate
             </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="v-tax-certificate-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="v-tax-certificate-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              ID Proof
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="v-id-proof-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="v-id-proof-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
           </div>
         </div>
       </div>
@@ -393,7 +385,7 @@
   <div id="revokedModal" class="modal">
   <div class="modal-content">
     <div class="modal-header">
-      <h2><span class="material-symbols-outlined">block</span> Company Details</h2>
+      <h2><span class="material-symbols-outlined">block</span>Revoked Company Details</h2>
       <button class="close">&times;</button>
     </div>
     <div class="modal-body">
@@ -436,45 +428,41 @@
               Business License
             </div>
             <div class="document-actions">
-              <button class="btn-doc btn-view-doc">
-                <span class="material-symbols-outlined">visibility</span>
-                View
+              <button class="btn-doc btn-view-doc" id="r-business-license-view">
+                <span class="material-symbols-outlined">visibility</span> View
               </button>
-              <button class="btn-doc btn-download">
-                <span class="material-symbols-outlined">download</span>
-                Download
+              <button class="btn-doc btn-download" id="r-business-license-download">
+                <span class="material-symbols-outlined">download</span> Download
               </button>
             </div>
           </div>
+
           <div class="document-item">
             <div class="document-name">
               <span class="material-symbols-outlined">description</span>
               Tax Certificate
             </div>
             <div class="document-actions">
-              <button class="btn-doc btn-view-doc">
-                <span class="material-symbols-outlined">visibility</span>
-                View
+              <button class="btn-doc btn-view-doc" id="r-tax-certificate-view">
+                <span class="material-symbols-outlined">visibility</span> View
               </button>
-              <button class="btn-doc btn-download">
-                <span class="material-symbols-outlined">download</span>
-                Download
+              <button class="btn-doc btn-download" id="r-tax-certificate-download">
+                <span class="material-symbols-outlined">download</span> Download
               </button>
             </div>
           </div>
+
           <div class="document-item">
             <div class="document-name">
               <span class="material-symbols-outlined">description</span>
               ID Proof
             </div>
             <div class="document-actions">
-              <button class="btn-doc btn-view-doc">
-                <span class="material-symbols-outlined">visibility</span>
-                View
+              <button class="btn-doc btn-view-doc" id="r-id-proof-view">
+                <span class="material-symbols-outlined">visibility</span> View
               </button>
-              <button class="btn-doc btn-download">
-                <span class="material-symbols-outlined">download</span>
-                Download
+              <button class="btn-doc btn-download" id="r-id-proof-download">
+                <span class="material-symbols-outlined">download</span> Download
               </button>
             </div>
           </div>
@@ -547,10 +535,10 @@
               Business License
             </div>
             <div class="document-actions">
-              <button class="btn-doc btn-view-doc">
+              <button class="btn-doc btn-view-doc" id="rj-business-license-view">
                 <span class="material-symbols-outlined">visibility</span> View
               </button>
-              <button class="btn-doc btn-download">
+              <button class="btn-doc btn-download" id="rj-business-license-download">
                 <span class="material-symbols-outlined">download</span> Download
               </button>
             </div>
@@ -562,10 +550,10 @@
               Tax Certificate
             </div>
             <div class="document-actions">
-              <button class="btn-doc btn-view-doc">
+              <button class="btn-doc btn-view-doc" id="rj-tax-certificate-view">
                 <span class="material-symbols-outlined">visibility</span> View
               </button>
-              <button class="btn-doc btn-download">
+              <button class="btn-doc btn-download" id="rj-tax-certificate-download">
                 <span class="material-symbols-outlined">download</span> Download
               </button>
             </div>
@@ -577,10 +565,10 @@
               ID Proof
             </div>
             <div class="document-actions">
-              <button class="btn-doc btn-view-doc">
+              <button class="btn-doc btn-view-doc" id="rj-id-proof-view">
                 <span class="material-symbols-outlined">visibility</span> View
               </button>
-              <button class="btn-doc btn-download">
+              <button class="btn-doc btn-download" id="rj-id-proof-download">
                 <span class="material-symbols-outlined">download</span> Download
               </button>
             </div>
@@ -727,6 +715,11 @@
       document.getElementById("modal-address").textContent = emp.address;
       document.getElementById("modal-industry").textContent = emp.industry;
       document.getElementById("modal-phone").textContent = emp.contact_mobile;
+
+      setDocumentButton("p-business-license", emp.business_permit);
+      setDocumentButton("p-tax-certificate", emp.bir_certification);
+      setDocumentButton("p-id-proof", emp.employer_profile);
+
       const modal = document.getElementById("pendingModal"); modal.style.display = "flex";
       const content = modal.querySelector(".modal-content");
       if (content) content.classList.add("modal-show");
@@ -739,6 +732,11 @@
       document.getElementById("v-modal-address").textContent = emp.address;
       document.getElementById("v-modal-industry").textContent = emp.industry;
       document.getElementById("v-modal-phone").textContent = emp.contact_mobile;
+
+      setDocumentButton("v-business-license", emp.business_permit);
+      setDocumentButton("v-tax-certificate", emp.bir_certification);
+      setDocumentButton("v-id-proof", emp.employer_profile);
+
       const modal = document.getElementById("verifiedModal"); modal.style.display = "flex";
       const content = modal.querySelector(".modal-content");
       if (content) content.classList.add("modal-show");
@@ -751,6 +749,10 @@
       document.getElementById("r-modal-address").textContent = emp.address;
       document.getElementById("r-modal-industry").textContent = emp.industry;
       document.getElementById("r-modal-phone").textContent = emp.contact_mobile;
+
+      setDocumentButton("r-business-license", emp.business_permit);
+      setDocumentButton("r-tax-certificate", emp.bir_certification);
+      setDocumentButton("r-id-proof", emp.employer_profile);
 
       const modal = document.getElementById("revokedModal");
       modal.style.display = "flex";
@@ -766,12 +768,35 @@
       document.getElementById("rej-modal-industry").textContent = emp.industry;
       document.getElementById("rej-modal-phone").textContent = emp.contact_mobile;
 
+      setDocumentButton("rj-business-license", emp.business_permit);
+      setDocumentButton("rj-tax-certificate", emp.bir_certification);
+      setDocumentButton("rj-id-proof", emp.employer_profile);
+
       const modal = document.getElementById("rejectedModal");
       modal.style.display = "flex";
       const content = modal.querySelector(".modal-content");
       if (content) content.classList.add("modal-show");
     }
 
+      function setDocumentButton(docType, filePath) {
+        const viewBtn = document.querySelector(`#${docType}-view`);
+        const downloadBtn = document.querySelector(`#${docType}-download`);
+
+        if (filePath && filePath.trim() !== "") {
+          const fullPath = `../../${filePath}`;
+          viewBtn.onclick = () => window.open(fullPath, "_blank");
+          downloadBtn.onclick = () => {
+            const link = document.createElement("a");
+            link.href = fullPath;
+            link.download = filePath.split("/").pop();
+            link.click();
+          };
+        } else {
+          viewBtn.onclick = downloadBtn.onclick = () => {
+            alert("No file uploaded for this document.");
+          };
+        }
+      }
     document.querySelectorAll(".modal .close, .btn-close").forEach(btn => {
     btn.addEventListener("click", function() {
       const modal = this.closest(".modal");
