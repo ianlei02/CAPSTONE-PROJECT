@@ -23,19 +23,31 @@ $sql = "SELECT
 
     $pending = [];
     $verified = [];
+    $revoked = [];
 
-    while ($row = $result->fetch_assoc()) {
-        if ($row['status'] === 'pending') {
-            $pending[] = $row;
-        } elseif ($row['status'] === 'verify' || $row['status'] === 'verified') {
-            $verified[] = $row;
+     while ($row = $result->fetch_assoc()) {
+        switch (strtolower($row['status'])) {
+            case 'pending':
+                $pending[] = $row;
+                break;
+
+            case 'verify':
+            case 'verified':
+                $verified[] = $row;
+                break;
+
+            case 'revoke':
+            case 'revoked':
+                $revoked[] = $row;
+                break;
         }
     }
 
     echo json_encode([
         "success" => true,
         "pending" => $pending,
-        "verified" => $verified
+        "verified" => $verified,
+        "revoked" => $revoked
     ]);
 } catch (Exception $e) {
     echo json_encode([

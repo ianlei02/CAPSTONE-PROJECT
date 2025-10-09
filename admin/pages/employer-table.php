@@ -131,6 +131,26 @@
           </tbody>
         </table>
       </div>
+
+      <div class="table-section">
+        <div class="table-header">
+          <span class="material-symbols-outlined">block</span>
+          <h2> Revoked Employers</h2>
+        </div>
+        <table id="revokedTable" class="display">
+          <thead>
+            <th>Company Name</th>
+            <th>Contact Person</th>
+            <th>Email</th>
+            <th>Industry</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </thead>
+          <tbody>
+            <!-- Data will be populated by JavaScript -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
   <!-- Pending Employer Modal -->
@@ -347,6 +367,111 @@
     </div>
   </div>
 
+  <div id="revokedModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2><span class="material-symbols-outlined">business</span> Company Details</h2>
+      <button class="close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="profile-section">
+        <h3 class="section-title"><span class="material-symbols-outlined">info</span> Company Profile</h3>
+        <div class="profile-details">
+          <div class="detail-item">
+            <label>Company Name</label>
+            <p id="r-modal-company-name">Revoked Company Inc.</p>
+          </div>
+          <div class="detail-item">
+            <label>Address</label>
+            <p id="r-modal-address">789 Restricted St, Los Angeles, CA</p>
+          </div>
+          <div class="detail-item">
+            <label>Industry</label>
+            <p id="r-modal-industry">Consulting</p>
+          </div>
+          <div class="detail-item">
+            <label>Contact Person</label>
+            <p id="r-modal-contact-person">Michael Brown</p>
+          </div>
+          <div class="detail-item">
+            <label>Email</label>
+            <p id="r-modal-email">michael@revokedcompany.com</p>
+          </div>
+          <div class="detail-item">
+            <label>Phone</label>
+            <p id="r-modal-phone">+1 (555) 987-6543</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="documents-section">
+        <h3 class="section-title"><span class="material-symbols-outlined">description</span> Documents</h3>
+        <div class="documents-list">
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Business License
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc">
+                <span class="material-symbols-outlined">visibility</span>
+                View
+              </button>
+              <button class="btn-doc btn-download">
+                <span class="material-symbols-outlined">download</span>
+                Download
+              </button>
+            </div>
+          </div>
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Tax Certificate
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc">
+                <span class="material-symbols-outlined">visibility</span>
+                View
+              </button>
+              <button class="btn-doc btn-download">
+                <span class="material-symbols-outlined">download</span>
+                Download
+              </button>
+            </div>
+          </div>
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              ID Proof
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc">
+                <span class="material-symbols-outlined">visibility</span>
+                View
+              </button>
+              <button class="btn-doc btn-download">
+                <span class="material-symbols-outlined">download</span>
+                Download
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-restore">
+        <span class="material-symbols-outlined">autorenew</span>
+        Restore Verification
+      </button>
+      <button class="btn btn-close">
+        <span class="material-symbols-outlined">close</span>
+        Close
+      </button>
+    </div>
+  </div>
+  </div>
+
 
   <script src="../assets/JS_JQUERY/jquery-3.7.1.min.js"></script>
   <script src="../assets/library/datatable/dataTables.js"></script>
@@ -405,16 +530,40 @@
           `).join("");
         }
 
+        const revokedTableBody = document.querySelector("#revokedTable tbody");
+        const revokedData = data.revoked || [];
+        if (Array.isArray(revokedData)) {
+          revokedTableBody.innerHTML = revokedData.map(emp => `
+            <tr>
+              <td>${emp.company_name}</td>
+              <td>${emp.contact_person}</td>
+              <td>${emp.email}</td>
+              <td>${emp.industry}</td>
+              <td><span class="status revoked">${emp.status}</span></td>
+              <td>
+                <button class="view-btn" data-type="revoked" data-company='${JSON.stringify(emp)}'>
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="restore-btn" data-email="${emp.email}">
+                  <span class="material-symbols-outlined">autorenew</span> Restore
+                </button>
+              </td>
+            </tr>
+          `).join("");
+        }
         
         document.querySelectorAll(".view-btn").forEach(btn => {
-          btn.addEventListener("click", function() {
-            const emp = JSON.parse(this.dataset.company);
-            const type = this.dataset.type;
-            if (type === "pending") {
-              openPendingModal(emp);
-            } else {
-              openVerifiedModal(emp);
-            }
+        btn.addEventListener("click", function() {
+          const emp = JSON.parse(this.dataset.company);
+          const type = this.dataset.type;
+
+          if (type === "pending") {
+            openPendingModal(emp);
+          } else if (type === "verified") {
+            openVerifiedModal(emp);
+          } else if (type === "revoked") {
+            openRevokedModal(emp);
+          }
           });
         });
 
@@ -445,6 +594,18 @@
       if (content) content.classList.add("modal-show");
     }
 
+    function openRevokedModal(emp) {
+      document.getElementById("r-modal-company-name").textContent = emp.company_name;
+      document.getElementById("r-modal-contact-person").textContent = emp.contact_person;
+      document.getElementById("r-modal-email").textContent = emp.email;
+      document.getElementById("r-modal-industry").textContent = emp.industry;
+
+      const modal = document.getElementById("revokedModal");
+      modal.style.display = "flex";
+      const content = modal.querySelector(".modal-content");
+      if (content) content.classList.add("modal-show");
+    }
+
     document.querySelectorAll(".modal .close, .btn-close").forEach(btn => {
     btn.addEventListener("click", function() {
       const modal = this.closest(".modal");
@@ -459,33 +620,60 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-
-      // Add event listeners to modal action buttons
-      document.querySelector('.btn-verify').addEventListener('click', function() {
-        alert('Employer verified successfully!');
-        document.querySelector('#pendingModal .modal-content').classList.remove('modal-show');
-        setTimeout(() => {
-          document.getElementById('pendingModal').style.display = 'none';
-        }, 300);
-      });
-
-      document.querySelector('.btn-reject').addEventListener('click', function() {
-        alert('Employer rejected.');
-        document.querySelector('#pendingModal .modal-content').classList.remove('modal-show');
-        setTimeout(() => {
-          document.getElementById('pendingModal').style.display = 'none';
-        }, 300);
-      });
-
-      document.querySelector('.btn-revoke').addEventListener('click', function() {
-        alert('Verification revoked.');
-        document.querySelector('#verifiedModal .modal-content').classList.remove('modal-show');
-        setTimeout(() => {
-          document.getElementById('verifiedModal').style.display = 'none';
-        }, 300);
-      });
-
+  
+    function updateEmployerStatus(email, status) {
+      fetch("../Function/update-employer-status.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ email, status })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert(data.message);
+          if (status === "verify" || status === "pending") {
+            document.querySelector('#pendingModal .modal-content').classList.remove('modal-show');
+            setTimeout(() => {
+              document.getElementById('pendingModal').style.display = 'none';
+            }, 300);
+          } else if (status === "revoked") {
+            document.querySelector('#verifiedModal .modal-content').classList.remove('modal-show');
+            setTimeout(() => {
+              document.getElementById('verifiedModal').style.display = 'none';
+            }, 300);
+          } else if (status === "restore") {
+            const modal = document.querySelector('#revokedModal');
+            modal.querySelector('.modal-content').classList.remove('modal-show');
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
+          }
+          setTimeout(() => location.reload(), 500);
+        } else {
+          alert("❌ " + data.message);
+        }
+      })
+      .catch(err => console.error("Error:", err));
+    }
+    document.querySelector('.btn-verify').addEventListener('click', function() {
+      const email = document.getElementById("modal-email").textContent;
+      updateEmployerStatus(email, "verified");
     });
+
+    document.querySelector('.btn-reject').addEventListener('click', function() {
+      const email = document.getElementById("modal-email").textContent;
+      updateEmployerStatus(email, "revoked");
+    });
+
+    document.querySelector('.btn-revoke').addEventListener('click', function() {
+      const email = document.getElementById("v-modal-email").textContent;
+      updateEmployerStatus(email, "revoked");
+    });
+
+    document.querySelector('.btn-restore')?.addEventListener('click', function() {
+    const email = document.getElementById("r-modal-email").textContent;
+    updateEmployerStatus(email, "verified");
+    });
+
+  });
   </script>
 
 </body>
