@@ -24,7 +24,7 @@ $sql = "SELECT
     $pending = [];
     $verified = [];
     $revoked = [];
-
+    $rejected = [];
      while ($row = $result->fetch_assoc()) {
         switch (strtolower($row['status'])) {
             case 'pending':
@@ -40,6 +40,9 @@ $sql = "SELECT
             case 'revoked':
                 $revoked[] = $row;
                 break;
+            case 'rejected':
+                $rejected[] = $row;
+                break;
         }
     }
 
@@ -47,7 +50,8 @@ $sql = "SELECT
         "success" => true,
         "pending" => $pending,
         "verified" => $verified,
-        "revoked" => $revoked
+        "revoked" => $revoked,
+        "rejected" => $rejected
     ]);
 } catch (Exception $e) {
     echo json_encode([

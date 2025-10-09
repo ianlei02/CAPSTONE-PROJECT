@@ -151,13 +151,35 @@
           </tbody>
         </table>
       </div>
+
+        <div class="table-section">
+      <div class="table-header">
+        <span class="material-symbols-outlined">block</span>
+        <h2>Rejected Employers</h2>
+      </div>
+      <table id="rejectedTable" class="display">
+        <thead>
+          <th>Company Name</th>
+          <th>Contact Person</th>
+          <th>Email</th>
+          <th>Industry</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </thead>
+        <tbody>
+          <!-- Data will be populated by JavaScript -->
+        </tbody>
+      </table>
+      </div>
     </div>
   </div>
+
+  
   <!-- Pending Employer Modal -->
   <div id="pendingModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2><span class="material-symbols-outlined">business</span> Company Details</h2>
+        <h2><span class="material-symbols-outlined">pending_actions</span> Company Details</h2>
         <button class="close">&times;</button>
       </div>
       <div class="modal-body">
@@ -266,7 +288,7 @@
   <div id="verifiedModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2><span class="material-symbols-outlined">business</span> Company Details</h2>
+        <h2><span class="material-symbols-outlined">verified</span> Company Details</h2>
         <button class="close">&times;</button>
       </div>
       <div class="modal-body">
@@ -367,10 +389,11 @@
     </div>
   </div>
 
+  <!-- Revoked Employer Modal -->
   <div id="revokedModal" class="modal">
   <div class="modal-content">
     <div class="modal-header">
-      <h2><span class="material-symbols-outlined">business</span> Company Details</h2>
+      <h2><span class="material-symbols-outlined">block</span> Company Details</h2>
       <button class="close">&times;</button>
     </div>
     <div class="modal-body">
@@ -472,6 +495,112 @@
   </div>
   </div>
 
+  <!-- Rejected Employer Modal -->
+  <div id="rejectedModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2><span class="material-symbols-outlined">block</span>Rejected Company Details</h2>
+      <button class="close">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="profile-section">
+        <h3 class="section-title">
+          <span class="material-symbols-outlined">info</span> Company Profile
+        </h3>
+        <div class="profile-details">
+          <div class="detail-item">
+            <label>Company Name</label>
+            <p id="rej-modal-company-name">Rejected Company Inc.</p>
+          </div>
+          <div class="detail-item">
+            <label>Address</label>
+            <p id="rej-modal-address">123 Denied Ave, Seattle, WA</p>
+          </div>
+          <div class="detail-item">
+            <label>Industry</label>
+            <p id="rej-modal-industry">Manufacturing</p>
+          </div>
+          <div class="detail-item">
+            <label>Contact Person</label>
+            <p id="rej-modal-contact-person">Sarah Lee</p>
+          </div>
+          <div class="detail-item">
+            <label>Email</label>
+            <p id="rej-modal-email">sarah@rejectedcompany.com</p>
+          </div>
+          <div class="detail-item">
+            <label>Phone</label>
+            <p id="rej-modal-phone">+1 (555) 222-7890</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="documents-section">
+        <h3 class="section-title">
+          <span class="material-symbols-outlined">description</span> Documents
+        </h3>
+        <div class="documents-list">
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Business License
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Tax Certificate
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              ID Proof
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-restored">
+        <span class="material-symbols-outlined">autorenew</span>
+        Restore Employer
+      </button>
+      <button class="btn btn-close">
+        <span class="material-symbols-outlined">close</span>
+        Close
+      </button>
+    </div>
+  </div>
+  </div>
 
   <script src="../assets/JS_JQUERY/jquery-3.7.1.min.js"></script>
   <script src="../assets/library/datatable/dataTables.js"></script>
@@ -524,7 +653,7 @@
                 <button class="view-btn" data-type="verified" data-company='${JSON.stringify(emp)}'>
                   <span class="material-symbols-outlined">visibility</span> View
                 </button>
-                <button class="revoke-btn" data-email="${emp.email}">Revoke</button>
+                <button class="revoke-btn" data-email="${emp.email}" style="display: none;">Revoke</button>
               </td>
             </tr>
           `).join("");
@@ -544,9 +673,29 @@
                 <button class="view-btn" data-type="revoked" data-company='${JSON.stringify(emp)}'>
                   <span class="material-symbols-outlined">visibility</span> View
                 </button>
-                <button class="restore-btn" data-email="${emp.email}">
-                  <span class="material-symbols-outlined">autorenew</span> Restore
+                <button class="restore-btn" data-email="${emp.email}" style="display: none;">
+                  <span class="material-symbols-outlined" >autorenew</span> Restore
                 </button>
+              </td>
+            </tr>
+          `).join("");
+        }
+
+        const rejectedData = data.rejected || [];
+        if (Array.isArray(rejectedData)) {
+          const rejectedTableBody = document.querySelector("#rejectedTable tbody");
+          rejectedTableBody.innerHTML = rejectedData.map(emp => `
+            <tr>
+              <td>${emp.company_name}</td>
+              <td>${emp.contact_person}</td>
+              <td>${emp.email}</td>
+              <td>${emp.industry}</td>
+              <td><span class="status rejected">${emp.status}</span></td>
+              <td>
+                <button class="view-btn" data-type="rejected" data-company='${JSON.stringify(emp)}'>
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="restore-btn" data-email="${emp.email}" style="display: none;">Restore</button>
               </td>
             </tr>
           `).join("");
@@ -563,7 +712,8 @@
             openVerifiedModal(emp);
           } else if (type === "revoked") {
             openRevokedModal(emp);
-          }
+          } else if (type === "rejected") 
+            openRejectedModal(emp);
           });
         });
 
@@ -598,9 +748,25 @@
       document.getElementById("r-modal-company-name").textContent = emp.company_name;
       document.getElementById("r-modal-contact-person").textContent = emp.contact_person;
       document.getElementById("r-modal-email").textContent = emp.email;
+      document.getElementById("r-modal-address").textContent = emp.address;
       document.getElementById("r-modal-industry").textContent = emp.industry;
+      document.getElementById("r-modal-phone").textContent = emp.contact_mobile;
 
       const modal = document.getElementById("revokedModal");
+      modal.style.display = "flex";
+      const content = modal.querySelector(".modal-content");
+      if (content) content.classList.add("modal-show");
+    }
+
+    function openRejectedModal(emp) {
+      document.getElementById("rej-modal-company-name").textContent = emp.company_name;
+      document.getElementById("rej-modal-contact-person").textContent = emp.contact_person;
+      document.getElementById("rej-modal-email").textContent = emp.email;
+      document.getElementById("rej-modal-address").textContent = emp.address;
+      document.getElementById("rej-modal-industry").textContent = emp.industry;
+      document.getElementById("rej-modal-phone").textContent = emp.contact_mobile;
+
+      const modal = document.getElementById("rejectedModal");
       modal.style.display = "flex";
       const content = modal.querySelector(".modal-content");
       if (content) content.classList.add("modal-show");
@@ -645,6 +811,10 @@
             const modal = document.querySelector('#revokedModal');
             modal.querySelector('.modal-content').classList.remove('modal-show');
             setTimeout(() => { modal.style.display = 'none'; }, 300);
+          } else if (status === "rejected") {
+            const modal = document.querySelector('#revokedModal');
+            modal.querySelector('.modal-content').classList.remove('modal-show');
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
           }
           setTimeout(() => location.reload(), 500);
         } else {
@@ -671,6 +841,11 @@
     document.querySelector('.btn-restore')?.addEventListener('click', function() {
     const email = document.getElementById("r-modal-email").textContent;
     updateEmployerStatus(email, "verified");
+    });
+
+    document.querySelector('.btn-restored')?.addEventListener('click', function() {
+      const email = document.getElementById("rej-modal-email").textContent;
+      updateEmployerStatus(email, "pending");
     });
 
   });
