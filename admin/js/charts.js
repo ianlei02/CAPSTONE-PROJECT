@@ -44,12 +44,7 @@ const monthlyVacancies = [
  // Male, Female
 
 // Age range data
-const ageRanges = ["18-24", "25-59", "60+"];
-const monthlyAgeData = {
-  "18-24": [40, 45, 50, 55, 60, 70, 75, 80, 85, 90, 95, 100],
-  "25-59": [70, 75, 80, 85, 90, 100, 110, 120, 125, 130, 135, 140],
-  "60+": [10, 12, 15, 18, 20, 22, 25, 28, 30, 32, 35, 40],
-};
+
 
 // Initialize charts after the page loads
 document.addEventListener("DOMContentLoaded", function () {
@@ -363,85 +358,81 @@ document.addEventListener("DOMContentLoaded", function () {
 })
 
   // Age Range Chart
-  const ageChart = new Chart(document.getElementById("ageChart"), {
-    type: "bar",
-    data: {
-      labels: months,
-      datasets: [
-        {
-          label: "18-24",
-          data: monthlyAgeData["18-24"],
-          backgroundColor: "rgba(59, 130, 246, 0.7)",
-          borderColor: "rgba(59, 130, 246, 1)",
-          borderWidth: 1,
-          borderRadius: 6,
-        },
-        {
-          label: "25-59",
-          data: monthlyAgeData["25-59"],
-          backgroundColor: "rgba(16, 185, 129, 0.7)",
-          borderColor: "rgba(16, 185, 129, 1)",
-          borderWidth: 1,
-          borderRadius: 6,
-        },
-        {
-          label: "60+",
-          data: monthlyAgeData["60+"],
-          backgroundColor: "rgba(139, 92, 246, 0.7)",
-          borderColor: "rgba(139, 92, 246, 1)",
-          borderWidth: 1,
-          borderRadius: 6,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: "top",
-          labels: {
-            usePointStyle: true,
-            padding: 20,
-            font: {
+  fetch("../Function/fetch-age.php")
+  .then(response => response.json())
+  .then(data => {
+    const ageLabels = ["18-24", "25-59", "60+"];
+
+    new Chart(document.getElementById("ageChart"), {
+      type: "bar",
+      data: {
+        labels: ageLabels,
+        datasets: [
+          {
+            label: "Age Distribution",
+            data: [data["18-24"], data["25-59"], data["60+"]],
+            backgroundColor: [
+              "rgba(59, 130, 246, 0.7)",
+              "rgba(16, 185, 129, 0.7)",
+              "rgba(139, 92, 246, 0.7)",
+            ],
+            borderColor: [
+              "rgba(59, 130, 246, 1)",
+              "rgba(16, 185, 129, 1)",
+              "rgba(139, 92, 246, 1)",
+            ],
+            borderWidth: 1,
+            borderRadius: 6,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: "top",
+            labels: {
+              usePointStyle: true,
+              padding: 20,
+              font: {
+                size: 14,
+              },
+            },
+          },
+          tooltip: {
+            bodyFont: {
               size: 14,
             },
-          },
-        },
-        tooltip: {
-          bodyFont: {
-            size: 14,
-          },
-          titleFont: {
-            size: 16,
-          },
-        },
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          grid: {
-            drawBorder: false,
-          },
-          ticks: {
-            font: {
-              size: 13,
+            titleFont: {
+              size: 16,
             },
           },
         },
-        x: {
-          grid: {
-            display: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: {
+              drawBorder: false,
+            },
+            ticks: {
+              font: {
+                size: 13,
+              },
+            },
           },
-          ticks: {
-            font: {
-              size: 13,
+          x: {
+            grid: {
+              display: false,
+            },
+            ticks: {
+              font: {
+                size: 13,
+              },
             },
           },
         },
       },
-    },
-  });
-
-  
+    });
+  })
 });

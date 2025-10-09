@@ -7,6 +7,7 @@
   <title>Employers</title>
   <script src="../js/load-saved.js"></script>
   <script src="../js/dark-mode.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="../css/navs.css">
   <link rel="stylesheet" href="../css/employer-table.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -793,7 +794,21 @@
           };
         } else {
           viewBtn.onclick = downloadBtn.onclick = () => {
-            alert("No file uploaded for this document.");
+            Swal.fire({
+              icon: 'warning',
+              title: 'No File Uploaded',
+              text: 'There is no document available for this file.',
+              confirmButtonText: 'Okay',
+              confirmButtonColor: '#3085d6',
+              background: '#fff',
+              color: '#333',
+              showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+              },
+              hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+              }
+            });
           };
         }
       }
