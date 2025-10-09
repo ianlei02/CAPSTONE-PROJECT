@@ -348,401 +348,117 @@
   </div>
 
 
-
-  <script>
-    // Sample data for employers
-    const pendingEmployers = [{
-        id: 1,
-        company: "Tech Solutions Inc.",
-        contact: "John Smith",
-        email: "john@techsolutions.com",
-        industry: "Information Technology",
-        status: "Pending"
-      },
-      {
-        id: 2,
-        company: "MediCare Providers",
-        contact: "Sarah Johnson",
-        email: "sarah@medicare.com",
-        industry: "Healthcare",
-        status: "Pending"
-      },
-      {
-        id: 3,
-        company: "EcoBuild Constructions",
-        contact: "Michael Brown",
-        email: "michael@ecobuild.com",
-        industry: "Construction",
-        status: "Pending"
-      },
-      {
-        id: 4,
-        company: "FoodExpress Delivery",
-        contact: "Jessica Lee",
-        email: "jessica@foodexpress.com",
-        industry: "Logistics",
-        status: "Pending"
-      },
-      {
-        id: 5,
-        company: "EduTech Innovations",
-        contact: "Robert Wilson",
-        email: "robert@edutech.com",
-        industry: "Education",
-        status: "Pending"
-      },
-      {
-        id: 6,
-        company: "GreenEnergy Solutions",
-        contact: "Emily Davis",
-        email: "emily@greenenergy.com",
-        industry: "Energy",
-        status: "Pending"
-      },
-      {
-        id: 7,
-        company: "FinSecure Advisors",
-        contact: "David Miller",
-        email: "david@finsecure.com",
-        industry: "Finance",
-        status: "Pending"
-      },
-      {
-        id: 8,
-        company: "RetailPlus Stores",
-        contact: "Amanda Taylor",
-        email: "amanda@retailplus.com",
-        industry: "Retail",
-        status: "Pending"
-      },
-      {
-        id: 9,
-        company: "AutoMech Repairs",
-        contact: "Christopher Moore",
-        email: "chris@automech.com",
-        industry: "Automotive",
-        status: "Pending"
-      },
-      {
-        id: 10,
-        company: "TravelWorld Agency",
-        contact: "Jennifer Anderson",
-        email: "jennifer@travelworld.com",
-        industry: "Tourism",
-        status: "Pending"
-      },
-      {
-        id: 21,
-        company: "CloudTech Innovations",
-        contact: "Alex Turner",
-        email: "alex@cloudtech.com",
-        industry: "Cloud Computing",
-        status: "Pending"
-      },
-      {
-        id: 22,
-        company: "DataSphere Analytics",
-        contact: "Megan Clark",
-        email: "megan@datasphere.com",
-        industry: "Data Analytics",
-        status: "Pending"
-      },
-      {
-        id: 23,
-        company: "SecureNet Systems",
-        contact: "Brian Wilson",
-        email: "brian@securenet.com",
-        industry: "Cybersecurity",
-        status: "Pending"
-      },
-      {
-        id: 24,
-        company: "NextGen Robotics",
-        contact: "Olivia Martinez",
-        email: "olivia@nextgen.com",
-        industry: "Robotics",
-        status: "Pending"
-      },
-      {
-        id: 25,
-        company: "BioPharm Solutions",
-        contact: "Kevin Harris",
-        email: "kevin@biopharm.com",
-        industry: "Pharmaceuticals",
-        status: "Pending"
-      }
-    ];
-    const verifiedEmployers = [{
-        id: 11,
-        company: "Global Services Ltd.",
-        contact: "Emma Johnson",
-        email: "emma@globalservices.com",
-        industry: "Financial Services",
-        status: "Verified"
-      },
-      {
-        id: 12,
-        company: "SoftWorks Development",
-        contact: "Daniel Martin",
-        email: "daniel@softworks.com",
-        industry: "Software",
-        status: "Verified"
-      },
-      {
-        id: 13,
-        company: "HealthFirst Clinics",
-        contact: "Sophia Williams",
-        email: "sophia@healthfirst.com",
-        industry: "Healthcare",
-        status: "Verified"
-      },
-      {
-        id: 14,
-        company: "BuildRight Contractors",
-        contact: "James Thompson",
-        email: "james@buildright.com",
-        industry: "Construction",
-        status: "Verified"
-      },
-      {
-        id: 15,
-        company: "QuickShip Logistics",
-        contact: "Olivia Garcia",
-        email: "olivia@quickship.com",
-        industry: "Logistics",
-        status: "Verified"
-      },
-      {
-        id: 16,
-        company: "LearnSmart Academy",
-        contact: "William Clark",
-        email: "william@learnsmart.com",
-        industry: "Education",
-        status: "Verified"
-      },
-      {
-        id: 17,
-        company: "PowerGrid Utilities",
-        contact: "Isabella Lewis",
-        email: "isabella@powergrid.com",
-        industry: "Energy",
-        status: "Verified"
-      },
-      {
-        id: 18,
-        company: "WealthManage Bank",
-        contact: "Ethan Robinson",
-        email: "ethan@wealthmanage.com",
-        industry: "Banking",
-        status: "Verified"
-      },
-      {
-        id: 19,
-        company: "StyleTrend Boutique",
-        contact: "Mia Walker",
-        email: "mia@styletrend.com",
-        industry: "Fashion",
-        status: "Verified"
-      },
-      {
-        id: 20,
-        company: "CarCare Center",
-        contact: "Noah Hall",
-        email: "noah@carcare.com",
-        industry: "Automotive",
-        status: "Verified"
-      },
-      {
-        id: 26,
-        company: "SmartHome Technologies",
-        contact: "Rachel Green",
-        email: "rachel@smarthome.com",
-        industry: "IoT",
-        status: "Verified"
-      },
-      {
-        id: 27,
-        company: "EcoEnergy Solutions",
-        contact: "Thomas Reed",
-        email: "thomas@ecoenergy.com",
-        industry: "Renewable Energy",
-        status: "Verified"
-      },
-      {
-        id: 28,
-        company: "FinTech Innovations",
-        contact: "Laura King",
-        email: "laura@fintech.com",
-        industry: "Financial Technology",
-        status: "Verified"
-      },
-      {
-        id: 29,
-        company: "MedTech Solutions",
-        contact: "Ryan Scott",
-        email: "ryan@medtech.com",
-        industry: "Medical Technology",
-        status: "Verified"
-      },
-      {
-        id: 30,
-        company: "AgriGrowth Farms",
-        contact: "Emma Watson",
-        email: "emma@agrigrowth.com",
-        industry: "Agriculture",
-        status: "Verified"
-      }
-    ];
-
-    // Initialize DataTables
-    let pendingTable, verifiedTable;
-
-    // Populate tables with data
-    function populateTables() {
-      const pendingTableBody = document.querySelector('#pendingTable tbody');
-      const verifiedTableBody = document.querySelector('#verifiedTable tbody');
-
-      // Clear existing rows
-      pendingTableBody.innerHTML = '';
-      verifiedTableBody.innerHTML = '';
-
-      // Add pending employers
-      pendingEmployers.forEach(employer => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-                    <td>${employer.company}</td>
-                    <td>${employer.contact}</td>
-                    <td>${employer.email}</td>
-                    <td>${employer.industry}</td>
-                    <td><span class="status status-pending"><span class="material-symbols-outlined">pending</span> ${employer.status}</span></td>
-                    <td><button class="btn btn-view" data-id="${employer.id}" data-status="pending"><span class="material-symbols-outlined">visibility</span> View</button></td>
-                `;
-        pendingTableBody.appendChild(row);
-      });
-      // Add verified employers
-      verifiedEmployers.forEach(employer => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-                    <td>${employer.company}</td>
-                    <td>${employer.contact}</td>
-                    <td>${employer.email}</td>
-                    <td>${employer.industry}</td>
-                    <td><span class="status status-verified"><span class="material-symbols-outlined">check_circle</span> ${employer.status}</span></td>
-                    <td><button class="btn btn-view" data-id="${employer.id}" data-status="verified"><span class="material-symbols-outlined">visibility</span> View</button></td>
-                `;
-        verifiedTableBody.appendChild(row);
-      });
-
-      // Initialize DataTables
-      if ($.fn.DataTable.isDataTable('#pendingTable')) {
-        pendingTable.destroy();
-      }
-
-      if ($.fn.DataTable.isDataTable('#verifiedTable')) {
-        verifiedTable.destroy();
-      }
-
-
-      // Add event listeners to View buttons
-      document.querySelectorAll('.btn-view').forEach(button => {
-        button.addEventListener('click', function() {
-          const id = this.getAttribute('data-id');
-          const status = this.getAttribute('data-status');
-          showModal(id, status);
-        });
-      });
-    }
-
-    // Show modal with employer details
-    function showModal(id, status) {
-      const employer = status === 'pending' ?
-        pendingEmployers.find(e => e.id === parseInt(id)) :
-        verifiedEmployers.find(e => e.id === parseInt(id));
-
-      if (status === 'pending') {
-        // Set modal content for pending employer
-        document.getElementById('modal-company-name').textContent = employer.company;
-        document.getElementById('modal-address').textContent = "123 Business Ave, New York, NY";
-        document.getElementById('modal-industry').textContent = employer.industry;
-        document.getElementById('modal-contact-person').textContent = employer.contact;
-        document.getElementById('modal-email').textContent = employer.email;
-        document.getElementById('modal-phone').textContent = "+1 (555) 123-4567";
-
-        // Show the pending modal
-        const modal = document.getElementById('pendingModal');
-        modal.style.display = 'flex';
-        setTimeout(() => {
-          modal.querySelector('.modal-content').classList.add('modal-show');
-        }, 10);
-      } else {
-        // Set modal content for verified employer
-        document.getElementById('v-modal-company-name').textContent = employer.company;
-        document.getElementById('v-modal-address').textContent = "456 Corporate Blvd, London, UK";
-        document.getElementById('v-modal-industry').textContent = employer.industry;
-        document.getElementById('v-modal-contact-person').textContent = employer.contact;
-        document.getElementById('v-modal-email').textContent = employer.email;
-        document.getElementById('v-modal-phone').textContent = "+44 20 1234 5678";
-
-        // Show the verified modal
-        const modal = document.getElementById('verifiedModal');
-        modal.style.display = 'flex';
-        setTimeout(() => {
-          modal.querySelector('.modal-content').classList.add('modal-show');
-        }, 10);
-      }
-    }
-
-    // Close modals
-    function setupModalClose() {
-      document.querySelectorAll('.close, .btn-close').forEach(button => {
-        button.addEventListener('click', function() {
-          document.querySelectorAll('.modal').forEach(modal => {
-            modal.querySelector('.modal-content').classList.remove('modal-show');
-            setTimeout(() => {
-              modal.style.display = 'none';
-            }, 300);
-          });
-        });
-      });
-
-      // Close modal when clicking outside
-      window.addEventListener('click', function(event) {
-        if (event.target.classList.contains('modal')) {
-          document.querySelectorAll('.modal').forEach(modal => {
-            modal.querySelector('.modal-content').classList.remove('modal-show');
-            setTimeout(() => {
-              modal.style.display = 'none';
-            }, 300);
-          });
-        }
-      });
-    }
-
-    // Document actions
-    function setupDocumentActions() {
-      document.querySelectorAll('.btn-view-doc').forEach(button => {
-        button.addEventListener('click', function() {
-          alert('Viewing document in new tab...');
-        });
-      });
-
-      document.querySelectorAll('.btn-download').forEach(button => {
-        button.addEventListener('click', function() {
-          alert('Downloading document...');
-        });
-      });
-    }
-  </script>
   <script src="../assets/JS_JQUERY/jquery-3.7.1.min.js"></script>
   <script src="../assets/library/datatable/dataTables.js"></script>
   <script src="../js/table-init.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch("../Function/fetch-employer.php")
+      .then(response => response.json())
+      .then(data => {
+        console.log("fetch result:", data);
+
+        if (!data.success) {
+          console.error(data.message || "fetch returned success:false");
+          return;
+        }
+
+        const pendingTableBody = document.querySelector("#pendingTable tbody");
+        const verifiedTableBody = document.querySelector("#verifiedTable tbody");
+
+        if (!pendingTableBody) console.error("Pending table tbody not found");
+        if (!verifiedTableBody) console.error("Verified table tbody not found");
+
+        if (Array.isArray(data.pending)) {
+          pendingTableBody.innerHTML = data.pending.map(emp => `
+            <tr>
+              <td>${emp.company_name}</td>
+              <td>${emp.contact_person}</td>
+              <td>${emp.email}</td>
+              <td>${emp.industry}</td>
+              <td><span class="status pending">${emp.status}</span></td>
+              <td>
+                <button class="view-btn" data-type="pending" data-company='${JSON.stringify(emp)}'>
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+              </td>
+            </tr>
+          `).join("");
+        }
+
+        const verifiedData = data.verified || [];
+        if (Array.isArray(verifiedData)) {
+          verifiedTableBody.innerHTML = verifiedData.map(emp => `
+            <tr>
+              <td>${emp.company_name}</td>
+              <td>${emp.contact_person}</td>
+              <td>${emp.email}</td>
+              <td>${emp.industry}</td>
+              <td><span class="status verified">${emp.status}</span></td>
+              <td>
+                <button class="view-btn" data-type="verified" data-company='${JSON.stringify(emp)}'>
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="revoke-btn" data-email="${emp.email}">Revoke</button>
+              </td>
+            </tr>
+          `).join("");
+        }
+
+        
+        document.querySelectorAll(".view-btn").forEach(btn => {
+          btn.addEventListener("click", function() {
+            const emp = JSON.parse(this.dataset.company);
+            const type = this.dataset.type;
+            if (type === "pending") {
+              openPendingModal(emp);
+            } else {
+              openVerifiedModal(emp);
+            }
+          });
+        });
+
+      })
+      .catch(error => console.error("Error fetching employer data:", error));
+
+    function openPendingModal(emp) {
+      document.getElementById("modal-company-name").textContent = emp.company_name;
+      document.getElementById("modal-contact-person").textContent = emp.contact_person;
+      document.getElementById("modal-email").textContent = emp.email;
+      document.getElementById("modal-address").textContent = emp.address;
+      document.getElementById("modal-industry").textContent = emp.industry;
+      document.getElementById("modal-phone").textContent = emp.contact_mobile;
+      const modal = document.getElementById("pendingModal"); modal.style.display = "flex";
+      const content = modal.querySelector(".modal-content");
+      if (content) content.classList.add("modal-show");
+    }
+
+    function openVerifiedModal(emp) {
+      document.getElementById("v-modal-company-name").textContent = emp.company_name;
+      document.getElementById("v-modal-contact-person").textContent = emp.contact_person;
+      document.getElementById("v-modal-email").textContent = emp.email;
+      document.getElementById("v-modal-address").textContent = emp.address;
+      document.getElementById("v-modal-industry").textContent = emp.industry;
+      document.getElementById("v-modal-phone").textContent = emp.contact_mobile;
+      const modal = document.getElementById("verifiedModal"); modal.style.display = "flex";
+      const content = modal.querySelector(".modal-content");
+      if (content) content.classList.add("modal-show");
+    }
+
+    document.querySelectorAll(".modal .close, .btn-close").forEach(btn => {
+    btn.addEventListener("click", function() {
+      const modal = this.closest(".modal");
+      const content = modal.querySelector(".modal-content");
+      if (content) content.classList.remove("modal-show");
+      modal.style.display = "none";
+    });
+  });
+  });
+  </script>
+
 
   <script>
-    // Run initialization when DOM is loaded
     document.addEventListener('DOMContentLoaded', () => {
-      populateTables();
-      setupModalClose();
-      setupDocumentActions();
 
       // Add event listeners to modal action buttons
       document.querySelector('.btn-verify').addEventListener('click', function() {
