@@ -9,7 +9,7 @@
     :root {
       --primary: oklch(55% 0.15 250);
       --primary-dark: oklch(45% 0.15 250);
-      --primary-light: oklch(95% 0.05 250);
+      --primary-light:hsla(0, 0%, 94%, 1.00);
       --accent: oklch(60% 0.12 280);
       --text: oklch(25% 0.05 250);
       --light-text: oklch(55% 0.05 250);
@@ -54,20 +54,20 @@
     }
 
     .brand-logo {
-      width: 64px;
-      height: 64px;
+      width: 100px;
+      height: 100px;
       margin: 0 auto 20px;
-      background-color: var(--primary);
+      /* background-color: var(--primary); */
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px oklch(55% 0.15 250 / 0.2);
+      /* box-shadow: 0 4px 12px oklch(55% 0.15 250 / 0.2); */
     }
 
-    .brand-logo svg {
-      width: 32px;
-      height: 32px;
+    .brand-logo img {
+      width: 100px;
+      height: 100px;
       fill: var(--white);
     }
 
@@ -257,9 +257,7 @@
   <div class="login-container">
     <div class="login-header">
       <div class="brand-logo">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V10.7C15.4,10.9 16,11.3 16.5,11.9C17.4,13.4 17.4,15.2 16.5,16.7C15.6,18.2 13.8,19 12,19C10.2,19 8.4,18.2 7.5,16.7C6.6,15.2 6.6,13.4 7.5,11.9C8,11.3 8.6,10.9 9.2,10.7V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.5,8.7 10.5,9.5C10.5,10.3 11.2,10.8 12,10.8C12.8,10.8 13.5,10.3 13.5,9.5C13.5,8.7 12.8,8.2 12,8.2Z" />
-        </svg>
+        <img src="../../public/smb-images/pesosmb.png" alt="">
       </div>
       <h1>Admin Portal</h1>
       <p>Secure access to management dashboard</p>
@@ -299,7 +297,7 @@
             <input type="checkbox" id="remember" name="remember">
             <label for="remember">Remember me</label>
           </div>
-          <a href="/forgot-password">Forgot password?</a>
+          <a href="forgot-password">Forgot password?</a>
         </div>
 
         <button type="submit" class="btn">Sign In</button>
@@ -312,7 +310,7 @@
         </div>
 
         <div class="form-footer">
-          <p>Need help? <a href="/support">Contact Support</a></p>
+          <p>Need help? <a href="">Contact Support</a></p>
         </div>
       </form>
     </div>
@@ -354,16 +352,14 @@
         const result = await response.json();
 
         if (result.status === 'success') {
-          // Success state
           submitBtn.textContent = 'Success!';
-          submitBtn.style.backgroundColor = 'oklch(50% 0.12 150)'; // Success green
+          submitBtn.style.backgroundColor = 'oklch(50% 0.12 150)'; 
           setTimeout(() => {
             window.location.href = result.redirect;
           }, 1000);
         } else {
-          // Error state
           submitBtn.textContent = 'Login Failed';
-          submitBtn.style.backgroundColor = 'oklch(50% 0.12 30)'; // Error red
+          submitBtn.style.backgroundColor = 'oklch(50% 0.12 30)';
           setTimeout(() => {
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
@@ -373,7 +369,7 @@
         }
       } catch (err) {
         submitBtn.textContent = 'Connection Error';
-        submitBtn.style.backgroundColor = 'oklch(50% 0.12 30)'; // Error red
+        submitBtn.style.backgroundColor = 'oklch(50% 0.12 30)'; 
         setTimeout(() => {
           submitBtn.textContent = originalText;
           submitBtn.disabled = false;

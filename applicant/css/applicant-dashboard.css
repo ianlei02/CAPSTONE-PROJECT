@@ -1,3 +1,38 @@
+.right-pos {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 0.5rem;
+
+  #notifBtn {
+    cursor: pointer;
+    background-color: var(--bg);
+    padding: 1rem;
+    display: flex;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+
+    &:hover {
+      border: 1px solid var(--color-blue-500);
+    }
+    #notifList {
+      display: none;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 10px;
+      width: 250px;
+      position: absolute;
+      right: 0;
+      top: 120%;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+  }
+}
 .main-header {
   display: flex;
   justify-content: center;
@@ -5,12 +40,12 @@
   /* padding: 1rem 0 0 0; */
   margin-bottom: 1rem;
 
-  h3{
+  h3 {
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--text);
   }
-  .complete-profile-warning{
+  .complete-profile-warning {
     cursor: pointer;
     background-color: var(--bg-muted);
     border: 1px solid var(--border);
@@ -113,7 +148,7 @@
     }
   }
 }
-.content-wrapper{
+.content-wrapper {
   display: flex;
   gap: 1rem;
 }
@@ -189,19 +224,18 @@
     flex-direction: column;
     gap: 0.25rem;
   }
-  .application-title{
+  .application-title {
     color: var(--text);
     font-size: var(--font-size-2xl);
   }
-  .application-company{
+  .application-company {
     color: var(--text-muted);
     font-size: var(--font-size-1xl);
     font-weight: var(--fw-bold);
   }
-  .application-location-date{
+  .application-location-date {
     color: var(--text-muted);
     font-size: var(--font-size-sm);
-
   }
   .status-action {
     display: flex;
@@ -212,23 +246,22 @@
   }
   .status-action .application-status {
     padding: 0.5rem 1rem;
-    border: 1px solid ;
+    border: 1px solid;
     border-radius: 3rem;
-
   }
-  .application-status.hired{
+  .application-status.hired {
     color: var(--success);
     border-color: inherit;
   }
-  .application-status.pending{
+  .application-status.pending {
     color: var(--warning);
     border-color: inherit;
   }
-  .application-status.interview{
+  .application-status.interview {
     color: var(--info);
     border-color: inherit;
   }
-  .application-status.rejected{
+  .application-status.rejected {
     color: var(--danger);
     border-color: inherit;
   }
@@ -255,7 +288,7 @@
   padding: 1rem;
   grid-column: span 2;
 
-  h2{
+  h2 {
     color: var(--text);
   }
   .actions-grid {
@@ -264,12 +297,12 @@
     gap: 15px;
     padding: 1rem;
   }
-  a{
+  a {
     text-decoration: none;
   }
   .action-card {
     background-color: var(--bg);
-    background-image: linear-gradient(to bottom, var(--bg),var(--bg-muted));
+    background-image: linear-gradient(to bottom, var(--bg), var(--bg-muted));
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
     border: 2px solid var(--border);

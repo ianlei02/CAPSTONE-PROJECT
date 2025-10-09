@@ -68,7 +68,7 @@ $result_job = $conn->query($sql_job);
         <div class="filter-section">
             <div style="display:flex;">
                 <input type="text" name="search-filter" placeholder="Search Jobs">
-                <button>Search</button>
+                <!-- <button>Search</button> -->
             </div>
             <div class="filter-options">
                 <select id="field-filter">
@@ -79,13 +79,13 @@ $result_job = $conn->query($sql_job);
                     <option value="Education">Education</option>
                     <option value="Finance">Finance</option>
                 </select>
-                <select id="type-filter">
+                <!-- <select id="type-filter">
                     <option value="all">All Employment Types</option>
                     <option value="Full-time">Full-time</option>
                     <option value="Part-time">Part-time</option>
                     <option value="Contract">Contract</option>
                     <option value="Internship">Internship</option>
-                </select>
+                </select> -->
             </div>
         </div>
         <div class="job-cards">
