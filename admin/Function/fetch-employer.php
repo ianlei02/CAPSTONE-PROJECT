@@ -3,17 +3,22 @@ require_once "../../connection/dbcon.php";
 header('Content-Type: application/json');
 
 try {
-$sql = "SELECT 
+ $sql = "SELECT 
                 c.company_name, 
                 c.contact_person,
                 c.contact_mobile,
                 c.address, 
                 a.email, 
                 c.industry, 
-                a.b_status AS status
+                a.b_status AS status,
+                d.employer_profile,
+                d.business_permit,
+                d.bir_certification
             FROM employer_company_info AS c
             INNER JOIN employer_account AS a 
-                ON c.employer_id = a.employer_id";
+                ON c.employer_id = a.employer_id
+            LEFT JOIN employer_company_docs AS d
+                ON c.employer_id = d.employer_id";
 
     $result = $conn->query($sql);
 
@@ -24,7 +29,7 @@ $sql = "SELECT
     $pending = [];
     $verified = [];
     $revoked = [];
-
+    $rejected = [];
      while ($row = $result->fetch_assoc()) {
         switch (strtolower($row['status'])) {
             case 'pending':
@@ -40,6 +45,9 @@ $sql = "SELECT
             case 'revoked':
                 $revoked[] = $row;
                 break;
+            case 'rejected':
+                $rejected[] = $row;
+                break;
         }
     }
 
@@ -47,7 +55,8 @@ $sql = "SELECT
         "success" => true,
         "pending" => $pending,
         "verified" => $verified,
-        "revoked" => $revoked
+        "revoked" => $revoked,
+        "rejected" => $rejected
     ]);
 } catch (Exception $e) {
     echo json_encode([
@@ -55,4 +64,5 @@ $sql = "SELECT
         "message" => $e->getMessage()
     ]);
 }
+
 
