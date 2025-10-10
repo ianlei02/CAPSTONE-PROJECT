@@ -28,7 +28,9 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
     <link rel="stylesheet" href="public/css/footer.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+      -->
+    <link rel="stylesheet" href="public/library/swiper/swiper-bundle.min.css">
 </head>
 
 <body>
@@ -48,8 +50,8 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
             <li><a class="nav-link" href="landing/pages/find-job.php">Job Listings</a></li>
             <li><a class="nav-link" href="landing/pages/aboutus.php">About Us</a></li>
             <li class="auth-buttons">
-                <a href="auth/login-signup.php?form=login"><button class="btn-login">Login</button></a>
-                <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a>
+                <a href="auth/login-signup.php?form=login" class="btn-primary">Login</a>
+                <!-- <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a> -->
             </li>
         </ul>
         <button onclick="sidebarToggle()" class="hamburger">
@@ -62,8 +64,8 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
             <li><a class="nav-link" href="./pages/find-job.php">Job Listings</a></li>
             <li><a class="nav-link" href="./pages/aboutus.php">About Us</a></li>
             <li class="auth-buttons">
-                <a href="auth/login-signup.php?form=login"><button class="btn-login">Login</button></a>
-                <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a>
+                <a href="auth/login-signup.php?form=login" class="btn-primary">Login</a>
+                <!-- <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a> -->
             </li>
         </ul>
     </aside>
@@ -302,8 +304,8 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
         });
     </script> -->
     <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-
+    <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script> -->
+    <script src="public/library/swiper/swiper-bundle.min.js"></script>
     <script>
         const swiper = new Swiper('.newsSwiper', {
             slidesPerView: 1,
