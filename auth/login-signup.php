@@ -28,141 +28,221 @@ if (isset($_SESSION['verification_success'])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login & Signup Form</title>
+  <script src="js/dark-mode.js"></script>
   <link rel="stylesheet" href="css/login-signup.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
   <div class="container">
-    <div class="form-container">
-      <div class="tab-container">
-        <div class="tab login-tab active" onclick="showTab('login')">Login</div>
-        <div class="tab signup-tab" onclick="showTab('signup')">
-          Sign Up
+    <!-- Left Panel - Forms go here -->
+    <div class="left-panel">
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+        <i data-lucide="moon" id="themeIcon"></i>
+      </button>
+
+      <div class="form-container">
+        <div class="tab-container">
+          <div class="tab login-tab active" onclick="showTab('login')">Login</div>
+          <div class="tab signup-tab" onclick="showTab('signup')">
+            Sign Up
+          </div>
+        </div>
+
+        <!-- Signup Form -->
+        <div class="form signup-form">
+          <h2 class="form-title">Create an Account</h2>
+          <p class="form-subtitle">Sign in to your account to continue</p>
+
+          <form action="functions/register.php" method="POST">
+            <div class="user-type">
+              <h4>Register as:</h4>
+              <div class="radio-container">
+                <div class="radio-option">
+                  <input
+                    type="radio"
+                    id="applicant"
+                    name="user-type"
+                    value="applicant"
+                    checked />
+                  <label for="applicant">Applicant</label>
+                </div>
+                <div class="radio-option">
+                  <input
+                    type="radio"
+                    id="employer"
+                    name="user-type"
+                    value="employer" />
+                  <label for="employer">Employer</label>
+                </div>
+              </div>
+            </div>
+            <div class="name-inputs">
+              <div class="input-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="f_name" required />
+              </div>
+              <div class="input-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="l_name" required />
+              </div>
+            </div>
+            <div class="input-group">
+              <label for="signupEmail">Email</label>
+              <input type="email" id="signupEmail" name="email" required />
+            </div>
+            <div class="input-group">
+              <label for="signupPassword">Password</label>
+              <div style="display:flex;align-items:center;">
+                <input type="password" id="signupPassword" name="password" minlength="8" title="Password must be at least 8 characters" required />
+                <label id="password-rules">?</label>
+              </div>
+              <div id="password-strength">
+                <div id="strength-bar"></div>
+                <span id="strength-text"></span>
+              </div>
+            </div>
+            <div class="input-group">
+              <input type="hidden" id="otp" name="otp" class="form-control" required />
+              <input type="hidden" id="subject" name="subject" class="form-control" value="Received OTP" required />
+            </div>
+            <div class="terms">
+              <input type="checkbox" id="terms" required />
+              <label style="margin-top: 8px;" for="terms">I agree to the
+                <a id="termsLink">Terms and Conditions</a></label>
+            </div>
+
+            <button type="submit" class="btn" id="signupBtn" name="signupBtn">Sign Up</button>
+            <div class="toggle-form">
+              Already have an account? <a onclick="showTab('login')">Login</a>
+            </div>
+          </form>
+        </div>
+
+        <!-- Login Form -->
+        <div class="form login-form active">
+          <h2 class="form-title">Welcome Back</h2>
+          <p class="form-subtitle">Sign in to your account to continue</p>
+
+          <form action="" method="POST">
+            <div class="user-type">
+              <h4>Login as:</h4>
+              <div class="radio-container">
+                <div class="radio-option">
+                  <input
+                    type="radio"
+                    id="loginApplicant"
+                    name="user-type-login"
+                    value="applicant"
+                    checked />
+                  <label for="loginApplicant">Applicant</label>
+                </div>
+                <div class="radio-option">
+                  <input
+                    type="radio"
+                    id="loginEmployer"
+                    name="user-type-login"
+                    value="employer" />
+                  <label for="loginEmployer">Employer</label>
+                </div>
+              </div>
+            </div>
+            <div class="input-group">
+              <label for="loginEmail">Email</label>
+              <input type="email" id="loginEmail" required />
+            </div>
+
+            <div class="input-group" style="position:relative;">
+              <label for="loginPassword">Password</label>
+              <input type="password" id="loginPassword" name="password" required />
+              <button type="button" id="togglePassword" style="position:absolute; right:10px; top:45px; background:none; border:none; cursor:pointer; padding:0;">
+                <span id="toggleIcon" style="display:none; font-size:14px; color: #131313ff;">Show</span>
+              </button>
+            </div>
+
+            <div class="input-group remember-me" style="display: flex; align-items: center; gap: 0.5rem; justify-content: space-between; ">
+              <div style="display: flex; align-items: center;">
+                <input type="checkbox" id="rememberMe" name="remember_me">
+                <label style="margin-top: 8px; margin-left: 4px;" for="rememberMe">Remember me</label>
+              </div>
+              <div class="forgot-password">
+                <a href="#" onclick="openForgotPasswordModal()">Forgot Password?</a>
+              </div>
+            </div>
+            <button type="submit" class="btn" id="loginBtn" name="remember_login">Login</button>
+            <div class="toggle-form">
+              Don't have an account? <a onclick="showTab('signup')">Sign Up</a>
+            </div>
+          </form>
         </div>
       </div>
-
-      <!-- Signup Form -->
-      <div class="form signup-form ">
-        <h2>Create an Account</h2>
-        <form action="functions/register.php" method="POST">
-          <div class="user-type">
-            <h4>Register as:</h4>
-            <div class="radio-container">
-              <div class="radio-option">
-                <input
-                  type="radio"
-                  id="applicant"
-                  name="user-type"
-                  value="applicant"
-                  checked />
-                <label for="applicant">Applicant</label>
-              </div>
-              <div class="radio-option">
-                <input
-                  type="radio"
-                  id="employer"
-                  name="user-type"
-                  value="employer" />
-                <label for="employer">Employer</label>
-              </div>
-            </div>
-          </div>
-          <div class="name-inputs">
-            <div class="input-group">
-              <label for="firstName">First Name</label>
-              <input type="text" id="firstName" name="f_name" required />
-            </div>
-            <div class="input-group">
-              <label for="lastName">Last Name</label>
-              <input type="text" id="lastName" name="l_name" required />
-            </div>
-          </div>
-          <div class="input-group">
-            <label for="signupEmail">Email</label>
-            <input type="email" id="signupEmail" name="email" required />
-          </div>
-          <div class="input-group">
-            <label for="signupPassword">Password</label>
-            <div style="display:flex;align-items:center;">
-              <input type="password" id="signupPassword" name="password" minlength="8" title="Password must be at least 8 characters" required />
-              <label id="password-rules">?</label>
-            </div>
-            <div id="password-strength">
-              <div id="strength-bar"></div>
-              <span id="strength-text"></span>
-            </div>
-          </div>
-          <div class="input-group">
-            <input type="hidden" id="otp" name="otp" class="form-control" required />
-            <input type="hidden" id="subject" name="subject" class="form-control" value="Received OTP" required />
-          </div>
-          <div class="terms">
-            <input type="checkbox" id="terms" required />
-            <label style="margin-top: 8px;" for="terms">I agree to the
-              <a id="termsLink">Terms and Conditions</a></label>
-          </div>
-
-          <button type="submit" class="btn" id="signupBtn" name="signupBtn">Sign Up</button>
-          <div class="toggle-form">
-            Already have an account? <a onclick="showTab('login')">Login</a>
-          </div>
-        </form>
-      </div>
-
-      <!-- Login Form -->
-      <div class="form login-form active">
-        <h2>Welcome Back</h2>
-        <form action="" method="POST">
-          <div class="user-type">
-            <h4>Login as:</h4>
-            <div class="radio-container">
-              <div class="radio-option">
-                <input
-                  type="radio"
-                  id="loginApplicant"
-                  name="user-type-login"
-                  value="applicant"
-                  checked />
-                <label for="loginApplicant">Applicant</label>
-              </div>
-              <div class="radio-option">
-                <input
-                  type="radio"
-                  id="loginEmployer"
-                  name="user-type-login"
-                  value="employer" />
-                <label for="loginEmployer">Employer</label>
-              </div>
-            </div>
-          </div>
-          <div class="input-group">
-            <label for="loginEmail">Email</label>
-            <input type="email" id="loginEmail" required />
-          </div>
-
-          <div class="input-group" style="position:relative;">
-            <label for="loginPassword">Password</label>
-            <input type="password" id="loginPassword" name="password" required />
-            <button type="button" id="togglePassword" style="position:absolute; right:10px; top:45px; background:none; border:none; cursor:pointer; padding:0;">
-              <span id="toggleIcon" style="display:none; font-size:14px; color: #131313ff;">Show</span>
-            </button>
-          </div>
-
-          <div class="input-group remember-me" style="display: flex; align-items: center; gap: 0.5rem; justify-content: space-between; ">
-            <div style="display: flex; align-items: center;">
-              <input type="checkbox" id="rememberMe" name="remember_me">
-              <label style="margin-top: 8px; margin-left: 4px;" for="rememberMe">Remember me</label>
-            </div>
-            <div class="forgot-password">
-              <a href="#" onclick="openForgotPasswordModal()">Forgot Password?</a>
-            </div>
-          </div>
-          <button type="submit" class="btn" id="loginBtn" name="remember_login">Login</button>
-          <div class="toggle-form">
-            Don't have an account? <a onclick="showTab('signup')">Sign Up</a>
-          </div>
-        </form>
+    </div>
+    <!-- Right Panel - Visual content -->
+    <div class="right-panel">
+      <div class="logo">PESO</div>
+      <h2 class="welcome-text" id="welcomeText">Welcome Back!</h2>
+      <p class="sub-text" id="subText">Sign in to access your personalized dashboard...</p>
+      <div class="illustration" id="illustration">
+        <svg
+          class="illustration"
+          id="illustration"
+          viewBox="0 0 500 400"
+          xmlns="http://www.w3.org/2000/svg">
+          <!-- Login illustration -->
+          <g id="loginIllustration">
+            <path
+              fill="#fff"
+              d="M207.5,175.5c0,28.9-23.4,52.3-52.3,52.3s-52.3-23.4-52.3-52.3s23.4-52.3,52.3-52.3S207.5,146.6,207.5,175.5z"
+              opacity="0.1" />
+            <path
+              fill="#fff"
+              d="M375,175.5c0,28.9-23.4,52.3-52.3,52.3s-52.3-23.4-52.3-52.3s23.4-52.3,52.3-52.3S375,146.6,375,175.5z"
+              opacity="0.1" />
+            <path
+              fill="#fff"
+              d="M291.2,300.5c0,0,22.3-54.5,83.8-54.5s83.8,54.5,83.8,54.5v45.5H291.2V300.5z" />
+            <path
+              fill="#fff"
+              d="M125,300.5c0,0,22.3-54.5,83.8-54.5s83.8,54.5,83.8,54.5v45.5H125V300.5z" />
+            <ellipse fill="#fff" cx="291.2" cy="246" rx="83.8" ry="54.5" />
+            <ellipse fill="#fff" cx="125" cy="246" rx="83.8" ry="54.5" />
+            <circle fill="#fff" cx="125" cy="246" r="41.8" />
+            <circle fill="#fff" cx="291.2" cy="246" r="41.8" />
+            <circle fill="#fff" cx="125" cy="246" r="16.7" />
+            <circle fill="#fff" cx="291.2" cy="246" r="16.7" />
+            <path
+              fill="#fff"
+              d="M250,136.5c0,0-27.5-31-62.5-31s-62.5,31-62.5,31s28,19,62.5,19S250,136.5,250,136.5z" />
+            <path
+              fill="#fff"
+              d="M416.2,136.5c0,0-27.5-31-62.5-31s-62.5,31-62.5,31s28,19,62.5,19S416.2,136.5,416.2,136.5z" />
+          </g>
+          <!-- Signup illustration (hidden by default) -->
+          <g id="signupIllustration" style="display: none">
+            <path
+              fill="#fff"
+              d="M250,100c83.9,0,152,68.1,152,152s-68.1,152-152,152S98,335.9,98,252S166.1,100,250,100z"
+              opacity="0.1" />
+            <circle fill="#fff" cx="250" cy="200" r="80" />
+            <path
+              fill="#fff"
+              d="M207.5,300.5c0,0-22.3,54.5-83.8,54.5s-83.8-54.5-83.8-54.5v-45.5h167.5V300.5z" />
+            <path
+              fill="#fff"
+              d="M375,300.5c0,0-22.3,54.5-83.8,54.5s-83.8-54.5-83.8-54.5v-45.5H375V300.5z" />
+            <ellipse fill="#fff" cx="291.2" cy="255" rx="83.8" ry="54.5" />
+            <ellipse fill="#fff" cx="125" cy="255" rx="83.8" ry="54.5" />
+            <circle fill="#fff" cx="125" cy="255" r="41.8" />
+            <circle fill="#fff" cx="291.2" cy="255" r="41.8" />
+            <path
+              fill="#fff"
+              d="M170,150c0,0,20-30,80-30s80,30,80,30"
+              stroke="#fff"
+              stroke-width="8"
+              stroke-linecap="round"
+              fill="none" />
+          </g>
+        </svg>
       </div>
     </div>
   </div>
@@ -344,6 +424,12 @@ if (isset($_SESSION['verification_success'])) {
   </script> -->
 
   <script src="js/login-signup.js"></script>
+  <!-- Development version -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <!-- // <script src="https://unpkg.com/lucide@latest"></script> -->
+  <script>
+    lucide.createIcons();
+  </script>
   <!-- OTP -->
   <script>
     function generateRandomNumber() {
