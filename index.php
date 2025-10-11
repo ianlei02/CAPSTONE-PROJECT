@@ -26,9 +26,7 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
     <link rel="stylesheet" href="public/css/css-reset.css" />
     <link rel="stylesheet" href="public/css/index.css" />
     <link rel="stylesheet" href="public/css/footer.css">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+    <link rel="stylesheet" href="public/library/swiper/swiper-bundle.min.css">
 </head>
 
 <body>
@@ -48,8 +46,10 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
             <li><a class="nav-link" href="landing/pages/find-job.php">Job Listings</a></li>
             <li><a class="nav-link" href="landing/pages/aboutus.php">About Us</a></li>
             <li class="auth-buttons">
-                <a href="auth/login-signup.php?form=login"><button class="btn-login">Login</button></a>
-                <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a>
+                <a href="auth/login-signup.php?form=login" class="btn btn-primary login" style="display: flex; align-items: center; gap: 5px;">
+                    <span>Login</span><i data-lucide="log-in"></i>
+                </a>
+                <!-- <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a> -->
             </li>
         </ul>
         <button onclick="sidebarToggle()" class="hamburger">
@@ -62,8 +62,8 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
             <li><a class="nav-link" href="./pages/find-job.php">Job Listings</a></li>
             <li><a class="nav-link" href="./pages/aboutus.php">About Us</a></li>
             <li class="auth-buttons">
-                <a href="auth/login-signup.php?form=login"><button class="btn-login">Login</button></a>
-                <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a>
+                <a href="auth/login-signup.php?form=login" class="btn btn-primary login">Login</a>
+                <!-- <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a> -->
             </li>
         </ul>
     </aside>
@@ -111,84 +111,44 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
         </section>
 
         <section class="news">
-            <div class="section-header">
-                <h2><i class="fas fa-bullhorn"></i> Announcements & Updates</h2>
-            </div>
-
-            <div class="swiper newsSwiper">
-                <div class="swiper-wrapper">
-                    <?php while ($news = $announcements->fetch_assoc()): ?>
-                        <div class="swiper-slide">
-                            <article class="news-card">
-                                <img src="admin/<?= $news['image'] ?>"
-                                    alt="<?= htmlspecialchars($news['title']); ?>"
-                                    class="news-image">
-                                <div class="news-content">
-                                    <h3 class="news-title"><?= htmlspecialchars($news['title']); ?></h3>
-                                    <div class="news-date">
-                                        <i class="far fa-calendar-alt"></i> <?= htmlspecialchars($news['publish_date']); ?>
-                                    </div>
-                                    <p class="news-excerpt">
-                                        <?= htmlspecialchars($news['excerpt']); ?>
-                                    </p>
-                                    <a href="#"
-                                        class="news-link readMoreBtn"
-                                        data-title="<?= htmlspecialchars($news['title']); ?>"
-                                        data-date="<?= htmlspecialchars($news['publish_date']); ?>"
-                                        data-image="<?= $news['image'] ? '/admin/' . $news['image'] : 'https://via.placeholder.com/600x400'; ?>"
-                                        data-content="<?= htmlspecialchars($news['content']); ?>">
-                                        Read More <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </article>
-                        </div>
-                    <?php endwhile; ?>
-                </div>
-
-                <!-- Navigation buttons -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-
-                <!-- Pagination -->
-                <div class="swiper-pagination"></div>
-            </div>
-        </section>
-
-        <section class="features">
             <div class="container">
                 <div class="section-title">
-                    <h2>Why Choose PESO?</h2>
-                    <p>We make job hunting and hiring simple, efficient, and effective</p>
+                    <h2><i class="fas fa-bullhorn"></i> Announcements & Updates</h2>
                 </div>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-briefcase"></i>
-                        </div>
-                        <h3>Quality Job Listings</h3>
-                        <p>Access thousands of verified job opportunities from top employers across various industries.</p>
+                <div class="swiper newsSwiper">
+                    <div class="swiper-wrapper">
+                        <?php while ($news = $announcements->fetch_assoc()): ?>
+                            <div class="swiper-slide">
+                                <article class="news-card">
+                                    <img src="admin/<?= $news['image'] ?>"
+                                        alt="<?= htmlspecialchars($news['title']); ?>"
+                                        class="news-image">
+                                    <div class="news-content">
+                                        <h3 class="news-title"><?= htmlspecialchars($news['title']); ?></h3>
+                                        <div class="news-date">
+                                            <i class="far fa-calendar-alt"></i> <?= htmlspecialchars($news['publish_date']); ?>
+                                        </div>
+                                        <p class="news-excerpt">
+                                            <?= htmlspecialchars($news['excerpt']); ?>
+                                        </p>
+                                        <a href="#"
+                                            class="news-link readMoreBtn"
+                                            data-title="<?= htmlspecialchars($news['title']); ?>"
+                                            data-date="<?= htmlspecialchars($news['publish_date']); ?>"
+                                            data-image="<?= $news['image'] ? '/admin/' . $news['image'] : 'https://via.placeholder.com/600x400'; ?>"
+                                            data-content="<?= htmlspecialchars($news['content']); ?>">
+                                            Read More <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </article>
+                            </div>
+                        <?php endwhile; ?>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <h3>Professional Matching</h3>
-                        <p>Our office reviews all applications to ensure the best matches between candidates and employers.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3>Secure Platform</h3>
-                        <p>Your personal information is protected with our advanced security measures and privacy controls.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-headset"></i>
-                        </div>
-                        <h3>Reliable Support</h3>
-                        <p>Our dedicated support team is available during office hours to assist you with any inquiries or issues.</p>
-                    </div>
+                    <!-- Navigation buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                    <!-- Pagination -->
+                    <div class="swiper-pagination"></div>
                 </div>
             </div>
         </section>
@@ -225,12 +185,12 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
         </section>
 
         <section class="cta">
-            <div class=" container" style="width: auto;">
+            <div class="container">
                 <h2>Ready to Take the Next Step?</h2>
                 <p>Join thousands of professionals and companies who found their perfect match through PESO</p>
                 <div style="display: flex; justify-content: center; gap: 20px;">
-                    <button class="btn btn-outline" style="background-color: transparent; border-color: var(--light-clr-700); color: var(--light-clr-700);" onclick="window.location.href='login-signup.php'">I'm Hiring</button>
-                    <button class="btn btn-primary" style="background-color: var(--light-clr-700); color: var(--primary-blue-color);" onclick="window.location.href='login-signup.php'">Find Jobs</button>
+                    <button class="btn btn-secondary" onclick="window.location.href='login-signup.php'">I'm Hiring</button>
+                    <button class="btn btn-primary" onclick="window.location.href='login-signup.php'">Find Jobs</button>
                 </div>
 
             </div>
@@ -289,21 +249,17 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
 
     <!-- //TODO NAHEHELO AQ -->
     <!-- <div id="preloader">
-        <div class="loader"></div>
+        <div class="loader"></div> -->
     </div>
-
+    <script src="public/js/preloader.js"> </script>
+    <script src="public/library/swiper/swiper-bundle.min.js"></script>
+    <!-- Development version -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- Production version -->
+    <!-- <script src="https://unpkg.com/lucide@latest"></script> -->
     <script>
-        window.addEventListener("load", function() {
-            const preloader = document.getElementById("preloader");
-            preloader.style.opacity = "0";
-            setTimeout(() => {
-                preloader.style.display = "none";
-            }, 500);
-        });
-    </script> -->
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-
+        lucide.createIcons();
+    </script>
     <script>
         const swiper = new Swiper('.newsSwiper', {
             slidesPerView: 1,
