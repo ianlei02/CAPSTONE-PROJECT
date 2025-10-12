@@ -31,6 +31,33 @@ if (isset($_SESSION['user_id'])) {
   }
   $stmt->close();
 }
+$sql = "
+  SELECT 
+    ja.application_id,
+    ja.job_id,
+    ja.status,
+    ja.referral_source,
+    ja.created_at,
+    ja.updated_at,
+    jp.job_title,
+    jp.job_type,
+    jp.salary_range,
+    jp.location,
+    jp.description,
+    jp.employer_id,
+    ec.company_name,
+    ec.profile_picture
+  FROM job_application ja
+  INNER JOIN job_postings jp ON ja.job_id = jp.job_id
+  INNER JOIN employer_company_info ec ON jp.employer_id = ec.employer_id
+  WHERE ja.applicant_id = ?
+  ORDER BY ja.created_at DESC
+";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $applicant_id);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 <!DOCTYPE html>
 <html lang="en" data-theme="light" data-state="expanded">
@@ -42,7 +69,7 @@ if (isset($_SESSION['user_id'])) {
   <script src="../js/load-saved.js"></script>
   <link rel="stylesheet" href="../css/navs.css" />
   <link rel="stylesheet" href="../css/applicant-applications.css" />
-  <link rel="stylesheet" href="../../public-assets/library/datatable/dataTables.css">
+  <link rel="stylesheet" href="../../public/library/datatable/dataTables.css">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
@@ -69,7 +96,8 @@ if (isset($_SESSION['user_id'])) {
         <div class="dropdown-menu" id="dropdownMenu">
           <div class="dropdown-arrow"></div>
           <div class="dropdown-header">
-            <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
+            <img src="../../<?= htmlspecialchars($row['profile_picture']); ?>" alt="company-logo"
+                style="width:70px;height:70px;object-fit:cover;border-radius:6px;">
             <a class="user-info" href="./applicant-profile.php">
               <h3><?= $fullName ?></h3>
               <p>See your profile</p>
@@ -151,186 +179,145 @@ if (isset($_SESSION['user_id'])) {
   </aside>
 
   <main class="main-content">
-    <!-- <div class="job-application-header">
-      <h2>Job Applications</h2>
-    </div> -->
-    <div class="job-application-status">
-      <div class="application-cards">
-        <div class="application-item">
+  <div class="job-application-status">
+    <div class="application-cards">
+      <?php while ($row = $result->fetch_assoc()): ?>
+        <?php
+          $rawLogoPath = "../../employer/" . htmlspecialchars($row['profile_picture']);
+          $defaultLogo = "../assets/images/profile.png";
+
+          if (!empty($row['profile_picture']) && file_exists($rawLogoPath)) {
+              $logoPath = $rawLogoPath;
+          } else {
+              $logoPath = $defaultLogo;
+          }
+        ?>
+        <div class="application-item" data-id="<?= $row['application_id']; ?>">
           <div class="application-info">
             <div class="application-logo">
-              <img src="../../public/images/company-logos/Jollibee.png" alt="company-logo">
+              <img src="<?= $logoPath; ?>" alt="company-logo" onerror="this.onerror=null;this.src='<?= $defaultLogo; ?>';" style="width:70px; height:70px; object-fit:contain; border-radius:6px;">
             </div>
             <div class="application-details">
-              <h3 class="application-title">Waiter</h3>
-              <div class="application-company">Jollibee Corp.</div>
+              <h3 class="application-title"><?= htmlspecialchars($row['job_title']); ?></h3>
+              <div class="application-company"><?= htmlspecialchars($row['company_name']); ?></div>
               <div class="application-location-date">
-                <span>San Ildefonso, Bulacan</span>
-                <span>9/20/2025</span>
+                <span><?= htmlspecialchars($row['location']); ?></span>
+                <span><?= date("m/d/Y", strtotime($row['created_at'])); ?></span>
               </div>
             </div>
           </div>
+
           <div class="status-action">
-            <span class="application-status hired">Hired </span>
-            <button>View</button>
+            <span class="application-status <?= strtolower($row['status']); ?>">
+              <?= htmlspecialchars($row['status']); ?>
+            </span>
+            <button 
+              class="view-btn"
+              data-job-title="<?= htmlspecialchars($row['job_title']); ?>"
+              data-company="<?= htmlspecialchars($row['company_name']); ?>"
+              data-location="<?= htmlspecialchars($row['location']); ?>"
+              data-date="<?= date("m/d/Y", strtotime($row['created_at'])); ?>"
+              data-referral="<?= htmlspecialchars($row['referral_source']); ?>"
+              data-status="<?= htmlspecialchars($row['status']); ?>"
+              data-description="<?= htmlspecialchars($row['description']); ?>"
+              data-salary="<?= htmlspecialchars($row['salary_range']); ?>"
+              data-logo="<?= $logoPath; ?>"
+            >
+              View
+            </button>
           </div>
         </div>
-        <div class="application-item">
-          <div class="application-info">
-            <div class="application-logo">
-              <img src="../../public/images/company-logos/7-eleven_logo.svg.png" alt="company-logo">
-            </div>
-            <div class="application-details">
-              <h3 class="application-title">Cashier</h3>
-              <div class="application-company">7-11</div>
-              <div class="application-location-date">
-                <span>San Ildefonso, Bulacan</span>
-                <span>9/20/2025</span>
-              </div>
-            </div>
-          </div>
-          <div class="status-action">
-            <span class="application-status pending">Pending</span>
-            <button>View</button>
-          </div>
-        </div>
-        <div class="application-item">
-          <div class="application-info">
-            <div class="application-logo">
-              <img src="../../public/images/company-logos/Chowking_logo.svg.png" alt="company-logo">
-            </div>
-            <div class="application-details">
-              <h3 class="application-title">Cashier</h3>
-              <div class="application-company">Chowking</div>
-              <div class="application-location-date">
-                <span>San Ildefonso, Bulacan</span>
-                <span>9/20/2025</span>
-              </div>
-            </div>
-          </div>
-          <div class="status-action">
-            <span class="application-status interview">Interview</span>
-            <button>View</button>
-          </div>
-        </div>
-        <div class="application-item">
-          <div class="application-info">
-            <div class="application-logo">
-              <img src="../../public/images/company-logos/kfc.png" alt="company-logo">
-            </div>
-            <div class="application-details">
-              <h3 class="application-title">Janitor</h3>
-              <div class="application-company">KFC</div>
-              <div class="application-location-date">
-                <span>San Ildefonso, Bulacan</span>
-                <span>9/20/2025</span>
-              </div>
-            </div>
-          </div>
-          <div class="status-action">
-            <span class="application-status rejected ">Rejected</span>
-            <button>View</button>
-          </div>
-        </div>
-      </div>
+      <?php endwhile; ?>
     </div>
+  </div>
   </main>
+
+
   <!-- Application Modal -->
-  <div class="modal" id="applicationModal">
+  <div class="modal" id="applicationModal" style="display:none;">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title">
-          Apply for <span id="modalJobTitle">Frontend Developer</span>
-        </h2>
-        <button type="button" class="close-btn">&times;</button>
+        <h2 class="modal-title">Application Details</h2>
+        <button class="close-btn" id="modalCloseTop">&times;</button>
       </div>
       <div class="modal-body">
-        <form class="application-form">
-          <div class="section">
-            <div class="job-card" data-field="Engineering">
-              <div class="job-field">Engineering</div>
-              <div class="job-header">
-                <div>
-                  <h3 class="job-title">Sukat Lupa</h3>
-                  <div class="job-company">Away kapit-bahay</div>
-                </div>
-                <div>
-                  <span class="job-salary">Sumbat<br> Salary/Month</span>
-                </div>
-              </div>
-              <div class="job-meta">
-                <span><i class="fas fa-briefcase"></i> 1</span>
-                <span><i class="fas fa-map-marker-alt"></i> 2</span>
-                <span><i class="fas fa-users"></i> Vacancies: 3</span>
-              </div>
-              <div class="job-description">
-                Awayin ang kapit-bahay at pamilya dahil mas malaki ang sakop na lupa nila. Pandilatan ng mata ang anak ng pinsan na pamangkin dahil malikot para makaganti sa tito at tita. Lagyan ng asin ang kape na ipinapatimpla ng mudrasta.
-              </div>
-              <div class="job-footer">
-                <div class="job-posted">Posted: Kahapon</div>
-                <!-- <button class="apply-btn" data-job-id="">
-                  Cancel
-                </button> -->
-              </div>
+        <input type="hidden" id="modalJobId" name="job_id" value="">
+
+        <div class="modal-row" style="display:flex; gap:16px; align-items:flex-start;">
+          <div style="flex:0 0 80px;">
+            <img id="modalCompanyLogo" src="../../public/images/company-logos/default.png" alt="logo" style="width:70px;height:70px;object-fit:contain;border-radius:6px;">
+          </div>
+          <div style="flex:1;">
+            <h3 id="modalJobTitleText" style="margin:0 0 6px 0;"></h3>
+            <div style="color:#666;margin-bottom:8px;">
+              <strong id="modalCompanyName"></strong> • <span id="modalJobLocation"></span>
             </div>
+            <div style="margin-bottom:8px;"><strong>Posted:</strong> <span id="modalJobPosted"></span></div>
+            <div style="margin-bottom:8px;"><strong>Salary:</strong> <span id="modalSalaryRange"></span></div>
           </div>
-          <div class="form-actions">
-            <button
-              type="button"
-              class="btn btn-outline"
-              id="cancelApplication">
-              Cancel Application
-            </button>
-            <button class="btn btn-primary close" type="button" onclick="closeModal()">
-              Close
-            </button>
-            <!-- <button type="submit" class="btn btn-primary">
-              Submit Application
-            </button> -->
-          </div>
-        </form>
+        </div>
+
+        <hr>
+
+        <div style="margin-bottom:12px;">
+          <h4 style="margin:0 0 6px 0;">Application Status</h4>
+          <div id="modalApplicationStatus" style="font-weight:700;color:#000;"></div>
+          <div id="modalAppliedAt" style="color:#666;font-size:0.95rem;margin-top:4px;"></div>
+        </div>
+
+        <div style="margin-bottom:12px;">
+          <h4 style="margin:0 0 6px 0;">Remarks / Notes</h4>
+          <p id="modalApplicationRemarks" style="white-space:pre-wrap;color:#333;">No remarks available.</p>
+        </div>
+
+        <div style="margin-top:8px;">
+          <h4 style="margin:0 0 6px 0;">Job Description</h4>
+          <div id="modalJobDescription" style="white-space:pre-wrap;color:#333;"></div>
+        </div>
+
+        <div class="form-actions" style="margin-top:18px;display:flex;gap:8px;">
+          <button type="button" class="btn btn-outline" id="applicationModalClose">Close</button>
+        </div>
       </div>
     </div>
   </div>
-
   <script src="../js/responsive.js"></script>
   <script src="../js/drop-down.js"></script>
   <script src="../js/dark-mode.js"></script>
   <script>
-    // Application Modal
-    const modal = document.getElementById('applicationModal');
-    const viewButtons = document.querySelectorAll('.view-btn');
-    const closeBtn = document.querySelector('.close-btn');
-    const cancelBtn = document.getElementById('cancelApplication');
-    const modalJobTitle = document.getElementById('modalJobTitle');
+  document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("applicationModal");
+    const closeBtns = [
+      document.getElementById("applicationModalClose"),
+      document.getElementById("modalCloseTop")
+    ];
 
-    // Open modal when Apply button is clicked
-    viewButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        modalJobTitle.textContent = document.querySelector('.job-card .job-title').textContent;
-        modal.style.display = 'block';
-        // document.body.style.overflow = 'hidden';
+    document.querySelectorAll(".view-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.getElementById("modalJobTitleText").textContent = btn.dataset.jobTitle;
+        document.getElementById("modalCompanyName").textContent = btn.dataset.company;
+        document.getElementById("modalJobLocation").textContent = btn.dataset.location;
+        document.getElementById("modalJobPosted").textContent = btn.dataset.date;
+        document.getElementById("modalSalaryRange").textContent = btn.dataset.salary || "Not specified";
+        document.getElementById("modalApplicationStatus").textContent = btn.dataset.status;
+        document.getElementById("modalAppliedAt").textContent = "Applied on " + btn.dataset.date;
+        document.getElementById("modalApplicationRemarks").textContent = btn.dataset.referral || "No remarks available.";
+        document.getElementById("modalJobDescription").textContent = btn.dataset.description || "No description provided.";
+
+        const logo = btn.dataset.logo || "../assets/images/profile.png";
+        const logoEl = document.getElementById("modalCompanyLogo");
+        logoEl.src = logo;
+        logoEl.onerror = () => logoEl.src = "../assets/images/profile.png";
+
+        modal.style.display = "block";
       });
     });
-    // Close modal
-    function closeModal() {
-      modal.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-    closeBtn.addEventListener('click', () => {
-      // e.preventDefault();
-      closeModal();
-    });
-    cancelBtn.addEventListener('click', () => {
-      confirm('Are you sure you want to cancel this application?')
-    });
-    // Close when clicking outside modal
-    window.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        closeModal();
-      }
-    });
+
+    closeBtns.forEach(btn => btn.addEventListener("click", () => modal.style.display = "none"));
+    window.addEventListener("click", e => { if (e.target === modal) modal.style.display = "none"; });
+  });
   </script>
+
 </body>
 
 </html>
