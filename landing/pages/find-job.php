@@ -29,11 +29,10 @@ $result_job = $conn->query($sql_job);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PESO Landing</title>
+    <script src="../../public/js/dark-mode.js"></script>
     <link rel="shortcut icon" href="../assets/images/pesosmb.png" type="image/x-icon">
-    <link rel="stylesheet" href="../css/css-reset.css" />
     <link rel="stylesheet" href="../css/find-job.css" />
     <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/breakpoints.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -41,25 +40,55 @@ $result_job = $conn->query($sql_job);
     <nav class="navbar">
         <a class="navbar-brand" href="#">
             <img
-                src="../../public-assets/smb-images/pesosmb.png"
-                alt="PESO logo"
+                src="../../public/smb-images/smb-logo.png"
+                alt="SMB logo"
                 class="logo" />
             <img
-                src="../../public-assets/smb-images/smb-logo.png"
+                src="../../public/smb-images/pesosmb.png"
                 alt="PESO logo"
                 class="logo" />
+            <!-- <span class="brand-text">PESO</span> -->
         </a>
-        <ul class="navbar-links">
-            <li><a class="nav-link" href="../../index.php">Home</a></li>
-            <li><a class="nav-link" href="./find-job.php">Job Listings</a></li>
-            <li><a class="nav-link" href="./aboutus.php">About Us</a></li>
+        <ul class="navbar-links topbar">
+            <li><a class="nav-link" href="../../index.php">
+                    <i data-lucide="house"></i>
+                    <span>Home</span>
+                </a></li>
+            <li><a class="nav-link" href="find-job.php">
+                    <i data-lucide="briefcase-business"></i>
+                    <span>Find Jobs</span>
+                </a></li>
+            <li><a class="nav-link" href="aboutus.php">
+                    <i data-lucide="circle-question-mark"></i>
+                    <span>About us</span>
+                </a></li>
             <li class="auth-buttons">
-                <a href="../login-signup.php?form=login"><button <a class="btn-login">Login</button></a>
-                <a href="../login-signup.php?form=signup"><button <a class="btn-signup">Sign Up</button></a>
+                <hr>
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+                    <i data-lucide="moon" id="themeIcon"></i>
+                </button>
+                <hr>
+                <a href="auth/login-signup.php" class="btn btn-primary login" style="display: flex; align-items: center; gap: 5px;">
+                    <span>Login</span><i data-lucide="log-in"></i>
+                </a>
+                <!-- <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a> -->
             </li>
         </ul>
-
+        <button onclick="sidebarToggle()" class="hamburger">
+            <i data-lucide="menu"></i>
+        </button>
     </nav>
+    <aside>
+        <ul class="navbar-links sidebar">
+            <li><a class="nav-link" href="index.php">Home</a></li>
+            <li><a class="nav-link" href="find-job.php">Job Listings</a></li>
+            <li><a class="nav-link" href="aboutus.php">About Us</a></li>
+            <li class="auth-buttons">
+                <a href="auth/login-signup.php?form=login" class="btn btn-primary login">Login</a>
+                <!-- <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a> -->
+            </li>
+        </ul>
+    </aside>
 
     <section class="job-listings">
         <div class="job-list-heading">
@@ -114,7 +143,7 @@ $result_job = $conn->query($sql_job);
                         </div>
                         <div class="job-footer">
                             <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
-                            <button class="apply-btn" onclick="window.location.href='../login-signup.php'">Apply Now</button>
+                            <button class="apply-btn" onclick="window.location.href='../../auth/login-signup.php'">Apply Now</button>
                         </div>
                     </div>
             <?php
@@ -129,7 +158,7 @@ $result_job = $conn->query($sql_job);
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-section">
-                <img src="../../landing/assets/images/pesosmb.png" style="width: 150px;" alt="PESO Logo">
+                <img src="../../public/smb-images/pesosmb.png" style="width: 150px;" alt="PESO Logo">
             </div>
             <div class="footer-section">
                 <h3>About Us</h3>
@@ -165,8 +194,18 @@ $result_job = $conn->query($sql_job);
             <p>&copy; 2025 PESO. All rights reserved.</p>
         </div>
     </footer>
+    <!-- Development version -->
+    <!-- <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script> -->
+    <!-- Production version -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
 
-
+        function sidebarToggle() {
+            const aside = document.querySelector('aside');
+            aside.classList.toggle('show')
+        }
+    </script>
 </body>
 
 </html>

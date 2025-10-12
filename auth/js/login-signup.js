@@ -1,7 +1,5 @@
 const loginForm = document.querySelector(".login-form");
 const signupForm = document.querySelector(".signup-form");
-const loginTab = document.querySelector(".login-tab");
-const signupTab = document.querySelector(".signup-tab");
 const termsLink = document.getElementById("termsLink");
 const termsModal = document.getElementById("termsModal");
 const closeModal = document.querySelector(".close");
@@ -9,37 +7,38 @@ const acceptTerms = document.getElementById("acceptTerms");
 const termsCheckbox = document.getElementById("terms");
 const signupBtn = document.getElementById("signupBtn");
 const loginBtn = document.getElementById("loginBtn");
+const welcomeText = document.getElementById("welcomeText");
+const subText = document.getElementById("subText");
+const illustration = document.querySelector(".illustration img");
 
 function showTab(tabName) {
   if (tabName === "login") {
     loginForm.classList.add("active");
     signupForm.classList.remove("active");
-    loginTab.classList.add("active");
-    signupTab.classList.remove("active");
+    welcomeText.textContent = "Welcome Back!"
+    subText.textContent = "Sign in to access your personalized dashboard..."
+    illustration.src = "../public/svg/login.svg";
   } else {
     signupForm.classList.add("active");
     loginForm.classList.remove("active");
-    signupTab.classList.add("active");
-    loginTab.classList.remove("active");
+    welcomeText.textContent = "Join Us Today!"
+    subText.textContent = "Create an account to get started with our services..."
+    illustration.src = "../public/svg/signup.svg";
   }
 }
 
 const urlParams = new URLSearchParams(window.location.search);
 const formType = urlParams.get("form");
 
+
 function showForm(tab) {
   console.log(`Switching to ${tab} tab`);
   if (tab === "login") {
     loginForm.classList.add("active");
     signupForm.classList.remove("active");
-    loginTab.classList.add("active");
-    signupTab.classList.remove("active");
   } else if (tab === "signup") {
     signupForm.classList.add("active");
     loginForm.classList.remove("active");
-
-    signupTab.classList.add("active");
-    loginTab.classList.remove("active");
   } else {
     console.error(`Unknown tab: ${tab}`);
   }
