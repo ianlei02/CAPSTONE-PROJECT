@@ -42,12 +42,6 @@ if (isset($_SESSION['verification_success'])) {
       </button>
 
       <div class="form-container">
-        <div class="tab-container">
-          <div class="tab login-tab active" onclick="showTab('login')">Login</div>
-          <div class="tab signup-tab" onclick="showTab('signup')">
-            Sign Up
-          </div>
-        </div>
 
         <!-- Signup Form -->
         <div class="form signup-form">
@@ -112,7 +106,9 @@ if (isset($_SESSION['verification_success'])) {
                 <a id="termsLink">Terms and Conditions</a></label>
             </div>
 
-            <button type="submit" class="btn" id="signupBtn" name="signupBtn">Sign Up</button>
+            <button type="submit" class="btn" id="signupBtn" name="signupBtn">
+              <span>Sign Up</span><i data-lucide="user-plus"></i>
+            </button>
             <div class="toggle-form">
               Already have an account? <a onclick="showTab('login')">Login</a>
             </div>
@@ -169,7 +165,9 @@ if (isset($_SESSION['verification_success'])) {
                 <a href="#" onclick="openForgotPasswordModal()">Forgot Password?</a>
               </div>
             </div>
-            <button type="submit" class="btn" id="loginBtn" name="remember_login">Login</button>
+            <button type="submit" class="btn" id="loginBtn" name="remember_login">
+               <span>Login</span><i data-lucide="log-in"></i>
+            </button>
             <div class="toggle-form">
               Don't have an account? <a onclick="showTab('signup')">Sign Up</a>
             </div>
@@ -179,70 +177,14 @@ if (isset($_SESSION['verification_success'])) {
     </div>
     <!-- Right Panel - Visual content -->
     <div class="right-panel">
-      <div class="logo">PESO</div>
+      <div class="logo">
+        <img src="../public/smb-images/pesosmb.png" alt="">
+        <span>PESO</span>
+      </div>
       <h2 class="welcome-text" id="welcomeText">Welcome Back!</h2>
       <p class="sub-text" id="subText">Sign in to access your personalized dashboard...</p>
       <div class="illustration" id="illustration">
-        <svg
-          class="illustration"
-          id="illustration"
-          viewBox="0 0 500 400"
-          xmlns="http://www.w3.org/2000/svg">
-          <!-- Login illustration -->
-          <g id="loginIllustration">
-            <path
-              fill="#fff"
-              d="M207.5,175.5c0,28.9-23.4,52.3-52.3,52.3s-52.3-23.4-52.3-52.3s23.4-52.3,52.3-52.3S207.5,146.6,207.5,175.5z"
-              opacity="0.1" />
-            <path
-              fill="#fff"
-              d="M375,175.5c0,28.9-23.4,52.3-52.3,52.3s-52.3-23.4-52.3-52.3s23.4-52.3,52.3-52.3S375,146.6,375,175.5z"
-              opacity="0.1" />
-            <path
-              fill="#fff"
-              d="M291.2,300.5c0,0,22.3-54.5,83.8-54.5s83.8,54.5,83.8,54.5v45.5H291.2V300.5z" />
-            <path
-              fill="#fff"
-              d="M125,300.5c0,0,22.3-54.5,83.8-54.5s83.8,54.5,83.8,54.5v45.5H125V300.5z" />
-            <ellipse fill="#fff" cx="291.2" cy="246" rx="83.8" ry="54.5" />
-            <ellipse fill="#fff" cx="125" cy="246" rx="83.8" ry="54.5" />
-            <circle fill="#fff" cx="125" cy="246" r="41.8" />
-            <circle fill="#fff" cx="291.2" cy="246" r="41.8" />
-            <circle fill="#fff" cx="125" cy="246" r="16.7" />
-            <circle fill="#fff" cx="291.2" cy="246" r="16.7" />
-            <path
-              fill="#fff"
-              d="M250,136.5c0,0-27.5-31-62.5-31s-62.5,31-62.5,31s28,19,62.5,19S250,136.5,250,136.5z" />
-            <path
-              fill="#fff"
-              d="M416.2,136.5c0,0-27.5-31-62.5-31s-62.5,31-62.5,31s28,19,62.5,19S416.2,136.5,416.2,136.5z" />
-          </g>
-          <!-- Signup illustration (hidden by default) -->
-          <g id="signupIllustration" style="display: none">
-            <path
-              fill="#fff"
-              d="M250,100c83.9,0,152,68.1,152,152s-68.1,152-152,152S98,335.9,98,252S166.1,100,250,100z"
-              opacity="0.1" />
-            <circle fill="#fff" cx="250" cy="200" r="80" />
-            <path
-              fill="#fff"
-              d="M207.5,300.5c0,0-22.3,54.5-83.8,54.5s-83.8-54.5-83.8-54.5v-45.5h167.5V300.5z" />
-            <path
-              fill="#fff"
-              d="M375,300.5c0,0-22.3,54.5-83.8,54.5s-83.8-54.5-83.8-54.5v-45.5H375V300.5z" />
-            <ellipse fill="#fff" cx="291.2" cy="255" rx="83.8" ry="54.5" />
-            <ellipse fill="#fff" cx="125" cy="255" rx="83.8" ry="54.5" />
-            <circle fill="#fff" cx="125" cy="255" r="41.8" />
-            <circle fill="#fff" cx="291.2" cy="255" r="41.8" />
-            <path
-              fill="#fff"
-              d="M170,150c0,0,20-30,80-30s80,30,80,30"
-              stroke="#fff"
-              stroke-width="8"
-              stroke-linecap="round"
-              fill="none" />
-          </g>
-        </svg>
+        <img src="../public/svg/login.svg" alt="">
       </div>
     </div>
   </div>
