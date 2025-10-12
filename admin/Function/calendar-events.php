@@ -6,7 +6,7 @@ error_reporting(0);
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
-    $sql = "SELECT id, title, start, end, type FROM calendar_event";
+    $sql = "SELECT id, title, start, end, type, description FROM calendar_event";
     $result = $conn->query($sql);
     $events = [];
 
@@ -55,9 +55,19 @@ if ($method === 'POST') {
      if ($action === 'update') {
         $id = intval($data['id']);
         $title = $conn->real_escape_string($data['title']);
+
+        $sql = "UPDATE calendar_event SET title='$title' WHERE id=$id";
+        echo $conn->query($sql)
+            ? json_encode(['status' => 'updated'])
+            : json_encode(['status' => 'error', 'message' => 'DB update failed']);
+        exit;
+    }
+
+    if ($action === 'updateDescription') {
+        $id = intval($data['id']);
         $description = $conn->real_escape_string($data['description'] ?? '');
 
-        $sql = "UPDATE calendar_event SET title='$title', description='$description' WHERE id=$id";
+        $sql = "UPDATE calendar_event SET description='$description' WHERE id=$id";
         echo $conn->query($sql)
             ? json_encode(['status' => 'updated'])
             : json_encode(['status' => 'error', 'message' => 'DB update failed']);
