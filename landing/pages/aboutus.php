@@ -5,7 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PESO Landing</title>
-  <link rel="shortcut icon" href="./assets/images/pesosmb.png" type="image/x-icon">
+  <script src="../../public/js/dark-mode.js"></script>
+  <link rel="icon" href="../../public/smb-images/pesosmb.png" type="image/x-icon">
   <link rel="stylesheet" href="../css/aboutus.css" />
   <link rel="stylesheet" href="../css/footer.css">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
@@ -17,25 +18,55 @@
   <nav class="navbar">
     <a class="navbar-brand" href="#">
       <img
+        src="../../public/smb-images/smb-logo.png"
+        alt="SMB logo"
+        class="logo" />
+      <img
         src="../../public/smb-images/pesosmb.png"
         alt="PESO logo"
         class="logo" />
-      <img
-        src="../../public/smb-images/smb-logo.png"
-        alt="PESO logo"
-        class="logo" />
+      <!-- <span class="brand-text">PESO</span> -->
     </a>
-    <ul class="navbar-links">
-      <li><a class="nav-link" href="../../index.php">Home</a></li>
-      <li><a class="nav-link" href="./find-job.php">Job Listings</a></li>
-      <li><a class="nav-link" href="./aboutus.php">About Us</a></li>
+    <ul class="navbar-links topbar">
+      <li><a class="nav-link" href="../../index.php">
+          <i data-lucide="house"></i>
+          <span>Home</span>
+        </a></li>
+      <li><a class="nav-link" href="find-job.php">
+          <i data-lucide="briefcase-business"></i>
+          <span>Find Jobs</span>
+        </a></li>
+      <li><a class="nav-link" href="aboutus.php">
+          <i data-lucide="circle-question-mark"></i>
+          <span>About us</span>
+        </a></li>
       <li class="auth-buttons">
-        <a href="../login-signup.php?form=login"><button <a class="btn-login">Login</button></a>
-        <a href="../login-signup.php?form=signup"><button <a class="btn-signup">Sign Up</button></a>
+        <hr>
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+          <i data-lucide="moon" id="themeIcon"></i>
+        </button>
+        <hr>
+        <a href="auth/login-signup.php" class="btn btn-primary login" style="display: flex; align-items: center; gap: 5px;">
+          <span>Login</span><i data-lucide="log-in"></i>
+        </a>
+        <!-- <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a> -->
       </li>
     </ul>
-
+    <button onclick="sidebarToggle()" class="hamburger">
+      <i data-lucide="menu"></i>
+    </button>
   </nav>
+  <aside>
+    <ul class="navbar-links sidebar">
+      <li><a class="nav-link" href="../../index.php">Home</a></li>
+      <li><a class="nav-link" href="find-job.php">Job Listings</a></li>
+      <li><a class="nav-link" href="aboutus.php">About Us</a></li>
+      <li class="auth-buttons">
+        <a href="auth/login-signup.php?form=login" class="btn btn-primary login">Login</a>
+        <!-- <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a> -->
+      </li>
+    </ul>
+  </aside>
 
   <main>
     <section class="about-section">
@@ -118,49 +149,17 @@
   </footer>
 
 
+  <!-- Development version -->
+  <!-- <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script> -->
+  <!-- Production version -->
+  <script src="https://unpkg.com/lucide@latest"></script>
   <script>
-    const scrollers = document.querySelectorAll(".scroller");
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      addAnimation();
+    lucide.createIcons();
+
+    function sidebarToggle() {
+      const aside = document.querySelector('aside');
+      aside.classList.toggle('show')
     }
-
-    function addAnimation() {
-      scrollers.forEach((scroller) => {
-        scroller.setAttribute("data-animated", true);
-
-        const scrollerInner = scroller.querySelector(".scroller__inner");
-        const scrollerContent = Array.from(scrollerInner.children);
-
-        scrollerContent.forEach((item) => {
-          const duplicatedItem = item.cloneNode(true);
-          duplicatedItem.setAttribute("aria-hidden", true);
-          scrollerInner.appendChild(duplicatedItem);
-        });
-      });
-    }
-    document.addEventListener("contextmenu", (e) => {
-      e.preventDefault();
-    });
-  </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const animateElements = document.querySelectorAll('.animate');
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = 1;
-          }
-        });
-      }, {
-        threshold: 0.1
-      });
-
-      animateElements.forEach(element => {
-        element.style.opacity = 0;
-        observer.observe(element);
-      });
-    });
   </script>
 </body>
 

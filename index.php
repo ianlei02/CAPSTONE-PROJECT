@@ -16,19 +16,18 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PESO Landing</title>
+    <script src="public/js/dark-mode.js"> </script>
     <link rel="shortcut icon" href="public/images/pesosmb.png" type="image/x-icon">
     <link rel="stylesheet" href="public/css/css-reset.css" />
     <link rel="stylesheet" href="public/css/index.css" />
     <link rel="stylesheet" href="public/css/footer.css">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+    <link rel="stylesheet" href="public/library/swiper/swiper-bundle.min.css">
 </head>
 
 <body>
@@ -42,18 +41,35 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
                 src="public/smb-images/pesosmb.png"
                 alt="PESO logo"
                 class="logo" />
+            <!-- <span class="brand-text">PESO</span> -->
         </a>
         <ul class="navbar-links topbar">
-            <li><a class="nav-link" href="index.php">Home</a></li>
-            <li><a class="nav-link" href="landing/pages/find-job.php">Job Listings</a></li>
-            <li><a class="nav-link" href="landing/pages/aboutus.php">About Us</a></li>
+            <li><a class="nav-link" href="index.php">
+                    <i data-lucide="house"></i>
+                    <span>Home</span>
+                </a></li>
+            <li><a class="nav-link" href="landing/pages/find-job.php">
+                <i data-lucide="briefcase-business"></i>
+                    <span>Find Jobs</span>
+                </a></li>
+            <li><a class="nav-link" href="landing/pages/aboutus.php">
+                <i data-lucide="circle-question-mark"></i>
+                    <span>About us</span>
+            </a></li>
             <li class="auth-buttons">
-                <a href="auth/login-signup.php?form=login"><button class="btn-login">Login</button></a>
-                <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a>
+                <hr>
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+                    <i data-lucide="moon" id="themeIcon"></i>
+                </button>
+                <hr>
+                <a href="auth/login-signup.php" class="btn btn-primary login" style="display: flex; align-items: center; gap: 5px;">
+                    <span>Login</span><i data-lucide="log-in"></i>
+                </a>
+                <!-- <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a> -->
             </li>
         </ul>
         <button onclick="sidebarToggle()" class="hamburger">
-            <span class="material-symbols-outlined">menu</span>
+            <i data-lucide="menu"></i>
         </button>
     </nav>
     <aside>
@@ -62,8 +78,8 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
             <li><a class="nav-link" href="./pages/find-job.php">Job Listings</a></li>
             <li><a class="nav-link" href="./pages/aboutus.php">About Us</a></li>
             <li class="auth-buttons">
-                <a href="auth/login-signup.php?form=login"><button class="btn-login">Login</button></a>
-                <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a>
+                <a href="auth/login-signup.php?form=login" class="btn btn-primary login">Login</a>
+                <!-- <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a> -->
             </li>
         </ul>
     </aside>
@@ -71,13 +87,12 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
     <main>
         <section class="hero" id="hero">
             <div class="hero-left">
-                <div class="hero-text">
-                    <h1>PUBLIC EMPLOYMENT SERVICE OFFICE OF SAN MIGUEL, BULACAN</h1>
-                    <p>Your gateway to amazing job opportunities.</p>
-                    <div class="hero-btn">
-                        <a href="auth/login-signup.php?form=signup" class="get-started">Get Started &#10132;</a>
-                    </div>
+                <h1>Where Talent Meets Opportunity</h1>
+                <p>Connect with employers and discover job openings in your area with the PESO San Miguel, Bulacan</p>
+                <div class="hero-btn">
+                    <a href="auth/login-signup.php?form=signup" class="get-started">Get Started &#10132;</a>
                 </div>
+
                 <div class="hero-stats">
                     <div class="hero-stat">
                         <h2><?php
@@ -104,91 +119,54 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
             </div>
             <div class="hero-image-container">
                 <img
-                    src="public/images/hero-asset.png"
+                    src="public/svg/Resume-amico.svg"
                     alt="Hero Image"
                     class="hero-img" />
             </div>
         </section>
 
         <section class="news">
-            <div class="section-header">
-                <h2><i class="fas fa-bullhorn"></i> Announcements & Updates</h2>
-            </div>
-
-            <div class="swiper newsSwiper">
-                <div class="swiper-wrapper">
-                    <?php while ($news = $announcements->fetch_assoc()): ?>
-                        <div class="swiper-slide">
-                            <article class="news-card">
-                                <img src="admin/<?= $news['image'] ?>"
-                                    alt="<?= htmlspecialchars($news['title']); ?>"
-                                    class="news-image">
-                                <div class="news-content">
-                                    <h3 class="news-title"><?= htmlspecialchars($news['title']); ?></h3>
-                                    <div class="news-date">
-                                        <i class="far fa-calendar-alt"></i> <?= htmlspecialchars($news['publish_date']); ?>
-                                    </div>
-                                    <p class="news-excerpt">
-                                        <?= htmlspecialchars($news['excerpt']); ?>
-                                    </p>
-                                    <a href="#"
-                                        class="news-link readMoreBtn"
-                                        data-title="<?= htmlspecialchars($news['title']); ?>"
-                                        data-date="<?= htmlspecialchars($news['publish_date']); ?>"
-                                        data-image="<?= $news['image'] ? '/admin/' . $news['image'] : 'https://via.placeholder.com/600x400'; ?>"
-                                        data-content="<?= htmlspecialchars($news['content']); ?>">
-                                        Read More <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </article>
-                        </div>
-                    <?php endwhile; ?>
-                </div>
-
-                <!-- Navigation buttons -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-
-                <!-- Pagination -->
-                <div class="swiper-pagination"></div>
-            </div>
-        </section>
-
-        <section class="features">
             <div class="container">
                 <div class="section-title">
-                    <h2>Why Choose PESO?</h2>
-                    <p>We make job hunting and hiring simple, efficient, and effective</p>
+                    <h2>
+                        <i data-lucide="megaphone" class="icon"></i>
+                        <span>Announcements & Updates</span>
+                    </h2>
                 </div>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-briefcase"></i>
-                        </div>
-                        <h3>Quality Job Listings</h3>
-                        <p>Access thousands of verified job opportunities from top employers across various industries.</p>
+                <div class="swiper newsSwiper">
+                    <div class="swiper-wrapper">
+                        <?php while ($news = $announcements->fetch_assoc()): ?>
+                            <div class="swiper-slide">
+                                <article class="news-card">
+                                    <img src="admin/<?= $news['image'] ?>"
+                                        alt="<?= htmlspecialchars($news['title']); ?>"
+                                        class="news-image">
+                                    <div class="news-content">
+                                        <h3 class="news-title"><?= htmlspecialchars($news['title']); ?></h3>
+                                        <div class="news-date">
+                                            <i class="far fa-calendar-alt"></i> <?= htmlspecialchars($news['publish_date']); ?>
+                                        </div>
+                                        <p class="news-excerpt">
+                                            <?= htmlspecialchars($news['excerpt']); ?>
+                                        </p>
+                                        <a href="#"
+                                            class="news-link readMoreBtn"
+                                            data-title="<?= htmlspecialchars($news['title']); ?>"
+                                            data-date="<?= htmlspecialchars($news['publish_date']); ?>"
+                                            data-image="<?= $news['image'] ? '/admin/' . $news['image'] : 'https://via.placeholder.com/600x400'; ?>"
+                                            data-content="<?= htmlspecialchars($news['content']); ?>">
+                                            Read More <i data-lucide="arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </article>
+                            </div>
+                        <?php endwhile; ?>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <h3>Professional Matching</h3>
-                        <p>Our office reviews all applications to ensure the best matches between candidates and employers.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3>Secure Platform</h3>
-                        <p>Your personal information is protected with our advanced security measures and privacy controls.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-headset"></i>
-                        </div>
-                        <h3>Reliable Support</h3>
-                        <p>Our dedicated support team is available during office hours to assist you with any inquiries or issues.</p>
-                    </div>
+                    <!-- Navigation buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                    <!-- Pagination -->
+                    <div class="swiper-pagination"></div>
                 </div>
             </div>
         </section>
@@ -196,41 +174,196 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
         <section class="how-it-works">
             <div class="container">
                 <div class="section-title">
-                    <h2>How It Works</h2>
+                    <h2>
+                        <i data-lucide="settings" class="icon"></i>
+                        <span>How It Works</span>
+                    </h2>
                     <p>Simple steps to get you hired or find the perfect candidate</p>
                 </div>
                 <div class="steps">
                     <div class="step">
                         <div class="step-number">1</div>
-                        <h3>Create Your Profile</h3>
-                        <p>Complete your professional profile with your skills, experience, and documents.</p>
+                        <h3>Create an Account</h3>
+                        <p>Sign up as a job seeker or employer. Build your profile with your details, skills, and documents.</p>
                     </div>
+
                     <div class="step">
                         <div class="step-number">2</div>
-                        <h3>Find Opportunities</h3>
-                        <p>Browse jobs or candidates that match your preferences and qualifications.</p>
+                        <h3>Browse Opportunities</h3>
+                        <p>Explore available job listings or look for candidates that match your preferences and qualifications.</p>
                     </div>
+
                     <div class="step">
                         <div class="step-number">3</div>
-                        <h3>Apply or Connect</h3>
-                        <p>Submit your application or reach out to potential candidates through our platform.</p>
+                        <h3>Apply or Post Jobs</h3>
+                        <p>Job seekers can apply for available positions, while employers can post job openings to find qualified applicants.</p>
                     </div>
+
                     <div class="step">
                         <div class="step-number">4</div>
-                        <h3>Get Matched</h3>
-                        <p> Our office reviews applications and connects qualified candidates with employers.</p>
+                        <h3>Track Application Status</h3>
+                        <p>Monitor the progress of your applications or job posts directly through your dashboard in real time.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="peso-faq-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>
+                        <i data-lucide="circle-question-mark" class="icon"></i>
+                        <span>FAQs</span>
+                    </h2>
+                    <!-- <p>Simple steps to get you hired or find the perfect candidate</p> -->
+                </div>
+                <div class="faq-list" id="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What is PESO?</h3>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>The Public Employment Service Office (PESO) is a non-fee charging multi-employment service facility or entity established or accredited pursuant to Republic Act No. 8759, otherwise known as the PESO Act of 1999.</p>
+                            <p>PESO is a community-based facility that provides employment information and services to job seekers, employers, and other clients. It serves as a referral and information center for the various programs and services of the Department of Labor and Employment (DOLE) and other government agencies involved in employment promotion.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What services does PESO offer?</h3>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>PESO offers a wide range of employment services including:</p>
+                            <ul>
+                                <li>Employment information and referral</li>
+                                <li>Job matching and placement</li>
+                                <li>Career guidance and employment coaching</li>
+                                <li>Livelihood and self-employment assistance</li>
+                                <li>Special programs for disadvantaged workers (PWDs, indigenous people, etc.)</li>
+                                <li>Labor market information</li>
+                                <li>Job fair organization</li>
+                                <li>Pre-employment documentation assistance</li>
+                                <li>Skills training and development programs</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How can I register or apply for jobs?</h3>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Job seekers can register with PESO through the following methods:</p>
+                            <ol>
+                                <li><strong>Online Registration:</strong> Visit our website and complete the online registration form in our Job Hiring Decision Support System.</li>
+                                <li><strong>In-Person Registration:</strong> Visit the PESO office and fill out the registration form. Please bring valid IDs and other required documents.</li>
+                                <li><strong>Job Fair Registration:</strong> Register during job fairs organized by PESO.</li>
+                            </ol>
+                            <p>Once registered, your profile will be included in our database and matched with suitable job opportunities based on your qualifications and preferences.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Is there a fee for PESO services?</h3>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>No, all PESO services are completely free of charge for both job seekers and employers. PESO is mandated to provide non-fee charging employment services as stipulated in the PESO Act of 1999.</p>
+                            <p>We are funded by the local government unit and the Department of Labor and Employment to ensure accessible employment services for all.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What are the requirements for job seekers and employers?</h3>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p><strong>For Job Seekers:</strong></p>
+                            <ul>
+                                <li>Valid government-issued ID (SSS, PhilHealth, Pag-IBIG, Passport, Driver's License, etc.)</li>
+                                <li>Resume with detailed work experience and educational background</li>
+                                <li>Certificate of employment or work experience (if applicable)</li>
+                                <li>Educational credentials (diploma, transcript of records)</li>
+                                <li>Other relevant certificates (training, seminars, etc.)</li>
+                            </ul>
+                            <p><strong>For Employers:</strong></p>
+                            <ul>
+                                <li>Company registration documents (DTI/SEC)</li>
+                                <li>Mayor's permit or business permit</li>
+                                <li>List of job vacancies with complete job descriptions</li>
+                                <li>Company profile</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How often does PESO hold job fairs?</h3>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>PESO regularly organizes job fairs throughout the year, with increased frequency during special occasions such as:</p>
+                            <ul>
+                                <li>Labor Day (May 1)</li>
+                                <li>PESO Anniversary (month of September)</li>
+                                <li>Christmas season</li>
+                                <li>Graduation season (March-April)</li>
+                            </ul>
+                            <p>We typically hold monthly job fairs at our main office and quarterly mega job fairs at larger venues. Additionally, we conduct special job fairs for specific sectors (e.g., tourism, BPO, manufacturing) and for special groups (PWDs, senior citizens, indigenous people).</p>
+                            <p>Check our website or visit our office for the updated schedule of job fairs.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Does PESO assist with overseas employment?</h3>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, PESO provides assistance for overseas employment through:</p>
+                            <ul>
+                                <li>Referral to licensed recruitment agencies</li>
+                                <li>Pre-employment orientation seminars (PEOS)</li>
+                                <li>Assistance in processing overseas employment documents</li>
+                                <li>Information on country-specific requirements and regulations</li>
+                                <li>Guidance on legitimate overseas job opportunities</li>
+                            </ul>
+                            <p>However, please note that PESO itself does not directly deploy workers abroad. We work in coordination with the Philippine Overseas Employment Administration (POEA) and accredited recruitment agencies to ensure safe and legal overseas employment.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Where is the PESO office located and how can it be contacted?</h3>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our main PESO office is located at:</p>
+                            <p><strong>123 Government Center, City Hall Compound, Your City, Province 1234</strong></p>
+                            <p>You can contact us through:</p>
+                            <ul>
+                                <li>Telephone: 0912 345 6789</li>
+                                <li>Email: pesosanmiguelbulacan@gmail.com</li>
+                                <li>Social Media: Facebook.com/PESOSanMiguel
+                            </ul>
+                            <p>We are open from Monday to Friday, 8:00 AM to 5:00 PM.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <section class="cta">
-            <div class=" container" style="width: auto;">
+            <div class="container">
                 <h2>Ready to Take the Next Step?</h2>
                 <p>Join thousands of professionals and companies who found their perfect match through PESO</p>
                 <div style="display: flex; justify-content: center; gap: 20px;">
-                    <button class="btn btn-outline" style="background-color: transparent; border-color: var(--light-clr-700); color: var(--light-clr-700);" onclick="window.location.href='login-signup.php'">I'm Hiring</button>
-                    <button class="btn btn-primary" style="background-color: var(--light-clr-700); color: var(--primary-blue-color);" onclick="window.location.href='login-signup.php'">Find Jobs</button>
+                    <button class="btn btn-secondary" onclick="window.location.href='login-signup.php'">I'm Hiring</button>
+                    <button class="btn btn-primary" onclick="window.location.href='login-signup.php'">Find Jobs</button>
                 </div>
 
             </div>
@@ -289,21 +422,17 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
 
     <!-- //TODO NAHEHELO AQ -->
     <!-- <div id="preloader">
-        <div class="loader"></div>
-    </div>
-
+        <div class="loader"></div> 
+    </div> -->
+    <script src="public/js/preloader.js"> </script>
+    <script src="public/library/swiper/swiper-bundle.min.js"></script>
+    <!-- Development version -->
+    <!-- <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script> -->
+    <!-- Production version -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script>
-        window.addEventListener("load", function() {
-            const preloader = document.getElementById("preloader");
-            preloader.style.opacity = "0";
-            setTimeout(() => {
-                preloader.style.display = "none";
-            }, 500);
-        });
-    </script> -->
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-
+        lucide.createIcons();
+    </script>
     <script>
         const swiper = new Swiper('.newsSwiper', {
             slidesPerView: 1,
@@ -341,11 +470,9 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
         document.addEventListener("DOMContentLoaded", function() {
             const modal = document.getElementById("customNewsModal");
             const closeBtn = document.querySelector(".custom-modal-close");
-
             document.querySelectorAll(".readMoreBtn").forEach(btn => {
                 btn.addEventListener("click", function(e) {
-                    e.preventDefault();
-
+                    e.preventDefault()
                     document.getElementById("newsModalTitle").textContent = this.dataset.title;
                     document.getElementById("newsModalDate").textContent = "📅 " + this.dataset.date;
                     document.getElementById("newsModalImage").src = this.dataset.image;
@@ -357,6 +484,28 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
             window.onclick = (e) => {
                 if (e.target == modal) modal.style.display = "none";
             };
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const icon = this.querySelector('.faq-icon');
+
+                    faqQuestions.forEach(otherQuestion => {
+                        if (otherQuestion !== this) {
+                            const otherAnswer = otherQuestion.nextElementSibling;
+                            const otherIcon = otherQuestion.querySelector('.faq-icon');
+                            otherAnswer.classList.remove('active');
+                            otherIcon.textContent = '+';
+                        }
+                    });
+                    answer.classList.toggle('active');
+                    if (answer.classList.contains('active')) {
+                        icon.textContent = '−';
+                    } else {
+                        icon.textContent = '+';
+                    }
+                });
+            });
         });
 
         function sidebarToggle() {
