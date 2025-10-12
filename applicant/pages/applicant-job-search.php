@@ -482,6 +482,7 @@ $result = $conn->query($sql);
           });
           form.reset();
           if (typeof closeModal === 'function') closeModal();
+          location.reload();
         } else {
           await Swal.fire('Error', data.message || 'Server returned an error.', 'error');
         }
