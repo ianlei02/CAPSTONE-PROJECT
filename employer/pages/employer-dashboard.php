@@ -313,6 +313,18 @@ $data = $result->fetch_assoc();
       </div>
     </div>
 
+<div id="eventModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close-btn" id="closeModal">&times;</span>
+    <h3 id="eventTitle"></h3>
+    <p><strong>Type:</strong> <span id="eventType"></span></p>
+    <p><strong>Start:</strong> <span id="eventStart"></span></p>
+    <p><strong>End:</strong> <span id="eventEnd"></span></p>
+    <p><strong>Description:</strong> <span id="eventDesc"></span></p>
+  </div>
+</div>
+
+
   </main>
 
   <script src="../js/responsive.js"></script>
@@ -350,30 +362,79 @@ $data = $result->fetch_assoc();
     });
   </script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var calendarEl = document.getElementById('calendar');
+  document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
 
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        headerToolbar: {
-          left: 'prev,next',
-          center: 'title',
-          // right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-        },
-        events: [{
-            title: 'Sample Event',
-            start: '2025-09-29'
-          },
-          {
-            title: 'Meeting',
-            start: '2025-09-30T10:00:00',
-            end: '2025-09-30T12:00:00'
-          }
-        ]
-      });
-      calendar.render();
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,listWeek'
+      },
+      initialView: 'dayGridMonth',
+      editable: false,
+      selectable: false,
+      allDaySlot: false,
+
+      events: async function(fetchInfo, successCallback, failureCallback) {
+        try {
+          const res = await fetch('../../admin/Function/calendar-events.php');
+          const data = await res.json();
+
+
+          const fixedEvents = data.map(event => {
+            if (event.end) {
+              const start = new Date(event.start);
+              const end = new Date(event.end);
+
+              if (
+                end.getHours() === 0 && end.getMinutes() === 0 &&
+                end.getDate() !== start.getDate()
+              ) {
+                end.setSeconds(end.getSeconds() - 1);
+                event.end = end.toISOString();
+              }
+            }
+            return event;
+          });
+
+          successCallback(fixedEvents);
+        } catch (err) {
+          console.error('Event load failed:', err);
+          failureCallback(err);
+        }
+      },
+
+      eventClick: function (info) {
+        document.getElementById('eventTitle').textContent = info.event.title;
+        document.getElementById('eventType').textContent = info.event.extendedProps.type || 'N/A';
+        document.getElementById('eventStart').textContent = new Date(info.event.start).toLocaleString();
+        document.getElementById('eventEnd').textContent = info.event.end
+          ? new Date(info.event.end).toLocaleString()
+          : '—';
+        document.getElementById('eventDesc').textContent = info.event.extendedProps.description || 'No description available.';
+        document.getElementById('eventModal').style.display = 'block';
+      },
+
+      eventDidMount: function(info) {
+        const type = info.event.extendedProps.type;
+        if (type === 'job_fair') info.el.style.backgroundColor = '#4f46e5';
+        else if (type === 'interview') info.el.style.backgroundColor = '#16a34a';
+        info.el.style.color = '#fff';
+      }
     });
+
+    calendar.render();
+
+    document.getElementById('closeModal').addEventListener('click', () => {
+      document.getElementById('eventModal').style.display = 'none';
+    });
+    window.addEventListener('click', (e) => {
+      if (e.target === document.getElementById('eventModal')) {
+        document.getElementById('eventModal').style.display = 'none';
+      }
+    });
+  });
   </script>
 
 </body>
