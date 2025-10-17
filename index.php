@@ -45,17 +45,17 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
         </a>
         <ul class="navbar-links topbar">
             <li><a class="nav-link" href="index.php">
-                    <i data-lucide="house"></i>
+                    <i data-lucide="house" class="icon"></i>
                     <span>Home</span>
                 </a></li>
             <li><a class="nav-link" href="landing/pages/find-job.php">
-                <i data-lucide="briefcase-business"></i>
+                    <i data-lucide="briefcase-business" class="icon"></i>
                     <span>Find Jobs</span>
                 </a></li>
             <li><a class="nav-link" href="landing/pages/aboutus.php">
-                <i data-lucide="circle-question-mark"></i>
+                    <i data-lucide="circle-question-mark" class="icon"></i>
                     <span>About us</span>
-            </a></li>
+                </a></li>
             <li class="auth-buttons">
                 <hr>
                 <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">

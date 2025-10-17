@@ -74,9 +74,8 @@
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    gap:var(--space-4);
     flex: 1;
-    margin-right: 2rem;
 
     .stat-card {
       background: var(--bg);
@@ -149,6 +148,11 @@
   }
 }
 .content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.content-flex{
   display: flex;
   gap: 1rem;
 }
@@ -281,19 +285,23 @@
 }
 .quick-actions {
   /* background-color: var(--bg); */
-  height: max-content;
+  max-width: 100%;
+  height: auto;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-md);
-  padding: 1rem;
-  grid-column: span 2;
+  padding: var(--space-1);
+  flex: 1;
 
+  .section-title{
+    padding: 1rem;
+  }
   h2 {
     color: var(--text);
   }
   .actions-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 15px;
     padding: 1rem;
   }
@@ -354,3 +362,137 @@
     color: var(--text-muted);
   }
 }
+.profile-completion-card {
+  background: var(--bg-muted);
+  background-image: radial-gradient(circle at 20% 50%, var(--bg), var(--bg-muted));
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  /* max-width: 380px; */
+  max-width: 100%;
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+  }
+  .card-title {
+    font-size: var(--font-size-base);
+    font-weight: var(--fw-semibold);
+    color: var(--text);
+  }
+  .progress-percentage {
+    font-size: var(--font-size-sm);
+    font-weight: var(--fw-bold);
+    color: var(--color-blue-600);
+    background: var(--bg-subtle);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+  }
+  .progress-section {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+  .progress-circle {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    flex-shrink: 0;
+  }
+  .progress-circle svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+  .progress-circle-background {
+    fill: none;
+    stroke: var(--bg-subtle);
+    stroke-width: 6;
+  }
+  .progress-circle-progress {
+    fill: none;
+    stroke: var(--color-blue-500);
+    stroke-width: 6;
+    stroke-linecap: round;
+  }
+  .progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  .progress-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--fw-bold);
+    color: var(--text);
+    line-height: 1;
+  }
+  .progress-content {
+    flex: 1;
+  }
+  .progress-stats {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    margin-bottom: var(--space-2);
+  }
+  .progress-description {
+    font-size: var(--font-size-s);
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .completion-message {
+    background: var(--color-yellow-50);
+    border: 1px solid var(--color-yellow-500);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+  
+  .message-text {
+    font-size: var(--font-size-xs);
+    color: #131313;
+    line-height: 1.4;
+    text-align: center;
+  }
+  
+  .message-text strong {
+    color: var(--color-yellow-500);
+  }
+  
+  .action-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  
+  .complete-profile-btn {
+    background: var(--color-blue-600);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--font-size-sm);
+    font-weight: var(--fw-semibold);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    width: 100%;
+  }
+  
+  .complete-profile-btn:hover {
+    background: var(--color-blue-700);
+  }
+  
+  .benefits-note {
+    text-align: center;
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+}
+

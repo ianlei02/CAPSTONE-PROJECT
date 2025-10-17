@@ -31,7 +31,7 @@ require_once '../Functions/getName.php';
       </div>
 
       <div class="right-pos">
-        
+
         <div class="profile">
           <img
             src="<?php echo htmlspecialchars($profile_picture_url); ?>"
@@ -197,57 +197,81 @@ require_once '../Functions/getName.php';
           <div class="stat-label">7 high priority</div>
         </div>
       </div>
-      <div class="profile-completion-container">
-        <div class="progress-circle">
-          <svg viewBox="0 0 100 100">
-            <circle class="progress-circle-background" cx="50" cy="50" r="<?php echo $radius; ?>"></circle>
-            <circle class="progress-circle-progress"
-              cx="50" cy="50" r="<?php echo $radius; ?>"
-              stroke-dasharray="<?php echo $circumference; ?>"
-              stroke-dashoffset="<?php echo $offset; ?>">
-            </circle>
-          </svg>
-          <div class="progress-text">
-            <?php echo $progress; ?>%
-            <!-- <span>COMPLETE</span> -->
-          </div>
-        </div>
-        <div class="message-button">
-          <!-- <div class="completion-message">
-            Complete your profile before you apply.
-          </div> -->
-          <button class="complete-profile-btn" onclick=" windows.location.href = 'application-profile.php'">Complete My Profile</button>
-        </div>
-      </div>
     </div>
     <div class="content-wrapper">
-      <div class="quick-actions">
-        <h2 class="section-title">
-          <span class="material-symbols-outlined">bolt</span>
-          <span>Quick Actions</span>
-        </h2>
-        <div class="actions-grid">
-          <a class="action-card" href="./applicant-job-search.php">
-            <div class="action-icon">
-              <span class="material-symbols-outlined">add</span>
+      <div class="content-flex">
+        <div class="profile-completion-card">
+          <div class="card-header">
+            <div class="card-title">Profile Completion</div>
+            <div class="progress-percentage">
+               <?php echo $progress; ?>%
             </div>
-            <div class="action-title">Apply</div>
-            <div class="action-desc">Apply for a Job</div>
-          </a>
-          <a class="action-card" href="./applicant-applications.php">
-            <div class="action-icon">
-              <span class="material-symbols-outlined">people</span>
+          </div>
+          <div class="progress-section">
+            <div class="progress-circle">
+              <svg viewBox="0 0 100 100">
+                <circle class="progress-circle-background" cx="50" cy="50" r="<?php echo $radius; ?>"></circle>
+                <circle class="progress-circle-progress"
+                  cx="50" cy="50" r="<?php echo $radius; ?>"
+                  stroke-dasharray="<?php echo $circumference; ?>"
+                  stroke-dashoffset="<?php echo $offset; ?>">
+                </circle>
+              </svg>
+              <div class="progress-text">
+                <div class="progress-label">
+                  <?php echo $progress; ?>%
+                </div>
+              </div>
             </div>
-            <div class="action-title">View Applications</div>
-            <div class="action-desc">See your full job applications</div>
-          </a>
-          <a class="action-card" href="./applicant-profile.php">
-            <div class="action-icon">
-              <span class="material-symbols-outlined">id_card</span>
+            <div class="progress-content">
+              <!-- <div class="progress-stats">7 of 10 sections complete</div> -->
+              <div class="progress-description">
+              <?php echo 100 - $progress; ?>% remaining to unlock job applications
+              </div>
             </div>
-            <div class="action-title">Edit My Profile</div>
-            <div class="action-desc">Update your information</div>
-          </a>
+          </div>
+          <div class="completion-message">
+            <div class="message-text">
+              <strong>Complete your profile</strong> to apply for jobs and get matched with employers
+            </div>
+          </div>
+          <div class="action-section">
+            <button class="complete-profile-btn" onclick="window.location.href='applicant-profile.php'">
+              Complete Profile
+            </button>
+            <div class="benefits-note">
+              100% completion required for job applications
+            </div>
+          </div>
+        </div>
+        <div class="quick-actions">
+          <h2 class="section-title">
+            <span class="material-symbols-outlined">bolt</span>
+            <span>Quick Actions</span>
+          </h2>
+          <div class="actions-grid">
+            <a class="action-card" href="./applicant-job-search.php">
+              <div class="action-icon">
+                <span class="material-symbols-outlined">add</span>
+              </div>
+              <div class="action-title">Apply for a Job</div>
+              <!-- <div class="action-desc">Apply for a Job</div> -->
+            </a>
+            <a class="action-card" href="./applicant-applications.php">
+              <div class="action-icon">
+                <span class="material-symbols-outlined">people</span>
+              </div>
+              <div class="action-title">View Applications</div>
+              <!-- <div class="action-desc">See your full job applications</div> -->
+            </a>
+            <a class="action-card" href="./applicant-profile.php">
+              <div class="action-icon">
+                <span class="material-symbols-outlined">id_card</span>
+              </div>
+              <div class="action-title">Edit My Profile</div>
+              <!-- <div class="action-desc">Update your information</div> -->
+            </a>
+          </div>
         </div>
       </div>
       <div class="job-application-status">
@@ -367,53 +391,53 @@ require_once '../Functions/getName.php';
     });
   </script>
   <script>
-  const notifBtn = document.getElementById('notifBtn');
-  const notifList = document.getElementById('notifList');
-  const notifCount = document.getElementById('notifCount');
+    const notifBtn = document.getElementById('notifBtn');
+    const notifList = document.getElementById('notifList');
+    const notifCount = document.getElementById('notifCount');
 
-  let hasOpened = false;
+    let hasOpened = false;
 
-  notifBtn.addEventListener('click', () => {
-  const isHidden = notifList.style.display === 'none';
-  notifList.style.display = isHidden ? 'block' : 'none';
+    notifBtn.addEventListener('click', () => {
+      const isHidden = notifList.style.display === 'none';
+      notifList.style.display = isHidden ? 'block' : 'none';
 
-  if (isHidden && !hasOpened) {
-    hasOpened = true;
+      if (isHidden && !hasOpened) {
+        hasOpened = true;
 
-    notifCount.textContent = 0;
-    notifCount.style.color = "gray";
+        notifCount.textContent = 0;
+        notifCount.style.color = "gray";
 
-    fetch('../Functions/seen.php')
-      .then(() => {
-        fetchNotifications();
-      })
-      .catch(err => console.error('Error marking seen:', err));
-    }
-  });
+        fetch('../Functions/seen.php')
+          .then(() => {
+            fetchNotifications();
+          })
+          .catch(err => console.error('Error marking seen:', err));
+      }
+    });
 
     function fetchNotifications() {
-    fetch('../Functions/notification.php')
-      .then(res => res.json())
-      .then(data => {
-        notifCount.textContent = data.count;
-        notifCount.style.color = data.count > 0 ? "red" : "gray";
-        if (data.notifications.length > 0) {
-          notifList.innerHTML = data.notifications
-            .map(n => `
+      fetch('../Functions/notification.php')
+        .then(res => res.json())
+        .then(data => {
+          notifCount.textContent = data.count;
+          notifCount.style.color = data.count > 0 ? "red" : "gray";
+          if (data.notifications.length > 0) {
+            notifList.innerHTML = data.notifications
+              .map(n => `
               <div style="border-bottom:1px solid var(--border); padding:5px; ${n.seen == 0 ? 'background: var(--bg);' : ''}">
                 <p style="margin:0;">${n.message}</p>
                 <small style="color:gray;">${new Date(n.created_at).toLocaleString()}</small>
               </div>
             `)
-            .join('');
-        } else {
-          notifList.innerHTML = "<p>No notifications yet</p>";
-        }
-      })
-      .catch(err => console.error('Notification fetch error:', err));
-  }
-  setInterval(fetchNotifications, 10000);
-  fetchNotifications();
+              .join('');
+          } else {
+            notifList.innerHTML = "<p>No notifications yet</p>";
+          }
+        })
+        .catch(err => console.error('Notification fetch error:', err));
+    }
+    setInterval(fetchNotifications, 10000);
+    fetchNotifications();
   </script>
 </body>
 
