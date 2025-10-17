@@ -7,6 +7,7 @@
   <title>Employers</title>
   <script src="../js/load-saved.js"></script>
   <script src="../js/dark-mode.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="../css/navs.css">
   <link rel="stylesheet" href="../css/employer-table.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -151,13 +152,35 @@
           </tbody>
         </table>
       </div>
+
+        <div class="table-section">
+      <div class="table-header">
+        <span class="material-symbols-outlined">block</span>
+        <h2>Rejected Employers</h2>
+      </div>
+      <table id="rejectedTable" class="display">
+        <thead>
+          <th>Company Name</th>
+          <th>Contact Person</th>
+          <th>Email</th>
+          <th>Industry</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </thead>
+        <tbody>
+          <!-- Data will be populated by JavaScript -->
+        </tbody>
+      </table>
+      </div>
     </div>
   </div>
+
+  
   <!-- Pending Employer Modal -->
   <div id="pendingModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2><span class="material-symbols-outlined">business</span> Company Details</h2>
+        <h2><span class="material-symbols-outlined">pending_actions</span>Pending Company Details</h2>
         <button class="close">&times;</button>
       </div>
       <div class="modal-body">
@@ -194,54 +217,50 @@
         <div class="documents-section">
           <h3 class="section-title"><span class="material-symbols-outlined">description</span> Documents</h3>
           <div class="documents-list">
-            <div class="document-item">
-              <div class="document-name">
-                <span class="material-symbols-outlined">description</span>
-                Business License
-              </div>
-              <div class="document-actions">
-                <button class="btn-doc btn-view-doc">
-                  <span class="material-symbols-outlined">visibility</span>
-                  View
-                </button>
-                <button class="btn-doc btn-download">
-                  <span class="material-symbols-outlined">download</span>
-                  Download
-                </button>
-              </div>
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Business License
             </div>
-            <div class="document-item">
-              <div class="document-name">
-                <span class="material-symbols-outlined">description</span>
-                Tax Certificate
-              </div>
-              <div class="document-actions">
-                <button class="btn-doc btn-view-doc">
-                  <span class="material-symbols-outlined">visibility</span>
-                  View
-                </button>
-                <button class="btn-doc btn-download">
-                  <span class="material-symbols-outlined">download</span>
-                  Download
-                </button>
-              </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="p-business-license-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="p-business-license-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
             </div>
-            <div class="document-item">
-              <div class="document-name">
-                <span class="material-symbols-outlined">description</span>
-                ID Proof
-              </div>
-              <div class="document-actions">
-                <button class="btn-doc btn-view-doc">
-                  <span class="material-symbols-outlined">visibility</span>
-                  View
-                </button>
-                <button class="btn-doc btn-download">
-                  <span class="material-symbols-outlined">download</span>
-                  Download
-                </button>
-              </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Tax Certificate
             </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="p-tax-certificate-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="p-tax-certificate-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              ID Proof
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="p-id-proof-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="p-id-proof-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
           </div>
         </div>
       </div>
@@ -266,7 +285,7 @@
   <div id="verifiedModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2><span class="material-symbols-outlined">business</span> Company Details</h2>
+        <h2><span class="material-symbols-outlined">verified</span>Verified Company Details</h2>
         <button class="close">&times;</button>
       </div>
       <div class="modal-body">
@@ -303,54 +322,50 @@
         <div class="documents-section">
           <h3 class="section-title"><span class="material-symbols-outlined">description</span> Documents</h3>
           <div class="documents-list">
-            <div class="document-item">
-              <div class="document-name">
-                <span class="material-symbols-outlined">description</span>
-                Business License
-              </div>
-              <div class="document-actions">
-                <button class="btn-doc btn-view-doc">
-                  <span class="material-symbols-outlined">visibility</span>
-                  View
-                </button>
-                <button class="btn-doc btn-download">
-                  <span class="material-symbols-outlined">download</span>
-                  Download
-                </button>
-              </div>
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Business License
             </div>
-            <div class="document-item">
-              <div class="document-name">
-                <span class="material-symbols-outlined">description</span>
-                Tax Certificate
-              </div>
-              <div class="document-actions">
-                <button class="btn-doc btn-view-doc">
-                  <span class="material-symbols-outlined">visibility</span>
-                  View
-                </button>
-                <button class="btn-doc btn-download">
-                  <span class="material-symbols-outlined">download</span>
-                  Download
-                </button>
-              </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="v-business-license-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="v-business-license-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
             </div>
-            <div class="document-item">
-              <div class="document-name">
-                <span class="material-symbols-outlined">description</span>
-                ID Proof
-              </div>
-              <div class="document-actions">
-                <button class="btn-doc btn-view-doc">
-                  <span class="material-symbols-outlined">visibility</span>
-                  View
-                </button>
-                <button class="btn-doc btn-download">
-                  <span class="material-symbols-outlined">download</span>
-                  Download
-                </button>
-              </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Tax Certificate
             </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="v-tax-certificate-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="v-tax-certificate-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              ID Proof
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="v-id-proof-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="v-id-proof-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
           </div>
         </div>
       </div>
@@ -367,10 +382,11 @@
     </div>
   </div>
 
+  <!-- Revoked Employer Modal -->
   <div id="revokedModal" class="modal">
   <div class="modal-content">
     <div class="modal-header">
-      <h2><span class="material-symbols-outlined">business</span> Company Details</h2>
+      <h2><span class="material-symbols-outlined">block</span>Revoked Company Details</h2>
       <button class="close">&times;</button>
     </div>
     <div class="modal-body">
@@ -413,45 +429,41 @@
               Business License
             </div>
             <div class="document-actions">
-              <button class="btn-doc btn-view-doc">
-                <span class="material-symbols-outlined">visibility</span>
-                View
+              <button class="btn-doc btn-view-doc" id="r-business-license-view">
+                <span class="material-symbols-outlined">visibility</span> View
               </button>
-              <button class="btn-doc btn-download">
-                <span class="material-symbols-outlined">download</span>
-                Download
+              <button class="btn-doc btn-download" id="r-business-license-download">
+                <span class="material-symbols-outlined">download</span> Download
               </button>
             </div>
           </div>
+
           <div class="document-item">
             <div class="document-name">
               <span class="material-symbols-outlined">description</span>
               Tax Certificate
             </div>
             <div class="document-actions">
-              <button class="btn-doc btn-view-doc">
-                <span class="material-symbols-outlined">visibility</span>
-                View
+              <button class="btn-doc btn-view-doc" id="r-tax-certificate-view">
+                <span class="material-symbols-outlined">visibility</span> View
               </button>
-              <button class="btn-doc btn-download">
-                <span class="material-symbols-outlined">download</span>
-                Download
+              <button class="btn-doc btn-download" id="r-tax-certificate-download">
+                <span class="material-symbols-outlined">download</span> Download
               </button>
             </div>
           </div>
+
           <div class="document-item">
             <div class="document-name">
               <span class="material-symbols-outlined">description</span>
               ID Proof
             </div>
             <div class="document-actions">
-              <button class="btn-doc btn-view-doc">
-                <span class="material-symbols-outlined">visibility</span>
-                View
+              <button class="btn-doc btn-view-doc" id="r-id-proof-view">
+                <span class="material-symbols-outlined">visibility</span> View
               </button>
-              <button class="btn-doc btn-download">
-                <span class="material-symbols-outlined">download</span>
-                Download
+              <button class="btn-doc btn-download" id="r-id-proof-download">
+                <span class="material-symbols-outlined">download</span> Download
               </button>
             </div>
           </div>
@@ -472,6 +484,112 @@
   </div>
   </div>
 
+  <!-- Rejected Employer Modal -->
+  <div id="rejectedModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2><span class="material-symbols-outlined">block</span>Rejected Company Details</h2>
+      <button class="close">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="profile-section">
+        <h3 class="section-title">
+          <span class="material-symbols-outlined">info</span> Company Profile
+        </h3>
+        <div class="profile-details">
+          <div class="detail-item">
+            <label>Company Name</label>
+            <p id="rej-modal-company-name">Rejected Company Inc.</p>
+          </div>
+          <div class="detail-item">
+            <label>Address</label>
+            <p id="rej-modal-address">123 Denied Ave, Seattle, WA</p>
+          </div>
+          <div class="detail-item">
+            <label>Industry</label>
+            <p id="rej-modal-industry">Manufacturing</p>
+          </div>
+          <div class="detail-item">
+            <label>Contact Person</label>
+            <p id="rej-modal-contact-person">Sarah Lee</p>
+          </div>
+          <div class="detail-item">
+            <label>Email</label>
+            <p id="rej-modal-email">sarah@rejectedcompany.com</p>
+          </div>
+          <div class="detail-item">
+            <label>Phone</label>
+            <p id="rej-modal-phone">+1 (555) 222-7890</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="documents-section">
+        <h3 class="section-title">
+          <span class="material-symbols-outlined">description</span> Documents
+        </h3>
+        <div class="documents-list">
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Business License
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="rj-business-license-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="rj-business-license-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Tax Certificate
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="rj-tax-certificate-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="rj-tax-certificate-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              ID Proof
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="rj-id-proof-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="rj-id-proof-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-restored">
+        <span class="material-symbols-outlined">autorenew</span>
+        Restore Employer
+      </button>
+      <button class="btn btn-close">
+        <span class="material-symbols-outlined">close</span>
+        Close
+      </button>
+    </div>
+  </div>
+  </div>
 
   <script src="../assets/JS_JQUERY/jquery-3.7.1.min.js"></script>
   <script src="../assets/library/datatable/dataTables.js"></script>
@@ -524,7 +642,7 @@
                 <button class="view-btn" data-type="verified" data-company='${JSON.stringify(emp)}'>
                   <span class="material-symbols-outlined">visibility</span> View
                 </button>
-                <button class="revoke-btn" data-email="${emp.email}">Revoke</button>
+                <button class="revoke-btn" data-email="${emp.email}" style="display: none;">Revoke</button>
               </td>
             </tr>
           `).join("");
@@ -544,9 +662,29 @@
                 <button class="view-btn" data-type="revoked" data-company='${JSON.stringify(emp)}'>
                   <span class="material-symbols-outlined">visibility</span> View
                 </button>
-                <button class="restore-btn" data-email="${emp.email}">
-                  <span class="material-symbols-outlined">autorenew</span> Restore
+                <button class="restore-btn" data-email="${emp.email}" style="display: none;">
+                  <span class="material-symbols-outlined" >autorenew</span> Restore
                 </button>
+              </td>
+            </tr>
+          `).join("");
+        }
+
+        const rejectedData = data.rejected || [];
+        if (Array.isArray(rejectedData)) {
+          const rejectedTableBody = document.querySelector("#rejectedTable tbody");
+          rejectedTableBody.innerHTML = rejectedData.map(emp => `
+            <tr>
+              <td>${emp.company_name}</td>
+              <td>${emp.contact_person}</td>
+              <td>${emp.email}</td>
+              <td>${emp.industry}</td>
+              <td><span class="status rejected">${emp.status}</span></td>
+              <td>
+                <button class="view-btn" data-type="rejected" data-company='${JSON.stringify(emp)}'>
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="restore-btn" data-email="${emp.email}" style="display: none;">Restore</button>
               </td>
             </tr>
           `).join("");
@@ -563,7 +701,8 @@
             openVerifiedModal(emp);
           } else if (type === "revoked") {
             openRevokedModal(emp);
-          }
+          } else if (type === "rejected") 
+            openRejectedModal(emp);
           });
         });
 
@@ -577,6 +716,11 @@
       document.getElementById("modal-address").textContent = emp.address;
       document.getElementById("modal-industry").textContent = emp.industry;
       document.getElementById("modal-phone").textContent = emp.contact_mobile;
+
+      setDocumentButton("p-business-license", emp.business_permit);
+      setDocumentButton("p-tax-certificate", emp.bir_certification);
+      setDocumentButton("p-id-proof", emp.employer_profile);
+
       const modal = document.getElementById("pendingModal"); modal.style.display = "flex";
       const content = modal.querySelector(".modal-content");
       if (content) content.classList.add("modal-show");
@@ -589,6 +733,11 @@
       document.getElementById("v-modal-address").textContent = emp.address;
       document.getElementById("v-modal-industry").textContent = emp.industry;
       document.getElementById("v-modal-phone").textContent = emp.contact_mobile;
+
+      setDocumentButton("v-business-license", emp.business_permit);
+      setDocumentButton("v-tax-certificate", emp.bir_certification);
+      setDocumentButton("v-id-proof", emp.employer_profile);
+
       const modal = document.getElementById("verifiedModal"); modal.style.display = "flex";
       const content = modal.querySelector(".modal-content");
       if (content) content.classList.add("modal-show");
@@ -598,7 +747,13 @@
       document.getElementById("r-modal-company-name").textContent = emp.company_name;
       document.getElementById("r-modal-contact-person").textContent = emp.contact_person;
       document.getElementById("r-modal-email").textContent = emp.email;
+      document.getElementById("r-modal-address").textContent = emp.address;
       document.getElementById("r-modal-industry").textContent = emp.industry;
+      document.getElementById("r-modal-phone").textContent = emp.contact_mobile;
+
+      setDocumentButton("r-business-license", emp.business_permit);
+      setDocumentButton("r-tax-certificate", emp.bir_certification);
+      setDocumentButton("r-id-proof", emp.employer_profile);
 
       const modal = document.getElementById("revokedModal");
       modal.style.display = "flex";
@@ -606,6 +761,57 @@
       if (content) content.classList.add("modal-show");
     }
 
+    function openRejectedModal(emp) {
+      document.getElementById("rej-modal-company-name").textContent = emp.company_name;
+      document.getElementById("rej-modal-contact-person").textContent = emp.contact_person;
+      document.getElementById("rej-modal-email").textContent = emp.email;
+      document.getElementById("rej-modal-address").textContent = emp.address;
+      document.getElementById("rej-modal-industry").textContent = emp.industry;
+      document.getElementById("rej-modal-phone").textContent = emp.contact_mobile;
+
+      setDocumentButton("rj-business-license", emp.business_permit);
+      setDocumentButton("rj-tax-certificate", emp.bir_certification);
+      setDocumentButton("rj-id-proof", emp.employer_profile);
+
+      const modal = document.getElementById("rejectedModal");
+      modal.style.display = "flex";
+      const content = modal.querySelector(".modal-content");
+      if (content) content.classList.add("modal-show");
+    }
+
+      function setDocumentButton(docType, filePath) {
+        const viewBtn = document.querySelector(`#${docType}-view`);
+        const downloadBtn = document.querySelector(`#${docType}-download`);
+
+        if (filePath && filePath.trim() !== "") {
+          const fullPath = `../../${filePath}`;
+          viewBtn.onclick = () => window.open(fullPath, "_blank");
+          downloadBtn.onclick = () => {
+            const link = document.createElement("a");
+            link.href = fullPath;
+            link.download = filePath.split("/").pop();
+            link.click();
+          };
+        } else {
+          viewBtn.onclick = downloadBtn.onclick = () => {
+            Swal.fire({
+              icon: 'warning',
+              title: 'No File Uploaded',
+              text: 'There is no document available for this file.',
+              confirmButtonText: 'Okay',
+              confirmButtonColor: '#3085d6',
+              background: '#fff',
+              color: '#333',
+              showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+              },
+              hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+              }
+            });
+          };
+        }
+      }
     document.querySelectorAll(".modal .close, .btn-close").forEach(btn => {
     btn.addEventListener("click", function() {
       const modal = this.closest(".modal");
@@ -645,6 +851,10 @@
             const modal = document.querySelector('#revokedModal');
             modal.querySelector('.modal-content').classList.remove('modal-show');
             setTimeout(() => { modal.style.display = 'none'; }, 300);
+          } else if (status === "rejected") {
+            const modal = document.querySelector('#revokedModal');
+            modal.querySelector('.modal-content').classList.remove('modal-show');
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
           }
           setTimeout(() => location.reload(), 500);
         } else {
@@ -671,6 +881,11 @@
     document.querySelector('.btn-restore')?.addEventListener('click', function() {
     const email = document.getElementById("r-modal-email").textContent;
     updateEmployerStatus(email, "verified");
+    });
+
+    document.querySelector('.btn-restored')?.addEventListener('click', function() {
+      const email = document.getElementById("rej-modal-email").textContent;
+      updateEmployerStatus(email, "pending");
     });
 
   });
