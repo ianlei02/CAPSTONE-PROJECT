@@ -172,8 +172,8 @@ $data = $result->fetch_assoc();
         </li>
         <li>
           <a href="./referred_users.php">
-            <span class="material-symbols-outlined">how_to_reg</span>
-            <span>Referred Applicants</span>
+            <span class="material-symbols-outlined icon">how_to_reg</span>
+            <span class="label">Referred Applicants</span>
           </a>
         </li>
         <!-- <li>
@@ -254,7 +254,82 @@ $data = $result->fetch_assoc();
           <div class="stat-label">This month</div>
         </div>
       </div>
-      <div class="status-card">
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content-column">
+        <div class="compact-profile-card">
+          <div class="card-header">
+            <div class="progress-circle">
+              <svg class="progress-circle-svg" viewBox="0 0 100 100">
+                <circle class="progress-circle-bg" cx="50" cy="50" r="45"></circle>
+                <circle class="progress-circle-fill"
+                  cx="50" cy="50" r="45"
+                  stroke-dasharray="<?php echo $circumference; ?>"
+                  stroke-dashoffset="<?php echo $offset; ?>"></circle>
+              </svg>
+              <div class="progress-text">
+                <div class="progress-percentage"><?php echo $completion; ?>%</div>
+              </div>
+            </div>
+            <div class="header-content">
+              <div class="card-title">Complete Profile</div>
+              <div class="card-subtitle">Get verified to post jobs</div>
+            </div>
+          </div>
+  
+          <div class="verification-status">
+            <div class="status-icon">!</div>
+            <div class="status-text">Verification required</div>
+          </div>
+  
+          <ul class="benefits-list">
+            <li>Post unlimited job vacancies</li>
+            <li>Receive referred applicants</li>
+          </ul>
+  
+          <button class="action-button">
+            Complete Profile
+          </button>
+        </div>
+        <div class="quick-actions">
+          <h2 class="section-title">
+            <span class="material-symbols-outlined">bolt</span>
+            <span>Quick Actions</span>
+          </h2>
+          <div class="actions-grid">
+            <a class="action-card" href="./employer-post.php">
+              <div class="action-icon">
+                <span class="material-symbols-outlined">add</span>
+              </div>
+              <div class="action-title">Post a Job</div>
+              <div class="action-desc">Create a new job posting</div>
+            </a>
+            <a class="action-card" href="./employer-post.php#jobsPosted">
+              <div class="action-icon">
+                <span class="material-symbols-outlined">people</span>
+              </div>
+              <div class="action-title">Review Applicants</div>
+              <div class="action-desc">Screen and filter candidates</div>
+            </a>
+            <a class="action-card" href="./employer-profile.php">
+              <div class="action-icon">
+                <span class="material-symbols-outlined">apartment</span>
+              </div>
+              <div class="action-title">Edit Company Profile</div>
+              <div class="action-desc">Update company information</div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="calendar-container">
+        <h2 class="section-title">
+          <span class="material-symbols-outlined">calendar_month</span>
+          <span>Calendar</span>
+        </h2>
+        <div id="calendar"></div>
+      </div>
+      <!-- <div class="status-card">
         <div class="progress-circle-container">
           <svg class="progress-circle-svg" viewBox="0 0 100 100">
             <circle class="progress-circle-bg" cx="50" cy="50" r="45"></circle>
@@ -271,46 +346,7 @@ $data = $result->fetch_assoc();
         <div class="verification-section">
           <button class="action-button">Complete Profile</button>
         </div>
-      </div>
-    </div>
-
-    <div class="content-wrapper">
-      <div class="quick-actions">
-        <h2 class="section-title">
-          <span class="material-symbols-outlined">bolt</span>
-          <span>Quick Actions</span>
-        </h2>
-        <div class="actions-grid">
-          <a class="action-card" href="./employer-post.php">
-            <div class="action-icon">
-              <span class="material-symbols-outlined">add</span>
-            </div>
-            <div class="action-title">Post a Job</div>
-            <div class="action-desc">Create a new job posting</div>
-          </a>
-          <a class="action-card" href="./employer-post.php#jobsPosted">
-            <div class="action-icon">
-              <span class="material-symbols-outlined">people</span>
-            </div>
-            <div class="action-title">Review Applicants</div>
-            <div class="action-desc">Screen and filter candidates</div>
-          </a>
-          <a class="action-card" href="./employer-profile.php">
-            <div class="action-icon">
-              <span class="material-symbols-outlined">apartment</span>
-            </div>
-            <div class="action-title">Edit Company Profile</div>
-            <div class="action-desc">Update company information</div>
-          </a>
-        </div>
-      </div>
-      <div class="calendar-container">
-        <h2 class="section-title">
-          <span class="material-symbols-outlined">calendar_month</span>
-          <span>Calendar</span>
-        </h2>
-        <div id="calendar"></div>
-      </div>
+      </div> -->
     </div>
 
 <div id="eventModal" class="modal" style="display:none;">
@@ -362,15 +398,22 @@ $data = $result->fetch_assoc();
     });
   </script>
   <script>
+
   document.addEventListener('DOMContentLoaded', function () {
     const calendarEl = document.getElementById('calendar');
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,listWeek'
-      },
+     // height: 'auto', 
+        // contentHeight: 'auto',
+        // expandRows: true,
+        headerToolbar: {
+          start: 'title',
+          // left: 'prev,next',
+          center: '',
+          end: 'prev,next dayGridMonth,timeGridWeek,listWeek'
+          // right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+          // right: 'dayGridMonth,timeGridWeek,listWeek'
+        },
       initialView: 'dayGridMonth',
       editable: false,
       selectable: false,

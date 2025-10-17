@@ -92,8 +92,8 @@ if (isset($_SESSION['verification_success'])) {
                 <label id="password-rules">?</label>
               </div>
               <div id="password-strength">
-                <div id="strength-bar"></div>
                 <span id="strength-text"></span>
+                <div id="strength-bar"></div>
               </div>
             </div>
             <div class="input-group">
@@ -102,7 +102,7 @@ if (isset($_SESSION['verification_success'])) {
             </div>
             <div class="terms">
               <input type="checkbox" id="terms" required />
-              <label style="margin-top: 8px;" for="terms">I agree to the
+              <label style="margin-top: 8px;" for="">I agree to the
                 <a id="termsLink">Terms and Conditions</a></label>
             </div>
 
