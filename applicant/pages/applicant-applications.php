@@ -97,7 +97,7 @@ $result = $stmt->get_result();
           <div class="dropdown-arrow"></div>
           <div class="dropdown-header">
             <img src="../../<?= htmlspecialchars($row['profile_picture']); ?>" alt="company-logo"
-                style="width:70px;height:70px;object-fit:cover;border-radius:6px;">
+              style="width:70px;height:70px;object-fit:cover;border-radius:6px;">
             <a class="user-info" href="./applicant-profile.php">
               <h3><?= $fullName ?></h3>
               <p>See your profile</p>
@@ -179,57 +179,63 @@ $result = $stmt->get_result();
   </aside>
 
   <main class="main-content">
-  <div class="job-application-status">
-    <div class="application-cards">
-      <?php while ($row = $result->fetch_assoc()): ?>
-        <?php
-          $rawLogoPath = "../../employer/" . htmlspecialchars($row['profile_picture']);
-          $defaultLogo = "../assets/images/profile.png";
+    <div class="job-application-status">
+      <div class="application-cards">
+        <?php if ($result->num_rows > 0): ?>
+          <?php while ($row = $result->fetch_assoc()): ?>
+            <?php
+            $rawLogoPath = "../../employer/" . htmlspecialchars($row['profile_picture']);
+            $defaultLogo = "../assets/images/profile.png";
 
-          if (!empty($row['profile_picture']) && file_exists($rawLogoPath)) {
+            if (!empty($row['profile_picture']) && file_exists($rawLogoPath)) {
               $logoPath = $rawLogoPath;
-          } else {
+            } else {
               $logoPath = $defaultLogo;
-          }
-        ?>
-        <div class="application-item" data-id="<?= $row['application_id']; ?>">
-          <div class="application-info">
-            <div class="application-logo">
-              <img src="<?= $logoPath; ?>" alt="company-logo" onerror="this.onerror=null;this.src='<?= $defaultLogo; ?>';" style="width:70px; height:70px; object-fit:contain; border-radius:6px;">
-            </div>
-            <div class="application-details">
-              <h3 class="application-title"><?= htmlspecialchars($row['job_title']); ?></h3>
-              <div class="application-company"><?= htmlspecialchars($row['company_name']); ?></div>
-              <div class="application-location-date">
-                <span><?= htmlspecialchars($row['location']); ?></span>
-                <span><?= date("m/d/Y", strtotime($row['created_at'])); ?></span>
+            }
+            ?>
+            <div class="application-item" data-id="<?= $row['application_id']; ?>">
+              <div class="application-info">
+                <div class="application-logo">
+                  <img src="<?= $logoPath; ?>" alt="company-logo" onerror="this.onerror=null;this.src='<?= $defaultLogo; ?>';" style="width:70px; height:70px; object-fit:contain; border-radius:6px;">
+                </div>
+                <div class="application-details">
+                  <h3 class="application-title"><?= htmlspecialchars($row['job_title']); ?></h3>
+                  <div class="application-company"><?= htmlspecialchars($row['company_name']); ?></div>
+                  <div class="application-location-date">
+                    <span><?= htmlspecialchars($row['location']); ?></span>
+                    <span><?= date("m/d/Y", strtotime($row['created_at'])); ?></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="status-action">
+                <span class="application-status <?= strtolower($row['status']); ?>">
+                  <?= htmlspecialchars($row['status']); ?>
+                </span>
+                <button
+                  class="view-btn"
+                  data-job-title="<?= htmlspecialchars($row['job_title']); ?>"
+                  data-company="<?= htmlspecialchars($row['company_name']); ?>"
+                  data-location="<?= htmlspecialchars($row['location']); ?>"
+                  data-date="<?= date("m/d/Y", strtotime($row['created_at'])); ?>"
+                  data-referral="<?= htmlspecialchars($row['referral_source']); ?>"
+                  data-status="<?= htmlspecialchars($row['status']); ?>"
+                  data-description="<?= htmlspecialchars($row['description']); ?>"
+                  data-salary="<?= htmlspecialchars($row['salary_range']); ?>"
+                  data-logo="<?= $logoPath; ?>">
+                  View
+                </button>
               </div>
             </div>
+          <?php endwhile; ?>
+        <?php else: ?>
+          <div class="no-applications">
+            <p>You have not applied to any jobs yet.</p>
+            <img src="../../public/svg/job-hunt.svg">
           </div>
-
-          <div class="status-action">
-            <span class="application-status <?= strtolower($row['status']); ?>">
-              <?= htmlspecialchars($row['status']); ?>
-            </span>
-            <button 
-              class="view-btn"
-              data-job-title="<?= htmlspecialchars($row['job_title']); ?>"
-              data-company="<?= htmlspecialchars($row['company_name']); ?>"
-              data-location="<?= htmlspecialchars($row['location']); ?>"
-              data-date="<?= date("m/d/Y", strtotime($row['created_at'])); ?>"
-              data-referral="<?= htmlspecialchars($row['referral_source']); ?>"
-              data-status="<?= htmlspecialchars($row['status']); ?>"
-              data-description="<?= htmlspecialchars($row['description']); ?>"
-              data-salary="<?= htmlspecialchars($row['salary_range']); ?>"
-              data-logo="<?= $logoPath; ?>"
-            >
-              View
-            </button>
-          </div>
-        </div>
-      <?php endwhile; ?>
+        <?php endif; ?>
+      </div>
     </div>
-  </div>
   </main>
 
 
@@ -285,37 +291,39 @@ $result = $stmt->get_result();
   <script src="../js/drop-down.js"></script>
   <script src="../js/dark-mode.js"></script>
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const modal = document.getElementById("applicationModal");
-    const closeBtns = [
-      document.getElementById("applicationModalClose"),
-      document.getElementById("modalCloseTop")
-    ];
+    document.addEventListener("DOMContentLoaded", () => {
+      const modal = document.getElementById("applicationModal");
+      const closeBtns = [
+        document.getElementById("applicationModalClose"),
+        document.getElementById("modalCloseTop")
+      ];
 
-    document.querySelectorAll(".view-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.getElementById("modalJobTitleText").textContent = btn.dataset.jobTitle;
-        document.getElementById("modalCompanyName").textContent = btn.dataset.company;
-        document.getElementById("modalJobLocation").textContent = btn.dataset.location;
-        document.getElementById("modalJobPosted").textContent = btn.dataset.date;
-        document.getElementById("modalSalaryRange").textContent = btn.dataset.salary || "Not specified";
-        document.getElementById("modalApplicationStatus").textContent = btn.dataset.status;
-        document.getElementById("modalAppliedAt").textContent = "Applied on " + btn.dataset.date;
-        document.getElementById("modalApplicationRemarks").textContent = btn.dataset.referral || "No remarks available.";
-        document.getElementById("modalJobDescription").textContent = btn.dataset.description || "No description provided.";
+      document.querySelectorAll(".view-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.getElementById("modalJobTitleText").textContent = btn.dataset.jobTitle;
+          document.getElementById("modalCompanyName").textContent = btn.dataset.company;
+          document.getElementById("modalJobLocation").textContent = btn.dataset.location;
+          document.getElementById("modalJobPosted").textContent = btn.dataset.date;
+          document.getElementById("modalSalaryRange").textContent = btn.dataset.salary || "Not specified";
+          document.getElementById("modalApplicationStatus").textContent = btn.dataset.status;
+          document.getElementById("modalAppliedAt").textContent = "Applied on " + btn.dataset.date;
+          document.getElementById("modalApplicationRemarks").textContent = btn.dataset.referral || "No remarks available.";
+          document.getElementById("modalJobDescription").textContent = btn.dataset.description || "No description provided.";
 
-        const logo = btn.dataset.logo || "../assets/images/profile.png";
-        const logoEl = document.getElementById("modalCompanyLogo");
-        logoEl.src = logo;
-        logoEl.onerror = () => logoEl.src = "../assets/images/profile.png";
+          const logo = btn.dataset.logo || "../assets/images/profile.png";
+          const logoEl = document.getElementById("modalCompanyLogo");
+          logoEl.src = logo;
+          logoEl.onerror = () => logoEl.src = "../assets/images/profile.png";
 
-        modal.style.display = "block";
+          modal.style.display = "block";
+        });
+      });
+
+      closeBtns.forEach(btn => btn.addEventListener("click", () => modal.style.display = "none"));
+      window.addEventListener("click", e => {
+        if (e.target === modal) modal.style.display = "none";
       });
     });
-
-    closeBtns.forEach(btn => btn.addEventListener("click", () => modal.style.display = "none"));
-    window.addEventListener("click", e => { if (e.target === modal) modal.style.display = "none"; });
-  });
   </script>
 
 </body>
