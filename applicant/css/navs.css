@@ -12,7 +12,6 @@
   font-display: swap;
   src: url("../../public/font/Inter/InterVariable.woff2") format("woff2");
 }
-
 :root {
   /* ---------- Primary (blue) palette ---------- */
   --color-blue-50: oklch(0.97 0.014 254.6);
@@ -25,6 +24,8 @@
   --color-blue-700: oklch(0.488 0.243 264.4);
   --color-blue-800: oklch(0.424 0.199 265.6);
   --color-blue-900: oklch(0.379 0.146 265.5);
+  --color-yellow-500: oklch(0.769 0.188 70.1);
+  --color-yellow-50: oklch(0.962 0.059 95.6);
   --primary: blue;
   /* ---------- Backgrounds ---------- */
   --bg: #ffffff;
@@ -453,8 +454,8 @@ body {
     border-radius: 50%;
     object-fit: cover;
   }
-  .user-info{
-    text-decoration: none ;
+  .user-info {
+    text-decoration: none;
   }
   .user-info h3 {
     font-size: 17px;
@@ -478,31 +479,31 @@ body {
     color: var(--text-muted);
     transition: background-color 0.2s;
   }
-  
+
   .dropdown-item:hover {
     background-color: var(--bg-active);
   }
-  
+
   .dropdown-item i {
     font-size: 20px;
     width: 24px;
     text-align: center;
   }
-  
+
   .dropdown-divider {
     height: 1px;
     background-color: #e4e6eb;
     margin: 8px 0;
   }
-  
+
   .logout-item {
     color: #e41e3f;
-  
+
     .icon {
       rotate: 180deg;
     }
   }
-  
+
   .logout-item:hover {
     background-color: #ffe6ea;
   }
@@ -532,7 +533,7 @@ body {
   .navbar {
     padding: 1rem 0.5rem;
   }
-  .navbar h1{
+  .navbar h1 {
     font-size: 1rem;
   }
   .navbar .profile {
@@ -565,9 +566,10 @@ body {
     padding: 0;
     margin: 0;
   }
-  .content-wrapper{
+  .content-wrapper, .content-flex {
     flex-direction: column;
   }
+  
   .job-application-status {
     padding: 0.5rem;
     display: flex;
@@ -579,7 +581,7 @@ body {
       font-size: 1.25rem;
     }
 
-    .application-item{
+    .application-item {
       flex-direction: column;
       padding: 0.5rem;
     }
@@ -588,7 +590,8 @@ body {
       width: 100%;
       justify-content: space-between;
     }
-    .status-action button, .status-action {
+    .status-action button,
+    .status-action {
       scale: 0.8;
     }
   }
@@ -596,23 +599,12 @@ body {
   .statistics-container {
     flex-direction: column;
     height: auto;
-  }
-  .stats-grid {
-    grid-template-columns: 1fr !important;
-    width: 100%;
-    /* flex: 0; */
-    margin: 0;
-  }
-  .profile-completion-container {
-    padding: 0;
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: row !important;
-
-    .progress-circle {
-      width: 100px;
-      height: 100px;
+    .stats-grid {
+      grid-template-columns: 1fr !important;
+      width: 100%;
+      /* flex: 0; */
       margin: 0;
     }
   }
+
 }
