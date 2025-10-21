@@ -9,6 +9,18 @@ if (!isset($_SESSION['user_id'])) {
 
 $employer_id = $_SESSION['user_id'];
 
+$sqll = "SELECT b_status FROM employer_account WHERE employer_id = ?";
+    $stmt = $conn->prepare($sqll);
+    $stmt->bind_param("i", $employer_id);
+    $stmt->execute();
+    $resultt = $stmt->get_result();
+
+    $status = "pending";
+    if ($row = $resultt->fetch_assoc()) {
+      $status = $row['b_status'];
+    }
+    $isVerified = ($status === 'verified');
+
 $sql = "
     SELECT 
         ja.application_id,
@@ -30,6 +42,7 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $employer_id);
 $stmt->execute();
 $result = $stmt->get_result();
+
 
 ?>
 <!DOCTYPE html>

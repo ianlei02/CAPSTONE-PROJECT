@@ -9,6 +9,18 @@ if (!isset($_SESSION['user_id'])) {
 $employer_id = $_SESSION['user_id'];
 $profile_picture_url = '../assets/images/profile.png';
 
+    $sql = "SELECT b_status FROM employer_account WHERE employer_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $employer_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $status = "pending";
+    if ($row = $result->fetch_assoc()) {
+      $status = $row['b_status'];
+    }
+    $isVerified = ($status === 'verified');
+
 if (isset($_SESSION['user_id'])) {
   $employer_id = $_SESSION['user_id'];
   $query = "SELECT profile_picture FROM employer_company_info WHERE employer_id = ?";
