@@ -403,3 +403,25 @@ table {
     scrollbar-width: thin;
   }
 }
+.sidebar-menu a.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.sidebar-menu a.disabled:hover::after {
+  content: "Complete your profile to unlock";
+  position: absolute;
+  left: 110%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #333;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 1;
+  z-index: 10;
+}
