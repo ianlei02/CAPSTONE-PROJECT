@@ -20,6 +20,11 @@ if (isset($_SESSION['verification_success'])) {
   unset($_SESSION['verification_success']);
 }
 
+if (isset($_SESSION['error'])) {
+    echo "<script>alert('" . $_SESSION['error'] . "');</script>";
+    unset($_SESSION['error']); 
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
