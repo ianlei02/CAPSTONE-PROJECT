@@ -26,10 +26,14 @@
     flex: 1;
 
     .stat-card {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
       background: var(--bg);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 0.5rem 2.5rem;
+      padding: 1.5rem 2.5rem;
       box-shadow: var(--shadow-md);
       transition: var(--transition);
       color: var(--text);
@@ -60,8 +64,8 @@
       font-size: var(--font-size-sm);
     }
     .stat-icon {
-      width: 50px;
-      height: 50px;
+      /* width: 50px; */
+      /* height: 50px; */
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -108,7 +112,7 @@
   border-radius: 10px;
   padding: 1rem;
   text-align: center;
-  
+
   .progress-circle-container {
     position: relative;
     width: 100px;
@@ -191,7 +195,7 @@
     background: var(--color-blue-100);
     color: var(--color-blue-500);
   }
-} 
+}
 .quick-actions {
   height: max-content;
   border-radius: var(--radius-lg);
@@ -297,13 +301,13 @@
     background-color: var(--color-blue-700);
   }
   .fc .fc-button-active {
-    background-color: #28a745; /* Green */
+    background-color: #28a745; 
     color: white;
   }
   .fc-header-toolbar {
-    flex-wrap: wrap !important; /* allows buttons to wrap to next line */
-    justify-content: center !important; /* centers them nicely */
-    gap: 0.5rem; /* adds small space between buttons */
+    flex-wrap: wrap !important; 
+    justify-content: center !important;
+    gap: 0.5rem; 
   }
 
   .fc-toolbar-chunk {
@@ -314,7 +318,11 @@
 }
 .compact-profile-card {
   background: var(--bg-muted);
-  background-image: radial-gradient(circle at 50% 80%, var(--bg), var(--bg-muted));
+  background-image: radial-gradient(
+    circle at 50% 80%,
+    var(--bg),
+    var(--bg-muted)
+  );
   /* background-image: radial-gradient(circle at 20% 50%, red, blue); */
   border-radius: var(--radius-md);
   padding: var(--space-4);
@@ -329,33 +337,33 @@
     gap: var(--space-3);
     margin-bottom: var(--space-4);
   }
-  
+
   .progress-circle {
     position: relative;
     width: 60px;
     height: 60px;
     flex-shrink: 0;
   }
-  
+
   .progress-circle-svg {
     width: 100%;
     height: 100%;
     transform: rotate(-90deg);
   }
-  
+
   .progress-circle-bg {
     fill: none;
     stroke: var(--bg-subtle);
     stroke-width: 6;
   }
-  
+
   .progress-circle-fill {
     fill: none;
     stroke: var(--color-blue-500);
     stroke-width: 6;
     stroke-linecap: round;
   }
-  
+
   .progress-text {
     position: absolute;
     top: 50%;
@@ -363,46 +371,45 @@
     transform: translate(-50%, -50%);
     text-align: center;
   }
-  
+
   .progress-percentage {
     font-size: var(--font-size-sm);
     font-weight: var(--fw-bold);
     color: var(--text);
     line-height: 1;
   }
-  
+
   .header-content {
     flex: 1;
   }
-  
+
   .card-title {
     font-size: var(--font-size-base);
     font-weight: var(--fw-semibold);
     color: var(--text);
     margin-bottom: var(--space-1);
   }
-  
+
   .card-subtitle {
     font-size: var(--font-size-xs);
     color: var(--text-muted);
     line-height: 1.3;
   }
-  
+
   .verification-status {
     display: flex;
     align-items: center;
     gap: var(--space-2);
     padding: var(--space-3);
     border-radius: var(--radius-sm);
-    border-left: 3px solid var(--warning);
+    border-left: 3px solid currentColor;
     margin-bottom: var(--space-3);
   }
-  
+
   .status-icon {
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    background: var(--warning);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -410,19 +417,37 @@
     font-size: 10px;
     font-weight: var(--fw-bold);
     flex-shrink: 0;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
-  
+  .verified {
+    background-color: rgba(76, 175, 80, 0.15); /* translucent green */
+    color: #2e7d32;
+  }
+  .pending {
+    background-color: rgba(255, 152, 0, 0.15); /* translucent orange */
+    color: #f57c00;
+  }
+  .revoked,
+  .rejected {
+    background-color: rgba(244, 67, 54, 0.15); /* translucent red */
+    color: #d32f2f;
+  }
+  .unknown {
+    background-color: rgba(158, 158, 158, 0.15);
+    color: #616161;
+  }
   .status-text {
     font-size: var(--font-size-xs);
     font-weight: var(--fw-medium);
     color: black;
   }
-  
+
   .benefits-list {
     list-style: none;
     margin-bottom: var(--space-4);
   }
-  
+
   .benefits-list li {
     display: flex;
     align-items: center;
@@ -431,14 +456,14 @@
     color: var(--text-muted);
     margin-bottom: var(--space-1);
   }
-  
+
   .benefits-list li::before {
     content: "✓";
     color: var(--color-blue-500);
     font-weight: var(--fw-bold);
     font-size: 10px;
   }
-  
+
   .action-button {
     width: 100%;
     background: var(--color-blue-600);
@@ -451,35 +476,37 @@
     cursor: pointer;
     transition: background-color 0.2s ease;
   }
-  
+
   .action-button:hover {
     background: var(--color-blue-700);
   }
 }
 
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  .modal-content {
-    background-color: #fff;
-    margin: 10% auto;
-    padding: 20px 30px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 500px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  }
-  .close-btn {
-    float: right;
-    font-size: 1.4rem;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .close-btn:hover {
-    color: red;
-  }
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+.close-btn {
+  float: right;
+  font-size: 1.4rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.close-btn:hover {
+  color: red;
+}

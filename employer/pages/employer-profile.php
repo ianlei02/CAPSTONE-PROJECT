@@ -61,7 +61,7 @@ $result = $stmt->get_result();
 
 $status = "pending";
 if ($row = $result->fetch_assoc()) {
-    $status = $row['b_status'];
+  $status = $row['b_status'];
 }
 $isVerified = ($status === 'verified');
 
@@ -77,130 +77,75 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
   <title>Company Profile</title>
   <script src="../js/load-saved.js"></script>
   <style>
-  .disabled-link {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  .disabled-link a {
-    pointer-events: none;
-  }
+    .disabled-link {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .disabled-link a {
+      pointer-events: none;
+    }
   </style>
   <link rel="stylesheet" href="../css/navs.css">
   <link rel="stylesheet" href="../css/employer-profile.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
-  <nav class="navbar">
-    <div class="navbar-left">
-      <div class="left-pos">
-        <button class="hamburger">☰</button>
-        <h1>My Profile</h1>
-      </div>
-      <div class="right-pos">
-        <div class="profile">
-          <img
-            src="<?php echo htmlspecialchars($profile_picture_url); ?>"
-            alt="Profile Picture"
-            class="profile-pic"
-            id="profilePicc" style="width: 50px !important;" />
-          <div class="user-name">
-            <h4><?= $fullName ?></h4>
-            <p>Employer</p>
-          </div>
-        </div>
-        <div class="dropdown-menu" id="dropdownMenu">
-          <div class="dropdown-arrow"></div>
-          <div class="dropdown-header">
-            <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
-            <a class="user-info" href="./employer-profile.php">
-              <h3><?= $fullName ?></h3>
-              <p>See your profile</p>
-            </a>
-          </div>
-
-          <div class="dropdown-links">
-            <a href="#" class="dropdown-item">
-              <span class="material-symbols-outlined">settings</span>
-              <span>Account Settings</span>
-            </a>
-            <a onclick="toggleTheme()" class="dropdown-item">
-              <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-              <span id="themeLabel">Dark Mode</span>
-            </a>
-
-            <div class="dropdown-divider"></div>
-            <a href="../../auth/functions/logout.php" class="dropdown-item logout-item">
-              <span class="material-symbols-outlined icon">logout</span>
-              <span>Log Out</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="logo">
-        <img src="../../public/images/pesosmb.png" alt="" />
+        <img src="../../public/smb-images/pesosmb.png" alt="" />
         <h3>PESO</h3>
       </div>
-      <button class="hamburger"><span class="material-symbols-outlined">dock_to_right</span></button>
+      <button class="hamburger"><i data-lucide="panel-left"></i></button>
     </div>
     <div class="sidebar-options">
       <ul class="sidebar-menu">
         <li>
-          <a href="./employer-dashboard.php" class="active">
-            <span class="material-symbols-outlined icon">dashboard</span>
+          <a href="./employer-dashboard.php">
+            <i data-lucide="layout-dashboard" class="icon"></i>
             <span class="label">Dashboard</span>
           </a>
         </li>
-        <?php if ($isVerified): ?>
         <li>
-          <a href="./employer-post.php">
-            <span class="material-symbols-outlined icon">work</span>
-            <span class="label">Post Job</span>
-          </a>
-        </li>
-        <li>
-          <a href="./referred_users.php">
-            <span class="material-symbols-outlined icon">how_to_reg</span>
-            <span class="label">Referred Applicants</span>
-          </a>
-        </li>
-      <?php else: ?>
-        <li class="disabled-link" title="Requires verification">
-          <a href="#" onclick="alert('Your account is not verified yet. Please complete verification to access this feature.'); return false;">
-            <span class="material-symbols-outlined icon">lock</span>
-            <span class="label">Post Job (Locked)</span>
-          </a>
-        </li>
-        <li class="disabled-link" title="Requires verification">
-          <a href="#" onclick="alert('Your account is not verified yet. Please complete verification to access this feature.'); return false;">
-            <span class="material-symbols-outlined icon">lock</span>
-            <span class="label">Referred Applicants (Locked)</span>
-          </a>
-        </li>
-      <?php endif; ?>
-        <li>
-          <a href="employer-profile.php">
-            <span class="material-symbols-outlined icon">id_card</span>
+          <a href="employer-profile.php" class="active">
+            <i data-lucide="id-card" class="icon"></i>
             <span class="label">My Profile</span>
           </a>
         </li>
-        <li>
-          <button onclick="toggleTheme()" class="dark-mode-toggle">
-            <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-            <span id="themeLabel">Dark Mode</span>
-          </button>
-        </li>
+        <?php if ($isVerified): ?>
+          <li>
+            <a href="./employer-post.php">
+              <i data-lucide="briefcase" class="icon"></i>
+              <span class="label">Post Job</span>
+            </a>
+          </li>
+          <li>
+            <a href="./referred_users.php">
+              <i data-lucide="user-check" class="icon"></i>
+              <span class="label">Referred Applicants</span>
+            </a>
+          </li>
+        <?php else: ?>
+          <li class="disabled-link" title="Requires verification">
+            <a href="#" onclick="alert('Your account is not verified yet. Please complete verification to access this feature.'); return false;">
+              <i data-lucide="lock" class="icon"></i>
+              <span class="label">Post Job (Locked)</span>
+            </a>
+          </li>
+          <li class="disabled-link" title="Requires verification">
+            <a href="#" onclick="alert('Your account is not verified yet. Please complete verification to access this feature.'); return false;">
+              <i data-lucide="lock" class="icon"></i>
+              <span class="label">Referred Applicants (Locked)</span>
+            </a>
+          </li>
+        <?php endif; ?>
       </ul>
       <ul>
         <li>
-          <a href="../../auth/functions/logout.php" class='log-out-btn'>
-            <span class="material-symbols-outlined icon">logout</span>
+          <a href="../../auth/functions/logout.php" class="log-out-btn">
+            <i data-lucide="log-out" class="icon"></i>
             <span class="label">Log Out</span>
           </a>
         </li>
@@ -209,6 +154,54 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
   </aside>
 
   <main class="main-content">
+    <nav class="navbar">
+      <div class="navbar-left">
+        <div class="left-pos">
+          <button class="hamburger">☰</button>
+          <h1>My Profile</h1>
+        </div>
+        <div class="right-pos">
+          <div class="profile">
+            <img
+              src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+              alt="Profile Picture"
+              class="profile-pic"
+              id="profilePicc" style="width: 50px !important;" />
+            <div class="user-name">
+              <h4><?= $fullName ?></h4>
+              <p>Employer</p>
+            </div>
+          </div>
+          <div class="dropdown-menu" id="dropdownMenu">
+            <div class="dropdown-arrow"></div>
+            <div class="dropdown-header">
+              <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
+              <a class="user-info" href="./employer-profile.php">
+                <h3><?= $fullName ?></h3>
+                <p>See your profile</p>
+              </a>
+            </div>
+
+            <div class="dropdown-links">
+              <a href="#" class="dropdown-item">
+                <span class="material-symbols-outlined">settings</span>
+                <span>Account Settings</span>
+              </a>
+              <a onclick="toggleTheme()" class="dropdown-item">
+                <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+                <span id="themeLabel">Dark Mode</span>
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a href="../../auth/functions/logout.php" class="dropdown-item logout-item">
+                <span class="material-symbols-outlined icon">logout</span>
+                <span>Log Out</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
     <form action="../Functions/profile_update.php" method="POST" enctype="multipart/form-data" class="profile-container" id="myForm">
       <div class="profile-header">
         <input type="text" id="companyName" name="companyName" placeholder="Put Your Company Name Here">
@@ -243,7 +236,22 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
             </div>
             <div class="info-item">
               <span class="info-label">Industry</span>
-              <input type="text" class="info-value" id="industry" name="industry"></input>
+              <input type="text" class="info-value" id="industry" name="industry" list="industry-list">
+              <datalist id="industry-list">
+                <option value="Education">
+                <option value="Financial Service">
+                <option value="Transportation">
+                <option value="Digital Economy">
+                <option value="Blue Economy">
+                <option value="Creative Economy">
+                <option value="Green Economy">
+                <option value="Housing">
+                <option value="Food & Advanced Manufacturing">
+                <option value="Health">
+                <option value="Agribusiness, Agriculture, Forestry, and Fisheries">
+                <option value="Tourism">
+                <option value="Construction">
+              </datalist>
             </div>
             <div class="info-item">
               <span class="info-label">Company Size</span>
@@ -320,13 +328,13 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
               </div>
               <div class="document-actions">
                 <?php if (!empty($docs['employer_profile'])): ?>
-                    <button class="view-doc" data-doc="<?php echo $baseURL . $docs['employer_profile']; ?>">
-                        <span class="material-symbols-outlined">visibility</span>
-                    </button>
+                  <button class="view-doc" data-doc="<?php echo $baseURL . $docs['employer_profile']; ?>">
+                    <span class="material-symbols-outlined">visibility</span>
+                  </button>
                 <?php else: ?>
-                    <button class="view-doc placeholder" disabled>
-                        <span class="material-symbols-outlined">block</span>
-                    </button>
+                  <button class="view-doc placeholder" disabled>
+                    <span class="material-symbols-outlined">block</span>
+                  </button>
                 <?php endif; ?>
                 <label for="upload-employer-profile" class="update-doc">Upload</label>
                 <input type="file" id="upload-employer-profile" name="upload-employer-profile" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
@@ -340,13 +348,13 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
               </div>
               <div class="document-actions">
                 <?php if (!empty($docs['company_profile'])): ?>
-                    <button class="view-doc" data-doc="<?php echo $baseURL . $docs['company_profile']; ?>">
-                        <span class="material-symbols-outlined">visibility</span>
-                    </button>
+                  <button class="view-doc" data-doc="<?php echo $baseURL . $docs['company_profile']; ?>">
+                    <span class="material-symbols-outlined">visibility</span>
+                  </button>
                 <?php else: ?>
-                    <button class="view-doc placeholder" disabled>
-                        <span class="material-symbols-outlined">block</span>
-                    </button>
+                  <button class="view-doc placeholder" disabled>
+                    <span class="material-symbols-outlined">block</span>
+                  </button>
                 <?php endif; ?>
                 <label for="upload-company-profile" class="update-doc">Upload</label>
                 <input type="file" id="upload-company-profile" name="upload-company-profile" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
@@ -360,13 +368,13 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
               </div>
               <div class="document-actions">
                 <?php if (!empty($docs['bir_certification'])): ?>
-                    <button class="view-doc" data-doc="<?php echo $baseURL . $docs['bir_certification']; ?>">
-                        <span class="material-symbols-outlined">visibility</span>
-                    </button>
+                  <button class="view-doc" data-doc="<?php echo $baseURL . $docs['bir_certification']; ?>">
+                    <span class="material-symbols-outlined">visibility</span>
+                  </button>
                 <?php else: ?>
-                    <button class="view-doc placeholder" disabled>
-                        <span class="material-symbols-outlined">block</span>
-                    </button>
+                  <button class="view-doc placeholder" disabled>
+                    <span class="material-symbols-outlined">block</span>
+                  </button>
                 <?php endif; ?>
                 <label for="upload-bir" class="update-doc">Upload</label>
                 <input type="file" id="upload-bir" name="upload-bir" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
@@ -380,13 +388,13 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
               </div>
               <div class="document-actions">
                 <?php if (!empty($docs['business_permit'])): ?>
-                    <button class="view-doc" data-doc="<?php echo $baseURL . $docs['business_permit']; ?>">
-                        <span class="material-symbols-outlined">visibility</span>
-                    </button>
+                  <button class="view-doc" data-doc="<?php echo $baseURL . $docs['business_permit']; ?>">
+                    <span class="material-symbols-outlined">visibility</span>
+                  </button>
                 <?php else: ?>
-                    <button class="view-doc placeholder" disabled>
-                        <span class="material-symbols-outlined">block</span>
-                    </button>
+                  <button class="view-doc placeholder" disabled>
+                    <span class="material-symbols-outlined">block</span>
+                  </button>
                 <?php endif; ?>
                 <label for="upload-business-permit" class="update-doc">Upload</label>
                 <input type="file" id="upload-business-permit" name="upload-business-permit" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
@@ -400,13 +408,13 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
               </div>
               <div class="document-actions">
                 <?php if (!empty($docs['dole_certification'])): ?>
-                    <button class="view-doc" data-doc="<?php echo $baseURL . $docs['dole_certification']; ?>">
-                        <span class="material-symbols-outlined">visibility</span>
-                    </button>
+                  <button class="view-doc" data-doc="<?php echo $baseURL . $docs['dole_certification']; ?>">
+                    <span class="material-symbols-outlined">visibility</span>
+                  </button>
                 <?php else: ?>
-                    <button class="view-doc placeholder" disabled>
-                        <span class="material-symbols-outlined">block</span>
-                    </button>
+                  <button class="view-doc placeholder" disabled>
+                    <span class="material-symbols-outlined">block</span>
+                  </button>
                 <?php endif; ?>
                 <label for="upload-dole" class="update-doc">Upload</label>
                 <input type="file" id="upload-dole" name="upload-dole" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
@@ -420,13 +428,13 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
               </div>
               <div class="document-actions">
                 <?php if (!empty($docs['migrant_certification'])): ?>
-                    <button class="view-doc" data-doc="<?php echo $baseURL . $docs['migrant_certification']; ?>">
-                        <span class="material-symbols-outlined">visibility</span>
-                    </button>
+                  <button class="view-doc" data-doc="<?php echo $baseURL . $docs['migrant_certification']; ?>">
+                    <span class="material-symbols-outlined">visibility</span>
+                  </button>
                 <?php else: ?>
-                    <button class="view-doc placeholder" disabled>
-                        <span class="material-symbols-outlined">block</span>
-                    </button>
+                  <button class="view-doc placeholder" disabled>
+                    <span class="material-symbols-outlined">block</span>
+                  </button>
                 <?php endif; ?>
                 <label for="upload-migrant" class="update-doc">Upload</label>
                 <input type="file" id="upload-migrant" name="upload-migrant" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
@@ -440,13 +448,13 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
               </div>
               <div class="document-actions">
                 <?php if (!empty($docs['philjob_certification'])): ?>
-                    <button class="view-doc" data-doc="<?php echo $baseURL . $docs['philjob_certification']; ?>">
-                        <span class="material-symbols-outlined">visibility</span>
-                    </button>
+                  <button class="view-doc" data-doc="<?php echo $baseURL . $docs['philjob_certification']; ?>">
+                    <span class="material-symbols-outlined">visibility</span>
+                  </button>
                 <?php else: ?>
-                    <button class="view-doc placeholder" disabled>
-                        <span class="material-symbols-outlined">block</span>
-                    </button>
+                  <button class="view-doc placeholder" disabled>
+                    <span class="material-symbols-outlined">block</span>
+                  </button>
                 <?php endif; ?>
                 <label for="upload-philjob" class="update-doc">Upload</label>
                 <input type="file" id="upload-philjob" name="upload-philjob" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
@@ -472,6 +480,8 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
       <img id="docImage" src="" style="max-width:50%; height:auto; display:none;" />
     </div>
   </div>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../js/responsive.js" defer></script>
   <script>
     const accountData = <?php echo $accountJson; ?>;
 
@@ -548,11 +558,6 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
       });
     });
   </script>
-  <script src="../js/responsive.js"></script>
-  <script src="../js/dark-mode.js"></script>
-  <script src="../js/drop-down.js"></script>
-
-
   <script>
     const editBtn = document.getElementById('editProfileBtn');
     const saveBtn = document.getElementById('saveProfileBtn');
@@ -564,7 +569,7 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
     });
 
     editBtn.addEventListener('click', () => {
-      const isDisabled = inputs[0].disabled; 
+      const isDisabled = inputs[0].disabled;
       if (isDisabled) {
         inputs.forEach(input => input.disabled = false);
         editBtn.textContent = "Disable";

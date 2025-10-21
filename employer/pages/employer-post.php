@@ -37,7 +37,7 @@ if (isset($_GET['action'])) {
   $action = $_GET['action'];
   $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-   if ($action === 'editJob') {
+  if ($action === 'editJob') {
     $stmt = $conn->prepare("SELECT * FROM job_postings WHERE job_id = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -48,11 +48,11 @@ if (isset($_GET['action'])) {
       exit;
     }
 
-     $salaryParts = explode('-', $job['salary_range'] ?? '');
+    $salaryParts = explode('-', $job['salary_range'] ?? '');
     $salaryMin = isset($salaryParts[0]) ? trim(str_replace('₱', '', $salaryParts[0])) : '';
     $salaryMax = isset($salaryParts[1]) ? trim(str_replace('₱', '', $salaryParts[1])) : '';
 
-    ?>
+?>
     <form id="editJobForm">
       <div class="form-row">
         <div class="form-group">
@@ -116,7 +116,7 @@ if (isset($_GET['action'])) {
         <textarea name="description" id="description" rows="5"><?= htmlspecialchars($job['description']) ?></textarea>
       </div>
     </form>
-    <?php
+<?php
     exit;
   }
 
@@ -153,25 +153,25 @@ if (isset($_GET['action'])) {
     exit;
   }
   if ($action === 'deleteJob') {
-      $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+    $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-      if (!$id) {
-        echo "Invalid job ID";
-        exit;
-      }
-
-      $stmt = $conn->prepare("DELETE FROM job_postings WHERE job_id = ?");
-      $stmt->bind_param("i", $id);
-
-      if ($stmt->execute()) {
-        echo "Job deleted successfully";
-      } else {
-        echo "Error deleting job: " . $stmt->error;
-      }
-
+    if (!$id) {
+      echo "Invalid job ID";
       exit;
     }
+
+    $stmt = $conn->prepare("DELETE FROM job_postings WHERE job_id = ?");
+    $stmt->bind_param("i", $id);
+
+    if ($stmt->execute()) {
+      echo "Job deleted successfully";
+    } else {
+      echo "Error deleting job: " . $stmt->error;
+    }
+
+    exit;
   }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" data-theme="light" data-state="expanded">
@@ -183,104 +183,64 @@ if (isset($_GET['action'])) {
   <script src="../js/load-saved.js"></script>
   <link rel="stylesheet" href="../css/navs.css">
   <link rel="stylesheet" href="../css/employer-post.css">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
-  <nav class="navbar">
-    <div class="navbar-left">
-      <div class="left-pos">
-        <button class="hamburger">☰</button>
-        <h1>Job Posting</h1>
-      </div>
-      <div class="right-pos">
-        <div class="profile">
-          <img
-            src="<?php echo htmlspecialchars($profile_picture_url); ?>"
-            alt="Profile Picture"
-            class="profile-pic"
-            id="profilePicc" style="width: 50px !important;" />
-          <div class="user-name">
-            <h4><?= $fullName ?></h4>
-            <p>Employer</p>
-          </div>
-        </div>
-        <div class="dropdown-menu" id="dropdownMenu">
-          <div class="dropdown-arrow"></div>
-          <div class="dropdown-header">
-            <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
-            <a class="user-info" href="./employer-profile.php">
-              <h3><?= $fullName ?></h3>
-              <p>See your profile</p>
-            </a>
-          </div>
-
-          <div class="dropdown-links">
-            <a href="#" class="dropdown-item">
-              <span class="material-symbols-outlined">settings</span>
-              <span>Account Settings</span>
-            </a>
-            <a onclick="toggleTheme()" class="dropdown-item">
-              <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-              <span id="themeLabel">Dark Mode</span>
-            </a>
-
-            <div class="dropdown-divider"></div>
-            <a href="../../auth/functions/logout.php" class="dropdown-item logout-item">
-              <span class="material-symbols-outlined icon">logout</span>
-              <span>Log Out</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="logo">
-        <img src="../../public/images/pesosmb.png" alt="" />
+        <img src="../../public/smb-images/pesosmb.png" alt="" />
         <h3>PESO</h3>
       </div>
-      <button class="hamburger"><span class="material-symbols-outlined">dock_to_right</span></button>
+      <button class="hamburger"><i data-lucide="panel-left"></i></button>
     </div>
     <div class="sidebar-options">
       <ul class="sidebar-menu">
         <li>
           <a href="./employer-dashboard.php">
-            <span class="material-symbols-outlined icon">dashboard</span>
+            <i data-lucide="layout-dashboard" class="icon"></i>
             <span class="label">Dashboard</span>
           </a>
         </li>
         <li>
-          <a href="./employer-post.php" class="active">
-            <span class="material-symbols-outlined icon">work</span>
-            <span class="label">Post Job</span>
-          </a>
-        </li>
-        <!-- <li>
-          <a href="./employer-applications.php">
-            <span class="material-symbols-outlined icon">people</span>
-            <span class="label">Job Applications</span>
-          </a>
-        </li> -->
-        <li>
           <a href="employer-profile.php">
-            <span class="material-symbols-outlined icon">id_card</span>
+            <i data-lucide="id-card" class="icon"></i>
             <span class="label">My Profile</span>
           </a>
         </li>
-        <li>
-          <button onclick="toggleTheme()" class="dark-mode-toggle">
-            <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-            <span id="themeLabel">Dark Mode</span>
-          </button>
-        </li>
+        <?php if ($isVerified): ?>
+          <li>
+            <a href="./employer-post.php"  class="active">
+              <i data-lucide="briefcase" class="icon"></i>
+              <span class="label">Post Job</span>
+            </a>
+          </li>
+          <li>
+            <a href="./referred_users.php">
+              <i data-lucide="user-check" class="icon"></i>
+              <span class="label">Referred Applicants</span>
+            </a>
+          </li>
+        <?php else: ?>
+          <li class="disabled-link" title="Requires verification">
+            <a href="#" onclick="alert('Your account is not verified yet. Please complete verification to access this feature.'); return false;">
+              <i data-lucide="lock" class="icon"></i>
+              <span class="label">Post Job (Locked)</span>
+            </a>
+          </li>
+          <li class="disabled-link" title="Requires verification">
+            <a href="#" onclick="alert('Your account is not verified yet. Please complete verification to access this feature.'); return false;">
+              <i data-lucide="lock" class="icon"></i>
+              <span class="label">Referred Applicants (Locked)</span>
+            </a>
+          </li>
+        <?php endif; ?>
       </ul>
       <ul>
         <li>
-          <a href="../../auth/functions/logout.php" class='log-out-btn'>
-            <span class="material-symbols-outlined icon">logout</span>
+          <a href="../../auth/functions/logout.php" class="log-out-btn">
+            <i data-lucide="log-out" class="icon"></i>
             <span class="label">Log Out</span>
           </a>
         </li>
@@ -289,6 +249,54 @@ if (isset($_GET['action'])) {
   </aside>
 
   <main class="main-content">
+    <nav class="navbar">
+      <div class="navbar-left">
+        <div class="left-pos">
+          <button class="hamburger">☰</button>
+          <h1>Job Posting</h1>
+        </div>
+        <div class="right-pos">
+          <div class="profile">
+            <img
+              src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+              alt="Profile Picture"
+              class="profile-pic"
+              id="profilePicc" style="width: 50px !important;" />
+            <div class="user-name">
+              <h4><?= $fullName ?></h4>
+              <p>Employer</p>
+            </div>
+          </div>
+          <div class="dropdown-menu" id="dropdownMenu">
+            <div class="dropdown-arrow"></div>
+            <div class="dropdown-header">
+              <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
+              <a class="user-info" href="./employer-profile.php">
+                <h3><?= $fullName ?></h3>
+                <p>See your profile</p>
+              </a>
+            </div>
+
+            <div class="dropdown-links">
+              <a href="#" class="dropdown-item">
+                <span class="material-symbols-outlined">settings</span>
+                <span>Account Settings</span>
+              </a>
+              <a onclick="toggleTheme()" class="dropdown-item">
+                <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+                <span id="themeLabel">Dark Mode</span>
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a href="../../auth/functions/logout.php" class="dropdown-item logout-item">
+                <span class="material-symbols-outlined icon">logout</span>
+                <span>Log Out</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
     <section class="job-posting-section card">
       <h2>Post a New Job</h2>
       <form id="jobPostForm" class="job-form" method="POST" action="../Functions/job_post.php">
@@ -420,10 +428,8 @@ if (isset($_GET['action'])) {
     </section>
   </main>
 
-  <script src="../js/responsive.js"></script>
-  <script src="../js/dark-mode.js"></script>
-  <script src="../js/drop-down.js"></script>
-
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../js/responsive.js" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -482,57 +488,57 @@ if (isset($_GET['action'])) {
     }
 
     function editJob(jobId) {
-    fetch(`employer-post.php?action=editJob&id=${jobId}`)
-      .then(res => res.text())
-      .then(data => {
-        Swal.fire({
-          title: 'Edit Job',
-          html: data,
-          showCancelButton: true,
-          confirmButtonText: 'Save',
-          focusConfirm: false,
-          preConfirm: () => {
-            const form = document.getElementById('editJobForm');
-            const formData = new FormData(form);
-            return fetch(`employer-post.php?action=saveJob&id=${jobId}`, {
-                method: 'POST',
-                body: formData
-              })
-              .then(res => res.text())
-              .then(result => {
-                if (result.includes('successfully')) {
-                  Swal.fire('Updated!', 'Job updated successfully.', 'success');
-                  setTimeout(() => location.reload(), 1000);
-                } else {
-                  Swal.showValidationMessage(`Update failed: ${result}`);
-                }
-              })
-              .catch(err => {
-                Swal.showValidationMessage(`Request failed: ${err}`);
-              });
-          }
+      fetch(`employer-post.php?action=editJob&id=${jobId}`)
+        .then(res => res.text())
+        .then(data => {
+          Swal.fire({
+            title: 'Edit Job',
+            html: data,
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            focusConfirm: false,
+            preConfirm: () => {
+              const form = document.getElementById('editJobForm');
+              const formData = new FormData(form);
+              return fetch(`employer-post.php?action=saveJob&id=${jobId}`, {
+                  method: 'POST',
+                  body: formData
+                })
+                .then(res => res.text())
+                .then(result => {
+                  if (result.includes('successfully')) {
+                    Swal.fire('Updated!', 'Job updated successfully.', 'success');
+                    setTimeout(() => location.reload(), 1000);
+                  } else {
+                    Swal.showValidationMessage(`Update failed: ${result}`);
+                  }
+                })
+                .catch(err => {
+                  Swal.showValidationMessage(`Request failed: ${err}`);
+                });
+            }
+          });
         });
-      });
     }
 
     function deleteJob(jobId) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "This will permanently delete the job posting.",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!'
-    }).then(result => {
-      if (result.isConfirmed) {
-        fetch(`employer-post.php?action=deleteJob&id=${jobId}`)
-          .then(res => res.text())
-          .then(() => {
-            Swal.fire('Deleted!', 'Job deleted.', 'success');
-            document.getElementById(`jobRow${jobId}`).remove();
-          });
-      }
-    });
-  }
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "This will permanently delete the job posting.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!'
+      }).then(result => {
+        if (result.isConfirmed) {
+          fetch(`employer-post.php?action=deleteJob&id=${jobId}`)
+            .then(res => res.text())
+            .then(() => {
+              Swal.fire('Deleted!', 'Job deleted.', 'success');
+              document.getElementById(`jobRow${jobId}`).remove();
+            });
+        }
+      });
+    }
   </script>
 </body>
 

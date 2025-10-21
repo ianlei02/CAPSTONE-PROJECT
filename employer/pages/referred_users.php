@@ -41,7 +41,6 @@ $result = $stmt->get_result();
     <script src="../js/load-saved.js"></script>
     <link rel="stylesheet" href="../css/navs.css">
     <link rel="stylesheet" href="../css/dss-results.css">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
 <body>
@@ -64,62 +63,71 @@ $result = $stmt->get_result();
             </div>
         </div>
     </nav>
-
     <aside class="sidebar">
         <div class="sidebar-logo">
             <div class="logo">
-                <img src="../../public/images/pesosmb.png" alt="" />
+                <img src="../../public/smb-images/pesosmb.png" alt="" />
                 <h3>PESO</h3>
             </div>
-            <button class="hamburger"><span class="material-symbols-outlined">dock_to_right</span></button>
+            <button class="hamburger"><i data-lucide="panel-left"></i></button>
         </div>
         <div class="sidebar-options">
             <ul class="sidebar-menu">
                 <li>
-                    <a href="./employer-dashboard.php" class="active">
-                        <span class="material-symbols-outlined icon">dashboard</span>
+                    <a href="./employer-dashboard.php">
+                        <i data-lucide="layout-dashboard" class="icon"></i>
                         <span class="label">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="./employer-post.php">
-                        <span class="material-symbols-outlined icon">work</span>
-                        <span class="label">Post Job</span>
-                    </a>
-                </li>
-                <!-- <li>
-                    <a href="./employer-applications.php">
-                        <span class="material-symbols-outlined icon">people</span>
-                        <span class="label">Job Applications</span>
-                    </a>
-                </li> -->
-                <li>
                     <a href="employer-profile.php">
-                        <span class="material-symbols-outlined icon">id_card</span>
+                        <i data-lucide="id-card" class="icon"></i>
                         <span class="label">My Profile</span>
                     </a>
                 </li>
-                <li>
-                    <button onclick="toggleTheme()" class="dark-mode-toggle">
-                        <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-                        <span id="themeLabel">Dark Mode</span>
-                    </button>
-                </li>
+                <?php if ($isVerified): ?>
+                    <li>
+                        <a href="./employer-post.php">
+                            <i data-lucide="briefcase" class="icon"></i>
+                            <span class="label">Post Job</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./referred_users.php" class="active">
+                            <i data-lucide="user-check" class="icon"></i>
+                            <span class="label">Referred Applicants</span>
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li class="disabled-link" title="Requires verification">
+                        <a href="#" onclick="alert('Your account is not verified yet. Please complete verification to access this feature.'); return false;">
+                            <i data-lucide="lock" class="icon"></i>
+                            <span class="label">Post Job (Locked)</span>
+                        </a>
+                    </li>
+                    <li class="disabled-link" title="Requires verification">
+                        <a href="#" onclick="alert('Your account is not verified yet. Please complete verification to access this feature.'); return false;">
+                            <i data-lucide="lock" class="icon"></i>
+                            <span class="label">Referred Applicants (Locked)</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
             </ul>
             <ul>
                 <li>
-                    <a href="../../auth/functions/logout.php" class='log-out-btn'>
-                        <span class="material-symbols-outlined icon">logout</span>
+                    <a href="../../auth/functions/logout.php" class="log-out-btn">
+                        <i data-lucide="log-out" class="icon"></i>
                         <span class="label">Log Out</span>
                     </a>
                 </li>
             </ul>
         </div>
     </aside>
+
     <main class="main-content">
         <h2><span class="material-symbols-outlined">how_to_reg</span> Referred Applicants</h2>
         <div class="table-container">
-            
+
             <table id="referredTable" class="styled-table display">
                 <thead>
                     <tr>
@@ -143,7 +151,7 @@ $result = $stmt->get_result();
                                         style="padding:5px 10px; background:#007bff; color:#fff; border:none; border-radius:5px; cursor:pointer;">
                                         View Profile
                                     </button>
-                                <!-- </td>
+                                    <!-- </td>
                                 <td> -->
                                     <button
                                         type="button"
@@ -153,7 +161,7 @@ $result = $stmt->get_result();
                                         data-status="rejected">
                                         Reject
                                     </button>
-        
+
                                     <button
                                         type="button"
                                         class="btn btn-primary btn-sm action-btn interview"
@@ -187,9 +195,10 @@ $result = $stmt->get_result();
                 </div>
             </div>
         </div>
-       
-    </main>
 
+    </main>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/responsive.js" defer></script>
     <script src="../assets/JS_JQUERY/jquery-3.7.1.min.js"></script>
     <script src="../assets/library/datatable/dataTables.js"></script>
     <script>
