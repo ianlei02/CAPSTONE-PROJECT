@@ -16,71 +16,12 @@ require_once '../Functions/getName.php';
   <link rel="stylesheet" href="../css/navs.css">
   <link rel="stylesheet" href="../css/profile-completion.css">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-  <!-- <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script> -->
+
 
 
 </head>
 
 <body>
-  <nav class="navbar">
-    <div class="navbar-left">
-      <div class="left-pos" style="display: flex; width: auto; height: auto">
-        <button class="hamburger">☰</button>
-        <h1>Dashboard</h1>
-      </div>
-
-      <div class="right-pos">
-
-        <div class="profile">
-          <img
-            src="<?php echo htmlspecialchars($profile_picture_url); ?>"
-            alt="Profile Picture"
-            class="profile-pic"
-            id="profilePicc" style="width: 50px !important;" />
-          <div class="user-name">
-            <h4><?= $fullName ?></h4>
-            <p>Applicant</p>
-          </div>
-        </div>
-
-        <div class="dropdown-menu" id="dropdownMenu">
-          <div class="dropdown-arrow"></div>
-          <div class="dropdown-header">
-            <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
-            <a class="user-info" href="./applicant-profile.php">
-              <h3><?= $fullName ?></h3>
-              <p>See your profile</p>
-            </a>
-          </div>
-
-          <div class="dropdown-links">
-            <a href="./account-settings.php" class="dropdown-item">
-              <span class="material-symbols-outlined">settings</span>
-              <span>Account Settings</span>
-            </a>
-            <a onclick="toggleTheme()" class="dropdown-item">
-              <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-              <span id="themeLabel">Dark Mode</span>
-            </a>
-
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item logout-item">
-              <span class="material-symbols-outlined icon">logout</span>
-              <span>Log Out</span>
-            </a>
-          </div>
-        </div>
-        <div id="notifBtn">
-          <span id="notifIcon" class="material-symbols-outlined">notifications </span>
-          <span id="notifCount">0</span>
-          <div id="notifList">
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </nav>
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="logo">
@@ -98,23 +39,24 @@ require_once '../Functions/getName.php';
           </a>
         </li>
         <li>
-          <a href="./applicant-applications.php">
-            <span class="material-symbols-outlined icon">work</span>
-            <span class="label">My Applications</span>
-          </a>
-        </li>
-        <li>
-          <a href="./applicant-job-search.php">
-            <span class="material-symbols-outlined icon">search</span>
-            <span class="label">Job Search</span>
-          </a>
-        </li>
-        <li>
           <a href="./applicant-profile.php">
             <i data-lucide="user" class="icon"></i>
             <span class="label">My Profile</span>
           </a>
         </li>
+        <li>
+          <a href="./applicant-applications.php">
+            <i data-lucide="briefcase-business" class="icon"></i>
+            <span class="label">My Applications</span>
+          </a>
+        </li>
+        <li>
+          <a href="./applicant-job-search.php">
+            <i data-lucide="search" class="icon"></i>
+            <span class="label">Job Search</span>
+          </a>
+        </li>
+
       </ul>
       <ul>
         <li>
@@ -127,17 +69,72 @@ require_once '../Functions/getName.php';
     </div>
   </aside>
   <main class="main-content">
-    <!-- <div class="main-header">
-      <h1>Welcome, Applicant!</h1>
-    </div> -->
+    <nav class="navbar">
+      <div class="navbar-left">
+        <div class="left-pos" style="display: flex; width: auto; height: auto">
+          <button class="hamburger">☰</button>
+          <h1>Dashboard</h1>
+        </div>
+
+        <div class="right-pos">
+
+          <div class="profile">
+            <img
+              src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+              alt="Profile Picture"
+              class="profile-pic"
+              id="profilePicc" style="width: 50px !important;" />
+            <div class="user-name">
+              <h4><?= $fullName ?></h4>
+              <p>Applicant</p>
+            </div>
+          </div>
+
+          <div class="dropdown-menu" id="dropdownMenu">
+            <div class="dropdown-arrow"></div>
+            <div class="dropdown-header">
+              <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
+              <a class="user-info" href="./applicant-profile.php">
+                <h3><?= $fullName ?></h3>
+                <p>See your profile</p>
+              </a>
+            </div>
+
+            <div class="dropdown-links">
+              <a href="./account-settings.php" class="dropdown-item">
+                <span class="material-symbols-outlined">settings</span>
+                <span>Account Settings</span>
+              </a>
+              <a onclick="toggleTheme()" class="dropdown-item">
+                <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+                <span id="themeLabel">Dark Mode</span>
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item logout-item">
+                <span class="material-symbols-outlined icon">logout</span>
+                <span>Log Out</span>
+              </a>
+            </div>
+          </div>
+          <div id="notifBtn">
+            <i id="notifIcon" data-lucide="bell"></i>
+            <span id="notifCount">0</span>
+            <div id="notifList">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </nav>
     <div class="main-header">
       <h3>Welcome, <?= $fullName ?>!</h1>
-        <a class="complete-profile-warning" href="./applicant-profile.php">
+        <!-- <a class="complete-profile-warning" href="./applicant-profile.php">
           <span>Before you can apply for a job, you should set up your profile first.</span>
           <span class="material-symbols-outlined">
             double_arrow
           </span>
-        </a>
+        </a> -->
     </div>
     <div class="statistics-container ">
       <div class="stats-grid">
@@ -145,7 +142,7 @@ require_once '../Functions/getName.php';
           <div class="stat-header">
             <h3 class="stat-title">Applications</h3>
             <div class="stat-icon bg-primary-light">
-              <span class="material-symbols-outlined">demography</span>
+              <i data-lucide="users"></i>
             </div>
           </div>
           <div class="stat-value">10</div>
@@ -156,9 +153,7 @@ require_once '../Functions/getName.php';
           <div class="stat-header">
             <h3 class="stat-title">Interviews</h3>
             <div class="stat-icon bg-purple-light">
-              <span class="material-symbols-outlined">
-                frame_person_mic
-              </span>
+              <i data-lucide="mic"></i>
             </div>
           </div>
           <div class="stat-value">2</div>
@@ -169,9 +164,7 @@ require_once '../Functions/getName.php';
           <div class="stat-header">
             <h3 class="stat-title">Referred</h3>
             <div class="stat-icon bg-warning-light">
-              <span class="material-symbols-outlined">
-                pending_actions
-              </span>
+              <i data-lucide="send"></i>
             </div>
           </div>
           <div class="stat-value">4</div>
@@ -182,13 +175,11 @@ require_once '../Functions/getName.php';
           <div class="stat-header">
             <h3 class="stat-title">Hired</h3>
             <div class="stat-icon bg-success-light">
-              <span class="material-symbols-outlined">
-                check_circle
-              </span>
+              <i data-lucide="check-circle"></i>
             </div>
           </div>
           <div class="stat-value">1</div>
-          <div class="stat-label">7 high priority</div>
+          <div class="stat-label">This month</div>
         </div>
       </div>
     </div>
@@ -239,8 +230,8 @@ require_once '../Functions/getName.php';
           </div>
         </div>
         <div class="quick-actions">
-          <h2 class="section-title">
-            <span class="material-symbols-outlined">bolt</span>
+          <h2 class="section-title" style="display:flex; align-items:center; gap:4px;">
+            <span><i data-lucide="zap"></i></span>
             <span>Quick Actions</span>
           </h2>
 
@@ -248,7 +239,7 @@ require_once '../Functions/getName.php';
             <a class="action-card"
               href="./applicant-job-search.php">
               <div class="action-icon">
-                <span class="material-symbols-outlined">add</span>
+                <span data-lucide="plus"></span>
               </div>
               <div class="action-title">Apply for a Job</div>
             </a>
@@ -256,29 +247,25 @@ require_once '../Functions/getName.php';
             <a class="action-card"
               href="./applicant-applications.php">
               <div class="action-icon">
-                <span class="material-symbols-outlined">people</span>
+                <span data-lucide="file-user"></span>
               </div>
               <div class="action-title">View Applications</div>
             </a>
 
             <a class="action-card" href="./applicant-profile.php">
               <div class="action-icon">
-                <span class="material-symbols-outlined">id_card</span>
+                <span data-lucide="user-pen"></span>
               </div>
               <div class="action-title">Edit My Profile</div>
             </a>
           </div>
         </div>
-
       </div>
       <div class="job-application-status">
         <div class="job-application-header">
           <h2>Recent Job Applications</h2>
           <a href="./applicant-applications.php" class="view-all">
-            <!-- <span>See all</span> -->
-            <span class="material-symbols-outlined">
-              open_in_new
-            </span>
+            <i data-lucide="external-link"></i>
           </a>
         </div>
         <div class="application-cards">
@@ -364,51 +351,21 @@ require_once '../Functions/getName.php';
     <!-- <div id="calendar"></div> -->
 
   </main>
-  <script src="../js/responsive.js"></script>
-  <script src="../js/drop-down.js"></script>
-  <script src="../js/dark-mode.js"></script>
+  <!-- <script src="https://unpkg.com/lucide@latest"></script> -->
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-
-  <script>
-    lucide.createIcons();
-  </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const statisticCards = document.querySelectorAll(".statistic-card p");
-
-      statisticCards.forEach(card => {
-        const targetNumber = parseInt(card.textContent, 10);
-        let currentNumber = 0;
-
-        const increment = Math.ceil(targetNumber / 100);
-        const interval = setInterval(() => {
-          currentNumber += increment;
-          if (currentNumber >= targetNumber) {
-            currentNumber = targetNumber;
-            clearInterval(interval);
-          }
-          card.textContent = currentNumber;
-        }, 20);
-      });
-    });
-  </script>
+  <script src="../js/responsive.js" defer></script>
   <script>
     const notifBtn = document.getElementById('notifBtn');
     const notifList = document.getElementById('notifList');
     const notifCount = document.getElementById('notifCount');
-
     let hasOpened = false;
-
     notifBtn.addEventListener('click', () => {
       const isHidden = notifList.style.display === 'none';
       notifList.style.display = isHidden ? 'block' : 'none';
-
       if (isHidden && !hasOpened) {
         hasOpened = true;
-
         notifCount.textContent = 0;
         notifCount.style.color = "gray";
-
         fetch('../Functions/seen.php')
           .then(() => {
             fetchNotifications();

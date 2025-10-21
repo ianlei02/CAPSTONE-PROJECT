@@ -25,113 +25,102 @@ require_once '../Functions/getinfo.php';
 </head>
 
 <body>
-  <nav class="navbar">
-    <div class="navbar-left">
-      <div class="left-pos" style="display: flex; width: auto; height: auto">
-        <button class="hamburger">☰</button>
-        <h1>Applicant Profile</h1>
-      </div>
-      <div class="right-pos">
-        <div class="profile">
-          <img
-            src="<?php echo htmlspecialchars($profile_picture_url); ?>"
-            alt="Profile Picture"
-            class="profile-pic"
-            id="profilePicc" style="width: 50px !important;" />
-          <div class="user-name">
-            <h4><?= $fullName ?></h4>
-            <p>Applicant</p>
-          </div>
-        </div>
-
-        <div class="dropdown-menu" id="dropdownMenu">
-          <div class="dropdown-arrow"></div>
-          <div class="dropdown-header">
-            <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
-            <a class="user-info" href="./applicant-profile.php">
-              <h3><?= $fullName ?></h3>
-              <p>See your profile</p>
-            </a>
-          </div>
-
-          <div class="dropdown-links">
-            <a href="./account-settings.php" class="dropdown-item">
-              <span class="material-symbols-outlined">settings</span>
-              <span>Account Settings</span>
-            </a>
-            <a onclick="toggleTheme()" class="dropdown-item">
-              <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-              <span id="themeLabel">Dark Mode</span>
-            </a>
-
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item logout-item">
-              <span class="material-symbols-outlined icon">logout</span>
-              <span>Log Out</span>
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </nav>
-
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="logo">
         <img src="../../public/images/pesosmb.png" alt="" />
         <h3>PESO</h3>
       </div>
-      <button class="hamburger"><span class="material-symbols-outlined">dock_to_right</span></button>
+      <button class="hamburger"><i data-lucide="panel-left"></i></button>
     </div>
     <div class="sidebar-options">
       <ul class="sidebar-menu">
         <li>
-          <a href="./applicant-dashboard.php"
-            class="<?php echo basename($_SERVER['PHP_SELF']) == 'applicant-dashboard.php' ? 'active' : ''; ?>">
-            <span class="material-symbols-outlined icon">dashboard</span>
+          <a href="./applicant-dashboard.php">
+            <i data-lucide="home" class="icon"></i>
             <span class="label">Dashboard</span>
           </a>
         </li>
-
         <li>
-          <a href="<?php echo $progress == 100 ? './applicant-applications.php' : '#'; ?>"
-            class="<?php echo $progress < 100 ? 'disabled' : ''; ?>">
-            <span class="material-symbols-outlined icon">work</span>
-            <span class="label">My Applications</span>
-          </a>
-        </li>
-
-        <li>
-          <a href="<?php echo $progress == 100 ? './applicant-job-search.php' : '#'; ?>"
-            class="<?php echo $progress < 100 ? 'disabled' : ''; ?>">
-            <span class="material-symbols-outlined icon">search</span>
-            <span class="label">Job Search</span>
-          </a>
-        </li>
-
-        <li>
-          <a href="./applicant-profile.php"
-            class="<?php echo basename($_SERVER['PHP_SELF']) == 'applicant-profile.php' ? 'active' : ''; ?>">
-            <span class="material-symbols-outlined icon">id_card</span>
+          <a href="./applicant-profile.php" class="active">
+            <i data-lucide="user" class="icon"></i>
             <span class="label">My Profile</span>
           </a>
         </li>
+        <li>
+          <a href="./applicant-applications.php">
+            <i data-lucide="briefcase-business" class="icon"></i>
+            <span class="label">My Applications</span>
+          </a>
+        </li>
+        <li>
+          <a href="./applicant-job-search.php">
+            <i data-lucide="search" class="icon"></i>
+            <span class="label">Job Search</span>
+          </a>
+        </li>
       </ul>
-
       <ul>
         <li>
           <a href="../../auth/functions/logout.php" class="log-out-btn">
-            <span class="material-symbols-outlined icon">logout</span>
+            <i data-lucide="log-out" class="icon"></i>
             <span class="label">Log Out</span>
           </a>
         </li>
       </ul>
     </div>
-
   </aside>
-
   <main class="main-content">
+    <nav class="navbar">
+      <div class="navbar-left">
+        <div class="left-pos" style="display: flex; width: auto; height: auto">
+          <button class="hamburger">☰</button>
+          <h1>Applicant Profile</h1>
+        </div>
+        <div class="right-pos">
+          <div class="profile">
+            <img
+              src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+              alt="Profile Picture"
+              class="profile-pic"
+              id="profilePicc" style="width: 50px !important;" />
+            <div class="user-name">
+              <h4><?= $fullName ?></h4>
+              <p>Applicant</p>
+            </div>
+          </div>
+
+          <div class="dropdown-menu" id="dropdownMenu">
+            <div class="dropdown-arrow"></div>
+            <div class="dropdown-header">
+              <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
+              <a class="user-info" href="./applicant-profile.php">
+                <h3><?= $fullName ?></h3>
+                <p>See your profile</p>
+              </a>
+            </div>
+
+            <div class="dropdown-links">
+              <a href="./account-settings.php" class="dropdown-item">
+                <span class="material-symbols-outlined">settings</span>
+                <span>Account Settings</span>
+              </a>
+              <a onclick="toggleTheme()" class="dropdown-item">
+                <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+                <span id="themeLabel">Dark Mode</span>
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item logout-item">
+                <span class="material-symbols-outlined icon">logout</span>
+                <span>Log Out</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </nav>
     <div class="profile-container">
       <form action="../Functions/profile_update.php" method="POST" id="profileForm" enctype="multipart/form-data">
         <div class="section">
@@ -1435,9 +1424,9 @@ require_once '../Functions/getinfo.php';
       otherInput.style.display = this.checked ? "inline-block" : "none";
     });
   </script>
-  <script src="../js/responsive.js"></script>
-  <script src="../js/drop-down.js"></script>
-  <script src="../js/dark-mode.js"></script>
+  <script src="../js/responsive.js" defer></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
   <script>
     const regionSel = document.getElementById('region');
     const provinceSel = document.getElementById('province');

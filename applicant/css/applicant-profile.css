@@ -301,7 +301,6 @@ textarea {
 .checkbox-flex input[type="checkbox"] {
   width: 20px;
   margin-right: 8px;
-  accent-color: red !important;
 }
 .checkbox-flex label {
   display: inline-block;
