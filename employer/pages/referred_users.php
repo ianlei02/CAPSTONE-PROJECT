@@ -1,5 +1,6 @@
 <?php
 require  '../../auth/functions/check_login.php';
+require_once  '../Functions/getName.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../../auth/login-signup.php");
@@ -44,25 +45,7 @@ $result = $stmt->get_result();
 </head>
 
 <body>
-    <nav class="navbar">
-        <div class="navbar-left">
-            <div class="left-pos">
-                <h1>
-                    <span class="material-symbols-outlined">dashboard</span>
-                    <span>Referred Applicants</span>
-                </h1>
-            </div>
-            <div class="right-pos">
-                <div class="profile">
-                    <img
-                        src="<?php echo htmlspecialchars($profile_picture_url); ?>"
-                        alt="Profile Picture"
-                        class="profile-pic"
-                        id="profilePicc" style="width: 50px !important;" />
-                </div>
-            </div>
-        </div>
-    </nav>
+
     <aside class="sidebar">
         <div class="sidebar-logo">
             <div class="logo">
@@ -125,6 +108,24 @@ $result = $stmt->get_result();
     </aside>
 
     <main class="main-content">
+            <nav class="navbar">
+        <div class="navbar-left">
+            <div class="left-pos">
+                <h1>
+                    <span>Referred Applicants</span>
+                </h1>
+            </div>
+            <div class="right-pos">
+                <div class="profile">
+                    <img
+                        src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+                        alt="Profile Picture"
+                        class="profile-pic"
+                        id="profilePicc" style="width: 50px !important;" />
+                </div>
+            </div>
+        </div>
+    </nav>
         <h2><span class="material-symbols-outlined">how_to_reg</span> Referred Applicants</h2>
         <div class="table-container">
 
