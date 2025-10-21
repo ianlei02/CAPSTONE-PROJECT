@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_id'])) {
   header("Location: ../../auth/login-signup.php");
   exit();
 }
-$profile_picture_url = '../assets/images/profile.png';
+$profile_picture_url = '../assets/images/guy.svg';
 if (isset($_SESSION['user_id'])) {
   $applicant_id = $_SESSION['user_id'];
   $query = "SELECT profile_picture FROM applicant_profile WHERE applicant_id = ?";

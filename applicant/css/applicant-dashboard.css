@@ -506,7 +506,7 @@
 .sidebar-menu a.disabled:hover::after {
   content: "Complete your profile to unlock";
   position: absolute;
-  left: 110%;
+  left: 50%;
   top: 50%;
   transform: translateY(-50%);
   background: #333;
