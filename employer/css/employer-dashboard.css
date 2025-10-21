@@ -393,7 +393,6 @@
     align-items: center;
     gap: var(--space-2);
     padding: var(--space-3);
-
     border-radius: var(--radius-sm);
     border-left: 3px solid var(--warning);
     margin-bottom: var(--space-3);
