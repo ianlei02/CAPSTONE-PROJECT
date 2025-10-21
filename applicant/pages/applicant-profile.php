@@ -2,7 +2,7 @@
 require_once '../../auth/functions/check_login.php';
 require_once '../Functions/getDataDisplay.php';
 require_once '../Functions/getName.php';
-
+require_once '../Functions/getinfo.php';
 ?>
 <!DOCTYPE html>
 <html lang="en" data-theme="light" data-state="expanded">
@@ -87,36 +87,38 @@ require_once '../Functions/getName.php';
     <div class="sidebar-options">
       <ul class="sidebar-menu">
         <li>
-          <a href="./applicant-dashboard.php">
+          <a href="./applicant-dashboard.php"
+            class="<?php echo basename($_SERVER['PHP_SELF']) == 'applicant-dashboard.php' ? 'active' : ''; ?>">
             <span class="material-symbols-outlined icon">dashboard</span>
             <span class="label">Dashboard</span>
           </a>
         </li>
+
         <li>
-          <a href="./applicant-applications.php">
+          <a href="<?php echo $progress == 100 ? './applicant-applications.php' : '#'; ?>"
+            class="<?php echo $progress < 100 ? 'disabled' : ''; ?>">
             <span class="material-symbols-outlined icon">work</span>
             <span class="label">My Applications</span>
           </a>
         </li>
+
         <li>
-          <a href="./applicant-job-search.php">
+          <a href="<?php echo $progress == 100 ? './applicant-job-search.php' : '#'; ?>"
+            class="<?php echo $progress < 100 ? 'disabled' : ''; ?>">
             <span class="material-symbols-outlined icon">search</span>
             <span class="label">Job Search</span>
           </a>
         </li>
+
         <li>
-          <a href="./applicant-profile.php">
+          <a href="./applicant-profile.php"
+            class="<?php echo basename($_SERVER['PHP_SELF']) == 'applicant-profile.php' ? 'active' : ''; ?>">
             <span class="material-symbols-outlined icon">id_card</span>
             <span class="label">My Profile</span>
           </a>
         </li>
-        <!-- <li>
-          <button onclick="toggleTheme()" class="dark-mode-toggle">
-            <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-            <span id="themeLabel">Dark Mode</span>
-          </button>
-        </li> -->
       </ul>
+
       <ul>
         <li>
           <a href="../../auth/functions/logout.php" class="log-out-btn">
@@ -126,6 +128,7 @@ require_once '../Functions/getName.php';
         </li>
       </ul>
     </div>
+
   </aside>
 
   <main class="main-content">

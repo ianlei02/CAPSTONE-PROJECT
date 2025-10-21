@@ -53,6 +53,18 @@ $stmt->execute();
 $result = $stmt->get_result();
 $docs = $result->fetch_assoc();
 
+$sql = "SELECT b_status FROM employer_account WHERE employer_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $employer_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$status = "pending";
+if ($row = $result->fetch_assoc()) {
+    $status = $row['b_status'];
+}
+$isVerified = ($status === 'verified');
+
 // $baseURL = "http://localhost/CAPSTONE/CAPSTONE-PROJECT/";
 $baseURL = "http://localhost/CAPSTONE-PROJECT/";
 ?>
@@ -64,6 +76,15 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Company Profile</title>
   <script src="../js/load-saved.js"></script>
+  <style>
+  .disabled-link {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .disabled-link a {
+    pointer-events: none;
+  }
+  </style>
   <link rel="stylesheet" href="../css/navs.css">
   <link rel="stylesheet" href="../css/employer-profile.css" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
@@ -131,25 +152,40 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
     <div class="sidebar-options">
       <ul class="sidebar-menu">
         <li>
-          <a href="./employer-dashboard.php">
+          <a href="./employer-dashboard.php" class="active">
             <span class="material-symbols-outlined icon">dashboard</span>
             <span class="label">Dashboard</span>
           </a>
         </li>
+        <?php if ($isVerified): ?>
         <li>
           <a href="./employer-post.php">
             <span class="material-symbols-outlined icon">work</span>
             <span class="label">Post Job</span>
           </a>
         </li>
-        <!-- <li>
-          <a href="./employer-applications.php">
-            <span class="material-symbols-outlined icon">people</span>
-            <span class="label">Job Applications</span>
-          </a>
-        </li> -->
         <li>
-          <a href="employer-profile.php" class="active">
+          <a href="./referred_users.php">
+            <span class="material-symbols-outlined icon">how_to_reg</span>
+            <span class="label">Referred Applicants</span>
+          </a>
+        </li>
+      <?php else: ?>
+        <li class="disabled-link" title="Requires verification">
+          <a href="#" onclick="alert('Your account is not verified yet. Please complete verification to access this feature.'); return false;">
+            <span class="material-symbols-outlined icon">lock</span>
+            <span class="label">Post Job (Locked)</span>
+          </a>
+        </li>
+        <li class="disabled-link" title="Requires verification">
+          <a href="#" onclick="alert('Your account is not verified yet. Please complete verification to access this feature.'); return false;">
+            <span class="material-symbols-outlined icon">lock</span>
+            <span class="label">Referred Applicants (Locked)</span>
+          </a>
+        </li>
+      <?php endif; ?>
+        <li>
+          <a href="employer-profile.php">
             <span class="material-symbols-outlined icon">id_card</span>
             <span class="label">My Profile</span>
           </a>

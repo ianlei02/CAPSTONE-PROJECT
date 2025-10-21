@@ -97,18 +97,23 @@ require_once '../Functions/getName.php';
             <span class="label">Dashboard</span>
           </a>
         </li>
+
         <li>
-          <a href="./applicant-applications.php">
-            <i data-lucide="briefcase" class="icon"></i>
+          <a href="<?php echo $progress == 100 ? './applicant-applications.php' : '#'; ?>"
+            class="<?php echo $progress < 100 ? 'disabled' : ''; ?>">
+            <span class="material-symbols-outlined icon">work</span>
             <span class="label">My Applications</span>
           </a>
         </li>
+
         <li>
-          <a href="./applicant-job-search.php">
-            <i data-lucide="search" class="icon"></i>
+          <a href="<?php echo $progress == 100 ? './applicant-job-search.php' : '#'; ?>"
+            class="<?php echo $progress < 100 ? 'disabled' : ''; ?>">
+            <span class="material-symbols-outlined icon">search</span>
             <span class="label">Job Search</span>
           </a>
         </li>
+
         <li>
           <a href="./applicant-profile.php">
             <i data-lucide="user" class="icon"></i>
@@ -116,6 +121,7 @@ require_once '../Functions/getName.php';
           </a>
         </li>
       </ul>
+
       <ul>
         <li>
           <a href="../../auth/functions/logout.php" class="log-out-btn">
@@ -125,6 +131,7 @@ require_once '../Functions/getName.php';
         </li>
       </ul>
     </div>
+
   </aside>
   <main class="main-content">
     <!-- <div class="main-header">
@@ -243,30 +250,33 @@ require_once '../Functions/getName.php';
             <span class="material-symbols-outlined">bolt</span>
             <span>Quick Actions</span>
           </h2>
+
           <div class="actions-grid">
-            <a class="action-card" href="./applicant-job-search.php">
+            <a class="action-card <?php echo $progress < 100 ? 'disabled' : ''; ?>"
+              href="<?php echo $progress == 100 ? './applicant-job-search.php' : '#'; ?>">
               <div class="action-icon">
                 <span class="material-symbols-outlined">add</span>
               </div>
               <div class="action-title">Apply for a Job</div>
-              <!-- <div class="action-desc">Apply for a Job</div> -->
             </a>
-            <a class="action-card" href="./applicant-applications.php">
+
+            <a class="action-card <?php echo $progress < 100 ? 'disabled' : ''; ?>"
+              href="<?php echo $progress == 100 ? './applicant-applications.php' : '#'; ?>">
               <div class="action-icon">
                 <span class="material-symbols-outlined">people</span>
               </div>
               <div class="action-title">View Applications</div>
-              <!-- <div class="action-desc">See your full job applications</div> -->
             </a>
+
             <a class="action-card" href="./applicant-profile.php">
               <div class="action-icon">
                 <span class="material-symbols-outlined">id_card</span>
               </div>
               <div class="action-title">Edit My Profile</div>
-              <!-- <div class="action-desc">Update your information</div> -->
             </a>
           </div>
         </div>
+
       </div>
       <div class="job-application-status">
         <div class="job-application-header">
