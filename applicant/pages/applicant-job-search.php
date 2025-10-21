@@ -1,35 +1,11 @@
 <?php
 require_once '../../auth/functions/check_login.php';
+require_once '../Functions/getinfo.php';
 require_once '../Functions/getName.php';
 
 if (!isset($_SESSION['user_id'])) {
   header("Location: ../../auth/login-signup.php");
   exit();
-}
-$profile_picture_url = '../assets/images/profile.png';
-if (isset($_SESSION['user_id'])) {
-  $applicant_id = $_SESSION['user_id'];
-  $query = "SELECT profile_picture FROM applicant_profile WHERE applicant_id = ?";
-  $stmt = $conn->prepare($query);
-  $stmt->bind_param("i", $applicant_id);
-  $stmt->execute();
-  $result = $stmt->get_result();
-
-  if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    if (!empty($row['profile_picture'])) {
-      $filename = basename($row['profile_picture']);
-      $absolute_path = __DIR__ . '/../uploads/profile_pictures/' . $filename;
-      $web_path = '../uploads/profile_pictures/' . $filename;
-
-      error_log("Checking: " . $absolute_path);
-
-      if (file_exists($absolute_path)) {
-        $profile_picture_url = $web_path;
-      }
-    }
-  }
-  $stmt->close();
 }
 $sql = "SELECT 
             jp.job_id, 
@@ -51,9 +27,7 @@ $sql = "SELECT
 
 $result = $conn->query($sql);
 
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en" data-theme="light" data-state="expanded">
 
@@ -208,6 +182,8 @@ $result = $conn->query($sql);
             <?php
             $jobId = $row['job_id'];
             $status = 'Not Applied';
+
+            // Check if applicant already applied
             $statusSql = "SELECT status FROM job_application WHERE applicant_id = ? AND job_id = ?";
             $stmt = $conn->prepare($statusSql);
             $stmt->bind_param("ii", $applicant_id, $jobId);
@@ -218,8 +194,8 @@ $result = $conn->query($sql);
             }
             $stmt->close();
             ?>
-            <div class="job-card hidden <?= $status ?>
-            " data-field="<?php echo htmlspecialchars($row['category']); ?>">
+
+            <div class="job-card hidden <?= $status ?>" data-field="<?php echo htmlspecialchars($row['category']); ?>">
               <div class="job-field"><?php echo htmlspecialchars($row['category']); ?></div>
 
               <div class="job-header">
@@ -244,13 +220,18 @@ $result = $conn->query($sql);
 
               <div class="job-footer">
                 <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
-                <!-- <p>Status: <strong style="color: <?= $status === 'Referred' ? 'green' : ($status === 'Rejected' ? 'red' : ($status === 'Pending' ? 'orange' : ($status === 'Interview' ? 'blue' : '#555'))); ?>"> <?= htmlspecialchars($status); ?></strong></p> -->
+
                 <?php if ($status === 'Pending' || $status === 'Referred' || $status === 'Rejected' || $status === 'Interview'): ?>
                   <button class="status-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">
                     <?= ($status === 'Pending') ? 'Applied' : 'View Status'; ?>
                   </button>
+
                 <?php else: ?>
-                  <button class="apply-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">Apply Now</button>
+                  <?php if ($progress == 100): ?>
+                    <button class="apply-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">Apply Now</button>
+                  <?php else: ?>
+                    <button class="apply-btn disabled" disabled>Complete Your Profile First</button>
+                  <?php endif; ?>
                 <?php endif; ?>
               </div>
             </div>
@@ -258,8 +239,8 @@ $result = $conn->query($sql);
         <?php else: ?>
           <p>No job postings available.</p>
         <?php endif; ?>
-
       </div>
+
     </div>
 
     <!-- Application Modal -->
@@ -390,8 +371,11 @@ $result = $conn->query($sql);
         closeModal();
       }
     });
-
-    // Form Submission
+    document.querySelectorAll("[data-alert]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        alert("Please complete your profile before applying for a job.");
+      });
+    });
 
 
     // Read More functionality
