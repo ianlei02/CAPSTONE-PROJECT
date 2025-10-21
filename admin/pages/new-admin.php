@@ -1,3 +1,6 @@
+<?php
+require_once '../Function/check_login.php';
+?>
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 
@@ -98,7 +101,7 @@
                 </button>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
+               <div class="table-responsive">
                     <table id="adminTable">
                         <thead>
                             <tr>
@@ -111,60 +114,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="editable-cell">John Smith</td>
-                                <td class="editable-cell">john.smith</td>
-                                <td class="editable-cell">john.smith@company.com</td>
-                                <td class="editable-cell">Employers Management, View Applications</td>
-                                <td><span class="badge badge-success">Active</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary edit-btn">
-                                        <span class="material-symbols-outlined">edit</span>
-                                    </button>
-                                    <button class="btn btn-sm btn-warning">
-                                        <span class="material-symbols-outlined">block</span>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="editable-cell">Sarah Johnson</td>
-                                <td class="editable-cell">sarah.j</td>
-                                <td class="editable-cell">sarah.j@company.com</td>
-                                <td class="editable-cell">News Management, Verified Employers</td>
-                                <td><span class="badge badge-success">Active</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary edit-btn">
-                                        <span class="material-symbols-outlined">edit</span>
-                                    </button>
-                                    <button class="btn btn-sm btn-warning">
-                                        <span class="material-symbols-outlined">block</span>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="editable-cell">Michael Brown</td>
-                                <td class="editable-cell">michael.b</td>
-                                <td class="editable-cell">michael.b@company.com</td>
-                                <td class="editable-cell">Pending Employers, View Applications</td>
-                                <td><span class="badge badge-danger">Disabled</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary edit-btn">
-                                        <span class="material-symbols-outlined">edit</span>
-                                    </button>
-                                    <button class="btn btn-sm btn-success">
-                                        <span class="material-symbols-outlined">check_circle</span>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </button>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -237,78 +186,256 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary"><span class="material-symbols-outlined">save</span> Save Admin</button>
+                <button class="btn btn-primary btn-save"><span class="material-symbols-outlined">save</span> Save Admin</button>
                 <button class="btn btn-danger close-btn"><span class="material-symbols-outlined">cancel</span> Cancel</button>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../assets/JS_JQUERY/jquery-3.7.1.min.js"></script>
     <script src="../assets/library/datatable/dataTables.js"></script>
     <script src="../js/table-init.js"></script>
     <script>
-        // Modal functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const modal = document.getElementById('addAdminModal');
-            const addBtn = document.getElementById('addAdminBtn');
-            const closeBtns = document.querySelectorAll('.close, .close-btn');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Modal elements
+        const modal = document.getElementById('addAdminModal');
+        const addBtn = document.getElementById('addAdminBtn');
+        const closeBtns = document.querySelectorAll('.close, .close-btn');
+        const saveBtn = modal.querySelector('.btn-save');
+        const form = document.getElementById('adminForm');
 
-            addBtn.addEventListener('click', function() {
-                modal.style.display = 'flex';
+        // Open modal
+        addBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+
+        // Close modal
+        closeBtns.forEach(btn => btn.addEventListener('click', () => modal.style.display = 'none'));
+        window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+
+        saveBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('adminName').value.trim();
+            const username = document.getElementById('adminUsername').value.trim();
+            const email = document.getElementById('adminEmail').value.trim();
+            const password = document.getElementById('adminPassword').value.trim();
+
+            const permissions = [];
+            document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked').forEach(cb => {
+                permissions.push(cb.nextElementSibling.textContent.trim());
             });
 
-            closeBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    modal.style.display = 'none';
+            if (!name || !username || !email || !password) {
+                alert("Please fill out all fields.");
+                return;
+            }
+
+            try {
+                const res = await fetch('../Function/add-admin.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, username, email, password, permissions })
                 });
-            });
+                
+                const data = await res.json();
+                console.log(data);
 
-            window.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
+                if (data.status === 'success') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Admin Added!',
+                        text: data.message,
+                        showConfirmButton: false,
+                        timer: 1800
+                    }).then(() => {
+                        form.reset();
+                        modal.style.display = 'none';
+                        location.reload(); 
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed!',
+                        text: data.message || 'Something went wrong while adding the admin.'
+                    });
                 }
+            } catch (err) {
+                console.error('Error:', err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error occurred while saving the admin.'
+                });
+            }
+        });
+    });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const tableBody = document.querySelector('#adminTable tbody');
+
+        async function loadAdmins() {
+            const res = await fetch('../Function/getAdmins.php');
+            const data = await res.json();
+
+            tableBody.innerHTML = '';
+
+            data.forEach(admin => {
+                const permissions = JSON.parse(admin.role).join(', '); 
+
+                const statusBadge = admin.status === 'Active'
+                    ? `<span class="badge badge-success">Active</span>`
+                    : `<span class="badge badge-danger">Disabled</span>`;
+
+                const toggleBtn = admin.status === 'Active'
+                    ? `<button class="btn btn-sm btn-warning toggle-status" data-id="${admin.admin_ID}" data-status="Disabled">
+                            <span class="material-symbols-outlined">block</span>
+                    </button>`
+                    : `<button class="btn btn-sm btn-success toggle-status" data-id="${admin.admin_ID}" data-status="Active">
+                            <span class="material-symbols-outlined">check_circle</span>
+                    </button>`;
+
+                const row = `
+                    <tr data-id="${admin.admin_ID}">
+                        <td class="editable-cell">${admin.fullname}</td>
+                        <td class="editable-cell">${admin.username}</td>
+                        <td class="editable-cell">${admin.email}</td>
+                        <td class="editable-cell">${permissions}</td>
+                        <td>${statusBadge}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary edit-btn">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+                            ${toggleBtn}
+                            <button class="btn btn-sm btn-danger delete-btn">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                tableBody.insertAdjacentHTML('beforeend', row);
             });
 
-            // Edit/Save functionality for table rows
-            const editButtons = document.querySelectorAll('.edit-btn');
+            attachRowListeners(); 
+        }
 
-            editButtons.forEach(button => {
-                button.addEventListener('click', function() {
+        function attachRowListeners() {
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', async function() {
                     const row = this.closest('tr');
-                    const isEditing = row.classList.contains('editing');
+                    const id = row.dataset.id;
 
-                    if (isEditing) {
-                        // Save changes
-                        saveRowChanges(row);
-                        this.innerHTML = '<span class="material-symbols-outlined">edit</span>';
-                        row.classList.remove('editing');
+                    if (row.classList.contains('editing')) {
+
+                        const inputs = row.querySelectorAll('input');
+                        const [fullname, username, email, permissions] = [...inputs].map(i => i.value.trim());
+
+                        const res = await fetch('../Function/manage-admin.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ 
+                                action: 'update_admin', 
+                                id, 
+                                fullname, 
+                                username, 
+                                email, 
+                                permissions 
+                            })
+                        });
+                        const data = await res.json();
+
+                        if (data.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Updated!',
+                                text: data.message,
+                                timer: 1500,
+                                showConfirmButton: false
+                            });
+                            loadAdmins();
+                        } else {
+                            Swal.fire({ icon: 'error', title: 'Failed', text: data.message });
+                        }
                     } else {
-                        // Enter edit mode
-                        enableRowEditing(row);
-                        this.innerHTML = '<span class="material-symbols-outlined">save</span>';
+    
+                        const cells = row.querySelectorAll('.editable-cell');
+                        cells.forEach(cell => {
+                            const val = cell.textContent;
+                            cell.innerHTML = `<input type="text" value="${val}" />`;
+                        });
                         row.classList.add('editing');
+                        this.innerHTML = '<span class="material-symbols-outlined">save</span>';
                     }
                 });
             });
 
-            function enableRowEditing(row) {
-                const editableCells = row.querySelectorAll('.editable-cell');
+            document.querySelectorAll('.toggle-status').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    const id = this.dataset.id;
+                    const newStatus = this.dataset.status;
 
-                editableCells.forEach(cell => {
-                    const currentValue = cell.textContent;
-                    cell.innerHTML = `<input type="text" value="${currentValue}">`;
+                    const res = await fetch('../Function/manage-admin.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action: 'update_status', id, status: newStatus })
+                    });
+                    const data = await res.json();
+
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Status Changed',
+                            text: data.message,
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                        loadAdmins();
+                    } else {
+                        Swal.fire({ icon: 'error', title: 'Failed', text: data.message });
+                    }
                 });
-            }
+            });
 
-            function saveRowChanges(row) {
-                const editableCells = row.querySelectorAll('.editable-cell');
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    const id = this.closest('tr').dataset.id;
 
-                editableCells.forEach(cell => {
-                    const input = cell.querySelector('input');
-                    cell.textContent = input.value;
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "This will permanently delete the admin!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then(async (result) => {
+                        if (result.isConfirmed) {
+                            const res = await fetch('../Function/manage-admin.php', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ action: 'delete', id })
+                            });
+                            const data = await res.json();
+
+                            if (data.status === 'success') {
+                                Swal.fire('Deleted!', data.message, 'success');
+                                loadAdmins();
+                            } else {
+                                Swal.fire('Error!', data.message, 'error');
+                            }
+                        }
+                    });
                 });
-            }
-        });
+            });
+        }
+
+        loadAdmins();
+    });
     </script>
+
+
 </body>
 
 </html>
