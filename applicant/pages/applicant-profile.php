@@ -531,7 +531,7 @@ require_once '../Functions/getName.php';
         </div>
 
         <!-- Section III: Language/Dialect Proficiency -->
-        <div class="section ">
+        <div class="section">
           <h2 class=" section-title">III. LANGUAGE / DIALECT PROFICIENCY</h2>
           <div class="form-grid">
             <div class="form-group language-dialect-container">

@@ -87,45 +87,39 @@ require_once '../Functions/getName.php';
         <img src="../../public/images/pesosmb.png" alt="" />
         <h3>PESO</h3>
       </div>
-      <button class="hamburger"><span class="material-symbols-outlined">dock_to_right</span></button>
+      <button class="hamburger"><i data-lucide="panel-left"></i></button>
     </div>
     <div class="sidebar-options">
       <ul class="sidebar-menu">
         <li>
           <a href="./applicant-dashboard.php" class="active">
-            <span class="material-symbols-outlined icon">dashboard</span>
+            <i data-lucide="home" class="icon"></i>
             <span class="label">Dashboard</span>
           </a>
         </li>
         <li>
           <a href="./applicant-applications.php">
-            <span class="material-symbols-outlined icon">work</span>
+            <i data-lucide="briefcase" class="icon"></i>
             <span class="label">My Applications</span>
           </a>
         </li>
         <li>
           <a href="./applicant-job-search.php">
-            <span class="material-symbols-outlined icon">search</span>
+            <i data-lucide="search" class="icon"></i>
             <span class="label">Job Search</span>
           </a>
         </li>
         <li>
           <a href="./applicant-profile.php">
-            <span class="material-symbols-outlined icon">id_card</span>
+            <i data-lucide="user" class="icon"></i>
             <span class="label">My Profile</span>
           </a>
         </li>
-        <!-- <li>
-          <button onclick="toggleTheme()" class="dark-mode-toggle">
-            <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-            <span id="themeLabel">Dark Mode</span>
-          </button>
-        </li> -->
       </ul>
       <ul>
         <li>
           <a href="../../auth/functions/logout.php" class="log-out-btn">
-            <span class="material-symbols-outlined icon">logout</span>
+            <i data-lucide="log-out" class="icon"></i>
             <span class="label">Log Out</span>
           </a>
         </li>
@@ -204,7 +198,7 @@ require_once '../Functions/getName.php';
           <div class="card-header">
             <div class="card-title">Profile Completion</div>
             <div class="progress-percentage">
-               <?php echo $progress; ?>%
+              <?php echo $progress; ?>%
             </div>
           </div>
           <div class="progress-section">
@@ -226,7 +220,7 @@ require_once '../Functions/getName.php';
             <div class="progress-content">
               <!-- <div class="progress-stats">7 of 10 sections complete</div> -->
               <div class="progress-description">
-              <?php echo 100 - $progress; ?>% remaining to unlock job applications
+                <?php echo 100 - $progress; ?>% remaining to unlock job applications
               </div>
             </div>
           </div>
@@ -370,6 +364,11 @@ require_once '../Functions/getName.php';
   <script src="../js/responsive.js"></script>
   <script src="../js/drop-down.js"></script>
   <script src="../js/dark-mode.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <script>
+    lucide.createIcons();
+  </script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const statisticCards = document.querySelectorAll(".statistic-card p");
