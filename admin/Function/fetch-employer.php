@@ -13,7 +13,11 @@ try {
                 a.b_status AS status,
                 d.employer_profile,
                 d.business_permit,
-                d.bir_certification
+                d.bir_certification,
+                d.company_profile,
+                d.dole_certification,
+                d.migrant_certification,
+                d.philjob_certification
             FROM employer_company_info AS c
             INNER JOIN employer_account AS a 
                 ON c.employer_id = a.employer_id

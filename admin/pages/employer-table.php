@@ -254,7 +254,7 @@ require_once '../Function/check_login.php';
           <div class="document-item">
             <div class="document-name">
               <span class="material-symbols-outlined">description</span>
-              ID Proof
+              Employer ID Proof
             </div>
             <div class="document-actions">
               <button class="btn-doc btn-view-doc" id="p-id-proof-view">
@@ -265,6 +265,67 @@ require_once '../Function/check_login.php';
               </button>
             </div>
           </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Company Profile
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="p-company-profile-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="p-company-profile-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              DOLE Certificate
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="p-dole-cert-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="p-dole-cert-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Migrant Certificate
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="p-migrant-cert-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="p-migrant-cert-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              PhilJob Certificate
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="p-philjob-cert-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="p-philjob-cert-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
           </div>
         </div>
       </div>
@@ -359,7 +420,7 @@ require_once '../Function/check_login.php';
           <div class="document-item">
             <div class="document-name">
               <span class="material-symbols-outlined">description</span>
-              ID Proof
+              Employer ID Proof
             </div>
             <div class="document-actions">
               <button class="btn-doc btn-view-doc" id="v-id-proof-view">
@@ -370,6 +431,67 @@ require_once '../Function/check_login.php';
               </button>
             </div>
           </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Company Profile
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="v-company-profile-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="v-company-profile-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              DOLE Certificate
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="v-dole-cert-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="v-dole-cert-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Migrant Certificate
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="v-migrant-cert-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="v-migrant-cert-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              PhilJob Certificate
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="v-philjob-cert-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="v-philjob-cert-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
           </div>
         </div>
       </div>
@@ -460,7 +582,7 @@ require_once '../Function/check_login.php';
           <div class="document-item">
             <div class="document-name">
               <span class="material-symbols-outlined">description</span>
-              ID Proof
+              Employer ID Proof
             </div>
             <div class="document-actions">
               <button class="btn-doc btn-view-doc" id="r-id-proof-view">
@@ -471,6 +593,67 @@ require_once '../Function/check_login.php';
               </button>
             </div>
           </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Company Profile
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="r-company-profile-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="r-company-profile-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              DOLE Certificate
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="r-dole-cert-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="r-dole-cert-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Migrant Certificate
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="r-migrant-cert-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="r-migrant-cert-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              PhilJob Certificate
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="r-philjob-cert-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="r-philjob-cert-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -567,7 +750,7 @@ require_once '../Function/check_login.php';
           <div class="document-item">
             <div class="document-name">
               <span class="material-symbols-outlined">description</span>
-              ID Proof
+              Employer ID Proof
             </div>
             <div class="document-actions">
               <button class="btn-doc btn-view-doc" id="rj-id-proof-view">
@@ -578,6 +761,67 @@ require_once '../Function/check_login.php';
               </button>
             </div>
           </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Company Profile
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="rj-company-profile-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="rj-company-profile-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              DOLE Certificate
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="rj-dole-cert-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="rj-dole-cert-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              Migrant Certificate
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="rj-migrant-cert-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="rj-migrant-cert-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
+          <div class="document-item">
+            <div class="document-name">
+              <span class="material-symbols-outlined">description</span>
+              PhilJob Certificate
+            </div>
+            <div class="document-actions">
+              <button class="btn-doc btn-view-doc" id="rj-philjob-cert-view">
+                <span class="material-symbols-outlined">visibility</span> View
+              </button>
+              <button class="btn-doc btn-download" id="rj-philjob-cert-download">
+                <span class="material-symbols-outlined">download</span> Download
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -724,6 +968,10 @@ require_once '../Function/check_login.php';
       setDocumentButton("p-business-license", emp.business_permit);
       setDocumentButton("p-tax-certificate", emp.bir_certification);
       setDocumentButton("p-id-proof", emp.employer_profile);
+      setDocumentButton("p-company-profile", emp.company_profile);
+      setDocumentButton("p-dole-cert", emp.dole_certification);
+      setDocumentButton("p-migrant-cert", emp.migrant_certification);
+      setDocumentButton("p-philjob-cert", emp.philjob_certification);
 
       const modal = document.getElementById("pendingModal"); modal.style.display = "flex";
       const content = modal.querySelector(".modal-content");
@@ -741,6 +989,10 @@ require_once '../Function/check_login.php';
       setDocumentButton("v-business-license", emp.business_permit);
       setDocumentButton("v-tax-certificate", emp.bir_certification);
       setDocumentButton("v-id-proof", emp.employer_profile);
+      setDocumentButton("v-company-profile", emp.company_profile);
+      setDocumentButton("v-dole-cert", emp.dole_certification);
+      setDocumentButton("v-migrant-cert", emp.migrant_certification);
+      setDocumentButton("v-philjob-cert", emp.philjob_certification);
 
       const modal = document.getElementById("verifiedModal"); modal.style.display = "flex";
       const content = modal.querySelector(".modal-content");
@@ -758,6 +1010,10 @@ require_once '../Function/check_login.php';
       setDocumentButton("r-business-license", emp.business_permit);
       setDocumentButton("r-tax-certificate", emp.bir_certification);
       setDocumentButton("r-id-proof", emp.employer_profile);
+      setDocumentButton("r-company-profile", emp.company_profile);
+      setDocumentButton("r-dole-cert", emp.dole_certification);
+      setDocumentButton("r-migrant-cert", emp.migrant_certification);
+      setDocumentButton("r-philjob-cert", emp.philjob_certification);
 
       const modal = document.getElementById("revokedModal");
       modal.style.display = "flex";
@@ -776,6 +1032,10 @@ require_once '../Function/check_login.php';
       setDocumentButton("rj-business-license", emp.business_permit);
       setDocumentButton("rj-tax-certificate", emp.bir_certification);
       setDocumentButton("rj-id-proof", emp.employer_profile);
+      setDocumentButton("rj-company-profile", emp.company_profile);
+      setDocumentButton("rj-dole-cert", emp.dole_certification);
+      setDocumentButton("rj-migrant-cert", emp.migrant_certification);
+      setDocumentButton("rj-philjob-cert", emp.philjob_certification);
 
       const modal = document.getElementById("rejectedModal");
       modal.style.display = "flex";
@@ -826,8 +1086,6 @@ require_once '../Function/check_login.php';
   });
   });
   </script>
-
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
   

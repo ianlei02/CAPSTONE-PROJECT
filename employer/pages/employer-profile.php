@@ -319,13 +319,17 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                 <div class="document-date">Uploaded: <span id="bir-upload-date"><?php echo !empty($docs['employer_profile']) ? "Uploaded" : "Not Uploaded"; ?></span></div>
               </div>
               <div class="document-actions">
-                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['employer_profile']; ?>">
-                  <span class="material-symbols-outlined">visibility</span>
-                </button>
-
+                <?php if (!empty($docs['employer_profile'])): ?>
+                    <button class="view-doc" data-doc="<?php echo $baseURL . $docs['employer_profile']; ?>">
+                        <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                <?php else: ?>
+                    <button class="view-doc placeholder" disabled>
+                        <span class="material-symbols-outlined">block</span>
+                    </button>
+                <?php endif; ?>
                 <label for="upload-employer-profile" class="update-doc">Upload</label>
                 <input type="file" id="upload-employer-profile" name="upload-employer-profile" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
-
               </div>
             </li>
             <li class="document-item">
@@ -335,9 +339,15 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                 <div class="document-date">Uploaded: <span id="bir-upload-date"><?php echo !empty($docs['company_profile']) ? "Uploaded" : "Not Uploaded"; ?></span></div>
               </div>
               <div class="document-actions">
-                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['company_profile']; ?>">
-                  <span class="material-symbols-outlined">visibility</span>
-                </button>
+                <?php if (!empty($docs['company_profile'])): ?>
+                    <button class="view-doc" data-doc="<?php echo $baseURL . $docs['company_profile']; ?>">
+                        <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                <?php else: ?>
+                    <button class="view-doc placeholder" disabled>
+                        <span class="material-symbols-outlined">block</span>
+                    </button>
+                <?php endif; ?>
                 <label for="upload-company-profile" class="update-doc">Upload</label>
                 <input type="file" id="upload-company-profile" name="upload-company-profile" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
               </div>
@@ -349,9 +359,15 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                 <div class="document-date">Uploaded:<span id="bir-upload-date"><?php echo !empty($docs['bir_certification']) ? "Uploaded" : "Not Uploaded"; ?></span></div>
               </div>
               <div class="document-actions">
-                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['bir_certification']; ?>">
-                  <span class="material-symbols-outlined">visibility</span>
-                </button>
+                <?php if (!empty($docs['bir_certification'])): ?>
+                    <button class="view-doc" data-doc="<?php echo $baseURL . $docs['bir_certification']; ?>">
+                        <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                <?php else: ?>
+                    <button class="view-doc placeholder" disabled>
+                        <span class="material-symbols-outlined">block</span>
+                    </button>
+                <?php endif; ?>
                 <label for="upload-bir" class="update-doc">Upload</label>
                 <input type="file" id="upload-bir" name="upload-bir" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
               </div>
@@ -363,9 +379,15 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                 <div class="document-date">Uploaded:<span id="bir-upload-date"><?php echo !empty($docs['business_permit']) ? "Uploaded" : "Not Uploaded"; ?></span></div>
               </div>
               <div class="document-actions">
-                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['business_permit']; ?>">
-                  <span class="material-symbols-outlined">visibility</span>
-                </button>
+                <?php if (!empty($docs['business_permit'])): ?>
+                    <button class="view-doc" data-doc="<?php echo $baseURL . $docs['business_permit']; ?>">
+                        <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                <?php else: ?>
+                    <button class="view-doc placeholder" disabled>
+                        <span class="material-symbols-outlined">block</span>
+                    </button>
+                <?php endif; ?>
                 <label for="upload-business-permit" class="update-doc">Upload</label>
                 <input type="file" id="upload-business-permit" name="upload-business-permit" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
               </div>
@@ -377,9 +399,15 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                 <div class="document-date">Uploaded:<span id="bir-upload-date"><?php echo !empty($docs['dole_certification']) ? "Uploaded" : "Not Uploaded"; ?></span></div>
               </div>
               <div class="document-actions">
-                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['dole_certification']; ?>">
-                  <span class="material-symbols-outlined">visibility</span>
-                </button>
+                <?php if (!empty($docs['dole_certification'])): ?>
+                    <button class="view-doc" data-doc="<?php echo $baseURL . $docs['dole_certification']; ?>">
+                        <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                <?php else: ?>
+                    <button class="view-doc placeholder" disabled>
+                        <span class="material-symbols-outlined">block</span>
+                    </button>
+                <?php endif; ?>
                 <label for="upload-dole" class="update-doc">Upload</label>
                 <input type="file" id="upload-dole" name="upload-dole" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
               </div>
@@ -391,9 +419,15 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                 <div class="document-date">Uploaded:<span id="bir-upload-date"><?php echo !empty($docs['migrant_certification']) ? "Uploaded" : "Not Uploaded"; ?></span></div>
               </div>
               <div class="document-actions">
-                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['migrant_certification']; ?>">
-                  <span class="material-symbols-outlined">visibility</span>
-                </button>
+                <?php if (!empty($docs['migrant_certification'])): ?>
+                    <button class="view-doc" data-doc="<?php echo $baseURL . $docs['migrant_certification']; ?>">
+                        <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                <?php else: ?>
+                    <button class="view-doc placeholder" disabled>
+                        <span class="material-symbols-outlined">block</span>
+                    </button>
+                <?php endif; ?>
                 <label for="upload-migrant" class="update-doc">Upload</label>
                 <input type="file" id="upload-migrant" name="upload-migrant" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
               </div>
@@ -405,9 +439,15 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
                 <div class="document-date">Uploaded:<span id="bir-upload-date"><?php echo !empty($docs['philjob_certification']) ? "Uploaded" : "Not Uploaded"; ?></span></div>
               </div>
               <div class="document-actions">
-                <button class="view-doc" data-doc="<?php echo $baseURL . $docs['philjob_certification']; ?>">
-                  <span class="material-symbols-outlined">visibility</span>
-                </button>
+                <?php if (!empty($docs['philjob_certification'])): ?>
+                    <button class="view-doc" data-doc="<?php echo $baseURL . $docs['philjob_certification']; ?>">
+                        <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                <?php else: ?>
+                    <button class="view-doc placeholder" disabled>
+                        <span class="material-symbols-outlined">block</span>
+                    </button>
+                <?php endif; ?>
                 <label for="upload-philjob" class="update-doc">Upload</label>
                 <input type="file" id="upload-philjob" name="upload-philjob" class="upload-input" accept=".pdf,.doc,.docx,.jpg,.png" style="display: none;">
               </div>
@@ -560,7 +600,6 @@ $baseURL = "http://localhost/CAPSTONE-PROJECT/";
           return;
         }
 
-        // detect file type by extension
         if (filePath.match(/\.(jpg|jpeg|png|gif)$/i)) {
           img.src = filePath;
           img.style.display = "block";
