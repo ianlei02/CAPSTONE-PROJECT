@@ -82,6 +82,18 @@ $stmt->bind_param("ii", $employer_id, $employer_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $data = $result->fetch_assoc();
+
+$sql = "SELECT b_status FROM employer_account WHERE employer_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $employer_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$status = "pending";
+if ($row = $result->fetch_assoc()) {
+    $status = $row['b_status'];
+}
+$isVerified = ($status === 'verified');
 ?>
 <!DOCTYPE html>
 <html lang="en" data-theme="light" data-state="expanded">
@@ -91,6 +103,15 @@ $data = $result->fetch_assoc();
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Employer Dashboard</title>
   <script src="../js/load-saved.js"></script>
+  <style>
+  .disabled-link {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .disabled-link a {
+    pointer-events: none;
+  }
+  </style>
   <link rel="stylesheet" href="../css/navs.css">
   <link rel="stylesheet" href="../css/employer-dashboard.css" />
   <link rel="stylesheet" href="../css/profile-completion.css">
@@ -164,6 +185,7 @@ $data = $result->fetch_assoc();
             <span class="label">Dashboard</span>
           </a>
         </li>
+        <?php if ($isVerified): ?>
         <li>
           <a href="./employer-post.php">
             <span class="material-symbols-outlined icon">work</span>
@@ -176,12 +198,20 @@ $data = $result->fetch_assoc();
             <span class="label">Referred Applicants</span>
           </a>
         </li>
-        <!-- <li>
-          <a href="./employer-applications.php">
-            <span class="material-symbols-outlined icon">people</span>
-            <span class="label">Job Applications</span>
+      <?php else: ?>
+        <li class="disabled-link" title="Requires verification">
+          <a href="#" onclick="alert('Your account is not verified yet. Please complete verification to access this feature.'); return false;">
+            <span class="material-symbols-outlined icon">lock</span>
+            <span class="label">Post Job (Locked)</span>
           </a>
-        </li> -->
+        </li>
+        <li class="disabled-link" title="Requires verification">
+          <a href="#" onclick="alert('Your account is not verified yet. Please complete verification to access this feature.'); return false;">
+            <span class="material-symbols-outlined icon">lock</span>
+            <span class="label">Referred Applicants (Locked)</span>
+          </a>
+        </li>
+      <?php endif; ?>
         <li>
           <a href="employer-profile.php">
             <span class="material-symbols-outlined icon">id_card</span>
@@ -279,8 +309,22 @@ $data = $result->fetch_assoc();
           </div>
   
           <div class="verification-status">
-            <div class="status-icon">!</div>
-            <div class="status-text">Verification required</div>
+            <?php if ($status === 'verified'): ?>
+              <div class="status-icon" style="color: green; background-color: lightgreen;">✔</div>
+              <div class="status-text" style="color: green;">Verified</div>
+            <?php elseif ($status === 'pending'): ?>
+              <div class="status-icon" style="color: orange; background-color: lightorange;">!</div>
+              <div class="status-text">Verification required</div>
+            <?php elseif ($status === 'revoked'): ?>
+              <div class="status-icon" style="color: red; background-color: lightred;">✖</div>
+              <div class="status-text">Verification revoked</div>
+            <?php elseif ($status === 'rejected'): ?>
+              <div class="status-icon" style="color: red; background-color: lightred;">✖</div>
+              <div class="status-text">Verification rejected</div>
+            <?php else: ?>
+              <div class="status-icon" style="color: gray;">!</div>
+              <div class="status-text">Unknown status</div>
+            <?php endif; ?>
           </div>
   
           <ul class="benefits-list">
@@ -298,6 +342,7 @@ $data = $result->fetch_assoc();
             <span>Quick Actions</span>
           </h2>
           <div class="actions-grid">
+            <?php if ($isVerified): ?>
             <a class="action-card" href="./employer-post.php">
               <div class="action-icon">
                 <span class="material-symbols-outlined">add</span>
@@ -305,6 +350,16 @@ $data = $result->fetch_assoc();
               <div class="action-title">Post a Job</div>
               <div class="action-desc">Create a new job posting</div>
             </a>
+          <?php else: ?>
+            <div class="action-card disabled-card" title="Requires verification">
+              <div class="action-icon">
+                <span class="material-symbols-outlined">lock</span>
+              </div>
+              <div class="action-title">Post a Job (Locked)</div>
+              <div class="action-desc">Complete verification to post jobs</div>
+            </div>
+          <?php endif; ?> 
+            <?php if ($isVerified): ?>
             <a class="action-card" href="./employer-post.php#jobsPosted">
               <div class="action-icon">
                 <span class="material-symbols-outlined">people</span>
@@ -312,6 +367,15 @@ $data = $result->fetch_assoc();
               <div class="action-title">Review Applicants</div>
               <div class="action-desc">Screen and filter candidates</div>
             </a>
+          <?php else: ?>
+            <div class="action-card disabled-card" title="Requires verification">
+              <div class="action-icon">
+                <span class="material-symbols-outlined">lock</span>
+              </div>
+              <div class="action-title">Review Applicants (Locked)</div>
+              <div class="action-desc">Complete verification to access</div>
+            </div>
+          <?php endif; ?>
             <a class="action-card" href="./employer-profile.php">
               <div class="action-icon">
                 <span class="material-symbols-outlined">apartment</span>

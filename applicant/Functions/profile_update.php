@@ -88,67 +88,80 @@ require "../../connection/dbcon.php";
 
     
     function handleFileUpload($fieldName, $docType, $conn, $applicant_id, $data, $allowedTypes, $maxFileSize) {
-        if (empty($_FILES[$fieldName]['name'])) {
-            return true; 
+    if (empty($_FILES[$fieldName]['name'])) {
+        return true; 
+    }
+
+    $file = $_FILES[$fieldName];
+
+    if ($file['size'] > $maxFileSize) {
+        throw new Exception("{$file['name']} exceeds 10MB limit");
+    }
+
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $fileType = $finfo->file($file['tmp_name']);
+    $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+    $allowedExtensions = ['pdf', 'doc', 'docx', 'jpeg', 'jpg', 'png'];
+    if (!in_array($fileType, $allowedTypes) || !in_array($extension, $allowedExtensions)) {
+        throw new Exception("Invalid file type or extension for {$file['name']}");
+    }
+
+    $storedName = bin2hex(random_bytes(16)) . '.' . $extension;
+
+    $uploadDir = __DIR__ . '/../uploads/documents/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+    $filePath = $uploadDir . $storedName;
+    $relativePath = '../uploads/documents/' . $storedName;
+
+    $oldFileQuery = $conn->prepare("SELECT file_path FROM applicant_documents WHERE applicant_id = ? AND document_type = ?");
+    $oldFileQuery->bind_param("is", $applicant_id, $docType);
+    $oldFileQuery->execute();
+    $oldFileResult = $oldFileQuery->get_result();
+
+    if ($oldFileResult->num_rows > 0) {
+        $oldFile = $oldFileResult->fetch_assoc();
+        $oldPath = __DIR__ . '/' . $oldFile['file_path'];
+
+        if (file_exists($oldPath) && is_file($oldPath)) {
+            unlink($oldPath);
         }
 
-        $file = $_FILES[$fieldName];
+        $deleteStmt = $conn->prepare("DELETE FROM applicant_documents WHERE applicant_id = ? AND document_type = ?");
+        $deleteStmt->bind_param("is", $applicant_id, $docType);
+        $deleteStmt->execute();
+    }
 
-        if ($file['size'] > $maxFileSize) {
-            throw new Exception("{$file['name']} exceeds 10MB limit");
-        }
+    if (!move_uploaded_file($file['tmp_name'], $filePath)) {
+        throw new Exception("Failed to save {$file['name']}");
+    }
 
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        $fileType = $finfo->file($file['tmp_name']);
-        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    $stmt = $conn->prepare("INSERT INTO applicant_documents 
+        (applicant_id, document_type, original_filename, stored_filename, file_path, file_type, file_size, port_link, drive_link, other_link) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-        
-        $allowedExtensions = ['pdf', 'doc', 'docx', 'jpeg', 'jpg', 'png'];
-        if (!in_array($fileType, $allowedTypes) || !in_array($extension, $allowedExtensions)) {
-            throw new Exception("Invalid file type or extension for {$file['name']}");
-        }
+    $stmt->bind_param("isssssisss", 
+        $applicant_id,
+        $docType,
+        $file['name'],
+        $storedName,
+        $relativePath,
+        $fileType,
+        $file['size'],
+        $data['portfolioLink'],
+        $data['gdriveLink'],
+        $data['otherLinks']
+    );
 
-        $storedName = bin2hex(random_bytes(16)) . '.' . $extension;
+    $result = $stmt->execute();
 
-       
-        $uploadDir = __DIR__ . '/../uploads/documents/';
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
-        }
-        $filePath = $uploadDir . $storedName;
-
-        if (!move_uploaded_file($file['tmp_name'], $filePath)) {
-            throw new Exception("Failed to save {$file['name']}");
-        }
-
-        
-        $relativePath = '../uploads/documents/' . $storedName;
-
-        $stmt = $conn->prepare("INSERT INTO applicant_documents 
-                            (applicant_id, document_type, original_filename, stored_filename, file_path, file_type, file_size, port_link, drive_link, other_link) 
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-        $stmt->bind_param("isssssisss", 
-            $applicant_id,
-            $docType,
-            $file['name'],
-            $storedName,
-            $relativePath,
-            $fileType,
-            $file['size'],
-            $data['portfolioLink'],
-            $data['gdriveLink'],
-            $data['otherLinks']
-        );
-
-        return $stmt->execute();
-    
-        if (
+    if (
         !empty($data['portfolioLink']) || 
         !empty($data['gdriveLink']) || 
         !empty($data['otherLinks'])
-        ) 
-        {
+    ) {
         $stmt = $conn->prepare("INSERT INTO applicant_documents 
             (applicant_id, document_type, original_filename, stored_filename, file_path, file_type, file_size, port_link, drive_link, other_link) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -173,7 +186,9 @@ require "../../connection/dbcon.php";
         $stmt->execute();
     }
 
+    return $result;
 }
+
 
     function handleApplicantProfilePictureUpload($conn, $applicant_id, $allowedTypes, $maxFileSize) {
         if (empty($_FILES['profilePicture']['name']) || $_FILES['profilePicture']['error'] !== UPLOAD_ERR_OK) {
