@@ -122,27 +122,27 @@
     }
 
     .bg-primary-light {
-      background: rgba(0, 26, 255, 0.1);
+      /* background: rgba(0, 26, 255, 0.1); */
       color: var(--color-blue-400);
     }
 
     .bg-success-light {
-      background: rgba(16, 185, 129, 0.1);
+      /* background: rgba(16, 185, 129, 0.1); */
       color: var(--success);
     }
 
     .bg-warning-light {
-      background: rgba(245, 158, 11, 0.1);
+      /* background: rgba(245, 158, 11, 0.1); */
       color: var(--warning);
     }
 
     .bg-danger-light {
-      background: rgba(239, 68, 68, 0.1);
+      /* background: rgba(239, 68, 68, 0.1); */
       color: var(--danger);
     }
 
     .bg-purple-light {
-      background: rgba(239, 68, 239, 0.1);
+      /* background: rgba(239, 68, 239, 0.1); */
       color: rgb(185, 0, 185);
     }
   }
@@ -506,7 +506,7 @@
 .sidebar-menu a.disabled:hover::after {
   content: "Complete your profile to unlock";
   position: absolute;
-  left: 110%;
+  left: 50%;
   top: 50%;
   transform: translateY(-50%);
   background: #333;

@@ -1,35 +1,11 @@
 <?php
 require_once '../../auth/functions/check_login.php';
+require_once '../Functions/getinfo.php';
 require_once '../Functions/getName.php';
 
 if (!isset($_SESSION['user_id'])) {
   header("Location: ../../auth/login-signup.php");
   exit();
-}
-$profile_picture_url = '../assets/images/profile.png';
-if (isset($_SESSION['user_id'])) {
-  $applicant_id = $_SESSION['user_id'];
-  $query = "SELECT profile_picture FROM applicant_profile WHERE applicant_id = ?";
-  $stmt = $conn->prepare($query);
-  $stmt->bind_param("i", $applicant_id);
-  $stmt->execute();
-  $result = $stmt->get_result();
-
-  if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    if (!empty($row['profile_picture'])) {
-      $filename = basename($row['profile_picture']);
-      $absolute_path = __DIR__ . '/../uploads/profile_pictures/' . $filename;
-      $web_path = '../uploads/profile_pictures/' . $filename;
-
-      error_log("Checking: " . $absolute_path);
-
-      if (file_exists($absolute_path)) {
-        $profile_picture_url = $web_path;
-      }
-    }
-  }
-  $stmt->close();
 }
 $sql = "SELECT 
             jp.job_id, 
@@ -51,9 +27,7 @@ $sql = "SELECT
 
 $result = $conn->query($sql);
 
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en" data-theme="light" data-state="expanded">
 
@@ -69,56 +43,7 @@ $result = $conn->query($sql);
 </head>
 
 <body>
-  <nav class="navbar">
-    <div class="navbar-left">
-      <div class="left-pos" style="display: flex; width: auto; height: auto">
-        <button class="hamburger">☰</button>
-        <h1>Job Listings</h1>
-      </div>
-      <div class="right-pos">
-        <div class="profile">
-          <img
-            src="<?php echo htmlspecialchars($profile_picture_url); ?>"
-            alt="Profile Picture"
-            class="profile-pic"
-            id="profilePicc" style="width: 50px !important;" />
-          <div class="user-name">
-            <h4><?= $fullName ?></h4>
-            <p>Applicant</p>
-          </div>
-        </div>
 
-        <div class="dropdown-menu" id="dropdownMenu">
-          <div class="dropdown-arrow"></div>
-          <div class="dropdown-header">
-            <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
-            <a class="user-info" href="./applicant-profile.php">
-              <h3><?= $fullName ?></h3>
-              <p>See your profile</p>
-            </a>
-          </div>
-
-          <div class="dropdown-links">
-            <a href="./account-settings.php" class="dropdown-item">
-              <span class="material-symbols-outlined">settings</span>
-              <span>Account Settings</span>
-            </a>
-            <a onclick="toggleTheme()" class="dropdown-item">
-              <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-              <span id="themeLabel">Dark Mode</span>
-            </a>
-
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item logout-item">
-              <span class="material-symbols-outlined icon">logout</span>
-              <span>Log Out</span>
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </nav>
 
   <aside class="sidebar">
     <div class="sidebar-logo">
@@ -126,45 +51,39 @@ $result = $conn->query($sql);
         <img src="../../public/images/pesosmb.png" alt="" />
         <h3>PESO</h3>
       </div>
-      <button class="hamburger"><span class="material-symbols-outlined">dock_to_right</span></button>
+      <button class="hamburger"><i data-lucide="panel-left"></i></button>
     </div>
     <div class="sidebar-options">
       <ul class="sidebar-menu">
         <li>
           <a href="./applicant-dashboard.php">
-            <span class="material-symbols-outlined icon">dashboard</span>
+            <i data-lucide="home" class="icon"></i>
             <span class="label">Dashboard</span>
           </a>
         </li>
         <li>
+          <a href="./applicant-profile.php">
+            <i data-lucide="user" class="icon"></i>
+            <span class="label">My Profile</span>
+          </a>
+        </li>
+        <li>
           <a href="./applicant-applications.php">
-            <span class="material-symbols-outlined icon">work</span>
+            <i data-lucide="briefcase-business" class="icon"></i>
             <span class="label">My Applications</span>
           </a>
         </li>
         <li>
-          <a href="./applicant-job-search.php">
-            <span class="material-symbols-outlined icon">search</span>
+          <a href="./applicant-job-search.php" class="active">
+            <i data-lucide="search" class="icon"></i>
             <span class="label">Job Search</span>
           </a>
         </li>
-        <li>
-          <a href="./applicant-profile.php">
-            <span class="material-symbols-outlined icon">id_card</span>
-            <span class="label">My Profile</span>
-          </a>
-        </li>
-        <!-- <li>
-          <button onclick="toggleTheme()" class="dark-mode-toggle">
-            <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-            <span id="themeLabel">Dark Mode</span>
-          </button>
-        </li> -->
       </ul>
       <ul>
         <li>
           <a href="../../auth/functions/logout.php" class="log-out-btn">
-            <span class="material-symbols-outlined icon">logout</span>
+            <i data-lucide="log-out" class="icon"></i>
             <span class="label">Log Out</span>
           </a>
         </li>
@@ -173,6 +92,56 @@ $result = $conn->query($sql);
   </aside>
 
   <main class="main-content">
+    <nav class="navbar">
+      <div class="navbar-left">
+        <div class="left-pos" style="display: flex; width: auto; height: auto">
+          <button class="hamburger">☰</button>
+          <h1>Job Listings</h1>
+        </div>
+        <div class="right-pos">
+          <div class="profile">
+            <img
+              src="<?php echo htmlspecialchars($profile_picture_url); ?>"
+              alt="Profile Picture"
+              class="profile-pic"
+              id="profilePicc" style="width: 50px !important;" />
+            <div class="user-name">
+              <h4><?= $fullName ?></h4>
+              <p>Applicant</p>
+            </div>
+          </div>
+
+          <div class="dropdown-menu" id="dropdownMenu">
+            <div class="dropdown-arrow"></div>
+            <div class="dropdown-header">
+              <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
+              <a class="user-info" href="./applicant-profile.php">
+                <h3><?= $fullName ?></h3>
+                <p>See your profile</p>
+              </a>
+            </div>
+
+            <div class="dropdown-links">
+              <a href="./account-settings.php" class="dropdown-item">
+                <span class="material-symbols-outlined">settings</span>
+                <span>Account Settings</span>
+              </a>
+              <a onclick="toggleTheme()" class="dropdown-item">
+                <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
+                <span id="themeLabel">Dark Mode</span>
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item logout-item">
+                <span class="material-symbols-outlined icon">logout</span>
+                <span>Log Out</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </nav>
     <div class="container-job-search">
       <!-- <div class="header">
         <h1>Job Listings</h1>
@@ -202,12 +171,14 @@ $result = $conn->query($sql);
         </select>
       </div>
 
-      <div class="job-listings">
+      <div class="job-listings" id="job-listings">
         <?php if ($result->num_rows > 0): ?>
           <?php while ($row = $result->fetch_assoc()): ?>
             <?php
             $jobId = $row['job_id'];
             $status = 'Not Applied';
+
+            // Check if applicant already applied
             $statusSql = "SELECT status FROM job_application WHERE applicant_id = ? AND job_id = ?";
             $stmt = $conn->prepare($statusSql);
             $stmt->bind_param("ii", $applicant_id, $jobId);
@@ -218,8 +189,8 @@ $result = $conn->query($sql);
             }
             $stmt->close();
             ?>
-            <div class="job-card hidden <?= $status ?>
-            " data-field="<?php echo htmlspecialchars($row['category']); ?>">
+
+            <div class="job-card hidden <?= $status ?>" data-field="<?php echo htmlspecialchars($row['category']); ?>">
               <div class="job-field"><?php echo htmlspecialchars($row['category']); ?></div>
 
               <div class="job-header">
@@ -244,13 +215,18 @@ $result = $conn->query($sql);
 
               <div class="job-footer">
                 <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
-                <!-- <p>Status: <strong style="color: <?= $status === 'Referred' ? 'green' : ($status === 'Rejected' ? 'red' : ($status === 'Pending' ? 'orange' : ($status === 'Interview' ? 'blue' : '#555'))); ?>"> <?= htmlspecialchars($status); ?></strong></p> -->
+
                 <?php if ($status === 'Pending' || $status === 'Referred' || $status === 'Rejected' || $status === 'Interview'): ?>
                   <button class="status-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">
                     <?= ($status === 'Pending') ? 'Applied' : 'View Status'; ?>
                   </button>
+
                 <?php else: ?>
-                  <button class="apply-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">Apply Now</button>
+                  <?php if ($progress == 100): ?>
+                    <button class="apply-btn" data-job-id="<?php echo (int)$row['job_id']; ?>">Apply Now</button>
+                  <?php else: ?>
+                    <button class="apply-btn disabled" disabled>Complete Your Profile First</button>
+                  <?php endif; ?>
                 <?php endif; ?>
               </div>
             </div>
@@ -258,8 +234,8 @@ $result = $conn->query($sql);
         <?php else: ?>
           <p>No job postings available.</p>
         <?php endif; ?>
-
       </div>
+
     </div>
 
     <!-- Application Modal -->
@@ -341,11 +317,10 @@ $result = $conn->query($sql);
     </div>
   </main>
 
-  <script src="../js/responsive.js"></script>
-  <script src="../js/drop-down.js"></script>
-  <script src="../js/dark-mode.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../js/responsive.js" defer></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     // Job Field Filter
     const jobFieldFilter = document.getElementById('jobFieldFilter');
@@ -390,8 +365,11 @@ $result = $conn->query($sql);
         closeModal();
       }
     });
-
-    // Form Submission
+    document.querySelectorAll("[data-alert]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        alert("Please complete your profile before applying for a job.");
+      });
+    });
 
 
     // Read More functionality
@@ -409,7 +387,6 @@ $result = $conn->query($sql);
     });
   </script>
   <script>
-    //FOR LAZY LOAD ANIMATION NOT YET FINISHED BECAUSE I NEED AJAX BRUHHHHHHHHHH
     document.addEventListener("DOMContentLoaded", () => {
       const jobCards = document.querySelectorAll(".job-card");
 

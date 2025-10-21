@@ -22,4 +22,41 @@ document.addEventListener("DOMContentLoaded", () => {
   hamburger1.addEventListener("click", () => {
     sidebar.classList.toggle("visible");
   });
+  
+  lucide.createIcons();
+
+  //DROP DOWN
+  const profilePic = document.querySelector(".navbar .profile");
+  const dropdownMenu = document.getElementById("dropdownMenu");
+
+  profilePic.addEventListener("click", function (e) {
+    e.stopPropagation();
+    dropdownMenu.classList.toggle("active");
+  });
+  document.addEventListener("click", function (e) {
+    if (!profilePic.contains(e.target) && !dropdownMenu.contains(e.target)) {
+      dropdownMenu.classList.remove("active");
+    }
+  });
+  dropdownMenu.addEventListener("click", function (e) {
+    e.stopPropagation();
+  });
 });
+//DARK MODE
+function toggleTheme() {
+  const html = document.documentElement;
+  const themeIcon = document.getElementById("themeIcon");
+  const themeLabel = document.getElementById("themeLabel");
+  const currentTheme = html.getAttribute("data-theme");
+  const newTheme = currentTheme === "dark" ? "light" : "dark";
+  html.setAttribute("data-theme", newTheme);
+  console.log("Theme toggled to:", newTheme);
+  localStorage.setItem("theme", newTheme);
+  if (newTheme === "dark") {
+    themeIcon.textContent = "light_mode";
+    themeLabel.textContent = "Light Mode";
+  } else {
+    themeIcon.textContent = "dark_mode";
+    themeLabel.textContent = "Dark Mode";
+  }
+}

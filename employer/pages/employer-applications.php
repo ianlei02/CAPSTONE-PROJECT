@@ -48,68 +48,64 @@ $result = $conn->query($sql);
   <script src="../js/load-saved.js"></script>
   <link rel="stylesheet" href="../css/employer-dashboard.css" />
   <link rel="stylesheet" href="../css/navs.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
 </head>
 
 <body>
-  <nav class="navbar">
-    <div class="navbar-left">
-      <div class="left-pos">
-        <button class="hamburger">☰</button>
-        <h1>Applications</h1>
-      </div>
-      <div class="right-pos">
-        <div class="profile">IAN</div>
-      </div>
-    </div>
-  </nav>
-
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="logo">
-        <img src="../../public/images/pesosmb.png" alt="" />
+        <img src="../../public/smb-images/pesosmb.png" alt="" />
         <h3>PESO</h3>
       </div>
-      <button class="hamburger"><span class="material-symbols-outlined">dock_to_right</span></button>
+      <button class="hamburger"><i data-lucide="panel-left"></i></button>
     </div>
     <div class="sidebar-options">
       <ul class="sidebar-menu">
         <li>
-          <a href="./employer-dashboard.php" >
-            <span class="material-symbols-outlined icon">dashboard</span>
+          <a href="./employer-dashboard.php">
+            <i data-lucide="layout-dashboard" class="icon"></i>
             <span class="label">Dashboard</span>
           </a>
         </li>
         <li>
-          <a href="./employer-post.php">
-            <span class="material-symbols-outlined icon">work</span>
-            <span class="label">Post Job</span>
-          </a>
-        </li>
-        <!-- <li>
-          <a href="./employer-applications.php" class="active">
-            <span class="material-symbols-outlined icon">people</span>
-            <span class="label">Job Applications</span>
-          </a>
-        </li> -->
-        <li>
           <a href="employer-profile.php">
-            <span class="material-symbols-outlined icon">id_card</span>
+            <i data-lucide="id-card" class="icon"></i>
             <span class="label">My Profile</span>
           </a>
         </li>
-        <li>
-          <button onclick="toggleTheme()" class="dark-mode-toggle">
-            <span class="material-symbols-outlined icon" id="themeIcon">dark_mode</span>
-            <span id="themeLabel">Dark Mode</span>
-          </button>
-        </li>
+        <?php if ($isVerified): ?>
+          <li>
+            <a href="./employer-post.php">
+              <i data-lucide="briefcase" class="icon"></i>
+              <span class="label">Post Job</span>
+            </a>
+          </li>
+          <li>
+            <a href="./referred_users.php">
+              <i data-lucide="user-check" class="icon"></i>
+              <span class="label">Referred Applicants</span>
+            </a>
+          </li>
+        <?php else: ?>
+          <li class="disabled-link" title="Requires verification">
+            <a href="#" onclick="alert('Your account is not verified yet. Please complete verification to access this feature.'); return false;">
+              <i data-lucide="lock" class="icon"></i>
+              <span class="label">Post Job (Locked)</span>
+            </a>
+          </li>
+          <li class="disabled-link" title="Requires verification">
+            <a href="#" onclick="alert('Your account is not verified yet. Please complete verification to access this feature.'); return false;">
+              <i data-lucide="lock" class="icon"></i>
+              <span class="label">Referred Applicants (Locked)</span>
+            </a>
+          </li>
+        <?php endif; ?>
       </ul>
       <ul>
         <li>
-          <a href="../../auth/functions/logout.php" class='log-out-btn'>
-            <span class="material-symbols-outlined icon">logout</span>
+          <a href="../../auth/functions/logout.php" class="log-out-btn">
+            <i data-lucide="log-out" class="icon"></i>
             <span class="label">Log Out</span>
           </a>
         </li>
@@ -118,6 +114,17 @@ $result = $conn->query($sql);
   </aside>
 
   <main class="main-content">
+    <nav class="navbar">
+      <div class="navbar-left">
+        <div class="left-pos">
+          <button class="hamburger">☰</button>
+          <h1>Applications</h1>
+        </div>
+        <div class="right-pos">
+          <div class="profile">IAN</div>
+        </div>
+      </div>
+    </nav>
     <div class="job-application-status" style="margin-top: 100px;">
       <h2>Applicant List</h2>
       <table class="job-application-table" id="employerDashboardTable">
@@ -158,8 +165,9 @@ $result = $conn->query($sql);
     </div>
   </main>
 
-  <script src="../js/responsive.js"></script>
-  <script src="../js/dark-mode.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../js/responsive.js" defer></script>
+
 
 </body>
 
