@@ -247,3 +247,7 @@ background: var(--danger-muted);
     grid-template-columns: 1fr;
   }
 }
+
+.swal2-container {
+  z-index: 99999 !important;
+}

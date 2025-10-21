@@ -1,6 +1,8 @@
 <?php
+require_once '../Function/check_login.php';
 require "../../connection/dbcon.php";
 require_once "../../employer/Functions/dss.php";
+
 
 $sql = "SELECT job_id, job_title, job_type, category, salary_range, location, vacancies, description, created_at 
         FROM job_postings 

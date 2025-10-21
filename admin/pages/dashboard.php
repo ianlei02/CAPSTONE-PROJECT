@@ -1,3 +1,8 @@
+<?php
+require_once '../Function/check_login.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 

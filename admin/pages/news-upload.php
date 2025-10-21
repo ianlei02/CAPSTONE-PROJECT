@@ -1,4 +1,5 @@
 <?php
+require_once '../Function/check_login.php';
 require "../../connection/dbcon.php";
 // session_start();
 

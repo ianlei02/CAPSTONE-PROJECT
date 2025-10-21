@@ -1,62 +1,51 @@
 <?php
 session_start();
-require '../../connection/dbcon.php';
+require_once '../../connection/dbcon.php'; 
 
-$username = $_POST['username'] ?? '';
-$password = $_POST['password'] ?? '';
+header('Content-Type: application/json');
 
-if (empty($username) || empty($password) ) {
-    echo json_encode([
-        "status" => "error",
-        "message" => "All fields are required"
-    ]);
-    exit();
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+    exit;
 }
 
-$query = "SELECT admin_ID, username, password FROM admin_account WHERE username = ?";
-$stmt = mysqli_prepare($conn, $query);
+$username = trim($_POST['username'] ?? '');
+$password = trim($_POST['password'] ?? '');
 
-if (!$stmt) {
-    header("Location: ../pages/admin-login.php?error=db_error");
-    exit();
+if (empty($username) || empty($password)) {
+    echo json_encode(['status' => 'error', 'message' => 'Please fill in both fields.']);
+    exit;
 }
 
-mysqli_stmt_bind_param($stmt, "s", $username);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
+$stmt = $conn->prepare("SELECT * FROM admin_account WHERE username = ?");
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
 
+if ($result->num_rows === 1) {
+    $admin = $result->fetch_assoc();
 
+    if (password_verify($password, $admin['password'])) {
 
-if (mysqli_num_rows($result) == 1) {
-    $user = mysqli_fetch_assoc($result);
+        $_SESSION['admin_ID'] = $admin['admin_ID'];
+        $_SESSION['admin_username'] = $admin['username'];
+        $_SESSION['admin_fullname'] = $admin['fullname'];
+        $_SESSION['is_super_admin'] = $admin['is_super_admin'];
+        $_SESSION['role'] = $admin['role'];
 
-if ($password === $user['password']) {
-        
-        $_SESSION['admin_ID'] = $user['admin_ID'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['logged_in'] = true;
-        
-        session_regenerate_id(true);
-        
         echo json_encode([
-            "status" => "success",
-            "message" => "Login successful",
-            "redirect" => "../pages/dashboard.php"
+            'status' => 'success',
+            'message' => 'Login successful!',
+            'redirect' => '../pages/dashboard.php' 
         ]);
     } else {
-         echo json_encode([
-            "status" => "error",
-            "message" => "Invalid username or password"
-            ]);
+        echo json_encode(['status' => 'error', 'message' => 'Incorrect password.']);
     }
 } else {
-    echo json_encode([
-        "status" => "error",
-        "message" => "Invalid username or password"
-    ]);
+    echo json_encode(['status' => 'error', 'message' => 'Username not found.']);
 }
 
-mysqli_stmt_close($stmt);
-mysqli_close($conn);
-
+$stmt->close();
+$conn->close();
 ?>

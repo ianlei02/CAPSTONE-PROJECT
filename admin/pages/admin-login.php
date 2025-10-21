@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Portal | Login</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     :root {
       --primary: oklch(55% 0.15 250);
       --primary-dark: oklch(45% 0.15 250);
-      --primary-light:hsla(0, 0%, 94%, 1.00);
+      --primary-light: hsla(0, 0%, 94%, 1.00);
       --accent: oklch(60% 0.12 280);
       --text: oklch(25% 0.05 250);
       --light-text: oklch(55% 0.05 250);
@@ -57,12 +57,10 @@
       width: 100px;
       height: 100px;
       margin: 0 auto 20px;
-      /* background-color: var(--primary); */
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      /* box-shadow: 0 4px 12px oklch(55% 0.15 250 / 0.2); */
     }
 
     .brand-logo img {
@@ -230,7 +228,6 @@
       margin-top: 2px;
     }
 
-    /* Responsive */
     @media (max-width: 480px) {
       .login-container {
         max-width: 100%;
@@ -317,6 +314,7 @@
   </div>
 
   <script>
+    // Toggle password visibility
     document.getElementById('togglePassword').addEventListener('click', function() {
       const passwordInput = document.getElementById('password');
       const icon = document.getElementById('toggleIcon');
@@ -329,13 +327,12 @@
       }
     });
 
+    // Handle login
     document.getElementById('loginform').addEventListener('submit', async function(e) {
       e.preventDefault();
 
       const submitBtn = this.querySelector('.btn');
       const originalText = submitBtn.textContent;
-      
-      // Show loading state
       submitBtn.textContent = 'Signing In...';
       submitBtn.disabled = true;
 
@@ -347,38 +344,38 @@
           body: formData
         });
 
-        if (!response.ok) throw new Error('Network response was not ok');
-
         const result = await response.json();
 
         if (result.status === 'success') {
-          submitBtn.textContent = 'Success!';
-          submitBtn.style.backgroundColor = 'oklch(50% 0.12 150)'; 
+          Swal.fire({
+            icon: 'success',
+            title: 'Login Successful',
+            text: 'Redirecting to dashboard...',
+            timer: 1500,
+            showConfirmButton: false
+          });
           setTimeout(() => {
             window.location.href = result.redirect;
-          }, 1000);
+          }, 1500);
         } else {
-          submitBtn.textContent = 'Login Failed';
-          submitBtn.style.backgroundColor = 'oklch(50% 0.12 30)';
-          setTimeout(() => {
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-            submitBtn.style.backgroundColor = '';
-          }, 2000);
-          alert(result.message);
-        }
-      } catch (err) {
-        submitBtn.textContent = 'Connection Error';
-        submitBtn.style.backgroundColor = 'oklch(50% 0.12 30)'; 
-        setTimeout(() => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Login Failed',
+            text: result.message
+          });
           submitBtn.textContent = originalText;
           submitBtn.disabled = false;
-          submitBtn.style.backgroundColor = '';
-        }, 2000);
-        alert('Login failed. Please try again.');
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Connection Error',
+          text: 'Unable to connect. Please try again.'
+        });
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
       }
     });
   </script>
 </body>
-
 </html>
