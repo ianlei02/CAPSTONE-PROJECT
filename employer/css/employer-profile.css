@@ -66,8 +66,8 @@
 
 .btn-outline {
   background: transparent;
-  color: white;
-  border: 1px solid white;
+  color: var(--color-blue-400);
+  border: 1px solid currentColor;
 }
 
 .btn-outline:hover {
