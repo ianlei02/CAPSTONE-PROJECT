@@ -157,29 +157,29 @@ require_once '../Function/check_login.php';
         </table>
       </div>
 
-        <div class="table-section">
-      <div class="table-header">
-        <span class="material-symbols-outlined">block</span>
-        <h2>Rejected Employers</h2>
-      </div>
-      <table id="rejectedTable" class="display">
-        <thead>
-          <th>Company Name</th>
-          <th>Contact Person</th>
-          <th>Email</th>
-          <th>Industry</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </thead>
-        <tbody>
-          <!-- Data will be populated by JavaScript -->
-        </tbody>
-      </table>
+      <div class="table-section">
+        <div class="table-header">
+          <span class="material-symbols-outlined">block</span>
+          <h2>Rejected Employers</h2>
+        </div>
+        <table id="rejectedTable" class="display">
+          <thead>
+            <th>Company Name</th>
+            <th>Contact Person</th>
+            <th>Email</th>
+            <th>Industry</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </thead>
+          <tbody>
+            <!-- Data will be populated by JavaScript -->
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 
-  
+
   <!-- Pending Employer Modal -->
   <div id="pendingModal" class="modal">
     <div class="modal-content">
@@ -221,110 +221,110 @@ require_once '../Function/check_login.php';
         <div class="documents-section">
           <h3 class="section-title"><span class="material-symbols-outlined">description</span> Documents</h3>
           <div class="documents-list">
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Business License
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Business License
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="p-business-license-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="p-business-license-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
             </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="p-business-license-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="p-business-license-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
 
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Tax Certificate
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Tax Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="p-tax-certificate-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="p-tax-certificate-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
             </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="p-tax-certificate-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="p-tax-certificate-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
 
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Employer ID Proof
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Employer ID Proof
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="p-id-proof-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="p-id-proof-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
             </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="p-id-proof-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="p-id-proof-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
 
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Company Profile
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Company Profile
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="p-company-profile-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="p-company-profile-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
             </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="p-company-profile-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="p-company-profile-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
 
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              DOLE Certificate
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                DOLE Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="p-dole-cert-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="p-dole-cert-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
             </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="p-dole-cert-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="p-dole-cert-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
 
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Migrant Certificate
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Migrant Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="p-migrant-cert-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="p-migrant-cert-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
             </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="p-migrant-cert-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="p-migrant-cert-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
 
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              PhilJob Certificate
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                PhilJob Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="p-philjob-cert-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="p-philjob-cert-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
             </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="p-philjob-cert-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="p-philjob-cert-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
 
           </div>
         </div>
@@ -387,110 +387,110 @@ require_once '../Function/check_login.php';
         <div class="documents-section">
           <h3 class="section-title"><span class="material-symbols-outlined">description</span> Documents</h3>
           <div class="documents-list">
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Business License
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Business License
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="v-business-license-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="v-business-license-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
             </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="v-business-license-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="v-business-license-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
 
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Tax Certificate
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Tax Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="v-tax-certificate-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="v-tax-certificate-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
             </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="v-tax-certificate-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="v-tax-certificate-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
 
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Employer ID Proof
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Employer ID Proof
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="v-id-proof-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="v-id-proof-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
             </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="v-id-proof-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="v-id-proof-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
 
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Company Profile
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Company Profile
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="v-company-profile-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="v-company-profile-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
             </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="v-company-profile-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="v-company-profile-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
 
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              DOLE Certificate
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                DOLE Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="v-dole-cert-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="v-dole-cert-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
             </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="v-dole-cert-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="v-dole-cert-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
 
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Migrant Certificate
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Migrant Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="v-migrant-cert-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="v-migrant-cert-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
             </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="v-migrant-cert-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="v-migrant-cert-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
 
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              PhilJob Certificate
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                PhilJob Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="v-philjob-cert-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="v-philjob-cert-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
             </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="v-philjob-cert-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="v-philjob-cert-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
 
           </div>
         </div>
@@ -510,358 +510,358 @@ require_once '../Function/check_login.php';
 
   <!-- Revoked Employer Modal -->
   <div id="revokedModal" class="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2><span class="material-symbols-outlined">block</span>Revoked Company Details</h2>
-      <button class="close">&times;</button>
-    </div>
-    <div class="modal-body">
-      <div class="profile-section">
-        <h3 class="section-title"><span class="material-symbols-outlined">info</span> Company Profile</h3>
-        <div class="profile-details">
-          <div class="detail-item">
-            <label>Company Name</label>
-            <p id="r-modal-company-name">Revoked Company Inc.</p>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><span class="material-symbols-outlined">block</span>Revoked Company Details</h2>
+        <button class="close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="profile-section">
+          <h3 class="section-title"><span class="material-symbols-outlined">info</span> Company Profile</h3>
+          <div class="profile-details">
+            <div class="detail-item">
+              <label>Company Name</label>
+              <p id="r-modal-company-name">Revoked Company Inc.</p>
+            </div>
+            <div class="detail-item">
+              <label>Address</label>
+              <p id="r-modal-address">789 Restricted St, Los Angeles, CA</p>
+            </div>
+            <div class="detail-item">
+              <label>Industry</label>
+              <p id="r-modal-industry">Consulting</p>
+            </div>
+            <div class="detail-item">
+              <label>Contact Person</label>
+              <p id="r-modal-contact-person">Michael Brown</p>
+            </div>
+            <div class="detail-item">
+              <label>Email</label>
+              <p id="r-modal-email">michael@revokedcompany.com</p>
+            </div>
+            <div class="detail-item">
+              <label>Phone</label>
+              <p id="r-modal-phone">+1 (555) 987-6543</p>
+            </div>
           </div>
-          <div class="detail-item">
-            <label>Address</label>
-            <p id="r-modal-address">789 Restricted St, Los Angeles, CA</p>
-          </div>
-          <div class="detail-item">
-            <label>Industry</label>
-            <p id="r-modal-industry">Consulting</p>
-          </div>
-          <div class="detail-item">
-            <label>Contact Person</label>
-            <p id="r-modal-contact-person">Michael Brown</p>
-          </div>
-          <div class="detail-item">
-            <label>Email</label>
-            <p id="r-modal-email">michael@revokedcompany.com</p>
-          </div>
-          <div class="detail-item">
-            <label>Phone</label>
-            <p id="r-modal-phone">+1 (555) 987-6543</p>
+        </div>
+
+        <div class="documents-section">
+          <h3 class="section-title"><span class="material-symbols-outlined">description</span> Documents</h3>
+          <div class="documents-list">
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Business License
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="r-business-license-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="r-business-license-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
+            </div>
+
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Tax Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="r-tax-certificate-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="r-tax-certificate-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
+            </div>
+
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Employer ID Proof
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="r-id-proof-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="r-id-proof-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
+            </div>
+
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Company Profile
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="r-company-profile-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="r-company-profile-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
+            </div>
+
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                DOLE Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="r-dole-cert-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="r-dole-cert-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
+            </div>
+
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Migrant Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="r-migrant-cert-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="r-migrant-cert-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
+            </div>
+
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                PhilJob Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="r-philjob-cert-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="r-philjob-cert-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
 
-      <div class="documents-section">
-        <h3 class="section-title"><span class="material-symbols-outlined">description</span> Documents</h3>
-        <div class="documents-list">
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Business License
-            </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="r-business-license-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="r-business-license-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
-
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Tax Certificate
-            </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="r-tax-certificate-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="r-tax-certificate-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
-
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Employer ID Proof
-            </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="r-id-proof-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="r-id-proof-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
-
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Company Profile
-            </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="r-company-profile-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="r-company-profile-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
-
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              DOLE Certificate
-            </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="r-dole-cert-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="r-dole-cert-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
-
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Migrant Certificate
-            </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="r-migrant-cert-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="r-migrant-cert-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
-
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              PhilJob Certificate
-            </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="r-philjob-cert-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="r-philjob-cert-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
-
-        </div>
+      <div class="modal-footer">
+        <button class="btn btn-restore">
+          <span class="material-symbols-outlined">autorenew</span>
+          Restore Verification
+        </button>
+        <button class="btn btn-close">
+          <span class="material-symbols-outlined">close</span>
+          Close
+        </button>
       </div>
     </div>
-
-    <div class="modal-footer">
-      <button class="btn btn-restore">
-        <span class="material-symbols-outlined">autorenew</span>
-        Restore Verification
-      </button>
-      <button class="btn btn-close">
-        <span class="material-symbols-outlined">close</span>
-        Close
-      </button>
-    </div>
-  </div>
   </div>
 
   <!-- Rejected Employer Modal -->
   <div id="rejectedModal" class="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2><span class="material-symbols-outlined">block</span>Rejected Company Details</h2>
-      <button class="close">&times;</button>
-    </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><span class="material-symbols-outlined">block</span>Rejected Company Details</h2>
+        <button class="close">&times;</button>
+      </div>
 
-    <div class="modal-body">
-      <div class="profile-section">
-        <h3 class="section-title">
-          <span class="material-symbols-outlined">info</span> Company Profile
-        </h3>
-        <div class="profile-details">
-          <div class="detail-item">
-            <label>Company Name</label>
-            <p id="rej-modal-company-name">Rejected Company Inc.</p>
+      <div class="modal-body">
+        <div class="profile-section">
+          <h3 class="section-title">
+            <span class="material-symbols-outlined">info</span> Company Profile
+          </h3>
+          <div class="profile-details">
+            <div class="detail-item">
+              <label>Company Name</label>
+              <p id="rej-modal-company-name">Rejected Company Inc.</p>
+            </div>
+            <div class="detail-item">
+              <label>Address</label>
+              <p id="rej-modal-address">123 Denied Ave, Seattle, WA</p>
+            </div>
+            <div class="detail-item">
+              <label>Industry</label>
+              <p id="rej-modal-industry">Manufacturing</p>
+            </div>
+            <div class="detail-item">
+              <label>Contact Person</label>
+              <p id="rej-modal-contact-person">Sarah Lee</p>
+            </div>
+            <div class="detail-item">
+              <label>Email</label>
+              <p id="rej-modal-email">sarah@rejectedcompany.com</p>
+            </div>
+            <div class="detail-item">
+              <label>Phone</label>
+              <p id="rej-modal-phone">+1 (555) 222-7890</p>
+            </div>
           </div>
-          <div class="detail-item">
-            <label>Address</label>
-            <p id="rej-modal-address">123 Denied Ave, Seattle, WA</p>
-          </div>
-          <div class="detail-item">
-            <label>Industry</label>
-            <p id="rej-modal-industry">Manufacturing</p>
-          </div>
-          <div class="detail-item">
-            <label>Contact Person</label>
-            <p id="rej-modal-contact-person">Sarah Lee</p>
-          </div>
-          <div class="detail-item">
-            <label>Email</label>
-            <p id="rej-modal-email">sarah@rejectedcompany.com</p>
-          </div>
-          <div class="detail-item">
-            <label>Phone</label>
-            <p id="rej-modal-phone">+1 (555) 222-7890</p>
+        </div>
+
+        <div class="documents-section">
+          <h3 class="section-title">
+            <span class="material-symbols-outlined">description</span> Documents
+          </h3>
+          <div class="documents-list">
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Business License
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="rj-business-license-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="rj-business-license-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
+            </div>
+
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Tax Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="rj-tax-certificate-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="rj-tax-certificate-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
+            </div>
+
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Employer ID Proof
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="rj-id-proof-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="rj-id-proof-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
+            </div>
+
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Company Profile
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="rj-company-profile-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="rj-company-profile-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
+            </div>
+
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                DOLE Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="rj-dole-cert-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="rj-dole-cert-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
+            </div>
+
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                Migrant Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="rj-migrant-cert-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="rj-migrant-cert-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
+            </div>
+
+            <div class="document-item">
+              <div class="document-name">
+                <span class="material-symbols-outlined">description</span>
+                PhilJob Certificate
+              </div>
+              <div class="document-actions">
+                <button class="btn-doc btn-view-doc" id="rj-philjob-cert-view">
+                  <span class="material-symbols-outlined">visibility</span> View
+                </button>
+                <button class="btn-doc btn-download" id="rj-philjob-cert-download">
+                  <span class="material-symbols-outlined">download</span> Download
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
 
-      <div class="documents-section">
-        <h3 class="section-title">
-          <span class="material-symbols-outlined">description</span> Documents
-        </h3>
-        <div class="documents-list">
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Business License
-            </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="rj-business-license-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="rj-business-license-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
-
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Tax Certificate
-            </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="rj-tax-certificate-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="rj-tax-certificate-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
-
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Employer ID Proof
-            </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="rj-id-proof-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="rj-id-proof-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
-
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Company Profile
-            </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="rj-company-profile-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="rj-company-profile-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
-
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              DOLE Certificate
-            </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="rj-dole-cert-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="rj-dole-cert-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
-
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              Migrant Certificate
-            </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="rj-migrant-cert-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="rj-migrant-cert-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
-
-          <div class="document-item">
-            <div class="document-name">
-              <span class="material-symbols-outlined">description</span>
-              PhilJob Certificate
-            </div>
-            <div class="document-actions">
-              <button class="btn-doc btn-view-doc" id="rj-philjob-cert-view">
-                <span class="material-symbols-outlined">visibility</span> View
-              </button>
-              <button class="btn-doc btn-download" id="rj-philjob-cert-download">
-                <span class="material-symbols-outlined">download</span> Download
-              </button>
-            </div>
-          </div>
-
-        </div>
+      <div class="modal-footer">
+        <button class="btn btn-restored">
+          <span class="material-symbols-outlined">autorenew</span>
+          Restore Employer
+        </button>
+        <button class="btn btn-close">
+          <span class="material-symbols-outlined">close</span>
+          Close
+        </button>
       </div>
     </div>
-
-    <div class="modal-footer">
-      <button class="btn btn-restored">
-        <span class="material-symbols-outlined">autorenew</span>
-        Restore Employer
-      </button>
-      <button class="btn btn-close">
-        <span class="material-symbols-outlined">close</span>
-        Close
-      </button>
-    </div>
-  </div>
   </div>
 
   <script src="../assets/JS_JQUERY/jquery-3.7.1.min.js"></script>
   <script src="../assets/library/datatable/dataTables.js"></script>
   <script src="../js/table-init.js"></script>
   <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    fetch("../Function/fetch-employer.php")
-      .then(response => response.json())
-      .then(data => {
-        console.log("fetch result:", data);
+    document.addEventListener("DOMContentLoaded", function() {
+      fetch("../Function/fetch-employer.php")
+        .then(response => response.json())
+        .then(data => {
+          console.log("fetch result:", data);
 
-        if (!data.success) {
-          console.error(data.message || "fetch returned success:false");
-          return;
-        }
+          if (!data.success) {
+            console.error(data.message || "fetch returned success:false");
+            return;
+          }
 
-        const pendingTableBody = document.querySelector("#pendingTable tbody");
-        const verifiedTableBody = document.querySelector("#verifiedTable tbody");
+          const pendingTableBody = document.querySelector("#pendingTable tbody");
+          const verifiedTableBody = document.querySelector("#verifiedTable tbody");
 
-        if (!pendingTableBody) console.error("Pending table tbody not found");
-        if (!verifiedTableBody) console.error("Verified table tbody not found");
+          if (!pendingTableBody) console.error("Pending table tbody not found");
+          if (!verifiedTableBody) console.error("Verified table tbody not found");
 
-        if (Array.isArray(data.pending)) {
-          pendingTableBody.innerHTML = data.pending.map(emp => `
+          if (Array.isArray(data.pending)) {
+            pendingTableBody.innerHTML = data.pending.map(emp => `
             <tr>
               <td>${emp.company_name}</td>
               <td>${emp.contact_person}</td>
@@ -875,11 +875,11 @@ require_once '../Function/check_login.php';
               </td>
             </tr>
           `).join("");
-        }
+          }
 
-        const verifiedData = data.verified || [];
-        if (Array.isArray(verifiedData)) {
-          verifiedTableBody.innerHTML = verifiedData.map(emp => `
+          const verifiedData = data.verified || [];
+          if (Array.isArray(verifiedData)) {
+            verifiedTableBody.innerHTML = verifiedData.map(emp => `
             <tr>
               <td>${emp.company_name}</td>
               <td>${emp.contact_person}</td>
@@ -894,12 +894,12 @@ require_once '../Function/check_login.php';
               </td>
             </tr>
           `).join("");
-        }
+          }
 
-        const revokedTableBody = document.querySelector("#revokedTable tbody");
-        const revokedData = data.revoked || [];
-        if (Array.isArray(revokedData)) {
-          revokedTableBody.innerHTML = revokedData.map(emp => `
+          const revokedTableBody = document.querySelector("#revokedTable tbody");
+          const revokedData = data.revoked || [];
+          if (Array.isArray(revokedData)) {
+            revokedTableBody.innerHTML = revokedData.map(emp => `
             <tr>
               <td>${emp.company_name}</td>
               <td>${emp.contact_person}</td>
@@ -916,12 +916,12 @@ require_once '../Function/check_login.php';
               </td>
             </tr>
           `).join("");
-        }
+          }
 
-        const rejectedData = data.rejected || [];
-        if (Array.isArray(rejectedData)) {
-          const rejectedTableBody = document.querySelector("#rejectedTable tbody");
-          rejectedTableBody.innerHTML = rejectedData.map(emp => `
+          const rejectedData = data.rejected || [];
+          if (Array.isArray(rejectedData)) {
+            const rejectedTableBody = document.querySelector("#rejectedTable tbody");
+            rejectedTableBody.innerHTML = rejectedData.map(emp => `
             <tr>
               <td>${emp.company_name}</td>
               <td>${emp.contact_person}</td>
@@ -936,112 +936,114 @@ require_once '../Function/check_login.php';
               </td>
             </tr>
           `).join("");
-        }
-        
-        document.querySelectorAll(".view-btn").forEach(btn => {
-        btn.addEventListener("click", function() {
-          const emp = JSON.parse(this.dataset.company);
-          const type = this.dataset.type;
+          }
 
-          if (type === "pending") {
-            openPendingModal(emp);
-          } else if (type === "verified") {
-            openVerifiedModal(emp);
-          } else if (type === "revoked") {
-            openRevokedModal(emp);
-          } else if (type === "rejected") 
-            openRejectedModal(emp);
+          document.querySelectorAll(".view-btn").forEach(btn => {
+            btn.addEventListener("click", function() {
+              const emp = JSON.parse(this.dataset.company);
+              const type = this.dataset.type;
+
+              if (type === "pending") {
+                openPendingModal(emp);
+              } else if (type === "verified") {
+                openVerifiedModal(emp);
+              } else if (type === "revoked") {
+                openRevokedModal(emp);
+              } else if (type === "rejected")
+                openRejectedModal(emp);
+            });
           });
-        });
 
-      })
-      .catch(error => console.error("Error fetching employer data:", error));
+        })
+        .catch(error => console.error("Error fetching employer data:", error));
 
-    function openPendingModal(emp) {
-      document.getElementById("modal-company-name").textContent = emp.company_name;
-      document.getElementById("modal-contact-person").textContent = emp.contact_person;
-      document.getElementById("modal-email").textContent = emp.email;
-      document.getElementById("modal-address").textContent = emp.address;
-      document.getElementById("modal-industry").textContent = emp.industry;
-      document.getElementById("modal-phone").textContent = emp.contact_mobile;
+      function openPendingModal(emp) {
+        document.getElementById("modal-company-name").textContent = emp.company_name;
+        document.getElementById("modal-contact-person").textContent = emp.contact_person;
+        document.getElementById("modal-email").textContent = emp.email;
+        document.getElementById("modal-address").textContent = emp.address;
+        document.getElementById("modal-industry").textContent = emp.industry;
+        document.getElementById("modal-phone").textContent = emp.contact_mobile;
 
-      setDocumentButton("p-business-license", emp.business_permit);
-      setDocumentButton("p-tax-certificate", emp.bir_certification);
-      setDocumentButton("p-id-proof", emp.employer_profile);
-      setDocumentButton("p-company-profile", emp.company_profile);
-      setDocumentButton("p-dole-cert", emp.dole_certification);
-      setDocumentButton("p-migrant-cert", emp.migrant_certification);
-      setDocumentButton("p-philjob-cert", emp.philjob_certification);
+        setDocumentButton("p-business-license", emp.business_permit);
+        setDocumentButton("p-tax-certificate", emp.bir_certification);
+        setDocumentButton("p-id-proof", emp.employer_profile);
+        setDocumentButton("p-company-profile", emp.company_profile);
+        setDocumentButton("p-dole-cert", emp.dole_certification);
+        setDocumentButton("p-migrant-cert", emp.migrant_certification);
+        setDocumentButton("p-philjob-cert", emp.philjob_certification);
 
-      const modal = document.getElementById("pendingModal"); modal.style.display = "flex";
-      const content = modal.querySelector(".modal-content");
-      if (content) content.classList.add("modal-show");
-    }
+        const modal = document.getElementById("pendingModal");
+        modal.style.display = "flex";
+        const content = modal.querySelector(".modal-content");
+        if (content) content.classList.add("modal-show");
+      }
 
-    function openVerifiedModal(emp) {
-      document.getElementById("v-modal-company-name").textContent = emp.company_name;
-      document.getElementById("v-modal-contact-person").textContent = emp.contact_person;
-      document.getElementById("v-modal-email").textContent = emp.email;
-      document.getElementById("v-modal-address").textContent = emp.address;
-      document.getElementById("v-modal-industry").textContent = emp.industry;
-      document.getElementById("v-modal-phone").textContent = emp.contact_mobile;
+      function openVerifiedModal(emp) {
+        document.getElementById("v-modal-company-name").textContent = emp.company_name;
+        document.getElementById("v-modal-contact-person").textContent = emp.contact_person;
+        document.getElementById("v-modal-email").textContent = emp.email;
+        document.getElementById("v-modal-address").textContent = emp.address;
+        document.getElementById("v-modal-industry").textContent = emp.industry;
+        document.getElementById("v-modal-phone").textContent = emp.contact_mobile;
 
-      setDocumentButton("v-business-license", emp.business_permit);
-      setDocumentButton("v-tax-certificate", emp.bir_certification);
-      setDocumentButton("v-id-proof", emp.employer_profile);
-      setDocumentButton("v-company-profile", emp.company_profile);
-      setDocumentButton("v-dole-cert", emp.dole_certification);
-      setDocumentButton("v-migrant-cert", emp.migrant_certification);
-      setDocumentButton("v-philjob-cert", emp.philjob_certification);
+        setDocumentButton("v-business-license", emp.business_permit);
+        setDocumentButton("v-tax-certificate", emp.bir_certification);
+        setDocumentButton("v-id-proof", emp.employer_profile);
+        setDocumentButton("v-company-profile", emp.company_profile);
+        setDocumentButton("v-dole-cert", emp.dole_certification);
+        setDocumentButton("v-migrant-cert", emp.migrant_certification);
+        setDocumentButton("v-philjob-cert", emp.philjob_certification);
 
-      const modal = document.getElementById("verifiedModal"); modal.style.display = "flex";
-      const content = modal.querySelector(".modal-content");
-      if (content) content.classList.add("modal-show");
-    }
+        const modal = document.getElementById("verifiedModal");
+        modal.style.display = "flex";
+        const content = modal.querySelector(".modal-content");
+        if (content) content.classList.add("modal-show");
+      }
 
-    function openRevokedModal(emp) {
-      document.getElementById("r-modal-company-name").textContent = emp.company_name;
-      document.getElementById("r-modal-contact-person").textContent = emp.contact_person;
-      document.getElementById("r-modal-email").textContent = emp.email;
-      document.getElementById("r-modal-address").textContent = emp.address;
-      document.getElementById("r-modal-industry").textContent = emp.industry;
-      document.getElementById("r-modal-phone").textContent = emp.contact_mobile;
+      function openRevokedModal(emp) {
+        document.getElementById("r-modal-company-name").textContent = emp.company_name;
+        document.getElementById("r-modal-contact-person").textContent = emp.contact_person;
+        document.getElementById("r-modal-email").textContent = emp.email;
+        document.getElementById("r-modal-address").textContent = emp.address;
+        document.getElementById("r-modal-industry").textContent = emp.industry;
+        document.getElementById("r-modal-phone").textContent = emp.contact_mobile;
 
-      setDocumentButton("r-business-license", emp.business_permit);
-      setDocumentButton("r-tax-certificate", emp.bir_certification);
-      setDocumentButton("r-id-proof", emp.employer_profile);
-      setDocumentButton("r-company-profile", emp.company_profile);
-      setDocumentButton("r-dole-cert", emp.dole_certification);
-      setDocumentButton("r-migrant-cert", emp.migrant_certification);
-      setDocumentButton("r-philjob-cert", emp.philjob_certification);
+        setDocumentButton("r-business-license", emp.business_permit);
+        setDocumentButton("r-tax-certificate", emp.bir_certification);
+        setDocumentButton("r-id-proof", emp.employer_profile);
+        setDocumentButton("r-company-profile", emp.company_profile);
+        setDocumentButton("r-dole-cert", emp.dole_certification);
+        setDocumentButton("r-migrant-cert", emp.migrant_certification);
+        setDocumentButton("r-philjob-cert", emp.philjob_certification);
 
-      const modal = document.getElementById("revokedModal");
-      modal.style.display = "flex";
-      const content = modal.querySelector(".modal-content");
-      if (content) content.classList.add("modal-show");
-    }
+        const modal = document.getElementById("revokedModal");
+        modal.style.display = "flex";
+        const content = modal.querySelector(".modal-content");
+        if (content) content.classList.add("modal-show");
+      }
 
-    function openRejectedModal(emp) {
-      document.getElementById("rej-modal-company-name").textContent = emp.company_name;
-      document.getElementById("rej-modal-contact-person").textContent = emp.contact_person;
-      document.getElementById("rej-modal-email").textContent = emp.email;
-      document.getElementById("rej-modal-address").textContent = emp.address;
-      document.getElementById("rej-modal-industry").textContent = emp.industry;
-      document.getElementById("rej-modal-phone").textContent = emp.contact_mobile;
+      function openRejectedModal(emp) {
+        document.getElementById("rej-modal-company-name").textContent = emp.company_name;
+        document.getElementById("rej-modal-contact-person").textContent = emp.contact_person;
+        document.getElementById("rej-modal-email").textContent = emp.email;
+        document.getElementById("rej-modal-address").textContent = emp.address;
+        document.getElementById("rej-modal-industry").textContent = emp.industry;
+        document.getElementById("rej-modal-phone").textContent = emp.contact_mobile;
 
-      setDocumentButton("rj-business-license", emp.business_permit);
-      setDocumentButton("rj-tax-certificate", emp.bir_certification);
-      setDocumentButton("rj-id-proof", emp.employer_profile);
-      setDocumentButton("rj-company-profile", emp.company_profile);
-      setDocumentButton("rj-dole-cert", emp.dole_certification);
-      setDocumentButton("rj-migrant-cert", emp.migrant_certification);
-      setDocumentButton("rj-philjob-cert", emp.philjob_certification);
+        setDocumentButton("rj-business-license", emp.business_permit);
+        setDocumentButton("rj-tax-certificate", emp.bir_certification);
+        setDocumentButton("rj-id-proof", emp.employer_profile);
+        setDocumentButton("rj-company-profile", emp.company_profile);
+        setDocumentButton("rj-dole-cert", emp.dole_certification);
+        setDocumentButton("rj-migrant-cert", emp.migrant_certification);
+        setDocumentButton("rj-philjob-cert", emp.philjob_certification);
 
-      const modal = document.getElementById("rejectedModal");
-      modal.style.display = "flex";
-      const content = modal.querySelector(".modal-content");
-      if (content) content.classList.add("modal-show");
-    }
+        const modal = document.getElementById("rejectedModal");
+        modal.style.display = "flex";
+        const content = modal.querySelector(".modal-content");
+        if (content) content.classList.add("modal-show");
+      }
 
       function setDocumentButton(docType, filePath) {
         const viewBtn = document.querySelector(`#${docType}-view`);
@@ -1076,81 +1078,90 @@ require_once '../Function/check_login.php';
           };
         }
       }
-    document.querySelectorAll(".modal .close, .btn-close").forEach(btn => {
-    btn.addEventListener("click", function() {
-      const modal = this.closest(".modal");
-      const content = modal.querySelector(".modal-content");
-      if (content) content.classList.remove("modal-show");
-      modal.style.display = "none";
+      document.querySelectorAll(".modal .close, .btn-close").forEach(btn => {
+        btn.addEventListener("click", function() {
+          const modal = this.closest(".modal");
+          const content = modal.querySelector(".modal-content");
+          if (content) content.classList.remove("modal-show");
+          modal.style.display = "none";
+        });
+      });
     });
-  });
-  });
   </script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-  
-    function updateEmployerStatus(email, status) {
-      fetch("../Function/update-employer-status.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ email, status })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          alert(data.message);
-          if (status === "verify" || status === "pending") {
-            document.querySelector('#pendingModal .modal-content').classList.remove('modal-show');
-            setTimeout(() => {
-              document.getElementById('pendingModal').style.display = 'none';
-            }, 300);
-          } else if (status === "revoked") {
-            document.querySelector('#verifiedModal .modal-content').classList.remove('modal-show');
-            setTimeout(() => {
-              document.getElementById('verifiedModal').style.display = 'none';
-            }, 300);
-          } else if (status === "restore") {
-            const modal = document.querySelector('#revokedModal');
-            modal.querySelector('.modal-content').classList.remove('modal-show');
-            setTimeout(() => { modal.style.display = 'none'; }, 300);
-          } else if (status === "rejected") {
-            const modal = document.querySelector('#revokedModal');
-            modal.querySelector('.modal-content').classList.remove('modal-show');
-            setTimeout(() => { modal.style.display = 'none'; }, 300);
-          }
-          setTimeout(() => location.reload(), 500);
-        } else {
-          alert("❌ " + data.message);
-        }
-      })
-      .catch(err => console.error("Error:", err));
-    }
-    document.querySelector('.btn-verify').addEventListener('click', function() {
-      const email = document.getElementById("modal-email").textContent;
-      updateEmployerStatus(email, "verified");
-    });
 
-    document.querySelector('.btn-reject').addEventListener('click', function() {
-      const email = document.getElementById("modal-email").textContent;
-      updateEmployerStatus(email, "revoked");
-    });
+      function updateEmployerStatus(email, status) {
+        fetch("../Function/update-employer-status.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams({
+              email,
+              status
+            })
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              alert(data.message);
+              if (status === "verify" || status === "pending") {
+                document.querySelector('#pendingModal .modal-content').classList.remove('modal-show');
+                setTimeout(() => {
+                  document.getElementById('pendingModal').style.display = 'none';
+                }, 300);
+              } else if (status === "revoked") {
+                document.querySelector('#verifiedModal .modal-content').classList.remove('modal-show');
+                setTimeout(() => {
+                  document.getElementById('verifiedModal').style.display = 'none';
+                }, 300);
+              } else if (status === "restore") {
+                const modal = document.querySelector('#revokedModal');
+                modal.querySelector('.modal-content').classList.remove('modal-show');
+                setTimeout(() => {
+                  modal.style.display = 'none';
+                }, 300);
+              } else if (status === "rejected") {
+                const modal = document.querySelector('#revokedModal');
+                modal.querySelector('.modal-content').classList.remove('modal-show');
+                setTimeout(() => {
+                  modal.style.display = 'none';
+                }, 300);
+              }
+              setTimeout(() => location.reload(), 500);
+            } else {
+              alert("❌ " + data.message);
+            }
+          })
+          .catch(err => console.error("Error:", err));
+      }
+      document.querySelector('.btn-verify').addEventListener('click', function() {
+        const email = document.getElementById("modal-email").textContent;
+        updateEmployerStatus(email, "verified");
+      });
 
-    document.querySelector('.btn-revoke').addEventListener('click', function() {
-      const email = document.getElementById("v-modal-email").textContent;
-      updateEmployerStatus(email, "revoked");
-    });
+      document.querySelector('.btn-reject').addEventListener('click', function() {
+        const email = document.getElementById("modal-email").textContent;
+        updateEmployerStatus(email, "revoked");
+      });
 
-    document.querySelector('.btn-restore')?.addEventListener('click', function() {
-    const email = document.getElementById("r-modal-email").textContent;
-    updateEmployerStatus(email, "verified");
-    });
+      document.querySelector('.btn-revoke').addEventListener('click', function() {
+        const email = document.getElementById("v-modal-email").textContent;
+        updateEmployerStatus(email, "revoked");
+      });
 
-    document.querySelector('.btn-restored')?.addEventListener('click', function() {
-      const email = document.getElementById("rej-modal-email").textContent;
-      updateEmployerStatus(email, "pending");
-    });
+      document.querySelector('.btn-restore')?.addEventListener('click', function() {
+        const email = document.getElementById("r-modal-email").textContent;
+        updateEmployerStatus(email, "verified");
+      });
 
-  });
+      document.querySelector('.btn-restored')?.addEventListener('click', function() {
+        const email = document.getElementById("rej-modal-email").textContent;
+        updateEmployerStatus(email, "pending");
+      });
+
+    });
   </script>
 
 </body>

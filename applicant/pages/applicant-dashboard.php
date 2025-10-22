@@ -17,8 +17,6 @@ require_once '../Functions/getName.php';
   <link rel="stylesheet" href="../css/profile-completion.css">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
-
-
 </head>
 
 <body>
@@ -71,13 +69,18 @@ require_once '../Functions/getName.php';
   <main class="main-content">
     <nav class="navbar">
       <div class="navbar-left">
-        <div class="left-pos" style="display: flex; width: auto; height: auto">
+        <div class="left-pos">
           <button class="hamburger">☰</button>
           <h1>Dashboard</h1>
         </div>
 
         <div class="right-pos">
-
+          <div id="notifBtn">
+            <i id="notifIcon" data-lucide="bell"></i>
+            <span id="notifCount">0</span>
+            <div id="notifList">
+            </div>
+          </div>
           <div class="profile">
             <img
               src="<?php echo htmlspecialchars($profile_picture_url); ?>"
@@ -89,9 +92,7 @@ require_once '../Functions/getName.php';
               <p>Applicant</p>
             </div>
           </div>
-
           <div class="dropdown-menu" id="dropdownMenu">
-            <div class="dropdown-arrow"></div>
             <div class="dropdown-header">
               <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile Picture">
               <a class="user-info" href="./applicant-profile.php">
@@ -99,7 +100,6 @@ require_once '../Functions/getName.php';
                 <p>See your profile</p>
               </a>
             </div>
-
             <div class="dropdown-links">
               <a href="./account-settings.php" class="dropdown-item">
                 <span class="material-symbols-outlined">settings</span>
@@ -116,13 +116,9 @@ require_once '../Functions/getName.php';
                 <span>Log Out</span>
               </a>
             </div>
+            <div class="dropdown-arrow"></div>
           </div>
-          <div id="notifBtn">
-            <i id="notifIcon" data-lucide="bell"></i>
-            <span id="notifCount">0</span>
-            <div id="notifList">
-            </div>
-          </div>
+
         </div>
       </div>
 
@@ -360,8 +356,8 @@ require_once '../Functions/getName.php';
     const notifCount = document.getElementById('notifCount');
     let hasOpened = false;
     notifBtn.addEventListener('click', () => {
-      const isHidden = notifList.style.display === 'none';
-      notifList.style.display = isHidden ? 'block' : 'none';
+      const isHidden = !notifList.classList.contains('active');
+      notifList.classList.toggle('active');
       if (isHidden && !hasOpened) {
         hasOpened = true;
         notifCount.textContent = 0;
