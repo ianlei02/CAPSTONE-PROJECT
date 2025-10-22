@@ -4,13 +4,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PESO Landing</title>
+  <title>About us</title>
   <script src="../../public/js/dark-mode.js"></script>
   <link rel="icon" href="../../public/smb-images/pesosmb.png" type="image/x-icon">
   <link rel="stylesheet" href="../css/aboutus.css" />
   <link rel="stylesheet" href="../css/footer.css">
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 </head>
 
@@ -79,17 +78,17 @@
         <div class="vision-mission-grid">
           <div class="card animate delay-1">
             <h2>Our Vision</h2>
-            <p>Ang pagkakaloob ng isang matatag at mapanatili na trabaho para sa isang kwalipikadong manggagawa na masigasig na nagtatrabaho sa bansa o sa ibang bansa.</p>
+            <p>Creating the Province of Bulacan as a Province that provides reliable and sustainable employment facilitation services that contribute to poverty alleviation and economic development in commitment and accordance with the People's Agenda 10.</p>
           </div>
 
           <div class="card animate delay-2">
             <h2>Our Mission</h2>
-            <p>Upang maisakatuparan ang aming pantay na mga oportunidad sa pagtatrabaho para sa lahat na may mabilis, pabago-bago, mahusay, at nakatuon na mga tagapagbigay ng serbisyo sa trabaho na suportado sa tumutugon na mga linya ng ahensya ng gobyerno na kasangkot sa trabaho tungo sa pandaigdigang kumpetensiya na pwersa ng trabaho.</p>
+            <p>To facilitate equal employment opportunities to the province's constituents through Job Matching and Coaching, employability enhancement and referrals for livelihood or training, and promotion of industrial peace through tripartism.</p>
           </div>
         </div>
 
-        <div class="cta-section animate delay-3">
-
+        <!-- <div class="cta-section animate delay-3">
+          <h2>Ready to take the next step in your career?</h2>
           <div class="btn-group">
             <a href="#learn-more" class="btn btn-primary">
               <i class="fas fa-book-open"></i> Learn More
@@ -98,12 +97,106 @@
               <i class="fas fa-envelope"></i> Contact Us
             </a>
           </div>
-        </div>
+        </div> -->
       </div>
     </section>
 
+    <!-- Team Section -->
+    <section class="team-section">
+      <div class="container">
+        <div class="section-header">
+          <h1>Meet Our Development Team</h1>
+          <p>The talented developers behind our innovative Job Hiring Decision Support System</p>
+        </div>
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-image">
+              <img src="../team-images/IanLeiCastillo.png" alt="">
+            </div>
+            <h3 class="team-name">Ian Lei C. Castillo</h3>
+            <div class="team-role">Project Manager / Frontend Developer</div>
+            <div class="team-divider"></div>
+            <p class="team-description">
+              Ian steers the project with a clear vision, ensuring our goals align with user needs while crafting the dynamic interface you interact with.
+            </p>
+            <div class="team-skills">
+              <span class="skill-tag">Project Management</span>
+              <!-- <span class="skill-tag">React</span> -->
+              <span class="skill-tag">UI Development</span>
+            </div>
+          </div>
+
+          <div class="team-card">
+            <div class="team-image">
+              <img src="../team-images/JustinLouieCruz.png" alt="">
+            </div>
+            <h3 class="team-name">Justin Louie Cruz</h3>
+            <div class="team-role">Backend Developer</div>
+            <div class="team-divider"></div>
+            <p class="team-description">
+              Louie architects the robust and intelligent backend that powers our analytical core, processing information with precision and speed.
+            </p>
+            <div class="team-skills">
+              <span class="skill-tag">PHP</span>
+              <span class="skill-tag">Database Design</span>
+              <!-- <span class="skill-tag">API Development</span> -->
+            </div>
+          </div>
+
+          <div class="team-card">
+            <div class="team-image">
+              <img src="../team-images/KateroseChico.png" alt="">
+            </div>
+            <h3 class="team-name">Katerose B. Chico</h3>
+            <div class="team-role">UI/UX Designer</div>
+            <div class="team-divider"></div>
+            <p class="team-description">
+              Kate designs intuitive and accessible user experiences, making complex data feel simple and actionable for all users.
+            </p>
+            <div class="team-skills">
+              <span class="skill-tag">Figma</span>
+              <span class="skill-tag">User Research</span>
+              <span class="skill-tag">Prototyping</span>
+            </div>
+          </div>
+          <div class="team-card">
+            <div class="team-image">
+              <img src="../team-images/VincentBaydal.png" alt="">
+            </div>
+            <h3 class="team-name">Vincent M. Baydal</h3>
+            <div class="team-role">Document Specialist</div>
+            <div class="team-divider"></div>
+            <p class="team-description">
+              Vincent brings clarity and coherence to the entire process, translating complex technical concepts into accessible documentation.
+            </p>
+            <div class="team-skills">
+              <span class="skill-tag">Technical Writing</span>
+              <!-- <span class="skill-tag">User Guides</span> -->
+              <span class="skill-tag">Process Documentation</span>
+            </div>
+          </div>
 
 
+
+          <div class="team-card">
+            <div class="team-image">
+              <img src="../team-images/AndreiPerez.png" alt="">
+            </div>
+            <h3 class="team-name">Ryan Andrei Perez</h3>
+            <div class="team-role">Lead Researcher</div>
+            <div class="team-divider"></div>
+            <p class="team-description">
+              Andrei ensures our algorithms are both cutting-edge and conscientious through deep research into equitable hiring practices.
+            </p>
+            <div class="team-skills">
+              <span class="skill-tag">Data Analysis</span>
+              <!-- <span class="skill-tag">Algorithm Design</span> -->
+              <span class="skill-tag">Ethical AI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
   <footer class="footer">
     <div class="footer-container">
@@ -160,6 +253,25 @@
       const aside = document.querySelector('aside');
       aside.classList.toggle('show')
     }
+    document.addEventListener('DOMContentLoaded', function() {
+      const animatedElements = document.querySelectorAll('.animate');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+
+      animatedElements.forEach(element => {
+        observer.observe(element);
+      });
+    });
+  </script>
   </script>
 </body>
 
