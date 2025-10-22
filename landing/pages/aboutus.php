@@ -58,8 +58,8 @@
   <aside>
     <ul class="navbar-links sidebar">
       <li><a class="nav-link" href="../../index.php">Home</a></li>
-      <li><a class="nav-link" href="find-job.php">Job Listings</a></li>
-      <li><a class="nav-link" href="aboutus.php">About Us</a></li>
+      <li><a class="nav-link" href="./find-job.php">Job Listings</a></li>
+      <li><a class="nav-link" href="./aboutus.php">About Us</a></li>
       <li class="auth-buttons">
         <a href="auth/login-signup.php?form=login" class="btn btn-primary login">Login</a>
         <!-- <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a> -->
