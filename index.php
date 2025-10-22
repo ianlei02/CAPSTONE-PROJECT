@@ -75,8 +75,8 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
     <aside>
         <ul class="navbar-links sidebar">
             <li><a class="nav-link" href="index.php">Home</a></li>
-            <li><a class="nav-link" href="./pages/find-job.php">Job Listings</a></li>
-            <li><a class="nav-link" href="./pages/aboutus.php">About Us</a></li>
+            <li><a class="nav-link" href="landing/pages/find-job.php">Job Listings</a></li>
+            <li><a class="nav-link" href="landing/pages/aboutus.php">About Us</a></li>
             <li class="auth-buttons">
                 <a href="auth/login-signup.php?form=login" class="btn btn-primary login">Login</a>
                 <!-- <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a> -->
@@ -213,9 +213,8 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
                 <div class="section-title">
                     <h2>
                         <i data-lucide="circle-question-mark" class="icon"></i>
-                        <span>FAQs</span>
+                        <span>Frequently Asked Questions</span>
                     </h2>
-                    <!-- <p>Simple steps to get you hired or find the perfect candidate</p> -->
                 </div>
                 <div class="faq-list" id="faq-list">
                     <div class="faq-item">
@@ -477,7 +476,7 @@ $announcements = $conn->query("SELECT * FROM announcement ORDER BY publish_date 
                     document.getElementById("newsModalDate").textContent = "📅 " + this.dataset.date;
                     document.getElementById("newsModalImage").src = this.dataset.image;
                     document.getElementById("newsModalContent").innerHTML = this.dataset.content;
-                    modal.style.display = "block";
+                    modal.style.display = "flex";
                 });
             });
             closeBtn.onclick = () => modal.style.display = "none";

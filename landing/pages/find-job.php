@@ -80,81 +80,82 @@ $result_job = $conn->query($sql_job);
     </nav>
     <aside>
         <ul class="navbar-links sidebar">
-            <li><a class="nav-link" href="index.php">Home</a></li>
-            <li><a class="nav-link" href="find-job.php">Job Listings</a></li>
-            <li><a class="nav-link" href="aboutus.php">About Us</a></li>
+            <li><a class="nav-link" href="../../index.php">Home</a></li>
+            <li><a class="nav-link" href="./find-job.php">Job Listings</a></li>
+            <li><a class="nav-link" href="./aboutus.php">About Us</a></li>
             <li class="auth-buttons">
                 <a href="auth/login-signup.php?form=login" class="btn btn-primary login">Login</a>
                 <!-- <a href="auth/login-signup.php?form=signup"><button class="btn-signup">Sign Up</button></a> -->
             </li>
         </ul>
     </aside>
-
-    <section class="job-listings">
-        <div class="job-list-heading">
-            <h2>Job Listings</h2>
-        </div>
-        <div class="filter-section">
-            <div style="display:flex;">
-                <input type="text" name="search-filter" placeholder="Search Jobs">
-                <!-- <button>Search</button> -->
+    <main>
+        <section>
+            <div class="job-list-heading">
+                <h2>Job Listings</h2>
             </div>
-            <div class="filter-options">
-                <select id="field-filter">
-                    <option value="all">All Job Fields</option>
-                    <option value="Engineering">Engineering</option>
-                    <option value="IT">Information Technology</option>
-                    <option value="Healthcare">Healthcare</option>
+            <div class="search-filter">
+                <div class="search-box">
+                    <span></span>
+                    <input type="text" placeholder="Search for jobs..." />
+                </div>
+                <select class="filter" id="jobFieldFilter">
+                    <option value="">All Fields</option>
                     <option value="Education">Education</option>
-                    <option value="Finance">Finance</option>
+                    <option value="Finance">Financial Service</option>
+                    <option value="Transpo">Transportation</option>
+                    <option value="D-economy">Digital Economy</option>
+                    <option value="B-economy">Blue Economy</option>
+                    <option value="C-economy">Creative Economy</option>
+                    <option value="G-economy">Green Economy</option>
+                    <option value="Housing">Housing</option>
+                    <option value="Food">Food & Advanced Manufacturing</option>
+                    <option value="Health">Health</option>
+                    <option value="Agri">Agribusiness, Agriculture, Forestry, and Fisheries</option>
+                    <option value="Tourism">Tourism</option>
+                    <option value="Construction">Construction</option>
                 </select>
-                <!-- <select id="type-filter">
-                    <option value="all">All Employment Types</option>
-                    <option value="Full-time">Full-time</option>
-                    <option value="Part-time">Part-time</option>
-                    <option value="Contract">Contract</option>
-                    <option value="Internship">Internship</option>
-                </select> -->
             </div>
-        </div>
-        <div class="job-cards">
-            <?php
-            if ($result_job->num_rows > 0) {
-                while ($row = $result_job->fetch_assoc()) {
-            ?>
-                    <div class="job-card" data-field="<?php echo htmlspecialchars($row['category']); ?>">
-                        <div class="job-field"><?php echo htmlspecialchars($row['category']); ?></div>
-                        <div class="job-header">
-                            <div>
-                                <h3 class="job-title"><?php echo htmlspecialchars($row['job_title']); ?></h3>
-                                <div class="job-company"><?php echo htmlspecialchars($row['company_name']); ?></div>
+        </section>
+        <section class="job-listings">
+            <div class="job-cards">
+                <?php
+                if ($result_job->num_rows > 0) {
+                    while ($row = $result_job->fetch_assoc()) {
+                ?>
+                        <div class="job-card" data-field="<?php echo htmlspecialchars($row['category']); ?>">
+                            <div class="job-field"><?php echo htmlspecialchars($row['category']); ?></div>
+                            <div class="job-header">
+                                <div>
+                                    <h3 class="job-title"><?php echo htmlspecialchars($row['job_title']); ?></h3>
+                                    <div class="job-company"><?php echo htmlspecialchars($row['company_name']); ?></div>
+                                </div>
+                                <div>
+                                    <span class="job-salary"><?php echo htmlspecialchars($row['salary_range']); ?> /Month</span>
+                                </div>
                             </div>
-                            <div>
-                                <span class="job-salary"><?php echo htmlspecialchars($row['salary_range']); ?></span>
+                            <div class="job-meta">
+                                <span><i class="fas fa-briefcase"></i> <?php echo htmlspecialchars($row['job_type']); ?></span>
+                                <span><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($row['location']); ?></span>
+                                <span><i class="fas fa-users"></i> Vacancies: <?php echo htmlspecialchars($row['vacancies']); ?></span>
+                            </div>
+                            <div class="job-description">
+                                <?php echo nl2br(htmlspecialchars($row['description'])); ?>
+                            </div>
+                            <div class="job-footer">
+                                <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
+                                <button class="apply-btn" onclick="window.location.href='../../auth/login-signup.php'">Apply Now</button>
                             </div>
                         </div>
-                        <div class="job-meta">
-                            <span><i class="fas fa-briefcase"></i> <?php echo htmlspecialchars($row['job_type']); ?></span>
-                            <span><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($row['location']); ?></span>
-                            <span><i class="fas fa-users"></i> Vacancies: <?php echo htmlspecialchars($row['vacancies']); ?></span>
-                        </div>
-                        <div class="job-description">
-                            <?php echo nl2br(htmlspecialchars($row['description'])); ?>
-                        </div>
-                        <div class="job-footer">
-                            <div class="job-posted">Posted: <?php echo date("M d, Y", strtotime($row['created_at'])); ?></div>
-                            <button class="apply-btn" onclick="window.location.href='../../auth/login-signup.php'">Apply Now</button>
-                        </div>
-                    </div>
-            <?php
+                <?php
+                    }
+                } else {
+                    echo "<p>No active job postings found.</p>";
                 }
-            } else {
-                echo "<p>No active job postings found.</p>";
-            }
-            ?>
-        </div>
-    </section>
-
+                ?>
+            </div>
+        </section>
+    </main>
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-section">
@@ -205,6 +206,100 @@ $result_job = $conn->query($sql_job);
             const aside = document.querySelector('aside');
             aside.classList.toggle('show')
         }
+    </script>
+    <script>
+        // Job Field Filter
+        const jobFieldFilter = document.getElementById('jobFieldFilter');
+        const jobCards = document.querySelectorAll('.job-card');
+        jobFieldFilter.addEventListener('change', function() {
+            const selectedField = this.value;
+            jobCards.forEach(card => {
+                if (selectedField === "" || card.getAttribute('data-field') === selectedField) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+        // Application Modal
+        const modal = document.getElementById('applicationModal');
+        const applyButtons = document.querySelectorAll('.apply-btn');
+        const closeBtn = document.querySelector('.close-btn');
+        const cancelBtn = document.getElementById('cancelApplication');
+        const modalJobTitle = document.getElementById('modalJobTitle');
+
+        // Open modal when Apply button is clicked
+        applyButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const jobCard = this.closest('.job-card');
+                const jobTitle = jobCard.querySelector('.job-title').textContent;
+                modalJobTitle.textContent = jobTitle;
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        // Close modal
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        closeBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+        // Close when clicking outside modal
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        document.querySelectorAll("[data-alert]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                alert("Please complete your profile before applying for a job.");
+            });
+        });
+
+
+        // Read More functionality
+        const readMoreLinks = document.querySelectorAll('.read-more');
+        readMoreLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                const jobDesc = this.previousElementSibling;
+                jobDesc.classList.toggle('expand');
+                if (jobDesc.classList.contains('expand')) {
+                    this.textContent = 'Read Less';
+                } else {
+                    this.textContent = 'Read More';
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.querySelector(".search-box input");
+            const filterSelect = document.getElementById("jobFieldFilter");
+            const jobCards = document.querySelectorAll(".job-card");
+
+            function filterJobs() {
+                const searchText = searchInput.value.toLowerCase();
+                const selectedField = filterSelect.value.toLowerCase();
+
+                jobCards.forEach(card => {
+                    const title = card.querySelector(".job-title").textContent.toLowerCase();
+                    const company = card.querySelector(".job-company").textContent.toLowerCase();
+                    const field = card.getAttribute("data-field").toLowerCase();
+
+                    const matchesSearch = title.includes(searchText) || company.includes(searchText);
+                    const matchesField = selectedField === "" || field === selectedField;
+
+                    if (matchesSearch && matchesField) {
+                        card.style.display = "block";
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+            }
+            searchInput.addEventListener("input", filterJobs);
+            filterSelect.addEventListener("change", filterJobs);
+        });
     </script>
 </body>
 

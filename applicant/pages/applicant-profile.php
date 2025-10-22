@@ -124,7 +124,6 @@ require_once '../Functions/getinfo.php';
     <div class="profile-container">
       <form action="../Functions/profile_update.php" method="POST" id="profileForm" enctype="multipart/form-data">
         <div class="section">
-          <button class="btn btn-outline" id="editBtn">Edit</button>
           <div class="profile-header">
             <label
               class="profile-pic-container"
@@ -467,7 +466,7 @@ require_once '../Functions/getinfo.php';
         </div>
 
         <!-- Section II: Job Preference -->
-        <div class="section ">
+        <div class="section">
           <h2 class="section-title">II. JOB PREFERENCE</h2>
           <div class="form-grid">
             <div class="form-group employment-status">
@@ -575,7 +574,7 @@ require_once '../Functions/getinfo.php';
         </div>
 
         <!-- Section IV: Educational Background -->
-        <div class="section ">
+        <div class="section">
           <h2 class=" section-title">IV. EDUCATIONAL BACKGROUND</h2>
           <div class="form-grid">
             <div class="form-group">
@@ -655,7 +654,7 @@ require_once '../Functions/getinfo.php';
         </div>
 
         <!-- Section V: Technical/Vocational Training -->
-        <div class="section ">
+        <div class="section">
           <h2 class="section-title">V. TECHNICAL/VOCATIONAL AND OTHER TRAINING</h2>
           <p style="margin-bottom: 15px; font-style: italic;">
             (include courses taken as part of college education)
@@ -701,7 +700,7 @@ require_once '../Functions/getinfo.php';
         </div>
 
         <!-- Section VI: Eligibility/Professional License -->
-        <div class="section ">
+        <div class="section">
           <h2 class="section-title">VI. ELIGIBILITY/ PROFESSIONAL LICENSE</h2>
 
           <div class="form-grid">
@@ -750,7 +749,7 @@ require_once '../Functions/getinfo.php';
         </div>
 
         <!-- Section VII: Work Experience -->
-        <div class="section ">
+        <div class="section">
           <h2 class="section-title">VII. WORK EXPERIENCE</h2>
           <p style="margin-bottom: 15px; font-style: italic;">
             (Limit to 10 year period, start with the most recent employment)
@@ -795,7 +794,7 @@ require_once '../Functions/getinfo.php';
         </div>
 
         <!-- Section VIII: Other Skills -->
-        <div class="section ">
+        <div class="section">
           <h2 class="section-title">VIII. OTHER SKILLS ACQUIRED WITHOUT CERTIFICATE</h2>
           <div class="form-grid">
             <div class="form-group">
@@ -879,7 +878,7 @@ require_once '../Functions/getinfo.php';
         </div>
 
         <!-- Section IX. Documents Section -->
-        <div class="section ">
+        <div class="section">
           <h2 class="section-title">IX. Documents</h2>
           <div class="form-grid">
             <div class="form-group">
@@ -891,7 +890,7 @@ require_once '../Functions/getinfo.php';
               <div class="file-preview" id="resumePreview"></div>
             </div>
             <div class="form-group">
-              <label>Valid ID (Government Issued)</label>
+              <label class="required">Valid ID (Government Issued)</label>
               <label class="file-upload" id="idUpload" for="idFile">
                 <p>Upload scanned copy</p>
                 <input type="file" class="file-input" id="idFile" name="idFile" />
@@ -914,7 +913,7 @@ require_once '../Functions/getinfo.php';
         </div>
 
         <!-- Section X. Links Section -->
-        <div class="section ">
+        <div class="section">
           <h2 class="section-title">X. Links</h2>
           <div class="form-grid">
 
@@ -963,6 +962,7 @@ require_once '../Functions/getinfo.php';
           <!-- <button type="submit" class="btn btn-outline" id="updateBtn">
             Update Profile
           </button> -->
+          <button class="btn btn-outline" id="editBtn">Edit</button>
           <button type="submit" class="btn btn-primary" id="saveBtnn">
             Save Profile
           </button>
@@ -1060,6 +1060,7 @@ require_once '../Functions/getinfo.php';
         }
       });
     });
+    const sections = document.querySelectorAll('.section');
     editBtn.addEventListener('click', () => {
       if (editBtn.textContent === 'Edit') {
         inputs.forEach(input => input.disabled = false);
@@ -1067,12 +1068,17 @@ require_once '../Functions/getinfo.php';
         textAreas.forEach(textArea => textArea.disabled = false);
         profilePicInput.disabled = false;
         editBtn.textContent = 'Cancel';
+        sections.forEach((s, i) => {
+          if (i === 2) s.classList.add('active');
+          else s.classList.remove('active');
+        });
       } else {
         inputs.forEach(input => input.disabled = true);
         select.forEach(select => select.disabled = true);
         textAreas.forEach(textArea => textArea.disabled = true);
         profilePicInput.disabled = true;
         editBtn.textContent = 'Edit';
+        sections.forEach(s => s.classList.remove('active'));
       }
     });
   </script>
@@ -1527,7 +1533,21 @@ require_once '../Functions/getinfo.php';
       handleAction(updateBtn, "update your profile", "Yes, Update it!");
     });
   </script>
-
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const sections = document.querySelectorAll(".section");
+      sections.forEach(section => {
+        const title = section.querySelector(".section-title");
+        if (!title) return;
+        title.addEventListener("click", () => {
+          sections.forEach(s => {
+            if (s !== section) s.classList.remove("active");
+          });
+          section.classList.toggle("active");
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

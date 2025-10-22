@@ -387,6 +387,35 @@ $result = $conn->query($sql);
     });
   </script>
   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const searchInput = document.querySelector(".search-box input");
+      const filterSelect = document.getElementById("jobFieldFilter");
+      const jobCards = document.querySelectorAll(".job-card");
+
+      function filterJobs() {
+        const searchText = searchInput.value.toLowerCase();
+        const selectedField = filterSelect.value.toLowerCase();
+
+        jobCards.forEach(card => {
+          const title = card.querySelector(".job-title").textContent.toLowerCase();
+          const company = card.querySelector(".job-company").textContent.toLowerCase();
+          const field = card.getAttribute("data-field").toLowerCase();
+
+          const matchesSearch = title.includes(searchText) || company.includes(searchText);
+          const matchesField = selectedField === "" || field === selectedField;
+
+          if (matchesSearch && matchesField) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      }
+      searchInput.addEventListener("input", filterJobs);
+      filterSelect.addEventListener("change", filterJobs);
+    });
+  </script>
+  <script>
     document.addEventListener("DOMContentLoaded", () => {
       const jobCards = document.querySelectorAll(".job-card");
 
