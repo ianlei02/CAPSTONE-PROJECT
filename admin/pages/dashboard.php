@@ -12,6 +12,34 @@ $admin = $result->fetch_assoc();
 $status = $admin['status'] ?? 'Active';
 
 $stmt->close();
+
+$sql = "
+    SELECT 
+        SUM(ea.b_status = 'verified') AS verified_count,
+        SUM(ea.b_status = 'pending') AS pending_count,
+        SUM(ea.b_status = 'revoked') AS revoked_count,
+        SUM(ea.b_status = 'rejected') AS rejected_count,
+        COUNT(DISTINCT jp.job_id) AS total_jobs
+    FROM employer_account ea
+    LEFT JOIN job_postings jp ON ea.employer_id = jp.employer_id
+";
+
+$result = $conn->query($sql);
+$data = $result->fetch_assoc();
+
+$verifiedCount = $data['verified_count'] ?? 0;
+$pendingCount = $data['pending_count'] ?? 0;
+$totalJobs = $data['total_jobs'] ?? 0;
+
+$sql_today = "
+    SELECT COUNT(*) AS today_jobs
+    FROM job_postings
+    WHERE DATE(created_at) = CURDATE()
+";
+$result_today = $conn->query($sql_today);
+$todayData = $result_today->fetch_assoc();
+$todayJobs = $todayData['today_jobs'] ?? 0;
+
 $conn->close();
 
 if ($status === 'Disabled') :
@@ -222,8 +250,8 @@ endif;
               <span class="material-symbols-outlined">verified_user</span>
             </div>
           </div>
-          <div class="stat-value">24</div>
-          <div class="stat-label">Employers to verify</div>
+          <div class="stat-value"><?= $verifiedCount ?></div>
+          <div class="stat-label">Employers are verified</div>
         </div>
 
         <div class="stat-card">
@@ -233,8 +261,8 @@ endif;
               <span class="material-symbols-outlined">work</span>
             </div>
           </div>
-          <div class="stat-value">76</div>
-          <div class="stat-label">15 new listings</div>
+          <div class="stat-value"><?= $totalJobs ?></div>
+          <div class="stat-label"><?= $todayJobs ?> new listings</div>
         </div>
 
         <div class="stat-card">
@@ -244,8 +272,8 @@ endif;
               <span class="material-symbols-outlined">hourglass_top</span>
             </div>
           </div>
-          <div class="stat-value">18</div>
-          <div class="stat-label">7 high priority</div>
+          <div class="stat-value"><?= $pendingCount ?></div>
+          <div class="stat-label">Employers to verify</div>
         </div>
 
         <div class="stat-card">
