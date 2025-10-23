@@ -2,7 +2,7 @@
 require_once '../Function/check_login.php';
 require "../../connection/dbcon.php";
 require_once "../../employer/Functions/dss.php";
-
+require_once '../Function/check-permission.php';
 
 $sql = "SELECT job_id, job_title, job_type, category, salary_range, location, vacancies, description, created_at 
         FROM job_postings 
@@ -72,40 +72,66 @@ $showApplicants = ($job_id > 0);
         </div>
         <ul class="nav-menu">
             <li>
-                <a class="nav-item active" href="./dashboard.php">
-                    <span class="material-symbols-outlined">dashboard</span>
-                    <span>Dashboard</span>
-                </a>
+            <a class="nav-item active" href="./dashboard.php">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span>Dashboard</span>
+            </a>
             </li>
+
+            <?php if (hasPermission('Pending Employers') || hasPermission('Verified Employers')): ?>
             <li>
                 <a class="nav-item" href="./employer-table.php">
-                    <span class="material-symbols-outlined">apartment</span>
-                    <span>Employers</span>
+                <span class="material-symbols-outlined">apartment</span>
+                <span>Employers</span>
                 </a>
             </li>
+            <?php endif; ?>
+
+            <?php if (hasPermission('View job cards & applicants table')): ?>
             <li>
                 <a class="nav-item" href="./job-listings.php">
-                    <span class="material-symbols-outlined">list_alt</span>
-                    <span>Job Listings</span>
+                <span class="material-symbols-outlined">list_alt</span>
+                <span>Job Listings</span>
                 </a>
             </li>
+            <?php endif; ?>
+
+            <?php if (in_array('ALL_ACCESS', $_SESSION['admin_roles'])): ?>
             <li>
                 <a class="nav-item" href="./new-admin.php">
-                    <span class="material-symbols-outlined">groups</span>
-                    <span>New Admin</span>
+                <span class="material-symbols-outlined">groups</span>
+                <span>New Admin</span>
                 </a>
             </li>
+            <?php endif; ?>
+
+            <?php if (
+            hasPermission('Edit News') ||
+            hasPermission('Delete News') ||
+            hasPermission('Publish News')
+            ): ?>
             <li>
                 <a class="nav-item" href="./news-upload.php">
-                    <span class="material-symbols-outlined">newspaper</span>
-                    <span>News</span>
+                <span class="material-symbols-outlined">newspaper</span>
+                <span>News</span>
                 </a>
             </li>
+            <?php endif; ?>
+
+            <?php if (hasPermission('Set Events') || hasPermission('ALL_ACCESS')): ?>
             <li>
-                <button class="nav-item" id="themeToggle" onclick="toggleTheme()">
-                    <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
-                    <span id="themeLabel">Theme toggle</span>
-                </button>
+                <a class="nav-item" href="./job-fair.php">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <span>Job Fair</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <li>
+            <button class="nav-item" id="themeToggle" onclick="toggleTheme()">
+                <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+                <span id="themeLabel">Theme toggle</span>
+            </button>
             </li>
         </ul>
         <ul class="nav-menu logout">

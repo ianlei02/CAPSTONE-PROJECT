@@ -1,5 +1,6 @@
 <?php
 require_once '../Function/check_login.php';
+require_once '../Function/check-permission.php';
 ?>
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
@@ -29,40 +30,66 @@ require_once '../Function/check_login.php';
         </div>
         <ul class="nav-menu">
             <li>
-                <a class="nav-item active" href="./dashboard.php">
-                    <span class="material-symbols-outlined">dashboard</span>
-                    <span>Dashboard</span>
-                </a>
+            <a class="nav-item active" href="./dashboard.php">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span>Dashboard</span>
+            </a>
             </li>
+
+            <?php if (hasPermission('Pending Employers') || hasPermission('Verified Employers')): ?>
             <li>
                 <a class="nav-item" href="./employer-table.php">
-                    <span class="material-symbols-outlined">apartment</span>
-                    <span>Employers</span>
+                <span class="material-symbols-outlined">apartment</span>
+                <span>Employers</span>
                 </a>
             </li>
+            <?php endif; ?>
+
+            <?php if (hasPermission('View job cards & applicants table')): ?>
             <li>
                 <a class="nav-item" href="./job-listings.php">
-                    <span class="material-symbols-outlined">list_alt</span>
-                    <span>Job Listings</span>
+                <span class="material-symbols-outlined">list_alt</span>
+                <span>Job Listings</span>
                 </a>
             </li>
+            <?php endif; ?>
+
+            <?php if (in_array('ALL_ACCESS', $_SESSION['admin_roles'])): ?>
             <li>
                 <a class="nav-item" href="./new-admin.php">
-                    <span class="material-symbols-outlined">groups</span>
-                    <span>New Admin</span>
+                <span class="material-symbols-outlined">groups</span>
+                <span>New Admin</span>
                 </a>
             </li>
+            <?php endif; ?>
+
+            <?php if (
+            hasPermission('Edit News') ||
+            hasPermission('Delete News') ||
+            hasPermission('Publish News')
+            ): ?>
             <li>
                 <a class="nav-item" href="./news-upload.php">
-                    <span class="material-symbols-outlined">newspaper</span>
-                    <span>News</span>
+                <span class="material-symbols-outlined">newspaper</span>
+                <span>News</span>
                 </a>
             </li>
+            <?php endif; ?>
+
+            <?php if (hasPermission('Set Events') || hasPermission('ALL_ACCESS')): ?>
             <li>
-                <button class="nav-item" id="themeToggle" onclick="toggleTheme()">
-                    <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
-                    <span id="themeLabel">Theme toggle</span>
-                </button>
+                <a class="nav-item" href="./job-fair.php">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <span>Job Fair</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <li>
+            <button class="nav-item" id="themeToggle" onclick="toggleTheme()">
+                <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+                <span id="themeLabel">Theme toggle</span>
+            </button>
             </li>
         </ul>
         <ul class="nav-menu logout">
@@ -161,13 +188,13 @@ require_once '../Function/check_login.php';
                                 <input type="checkbox" id="perm3">
                                 <label for="perm3">View job cards & applicants table</label>
                             </div>
-                            <div class="checkbox-item">
+                            <div class="checkbox-item" style="display: none;">
                                 <input type="checkbox" id="perm4">
                                 <label for="perm4">View applicant profile modal</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="perm5">
-                                <label for="perm5">Upload News</label>
+                                <label for="perm5">Set Events</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="perm6">
@@ -179,7 +206,7 @@ require_once '../Function/check_login.php';
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="perm8">
-                                <label for="perm8">Archive News</label>
+                                <label for="perm8">Publish News</label>
                             </div>
                         </div>
                     </div>

@@ -4,7 +4,6 @@ require_once '../../connection/dbcon.php';
 
 header('Content-Type: application/json');
 
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
     exit;
@@ -31,13 +30,24 @@ if ($result->num_rows === 1) {
         $_SESSION['admin_ID'] = $admin['admin_ID'];
         $_SESSION['admin_username'] = $admin['username'];
         $_SESSION['admin_fullname'] = $admin['fullname'];
-        $_SESSION['is_super_admin'] = $admin['is_super_admin'];
-        $_SESSION['role'] = $admin['role'];
+        $_SESSION['is_super_admin'] = (int)$admin['is_super_admin'];
+
+        if ((int)$admin['is_super_admin'] === 1) {
+            
+            $_SESSION['admin_roles'] = ['ALL_ACCESS'];
+        } else {
+   
+            $roles = json_decode($admin['role'], true);
+            if (json_last_error() !== JSON_ERROR_NONE || !is_array($roles)) {
+                $roles = []; 
+            }
+            $_SESSION['admin_roles'] = $roles;
+        }
 
         echo json_encode([
             'status' => 'success',
             'message' => 'Login successful!',
-            'redirect' => '../pages/dashboard.php' 
+            'redirect' => '../pages/dashboard.php'
         ]);
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Incorrect password.']);
@@ -48,4 +58,4 @@ if ($result->num_rows === 1) {
 
 $stmt->close();
 $conn->close();
-
+?>
