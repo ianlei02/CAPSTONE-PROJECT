@@ -1,6 +1,17 @@
 <?php
 require_once '../Function/check_login.php';
 require_once '../Function/check-permission.php';
+require_once '../../connection/dbcon.php';
+
+$admin_ID = $_SESSION['admin_ID'];
+$stmt = $conn->prepare("SELECT status, fullname, is_super_admin FROM admin_account WHERE admin_ID = ?");
+$stmt->bind_param("i", $admin_ID);
+$stmt->execute();
+$result = $stmt->get_result();
+$admin = $result->fetch_assoc();
+
+$stmt->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -114,8 +125,8 @@ require_once '../Function/check-permission.php';
             src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff"
             alt="Admin User" />
           <div>
-            <p>Ian Lei Castillo</p>
-            <span>SUPER ADMIN</span>
+            <p><?= htmlspecialchars($admin['fullname']) ?></p>
+            <span><?= $admin['is_super_admin'] == 1 ? 'SUPER ADMIN' : 'ADMIN' ?></span>
           </div>
           <!-- <i class="fas fa-chevron-down"></i> -->
         </div>

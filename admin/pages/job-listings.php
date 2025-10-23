@@ -4,6 +4,14 @@ require "../../connection/dbcon.php";
 require_once "../../employer/Functions/dss.php";
 require_once '../Function/check-permission.php';
 
+$admin_ID = $_SESSION['admin_ID'];
+$stmtt = $conn->prepare("SELECT status, fullname, is_super_admin FROM admin_account WHERE admin_ID = ?");
+$stmtt->bind_param("i", $admin_ID);
+$stmtt->execute();
+$result = $stmtt->get_result();
+$admin = $result->fetch_assoc();
+$stmtt->close();
+
 $sql = "SELECT job_id, job_title, job_type, category, salary_range, location, vacancies, description, created_at 
         FROM job_postings 
         WHERE status = 'active' 
@@ -155,8 +163,8 @@ $showApplicants = ($job_id > 0);
                         src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff"
                         alt="Admin User" />
                     <div>
-                        <p>Ian Lei Castillo</p>
-                        <span>SUPER ADMIN</span>
+                        <p><?= htmlspecialchars($admin['fullname']) ?></p>
+                        <span><?= $admin['is_super_admin'] == 1 ? 'SUPER ADMIN' : 'ADMIN' ?></span>
                     </div>
                     <!-- <i class="fas fa-chevron-down"></i> -->
                 </div>

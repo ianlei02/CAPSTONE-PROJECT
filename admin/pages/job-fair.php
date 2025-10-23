@@ -1,6 +1,17 @@
 <?php
 require_once '../Function/check_login.php';
 require_once '../Function/check-permission.php';
+require_once '../../connection/dbcon.php';
+
+$admin_ID = $_SESSION['admin_ID'];
+$stmt = $conn->prepare("SELECT status, fullname, is_super_admin FROM admin_account WHERE admin_ID = ?");
+$stmt->bind_param("i", $admin_ID);
+$stmt->execute();
+$result = $stmt->get_result();
+$admin = $result->fetch_assoc();
+
+$stmt->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -111,8 +122,8 @@ require_once '../Function/check-permission.php';
         <div class="user-profile">
           <img src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff" alt="Admin User" />
           <div>
-            <p>Ian Lei Castillo</p>
-            <span>SUPER ADMIN</span>
+            <p><?= htmlspecialchars($admin['fullname']) ?></p>
+            <span><?= $admin['is_super_admin'] == 1 ? 'SUPER ADMIN' : 'ADMIN' ?></span>
           </div>
         </div>
       </div>
@@ -143,51 +154,77 @@ require_once '../Function/check-permission.php';
       eventDisplay: 'block',
       allDaySlot: false,
 
-      slotMinTime: '07:00:00',
-      slotMaxTime: '24:00:00',
+      slotMinTime: '08:00:00',
+      slotMaxTime: '23:00:00',
+      scrollTime: '08:00:00',
+      contentHeight: 'auto',
+      expandRows: true,
 
       events: '../Function/calendar-events.php',
 
-      select: function (info) {
+      select: async function (info) {
         const title = prompt('Enter event title:');
-        if (title) {
-          const type = prompt('Enter event type (interview or job_fair):', 'job_fair');
-          const description = prompt('Enter event description:', '');
+        if (!title) return;
 
-          let endDate = new Date(info.end);
-          endDate.setSeconds(endDate.getSeconds() - 1);
+        const type = prompt('Enter event type (interview or job_fair):', 'job_fair');
+        const description = prompt('Enter event description:', '');
 
-          const payload = {
-            action: 'add',
-            title: title,
-            start: info.startStr,
-            end: endDate.toISOString(),
-            type: type,
-            description: description
-          };
+        const startTime = prompt(
+          `Enter start time for ${title} (24-hour format, e.g. 09:30):`,
+          '09:00'
+        );
+        const endTime = prompt(
+          `Enter end time for ${title} (24-hour format, e.g. 11:30):`,
+          '10:00'
+        );
 
-          fetch('../Function/calendar-events.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          })
-            .then(async res => {
-              const text = await res.text();
-              try { return JSON.parse(text); }
-              catch { console.error('Invalid JSON:', text); alert('⚠️ Server error'); return {}; }
-            })
-            .then(data => {
-              if (data.status === 'success') {
-                alert('✅ Event added!');
-                calendar.refetchEvents();
-              } else {
-                alert('⚠️ ' + (data.message || 'Error adding event.'));
-              }
-            });
+        if (!startTime || !endTime) {
+          alert('⚠️ Event not added — invalid time.');
+          return;
+        }
+
+        const startDate = new Date(info.start);
+        const [startHour, startMin] = startTime.split(':').map(Number);
+        startDate.setHours(startHour, startMin, 0, 0);
+
+        const endDate = new Date(info.start);
+        const [endHour, endMin] = endTime.split(':').map(Number);
+        endDate.setHours(endHour, endMin, 0, 0);
+
+        const payload = {
+          action: 'add',
+          title: title,
+          start: startDate.toISOString(),
+          end: endDate.toISOString(),
+          type: type,
+          description: description
+        };
+
+        const res = await fetch('../Function/calendar-events.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const text = await res.text();
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch {
+          console.error('Invalid JSON:', text);
+          alert('⚠️ Server error');
+          return;
+        }
+
+        if (data.status === 'success') {
+          alert('✅ Event added!');
+          calendar.refetchEvents();
+        } else {
+          alert('⚠️ ' + (data.message || 'Error adding event.'));
         }
       },
 
-     eventClick: function (info) {
+      eventClick: function (info) {
         const action = prompt(
           `Event: ${info.event.title}\nType: ${info.event.extendedProps.type}\n\nChoose action:\n1. Edit title\n2. Edit Description\n3. Delete\n\nEnter 1, 2 or 3:`
         );
