@@ -9,17 +9,17 @@ if (!isset($_SESSION['user_id'])) {
 $employer_id = $_SESSION['user_id'];
 $profile_picture_url = '../assets/images/profile.png';
 
-    $sql = "SELECT b_status FROM employer_account WHERE employer_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $employer_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+$sql = "SELECT b_status FROM employer_account WHERE employer_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $employer_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
-    $status = "pending";
-    if ($row = $result->fetch_assoc()) {
-      $status = $row['b_status'];
-    }
-    $isVerified = ($status === 'verified');
+$status = "pending";
+if ($row = $result->fetch_assoc()) {
+  $status = $row['b_status'];
+}
+$isVerified = ($status === 'verified');
 
 if (isset($_SESSION['user_id'])) {
   $employer_id = $_SESSION['user_id'];
@@ -223,7 +223,7 @@ if (isset($_GET['action'])) {
         </li>
         <?php if ($isVerified): ?>
           <li>
-            <a href="./employer-post.php"  class="active">
+            <a href="./employer-post.php" class="active">
               <i data-lucide="briefcase" class="icon"></i>
               <span class="label">Post Job</span>
             </a>
@@ -337,24 +337,51 @@ if (isset($_GET['action'])) {
           </div>
           <div class="form-group">
             <label for="category" class="required">Category</label>
-            <select id="category" name="category" required>
-              <option value="">Select Category</option>
-              <option value="Education">Education</option>
-              <option value="Finance">Financial Service</option>
-              <option value="Transpo">Transportation</option>
-              <option value="D-economy">Digital Economy</option>
-              <option value="B-economy">Blue Economy</option>
-              <option value="C-economy">Creative Economy</option>
-              <option value="G-economy">Green Economy</option>
-              <option value="Housing">Housing</option>
-              <option value="Food">Food & Advanced Manufacturing</option>
-              <option value="Health">Health</option>
-              <option value="Agri">Agribusiness, Agriculture, Forestry, and Fisheries</option>
-              <option value="Tourism">Tourism</option>
-              <option value="Construction">Construction</option>
-
-            </select>
+            <div class="category-select-wrapper">
+              <select id="category" name="category" required>
+                <option value="">Select Category</option>
+                <option value="Education">Education</option>
+                <option value="Finance">Financial Service</option>
+                <option value="Transpo">Transportation</option>
+                <option value="D-economy">Digital Economy</option>
+                <option value="B-economy">Blue Economy</option>
+                <option value="C-economy">Creative Economy</option>
+                <option value="G-economy">Green Economy</option>
+                <option value="Housing">Housing</option>
+                <option value="Food">Food & Advanced Manufacturing</option>
+                <option value="Health">Health</option>
+                <option value="Agri">Agribusiness, Agriculture, Forestry, and Fisheries</option>
+                <option value="Tourism">Tourism</option>
+                <option value="Construction">Construction</option>
+              </select>
+              <button type="button" id="categoryGuideBtn" class="guide-btn">?</button>
+            </div>
           </div>
+
+          <div id="categoryGuideModal" class="category-modal">
+            <div class="category-modal-content">
+              <span class="category-modal-close">&times;</span>
+              <h2>Category Guide</h2>
+              <p>Select the most suitable category for your job post. Here’s what each one means:</p>
+
+              <ul class="category-list">
+                <li><strong>Education</strong> – Teaching, training, and academic administration.</li>
+                <li><strong>Financial Service</strong> – Banking, insurance, accounting, and fintech.</li>
+                <li><strong>Transportation</strong> – Logistics, land, air, and sea transport.</li>
+                <li><strong>Digital Economy</strong> – IT, software, BPO, and online services.</li>
+                <li><strong>Blue Economy</strong> – Marine, fisheries, and maritime industries.</li>
+                <li><strong>Creative Economy</strong> – Arts, design, media, and entertainment.</li>
+                <li><strong>Green Economy</strong> – Renewable energy and environmental sustainability.</li>
+                <li><strong>Housing</strong> – Real estate, construction, and property development.</li>
+                <li><strong>Food & Advanced Manufacturing</strong> – Food production and tech-based manufacturing.</li>
+                <li><strong>Health</strong> – Healthcare, medicine, and public health.</li>
+                <li><strong>Agribusiness, Agriculture, Forestry, and Fisheries</strong> – Farming, forestry, and agritech.</li>
+                <li><strong>Tourism</strong> – Travel, hospitality, and leisure services.</li>
+                <li><strong>Construction</strong> – Infrastructure, building, and engineering.</li>
+              </ul>
+            </div>
+          </div>
+
         </div>
 
         <div class="form-row">
@@ -551,6 +578,25 @@ if (isset($_GET['action'])) {
         }
       });
     }
+  </script>
+  <script>
+    const categoryGuideBtn = document.getElementById("categoryGuideBtn");
+    const categoryModal = document.getElementById("categoryGuideModal");
+    const categoryClose = document.querySelector(".category-modal-close");
+
+    categoryGuideBtn.addEventListener("click", () => {
+      categoryModal.style.display = "flex";
+    });
+
+    categoryClose.addEventListener("click", () => {
+      categoryModal.style.display = "none";
+    });
+
+    window.addEventListener("click", (e) => {
+      if (e.target === categoryModal) {
+        categoryModal.style.display = "none";
+      }
+    });
   </script>
 </body>
 
