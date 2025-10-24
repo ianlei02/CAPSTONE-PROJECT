@@ -1,19 +1,18 @@
 <?php
 require_once '../Function/check_login.php';
 require "../../connection/dbcon.php";
-// session_start();
+require_once '../Function/check-permission.php';
 
-// header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-// header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
-// header("Pragma: no-cache");
+$admin_ID = $_SESSION['admin_ID'];
+$stmt = $conn->prepare("SELECT status, fullname, is_super_admin FROM admin_account WHERE admin_ID = ?");
+$stmt->bind_param("i", $admin_ID);
+$stmt->execute();
+$result = $stmt->get_result();
+$admin = $result->fetch_assoc();
 
-// if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-//     header("Location: ../pages/admin-login.php");
-//     exit();
-// }
+$stmt->close();
 
 $result = $conn->query("SELECT * FROM announcement ORDER BY publish_date DESC");
-
 
 $editData = null;
 if (isset($_GET['edit'])) {
@@ -56,43 +55,69 @@ if (isset($_GET['edit'])) {
       <h2>PESO</h2>
     </div>
     <ul class="nav-menu">
-      <li>
-        <a class="nav-item active" href="./dashboard.php">
-          <span class="material-symbols-outlined">dashboard</span>
-          <span>Dashboard</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="./employer-table.php">
-          <span class="material-symbols-outlined">apartment</span>
-          <span>Employers</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="./job-listings.php">
-          <span class="material-symbols-outlined">list_alt</span>
-          <span>Job Listings</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="./new-admin.php">
-          <span class="material-symbols-outlined">groups</span>
-          <span>New Admin</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="./news-upload.php">
-          <span class="material-symbols-outlined">newspaper</span>
-          <span>News</span>
-        </a>
-      </li>
-      <li>
-        <button class="nav-item" id="themeToggle" onclick="toggleTheme()">
-          <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
-          <span id="themeLabel">Theme toggle</span>
-        </button>
-      </li>
-    </ul>
+            <li>
+            <a class="nav-item active" href="./dashboard.php">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span>Dashboard</span>
+            </a>
+            </li>
+
+            <?php if (hasPermission('Pending Employers') || hasPermission('Verified Employers')): ?>
+            <li>
+                <a class="nav-item" href="./employer-table.php">
+                <span class="material-symbols-outlined">apartment</span>
+                <span>Employers</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <?php if (hasPermission('View job cards & applicants table')): ?>
+            <li>
+                <a class="nav-item" href="./job-listings.php">
+                <span class="material-symbols-outlined">list_alt</span>
+                <span>Job Listings</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <?php if (in_array('ALL_ACCESS', $_SESSION['admin_roles'])): ?>
+            <li>
+                <a class="nav-item" href="./new-admin.php">
+                <span class="material-symbols-outlined">groups</span>
+                <span>New Admin</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <?php if (
+            hasPermission('Edit News') ||
+            hasPermission('Delete News') ||
+            hasPermission('Publish News')
+            ): ?>
+            <li>
+                <a class="nav-item" href="./news-upload.php">
+                <span class="material-symbols-outlined">newspaper</span>
+                <span>News</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <?php if (hasPermission('Set Events') || hasPermission('ALL_ACCESS')): ?>
+            <li>
+                <a class="nav-item" href="./job-fair.php">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <span>Job Fair</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <li>
+            <button class="nav-item" id="themeToggle" onclick="toggleTheme()">
+                <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+                <span id="themeLabel">Theme toggle</span>
+            </button>
+            </li>
+        </ul>
     <ul class="nav-menu logout">
       <li>
         <a class="nav-item" href="../Function/logout.php">
@@ -135,14 +160,15 @@ if (isset($_GET['edit'])) {
           src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff"
           alt="Admin User" />
         <div>
-          <p>Ian Lei Castillo</p>
-          <span>SUPER ADMIN</span>
+          <p><?= htmlspecialchars($admin['fullname']) ?></p>
+          <span><?= $admin['is_super_admin'] == 1 ? 'SUPER ADMIN' : 'ADMIN' ?></span>
         </div>
         <!-- <i class="fas fa-chevron-down"></i> -->
       </div>
     </div>
     <div class="content-wrapper">
       <!-- News Form -->
+      <?php if (hasPermission('Publish News')): ?>
       <form id="newsForm" action="../Function/news-upload.php" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="action" value="create">
 
@@ -183,14 +209,17 @@ if (isset($_GET['edit'])) {
           </div>
         </div>
         <div class="form-group" style="display: flex; gap: 10px;">
+          
           <button type="submit" class="btn btn-primary">
             <i class="fas fa-save"></i> Publish News
           </button>
           <button type="reset" class="btn" style="background: var(--border);">
             <i class="fas fa-undo"></i> Reset
           </button>
+          
         </div>
       </form>
+      <?php endif; ?>
       <!-- Uploaded News -->
       <div class="news-list">
         <h2>Uploaded News</h2>
@@ -218,6 +247,7 @@ if (isset($_GET['edit'])) {
                 <td><?= htmlspecialchars($row['excerpt']); ?></td>
                 <td>
                   <!-- Edit Button -->
+                   <?php if (hasPermission('Edit News')): ?>
                   <button type="button" class="btn btn-primary editBtn"
                     data-id="<?= $row['id']; ?>"
                     data-title="<?= htmlspecialchars($row['title']); ?>"
@@ -228,11 +258,14 @@ if (isset($_GET['edit'])) {
                     >
                     <i class="fas fa-edit"></i> Edit
                   </button>
+                  <?php endif; ?>
                   <!-- Delete Button -->
+                   <?php if (hasPermission('Delete News')): ?>
                   <a href="../Function/news-upload.php?action=delete&id=<?= $row['id']; ?>"
                     class="btn btn-danger deleteBtn">
                     <i class="fas fa-trash"></i> Delete
                   </a>
+                  <?php endif; ?>
                 </td>
               </tr>
             <?php endwhile; ?>

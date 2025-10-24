@@ -1,5 +1,17 @@
 <?php
 require_once '../Function/check_login.php';
+require_once '../Function/check-permission.php';
+require_once '../../connection/dbcon.php';
+
+$admin_ID = $_SESSION['admin_ID'];
+$stmt = $conn->prepare("SELECT status, fullname, is_super_admin FROM admin_account WHERE admin_ID = ?");
+$stmt->bind_param("i", $admin_ID);
+$stmt->execute();
+$result = $stmt->get_result();
+$admin = $result->fetch_assoc();
+
+$stmt->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -30,43 +42,69 @@ require_once '../Function/check_login.php';
       <h2>PESO</h2>
     </div>
     <ul class="nav-menu">
-      <li>
-        <a class="nav-item active" href="./dashboard.php">
-          <span class="material-symbols-outlined">dashboard</span>
-          <span>Dashboard</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="./employer-table.php">
-          <span class="material-symbols-outlined">apartment</span>
-          <span>Employers</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="./job-listings.php">
-          <span class="material-symbols-outlined">list_alt</span>
-          <span>Job Listings</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="./new-admin.php">
-          <span class="material-symbols-outlined">groups</span>
-          <span>New Admin</span>
-        </a>
-      </li>
-      <li>
-        <a class="nav-item" href="./news-upload.php">
-          <span class="material-symbols-outlined">newspaper</span>
-          <span>News</span>
-        </a>
-      </li>
-      <li>
-        <button class="nav-item" id="themeToggle" onclick="toggleTheme()">
-          <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
-          <span id="themeLabel">Theme toggle</span>
-        </button>
-      </li>
-    </ul>
+            <li>
+            <a class="nav-item active" href="./dashboard.php">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span>Dashboard</span>
+            </a>
+            </li>
+
+            <?php if (hasPermission('Pending Employers') || hasPermission('Verified Employers')): ?>
+            <li>
+                <a class="nav-item" href="./employer-table.php">
+                <span class="material-symbols-outlined">apartment</span>
+                <span>Employers</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <?php if (hasPermission('View job cards & applicants table')): ?>
+            <li>
+                <a class="nav-item" href="./job-listings.php">
+                <span class="material-symbols-outlined">list_alt</span>
+                <span>Job Listings</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <?php if (in_array('ALL_ACCESS', $_SESSION['admin_roles'])): ?>
+            <li>
+                <a class="nav-item" href="./new-admin.php">
+                <span class="material-symbols-outlined">groups</span>
+                <span>New Admin</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <?php if (
+            hasPermission('Edit News') ||
+            hasPermission('Delete News') ||
+            hasPermission('Publish News')
+            ): ?>
+            <li>
+                <a class="nav-item" href="./news-upload.php">
+                <span class="material-symbols-outlined">newspaper</span>
+                <span>News</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <?php if (hasPermission('Set Events') || hasPermission('ALL_ACCESS')): ?>
+            <li>
+                <a class="nav-item" href="./job-fair.php">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <span>Job Fair</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <li>
+            <button class="nav-item" id="themeToggle" onclick="toggleTheme()">
+                <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+                <span id="themeLabel">Theme toggle</span>
+            </button>
+            </li>
+        </ul>
     <ul class="nav-menu logout">
       <li>
         <a class="nav-item" href="../Function/logout.php">
@@ -75,7 +113,6 @@ require_once '../Function/check_login.php';
         </a>
       </li>
     </ul>
-
   </div>
 
   <!-- Main Content -->
@@ -88,8 +125,8 @@ require_once '../Function/check_login.php';
             src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff"
             alt="Admin User" />
           <div>
-            <p>Ian Lei Castillo</p>
-            <span>SUPER ADMIN</span>
+            <p><?= htmlspecialchars($admin['fullname']) ?></p>
+            <span><?= $admin['is_super_admin'] == 1 ? 'SUPER ADMIN' : 'ADMIN' ?></span>
           </div>
           <!-- <i class="fas fa-chevron-down"></i> -->
         </div>
@@ -97,6 +134,7 @@ require_once '../Function/check_login.php';
     </div>
 
     <div class="content-wrapper">
+      <?php if (hasPermission('Pending Employers')): ?>
       <div class="table-section">
         <div class="table-header">
           <span class="material-symbols-outlined">pending_actions</span>
@@ -114,9 +152,10 @@ require_once '../Function/check_login.php';
           <tbody>
             <!-- Data will be populated by JavaScript -->
           </tbody>
-        </table>
+        </table>     
       </div>
-
+      <?php endif; ?>
+      <?php if (hasPermission('Verified Employers')): ?>
       <div class="table-section">
         <div class="table-header">
           <span class="material-symbols-outlined">verified</span>
@@ -136,7 +175,8 @@ require_once '../Function/check_login.php';
           </tbody>
         </table>
       </div>
-
+      <?php endif;?>
+      <?php if (hasPermission('Verified Employers')): ?>
       <div class="table-section">
         <div class="table-header">
           <span class="material-symbols-outlined">block</span>
@@ -156,7 +196,8 @@ require_once '../Function/check_login.php';
           </tbody>
         </table>
       </div>
-
+      <?php endif;?>
+      <?php if (hasPermission('Pending Employers')): ?>
       <div class="table-section">
         <div class="table-header">
           <span class="material-symbols-outlined">block</span>
@@ -176,6 +217,7 @@ require_once '../Function/check_login.php';
           </tbody>
         </table>
       </div>
+      <?php endif;?>
     </div>
   </div>
 
@@ -843,7 +885,7 @@ require_once '../Function/check_login.php';
   <script src="../assets/library/datatable/dataTables.js"></script>
   <script src="../js/table-init.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
       fetch("../Function/fetch-employer.php")
         .then(response => response.json())
         .then(data => {
@@ -855,87 +897,80 @@ require_once '../Function/check_login.php';
           }
 
           const pendingTableBody = document.querySelector("#pendingTable tbody");
-          const verifiedTableBody = document.querySelector("#verifiedTable tbody");
-
-          if (!pendingTableBody) console.error("Pending table tbody not found");
-          if (!verifiedTableBody) console.error("Verified table tbody not found");
-
-          if (Array.isArray(data.pending)) {
+          if (pendingTableBody && Array.isArray(data.pending)) {
             pendingTableBody.innerHTML = data.pending.map(emp => `
-            <tr>
-              <td>${emp.company_name}</td>
-              <td>${emp.contact_person}</td>
-              <td>${emp.email}</td>
-              <td>${emp.industry}</td>
-              <td><span class="status pending">${emp.status}</span></td>
-              <td>
-                <button class="view-btn" data-type="pending" data-company='${JSON.stringify(emp)}'>
-                  <span class="material-symbols-outlined">visibility</span> View
-                </button>
-              </td>
-            </tr>
-          `).join("");
+              <tr>
+                <td>${emp.company_name}</td>
+                <td>${emp.contact_person}</td>
+                <td>${emp.email}</td>
+                <td>${emp.industry}</td>
+                <td><span class="status pending">${emp.status}</span></td>
+                <td>
+                  <button class="view-btn" data-type="pending" data-company='${JSON.stringify(emp)}'>
+                    <span class="material-symbols-outlined">visibility</span> View
+                  </button>
+                </td>
+              </tr>
+            `).join("");
           }
 
-          const verifiedData = data.verified || [];
-          if (Array.isArray(verifiedData)) {
-            verifiedTableBody.innerHTML = verifiedData.map(emp => `
-            <tr>
-              <td>${emp.company_name}</td>
-              <td>${emp.contact_person}</td>
-              <td>${emp.email}</td>
-              <td>${emp.industry}</td>
-              <td><span class="status verified">${emp.status}</span></td>
-              <td>
-                <button class="view-btn" data-type="verified" data-company='${JSON.stringify(emp)}'>
-                  <span class="material-symbols-outlined">visibility</span> View
-                </button>
-                <button class="revoke-btn" data-email="${emp.email}" style="display: none;">Revoke</button>
-              </td>
-            </tr>
-          `).join("");
+          const verifiedTableBody = document.querySelector("#verifiedTable tbody");
+          if (verifiedTableBody && Array.isArray(data.verified)) {
+            verifiedTableBody.innerHTML = data.verified.map(emp => `
+              <tr>
+                <td>${emp.company_name}</td>
+                <td>${emp.contact_person}</td>
+                <td>${emp.email}</td>
+                <td>${emp.industry}</td>
+                <td><span class="status verified">${emp.status}</span></td>
+                <td>
+                  <button class="view-btn" data-type="verified" data-company='${JSON.stringify(emp)}'>
+                    <span class="material-symbols-outlined">visibility</span> View
+                  </button>
+                  <button class="revoke-btn" data-email="${emp.email}" style="display: none;">Revoke</button>
+                </td>
+              </tr>
+            `).join("");
           }
 
           const revokedTableBody = document.querySelector("#revokedTable tbody");
-          const revokedData = data.revoked || [];
-          if (Array.isArray(revokedData)) {
-            revokedTableBody.innerHTML = revokedData.map(emp => `
-            <tr>
-              <td>${emp.company_name}</td>
-              <td>${emp.contact_person}</td>
-              <td>${emp.email}</td>
-              <td>${emp.industry}</td>
-              <td><span class="status revoked">${emp.status}</span></td>
-              <td>
-                <button class="view-btn" data-type="revoked" data-company='${JSON.stringify(emp)}'>
-                  <span class="material-symbols-outlined">visibility</span> View
-                </button>
-                <button class="restore-btn" data-email="${emp.email}" style="display: none;">
-                  <span class="material-symbols-outlined" >autorenew</span> Restore
-                </button>
-              </td>
-            </tr>
-          `).join("");
+          if (revokedTableBody && Array.isArray(data.revoked)) {
+            revokedTableBody.innerHTML = data.revoked.map(emp => `
+              <tr>
+                <td>${emp.company_name}</td>
+                <td>${emp.contact_person}</td>
+                <td>${emp.email}</td>
+                <td>${emp.industry}</td>
+                <td><span class="status revoked">${emp.status}</span></td>
+                <td>
+                  <button class="view-btn" data-type="revoked" data-company='${JSON.stringify(emp)}'>
+                    <span class="material-symbols-outlined">visibility</span> View
+                  </button>
+                  <button class="restore-btn" data-email="${emp.email}" style="display: none;">
+                    <span class="material-symbols-outlined">autorenew</span> Restore
+                  </button>
+                </td>
+              </tr>
+            `).join("");
           }
 
-          const rejectedData = data.rejected || [];
-          if (Array.isArray(rejectedData)) {
-            const rejectedTableBody = document.querySelector("#rejectedTable tbody");
-            rejectedTableBody.innerHTML = rejectedData.map(emp => `
-            <tr>
-              <td>${emp.company_name}</td>
-              <td>${emp.contact_person}</td>
-              <td>${emp.email}</td>
-              <td>${emp.industry}</td>
-              <td><span class="status rejected">${emp.status}</span></td>
-              <td>
-                <button class="view-btn" data-type="rejected" data-company='${JSON.stringify(emp)}'>
-                  <span class="material-symbols-outlined">visibility</span> View
-                </button>
-                <button class="restore-btn" data-email="${emp.email}" style="display: none;">Restore</button>
-              </td>
-            </tr>
-          `).join("");
+          const rejectedTableBody = document.querySelector("#rejectedTable tbody");
+          if (rejectedTableBody && Array.isArray(data.rejected)) {
+            rejectedTableBody.innerHTML = data.rejected.map(emp => `
+              <tr>
+                <td>${emp.company_name}</td>
+                <td>${emp.contact_person}</td>
+                <td>${emp.email}</td>
+                <td>${emp.industry}</td>
+                <td><span class="status rejected">${emp.status}</span></td>
+                <td>
+                  <button class="view-btn" data-type="rejected" data-company='${JSON.stringify(emp)}'>
+                    <span class="material-symbols-outlined">visibility</span> View
+                  </button>
+                  <button class="restore-btn" data-email="${emp.email}" style="display: none;">Restore</button>
+                </td>
+              </tr>
+            `).join("");
           }
 
           document.querySelectorAll(".view-btn").forEach(btn => {
