@@ -3,7 +3,8 @@
     "description": "Capstone project: Job Hiring Decision Support System for PESO SMB.",
     "type": "project",
     "require": {
-        "phpmailer/phpmailer": "^6.10"
+        "phpmailer/phpmailer": "^6.10",
+        "vlucas/phpdotenv": "^5.6"
     },
     "license": "proprietary"
 }

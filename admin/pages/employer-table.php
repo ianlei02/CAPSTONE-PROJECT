@@ -42,69 +42,69 @@ $conn->close();
       <h2>PESO</h2>
     </div>
     <ul class="nav-menu">
-            <li>
-            <a class="nav-item active" href="./dashboard.php">
-                <span class="material-symbols-outlined">dashboard</span>
-                <span>Dashboard</span>
-            </a>
-            </li>
+      <li>
+        <a class="nav-item active" href="./dashboard.php">
+          <span class="material-symbols-outlined">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
 
-            <?php if (hasPermission('Pending Employers') || hasPermission('Verified Employers')): ?>
-            <li>
-                <a class="nav-item" href="./employer-table.php">
-                <span class="material-symbols-outlined">apartment</span>
-                <span>Employers</span>
-                </a>
-            </li>
-            <?php endif; ?>
+      <?php if (hasPermission('Pending Employers') || hasPermission('Verified Employers')): ?>
+        <li>
+          <a class="nav-item" href="./employer-table.php">
+            <span class="material-symbols-outlined">apartment</span>
+            <span>Employers</span>
+          </a>
+        </li>
+      <?php endif; ?>
 
-            <?php if (hasPermission('View job cards & applicants table')): ?>
-            <li>
-                <a class="nav-item" href="./job-listings.php">
-                <span class="material-symbols-outlined">list_alt</span>
-                <span>Job Listings</span>
-                </a>
-            </li>
-            <?php endif; ?>
+      <?php if (hasPermission('View job cards & applicants table')): ?>
+        <li>
+          <a class="nav-item" href="./job-listings.php">
+            <span class="material-symbols-outlined">list_alt</span>
+            <span>Job Listings</span>
+          </a>
+        </li>
+      <?php endif; ?>
 
-            <?php if (in_array('ALL_ACCESS', $_SESSION['admin_roles'])): ?>
-            <li>
-                <a class="nav-item" href="./new-admin.php">
-                <span class="material-symbols-outlined">groups</span>
-                <span>New Admin</span>
-                </a>
-            </li>
-            <?php endif; ?>
+      <?php if (in_array('ALL_ACCESS', $_SESSION['admin_roles'])): ?>
+        <li>
+          <a class="nav-item" href="./new-admin.php">
+            <span class="material-symbols-outlined">groups</span>
+            <span>New Admin</span>
+          </a>
+        </li>
+      <?php endif; ?>
 
-            <?php if (
-            hasPermission('Edit News') ||
-            hasPermission('Delete News') ||
-            hasPermission('Publish News')
-            ): ?>
-            <li>
-                <a class="nav-item" href="./news-upload.php">
-                <span class="material-symbols-outlined">newspaper</span>
-                <span>News</span>
-                </a>
-            </li>
-            <?php endif; ?>
+      <?php if (
+        hasPermission('Edit News') ||
+        hasPermission('Delete News') ||
+        hasPermission('Publish News')
+      ): ?>
+        <li>
+          <a class="nav-item" href="./news-upload.php">
+            <span class="material-symbols-outlined">newspaper</span>
+            <span>News</span>
+          </a>
+        </li>
+      <?php endif; ?>
 
-            <?php if (hasPermission('Set Events') || hasPermission('ALL_ACCESS')): ?>
-            <li>
-                <a class="nav-item" href="./job-fair.php">
-                <span class="material-symbols-outlined">calendar_month</span>
-                <span>Job Fair</span>
-                </a>
-            </li>
-            <?php endif; ?>
+      <?php if (hasPermission('Set Events') || hasPermission('ALL_ACCESS')): ?>
+        <li>
+          <a class="nav-item" href="./job-fair.php">
+            <span class="material-symbols-outlined">calendar_month</span>
+            <span>Job Fair</span>
+          </a>
+        </li>
+      <?php endif; ?>
 
-            <li>
-            <button class="nav-item" id="themeToggle" onclick="toggleTheme()">
-                <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
-                <span id="themeLabel">Theme toggle</span>
-            </button>
-            </li>
-        </ul>
+      <li>
+        <button class="nav-item" id="themeToggle" onclick="toggleTheme()">
+          <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+          <span id="themeLabel">Theme toggle</span>
+        </button>
+      </li>
+    </ul>
     <ul class="nav-menu logout">
       <li>
         <a class="nav-item" href="../Function/logout.php">
@@ -135,89 +135,89 @@ $conn->close();
 
     <div class="content-wrapper">
       <?php if (hasPermission('Pending Employers')): ?>
-      <div class="table-section">
-        <div class="table-header">
-          <span class="material-symbols-outlined">pending_actions</span>
-          <h2> Pending Employers</h2>
+        <div class="table-section">
+          <div class="table-header">
+            <span class="material-symbols-outlined">pending_actions</span>
+            <h2> Pending Employers</h2>
+          </div>
+          <table id="pendingTable" class="display">
+            <thead>
+              <th>Company Name</th>
+              <th>Contact Person</th>
+              <th>Email</th>
+              <th>Industry</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </thead>
+            <tbody>
+              <!-- Data will be populated by JavaScript -->
+            </tbody>
+          </table>
         </div>
-        <table id="pendingTable" class="display">
-          <thead>
-            <th>Company Name</th>
-            <th>Contact Person</th>
-            <th>Email</th>
-            <th>Industry</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </thead>
-          <tbody>
-            <!-- Data will be populated by JavaScript -->
-          </tbody>
-        </table>     
-      </div>
       <?php endif; ?>
       <?php if (hasPermission('Verified Employers')): ?>
-      <div class="table-section">
-        <div class="table-header">
-          <span class="material-symbols-outlined">verified</span>
-          <h2> Verified Employers</h2>
+        <div class="table-section">
+          <div class="table-header">
+            <span class="material-symbols-outlined">verified</span>
+            <h2> Verified Employers</h2>
+          </div>
+          <table id="verifiedTable" class="display">
+            <thead>
+              <th>Company Name</th>
+              <th>Contact Person</th>
+              <th>Email</th>
+              <th>Industry</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </thead>
+            <tbody>
+              <!-- Data will be populated by JavaScript -->
+            </tbody>
+          </table>
         </div>
-        <table id="verifiedTable" class="display">
-          <thead>
-            <th>Company Name</th>
-            <th>Contact Person</th>
-            <th>Email</th>
-            <th>Industry</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </thead>
-          <tbody>
-            <!-- Data will be populated by JavaScript -->
-          </tbody>
-        </table>
-      </div>
-      <?php endif;?>
+      <?php endif; ?>
       <?php if (hasPermission('Verified Employers')): ?>
-      <div class="table-section">
-        <div class="table-header">
-          <span class="material-symbols-outlined">block</span>
-          <h2> Revoked Employers</h2>
+        <div class="table-section">
+          <div class="table-header">
+            <span class="material-symbols-outlined">block</span>
+            <h2> Revoked Employers</h2>
+          </div>
+          <table id="revokedTable" class="display">
+            <thead>
+              <th>Company Name</th>
+              <th>Contact Person</th>
+              <th>Email</th>
+              <th>Industry</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </thead>
+            <tbody>
+              <!-- Data will be populated by JavaScript -->
+            </tbody>
+          </table>
         </div>
-        <table id="revokedTable" class="display">
-          <thead>
-            <th>Company Name</th>
-            <th>Contact Person</th>
-            <th>Email</th>
-            <th>Industry</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </thead>
-          <tbody>
-            <!-- Data will be populated by JavaScript -->
-          </tbody>
-        </table>
-      </div>
-      <?php endif;?>
+      <?php endif; ?>
       <?php if (hasPermission('Pending Employers')): ?>
-      <div class="table-section">
-        <div class="table-header">
-          <span class="material-symbols-outlined">block</span>
-          <h2>Rejected Employers</h2>
+        <div class="table-section">
+          <div class="table-header">
+            <span class="material-symbols-outlined">block</span>
+            <h2>Rejected Employers</h2>
+          </div>
+          <table id="rejectedTable" class="display">
+            <thead>
+              <th>Company Name</th>
+              <th>Contact Person</th>
+              <th>Email</th>
+              <th>Industry</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </thead>
+            <tbody>
+              <!-- Data will be populated by JavaScript -->
+            </tbody>
+          </table>
         </div>
-        <table id="rejectedTable" class="display">
-          <thead>
-            <th>Company Name</th>
-            <th>Contact Person</th>
-            <th>Email</th>
-            <th>Industry</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </thead>
-          <tbody>
-            <!-- Data will be populated by JavaScript -->
-          </tbody>
-        </table>
-      </div>
-      <?php endif;?>
+      <?php endif; ?>
     </div>
   </div>
 
@@ -885,7 +885,7 @@ $conn->close();
   <script src="../assets/library/datatable/dataTables.js"></script>
   <script src="../js/table-init.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
       fetch("../Function/fetch-employer.php")
         .then(response => response.json())
         .then(data => {
@@ -906,7 +906,7 @@ $conn->close();
                 <td>${emp.industry}</td>
                 <td><span class="status pending">${emp.status}</span></td>
                 <td>
-                  <button class="view-btn" data-type="pending" data-company='${JSON.stringify(emp)}'>
+                  <button class="view-btn" data-type="pending" data-company='${JSON.stringify(emp)}' style="background-color: var(--color-blue-500);color: white;   padding: 10px 18px;border: none;border-radius: 8px;cursor: pointer;font-weight: 500;transition: all 0.3s;display: inline-flex;align-items: center;gap: 8px;">
                     <span class="material-symbols-outlined">visibility</span> View
                   </button>
                 </td>
@@ -924,7 +924,7 @@ $conn->close();
                 <td>${emp.industry}</td>
                 <td><span class="status verified">${emp.status}</span></td>
                 <td>
-                  <button class="view-btn" data-type="verified" data-company='${JSON.stringify(emp)}'>
+                  <button class="view-btn" data-type="verified" data-company='${JSON.stringify(emp)}' style="background-color: var(--color-blue-500);color: white;   padding: 10px 18px;border: none;border-radius: 8px;cursor: pointer;font-weight: 500;transition: all 0.3s;display: inline-flex;align-items: center;gap: 8px;">
                     <span class="material-symbols-outlined">visibility</span> View
                   </button>
                   <button class="revoke-btn" data-email="${emp.email}" style="display: none;">Revoke</button>
@@ -943,7 +943,7 @@ $conn->close();
                 <td>${emp.industry}</td>
                 <td><span class="status revoked">${emp.status}</span></td>
                 <td>
-                  <button class="view-btn" data-type="revoked" data-company='${JSON.stringify(emp)}'>
+                  <button class="view-btn" data-type="revoked" data-company='${JSON.stringify(emp)}' style="background-color: var(--color-blue-500);color: white;   padding: 10px 18px;border: none;border-radius: 8px;cursor: pointer;font-weight: 500;transition: all 0.3s;display: inline-flex;align-items: center;gap: 8px;">
                     <span class="material-symbols-outlined">visibility</span> View
                   </button>
                   <button class="restore-btn" data-email="${emp.email}" style="display: none;">
@@ -964,7 +964,7 @@ $conn->close();
                 <td>${emp.industry}</td>
                 <td><span class="status rejected">${emp.status}</span></td>
                 <td>
-                  <button class="view-btn" data-type="rejected" data-company='${JSON.stringify(emp)}'>
+                  <button class="view-btn" data-type="rejected" data-company='${JSON.stringify(emp)}' style="background-color: var(--color-blue-500);color: white;   padding: 10px 18px;border: none;border-radius: 8px;cursor: pointer;font-weight: 500;transition: all 0.3s;display: inline-flex;align-items: center;gap: 8px;">
                     <span class="material-symbols-outlined">visibility</span> View
                   </button>
                   <button class="restore-btn" data-email="${emp.email}" style="display: none;">Restore</button>
